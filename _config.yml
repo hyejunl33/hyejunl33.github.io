@@ -22,7 +22,7 @@ repository               : "hyejunl33/hyejunl33.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "/assets/images/profile.png"
+  avatar           : "https://hyejunl33.github.io/assets/images/profile.png"
   name             : "Hyejun"
   pronouns         : # example: "she/her"  
   bio              : "Studing AI in Naver BoostCamp AItech"
