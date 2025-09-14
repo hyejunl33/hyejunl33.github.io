@@ -1,6 +1,6 @@
 ---
 title: "[Project] 고양이와 강아지 이미지 분류기"
-date: 2025-09-17 14:00:00 +0900
+date: 2025-09-14
 categories:
   - projects
 tags:
