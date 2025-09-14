@@ -8,29 +8,28 @@
 
 # Basic Site Settings
 locale                   : "en-US"
-site_theme               : "default" # Currently available options are "default", "air"
-title                    : "Your Name / Site Title"
+site_theme               : "air" # Currently available options are "default", "air"
+title                    : "Archive for AI study"
 title_separator          : "-"
-name                     : &name "Your Name"
-description              : &description "Your Name's academic portfolio"   # Update this with a general description of your site, this is the default if not overridden by a page
-url                      : https://academicpages.github.io # The base hostname & protocol for your site e.g. "https://[your GitHub username].github.io",
+name                     : &name "Hyejunl33"
+description              : &description "Studing AI in Naver BoostCamp AItech"   # Update this with a general description of your site, this is the default if not overridden by a page
+url                      : "https://hyejunl33.github.io" # The base hostname & protocol for your site e.g. "https://[your GitHub username].github.io",
                                                            # or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
-repository               : "academicpages/academicpages.github.io"
-
+repository               : "hyejunl33/hyejunl33.github.io"
 # Site Author - The following control what appear as part of the author content on the side bar.
 #               If a field is blank the icon and link will not appear, otherwise it will be shown.
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
   avatar           : "profile.png"
-  name             : "Your Sidebar Name"
+  name             : "Hyejun"
   pronouns         : # example: "she/her"  
   bio              : "Short biography for the left-hand sidebar"
-  location         : "Earth"
-  employer         : "Red Brick University"
+  location         : "Seoul, South Korea"
+  employer         : "Gwangju National University of Education"
   uri              : # URL
-  email            : "none@example.org" 
+  email            : "rydnsj200@naver.com"
 
   # Academic websites
   academia         : # URL
@@ -48,7 +47,7 @@ author:
   bitbucket        : # Username - Update with your username on the site
   codepen          : # Username
   dribbble         : # Username
-  github           : "academicpages"
+  github           : "hyejunl33"
   kaggle           : # Username  
   stackoverflow    : # User number or user number and name (i.e., use "1" or "1/jeff-atwood")    
 
@@ -218,16 +217,16 @@ kramdown:
 
 # These settings control the types of collections used by the template
 collections:
-  teaching:
+  projects:
     output: true
     permalink: /:collection/:path/
-  publications:
+  study:
     output: true
     permalink: /:collection/:path/
-  portfolio:
+  algorithm:
     output: true
     permalink: /:collection/:path/
-  talks:
+  weeklyreview:
     output: true
     permalink: /:collection/:path/
 
@@ -252,39 +251,39 @@ defaults:
     values:
       layout: single
       author_profile: true
-  # _teaching
+  # _projects
   - scope:
-      path: ""
-      type: teaching
+      path: "_projects"
+      type: projects
     values:
       layout: single
       author_profile: true
       share: true
       comments: true
-  # _publications
+  # _study
   - scope:
       path: ""
-      type: publications
+      type: study
     values:
       layout: single
       author_profile: true
       share: true
       comments: true
-  # _portfolio
+  # _algorithm
   - scope:
       path: ""
-      type: portfolio
+      type: algorithm
     values:
       layout: single
       author_profile: true
       share: true
       comment: true
-  # _talks
+  # _weeklyreview
   - scope:
       path: ""
-      type: talks
+      type: weeklyreview
     values:
-      layout: talk
+      layout: single
       author_profile: true
       share: true
 
