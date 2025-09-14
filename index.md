@@ -3,7 +3,10 @@ layout: archive
 title: "Recent Posts"
 ---
 
-{% assign all_posts = site.projects | concat: site.study | concat: site.algorithm | concat: site.weeklyreview %}
+{% comment %}{% endcomment %}
+{% assign all_posts = site.posts | concat: site.projects | concat: site.study | concat: site.algorithm | concat: site.weeklyreview %}
+
+{% comment %}{% endcomment %}
 {% assign sorted_posts = all_posts | sort: 'date' | reverse %}
 
 <div class="entries-{{ page.entries_layout | default: 'list' }}">
