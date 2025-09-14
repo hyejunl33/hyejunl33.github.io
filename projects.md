@@ -1,19 +1,12 @@
 ---
-layout: page
-title: "Projects List"
+layout: archive
+title: "Projects"
+collection: projects
 permalink: /projects/
 ---
 
-## My Projects
-
-<hr>
-
-<ul>
-  {% for project in site.projects %}
-    <li style="margin-bottom: 2em;">
-      <h3><a href="{{ site.baseurl }}{{ project.url }}">{{ project.title }}</a></h3>
-      <p><strong>Published on:</strong> {{ project.date | date: "%B %d, %Y" }}</p>
-      <p>{{ project.excerpt }}</p>
-    </li>
+<div class="entries-{{ page.entries_layout | default: 'list' }}">
+  {% for post in site.projects %}
+    {% include archive-single.html type=page.entries_layout %}
   {% endfor %}
-</ul>
+</div>
