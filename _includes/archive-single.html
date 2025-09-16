@@ -1,5 +1,27 @@
-<div style="border: 2px solid red; padding: 10px; margin: 10px 0;">
-  <h3>[디버깅] post.excerpt 변수 내용:</h3>
-  <pre><code>{{ post.excerpt | escape }}</code></pre>
+{% comment %}
+  The `post` variable is passed to this file from the main loop.
+{% endcomment %}
+
+<div class="list__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="{{ post.url | relative_url }}" rel="permalink">{{ post.title }}</a>
+    </h2>
+    
+    {% if post.date %}
+      <p class="page__meta">
+        <i class="fa fa-fw fa-calendar" aria-hidden="true"></i> 
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
+      </p>
+    {% endif %}
+
+    {% if post.excerpt %}
+      <div class="archive__item-excerpt" itemprop="description">
+        {{ post.excerpt | markdownify }}
+      </div>
+    {% endif %}
+    
+  </article>
 </div>
 <hr>
