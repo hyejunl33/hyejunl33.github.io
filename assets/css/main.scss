@@ -43,16 +43,18 @@
 ;
 /* --- 상단 네비게이션 메뉴 반응형 수정 --- */
 
-/* 화면 너비가 1024px 이하일 때 스타일 적용 */
-@media screen and (max-width: 1024px) {
+/* 화면 너비가 1024px 이하일 때 적용 */
+@media screen and (max-width: 1200px) {
   
-  /* 기존의 수평 메뉴 항목들을 숨김 처리 */
+  /* 기존의 수평 메뉴 항목들을 강제로 숨김 처리 */
+  /* !important를 사용해 다른 스타일보다 우선 적용되도록 합니다 */
   .greedy-nav a {
-    display: none;
+    display: none !important;
   }
 
-  /* 숨겨져 있던 햄버거 메뉴(토글) 버튼을 다시 보이게 함 */
+  /* 햄버거 메뉴(토글) 버튼을 강제로 표시 */
+  /* !important를 사용해 다른 스타일보다 우선 적용되도록 합니다 */
   .greedy-nav button.navicon {
-    display: block;
+    display: block !important;
   }
 }
