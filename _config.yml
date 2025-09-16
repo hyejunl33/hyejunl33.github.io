@@ -18,7 +18,7 @@ url                      : "https://hyejunl33.github.io" # The base hostname & p
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "hyejunl33/hyejunl33.github.io"
 # Site Author - The following control what appear as part of the author content on the side bar.
-#               If a field is blank the icon and link will not appear, otherwise it will be shown.
+#               If a field is blank the icon and link will not vappear, otherwise it will be shown.
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
@@ -212,6 +212,8 @@ kramdown:
   toc_levels: 1..6
   smart_quotes: lsquo,rsquo,ldquo,rdquo
   enable_coderay: false
+  math_engine: mathjax
+  transliterated_header_ids: false
 
 
 # These settings control the types of collections used by the template
