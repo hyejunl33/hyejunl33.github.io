@@ -9,7 +9,7 @@ author_profile: true
 - 해군사관학교(Repulic of Korea Naval Academy) 81기(2022)
 
 - **학사, 컴퓨터교육학과(Education of Computer Science)**
-  - *광주교육대학교(Gwangju National University of Education)*, 2023.03 - 2026.06 재학
+  - *광주교육대학교(Gwangju National University of Education)*, 2023.03 - 2027.06 재학
 
 ---
 
