@@ -2,15 +2,15 @@
 layout: default
 ---
 
-<div id="main" role="main">
-  <div class="sidebar sticky">
-    {% include author-profile.html %}
-  </div>
-
-  <div class="archive">
-    <h1 class="page__title">Recent Posts</h1>
-    {% for post in site.posts %}
-      {% include archive-single.html %}
-    {% endfor %}
+<div class="page-content">
+  <div class="wrapper">
+    <div class="home">
+      <h1>Recent Posts</h1>
+      <div class="post-list">
+        {% for post in site.posts %}
+          {% include archive-item.html %}
+        {% endfor %}
+      </div>
+    </div>
   </div>
 </div>
