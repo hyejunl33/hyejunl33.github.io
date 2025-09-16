@@ -1,64 +1,29 @@
 ---
-layout: archive
-title: "CV"
+title: "CV & Career"
 permalink: /cv/
+layout: single
 author_profile: true
-redirect_from:
-  - /resume
 ---
 
-{% include base_path %}
+## 👨‍🎓 학력 (Education)
+- 해군사관학교 81기(2022)
 
-Education
-======
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-* M.S. in Jekyll, GitHub University, 2014
-* B.S. in GitHub, GitHub University, 2012
+- **학사, 컴퓨터교육학과(Education of Computer Science)**
+  - *광주교육대학교(Gwangju National University of Education)*, 2023.03 - 2026.06 재학
 
-Work experience
-======
-* Spring 2024: Academic Pages Collaborator
-  * GitHub University
-  * Duties includes: Updates and improvements to template
-  * Supervisor: The Users
+---
 
-* Fall 2015: Research Assistant
-  * GitHub University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
+## 💻 경력 (Experience)
 
-* Summer 2015: Research Assistant
-  * GitHub University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
-  
-Skills
-======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+- **Naver BoostCamp AI Tech 8기** 
+  - *네이버 커넥트재단*, 2025.09 - 2026.02
 
-Publications
-======
-  <ul>{% for post in site.publications reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Talks
-======
-  <ul>{% for post in site.talks reversed %}
-    {% include archive-single-talk-cv.html  %}
-  {% endfor %}</ul>
-  
-Teaching
-======
-  <ul>{% for post in site.teaching reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Service and leadership
-======
-* Currently signed in to 43 different slack teams
+
+
+---
+
+## 💡 기술 스택 (Skills)
+
+- **Languages**: Python, C++
+- **Frameworks**: PyTorch, Scikit-learn
+- **Tools**: Git, Docker, Notion
