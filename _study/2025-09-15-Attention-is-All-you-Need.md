@@ -35,6 +35,8 @@ math: true
 ## 1. 서론: 기존 RNN 기반 모델의 한계
 
 `Attention Is All You Need` 논문이 등장하기 전, 자연어 처리(NLP), 특히 기계 번역 분야는 **RNN(Recurrent Neural Network)** 과 이를 개선한 LSTM, GRU 기반의 Seq2Seq 모델이 주를 이뤘다. 이 모델들은 시퀀스 데이터 처리에 효과적이었지만, 다음과 같은 명확한 한계를 지니고 있었다.
+![](/assets/images/2025-09-16-23-08-07.png)
+![](/assets/images/2025-09-16-23-08-28.png)
 
 ### 순차적 처리와 병렬화의 부재
 RNN은 이전 타임스텝의 은닉 상태($h_{t-1}$)를 현재 타임스텝($t$)의 입력으로 사용하는 순환 구조를 가진다. 이는 데이터의 순서 정보를 자연스럽게 처리할 수 있는 장점이 있지만, **순차적으로만 계산이 가능**하다는 치명적인 단점을 야기한다. 이로 인해 GPU의 장점인 병렬 연산을 활용하기 어려워 대규모 데이터셋 학습에 많은 시간이 소요되었다.
@@ -57,6 +59,7 @@ RNN은 이전 타임스텝의 은닉 상태($h_{t-1}$)를 현재 타임스텝($t
 ---
 
 ## 3. 모델 아키텍처 (Model Architecture) 심층 분석
+![](/assets/images/2025-09-16-23-09-03.png)
 ![](/assets/images/2025-09-16-12-47-06.png)
 ### 전체 구조: 인코더-디코더
 트랜스포머는 기계 번역을 위해 설계된 전통적인 **인코더-디코더** 구조를 따른다.
@@ -66,14 +69,42 @@ RNN은 이전 타임스텝의 은닉 상태($h_{t-1}$)를 현재 타임스텝($t
 논문에서는 인코더와 디코더 모두 **N=6개의 동일한 레이어**를 쌓아 구성했다.
 
 ### 인코더(Encoder) 상세 구조
+![](/assets/images/2025-09-16-23-09-18.png)
 각 인코더 레이어는 두 개의 주요 서브 레이어(sub-layer)로 구성된다.
 1.  **Multi-Head Self-Attention**: 입력 문장 내에서 단어들 간의 관계를 파악하는 역할을 한다.
 2.  **Position-wise Feed-Forward Network**: 어텐션을 통해 얻은 정보를 바탕으로 비선형 변환을 적용하는 완전 연결 신경망이다.
 
-각 서브 레이어의 출력에는 **잔차 연결(Residual Connection)**과 **층 정규화(Layer Normalization)**가 적용된다.
+![](/assets/images/2025-09-16-23-09-45.png)
+![](/assets/images/2025-09-16-23-09-57.png)
 
+Self Attention단계에서는 Attention을 이용해 단어들 사이의 dependency 즉 단어간의 유사도를 계산한다.
+
+### Attention 과정
+과연 Attention 과정은 어떻길래 단어들 사이의 유사도를 측정할 수 있는걸까?
+
+
+![](/assets/images/2025-09-16-23-11-33.png)
+![](/assets/images/2025-09-16-23-11-45.png)
+1. 각 단어마다 Query, Key, Value 벡터를 만든다.
+2. q와 k벡터를 내적하여 score값(스칼라)를 생성한다.
+3. score를 $\sqrt{d_k}$로 나눠준다.
+4. softmax 연산을 한다 -> 이후 나오는 값이 dependency인 z다.
+
+**그렇다면 왜 하필 $\sqrt{d_k}$로 나눠야만 할까?**
+![](/assets/images/2025-09-16-23-15-02.png)
+Attention단계에서는 실제로 Multi-head Attention을 하기 위해서 8개로 Attention을 나눠서 실행한다. 왜냐하면 다양한 관점에서 정보를 추출해야 하기 때문이다. 한단어가 어느 특정단어와 연관이 깊다고 해서 다른단어와 연관이 없는것은 아니다. 따라서 사진속 오른쪽 그림처럼 다양한 관점에서 한 단어에 대해 연관성을 측정한다.
+
+그렇다면 왜 하필 $\sqrt {d_k}=8일까?$ 그리고 왜 softmax함수를 쓰기 전에 나눠야 하는걸까?
+![](/assets/images/2025-09-16-23-16-44.png)
+일단 softmax연산은 분자가 지수함수이므로 상대적으로 큰값이 들어오면 큰값에만 확률이 매우크게 배정될 수 있다. 따라서 softmax함수에 넣어주는 값을 정규화(normalize)해주는 것이다.
+그리고 8이라는 숫자는 표준편차가 8이기 떄문에 8로 나눠주는 것이다.
+![](/assets/images/2025-09-16-23-18-57.png)
+
+각 서브 레이어의 출력에는 **잔차 연결(Residual Connection)**과 **층 정규화(Layer Normalization)**가 적용된다.
+![](/assets/images/2025-09-16-23-19-35.png)
 ### 디코더(Decoder) 상세 구조
 각 디코더 레이어는 세 개의 서브 레이어로 구성된다.
+![](/assets/images/2025-09-16-23-19-47.png)
 1.  **Masked Multi-Head Self-Attention**: 출력 시퀀스 내에서 단어들 간의 관계를 파악한다. 이때, 현재 위치의 단어가 미래 위치의 단어를 참고하지 못하도록 **마스킹(Masking)**을 적용하여 **자가 회귀(auto-regressive)** 속성을 보장한다.
 2.  **Multi-Head Encoder-Decoder Attention**: 디코더가 단어를 예측할 때, 인코더가 출력한 입력 문장의 어떤 부분에 집중(Attention)해야 할지를 결정한다.
 3.  **Position-wise Feed-Forward Network**: 인코더와 동일한 역할을 수행한다.
@@ -129,6 +160,13 @@ $$ PE_{(pos, 2i+1)} = \cos(pos / 10000^{2i/d_{\text{model}}}) $$
 - **레이어당 복잡도**: Self-Attention은 시퀀스 길이($n$)가 차원($d$)보다 작을 때 RNN보다 효율적이다.
 - **순차 연산 및 최대 경로 길이**: Self-Attention은 순차 연산이 O(1)로 병렬화에 유리하며, 단어 간 경로 길이가 O(1)로 장기 의존성 문제에 강하다.
 
+### Model Variations
+![](/assets/images/2025-09-16-23-20-23.png)
+
+- (A) Attention head(h)의 수는 너무 적거나 많으면 Bleu점수가 잘 나오지 않는다. -> 8이 최적이다.
+- (B) Attention key($d_k$)를 줄이면 점수가 떨어진다. -> 단어간 유사도를 계산할때 충분한 차원의 벡터가 필요하다.
+- (C) 모델을 키울수록 성능이 향상된다.
+- (D) Ragularization(정규화)로 dropout, Label Smoothing을 사용한 결과 점수가 향상되었다.
 ---
 
 ## 6. 결론
