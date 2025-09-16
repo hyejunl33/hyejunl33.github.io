@@ -1,10 +1,6 @@
-{% comment %}
-  The `post` variable is passed to this file from the main loop.
-{% endcomment %}
-
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+
     <h2 class="archive__item-title" itemprop="headline">
       <a href="{{ post.url | relative_url }}" rel="permalink">{{ post.title }}</a>
     </h2>

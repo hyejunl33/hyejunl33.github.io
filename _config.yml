@@ -213,7 +213,7 @@ kramdown:
   smart_quotes: lsquo,rsquo,ldquo,rdquo
   enable_coderay: false
   math_engine: null
-  parse_block_html: true
+  parse_block_html: false
 
 
 # These settings control the types of collections used by the template
