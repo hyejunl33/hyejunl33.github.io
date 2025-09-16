@@ -263,7 +263,7 @@ defaults:
       comments: true
   # _study
   - scope:
-      path: ""
+      path: "_study"
       type: study
     values:
       layout: single
@@ -272,7 +272,7 @@ defaults:
       comments: true
   # _algorithm
   - scope:
-      path: ""
+      path: "_algorithm"
       type: algorithm
     values:
       layout: single
