@@ -8,10 +8,13 @@ layout: default
       <h1>Recent Posts</h1>
       <div class="post-list">
         
-        {% comment %}{% endcomment %}
-        {% assign all_posts = site.weeklyreview | concat: site.projects | concat: site.study | concat: site.algorithm %}
+        {% assign collections = "weeklyreview,projects,study,algorithm" | split: "," %}
+        {% assign all_posts = "" | split: "," %}
         
-        {% comment %}{% endcomment %}
+        {% for collection in collections %}
+          {% assign all_posts = all_posts | concat: site[collection] %}
+        {% endfor %}
+        
         {% assign sorted_posts = all_posts | sort: 'date' | reverse %}
         
         {% for post in sorted_posts %}

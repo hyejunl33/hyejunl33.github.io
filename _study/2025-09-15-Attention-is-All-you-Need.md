@@ -2,10 +2,10 @@
 title: "[논문 리뷰] Attention Is All You need (2017) 심층 분석"
 date: 2025-09-15
 tags:
-  - NLP
-  - Transformer
-  - Attention
-  - 논문리뷰
+  - NLP       # <-- 일반 스페이스 2칸으로 수정
+  - Transformer
+  - Attention
+  - 논문리뷰
 excerpt: "순환 신경망(RNN)의 한계를 극복하고 자연어 처리의 새로운 패러다임을 제시한 Transformer 모델의 아키텍처부터 Self-Attention 메커니즘, 실험 결과까지 PPT 내용을 기반으로 상세하게 분석한다."
 math: true
 ---
