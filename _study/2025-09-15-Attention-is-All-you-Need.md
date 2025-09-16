@@ -120,17 +120,13 @@ $$ PE_{(pos, 2i+1)} = \cos(pos / 10000^{2i/d_{\text{model}}}) $$
 -   **정규화**: 잔차 연결 외에 Dropout과 Label Smoothing을 사용하여 과적합을 방지했다.
 
 ### 성능 평가 (BLEU Score)
+![alt text](image-1.png)
 -   WMT 2014 영어-독일어 번역 태스크에서 기존 앙상블 모델보다 2.0 BLEU 포인트 높은 28.4를 기록하며 **SOTA(State-of-the-art)**를 달성했다.
 -   영어-프랑스어 번역 태스크에서도 기존 단일 모델들의 성능을 모두 뛰어넘었다.
 -   이러한 성능을 기존 모델의 **1/4 미만의 훈련 비용**으로 달성했다.
 
 ### 모델 복잡도 비교
-| 모델 | 레이어당 복잡도 | 순차 연산 | 최대 경로 길이 |
-| :--- | :---: | :---: | :---: |
-| Self-Attention | O(n<sup>2</sup>d) | O(1) | O(1) |
-| Recurrent (RNN) | O(nd<sup>2</sup>) | O(n) | O(n) |
-| Convolutional | O(knd<sup>2</sup>) | O(1) | O(log<sub>k</sub>(n)) |
-
+![](image.png)
 - **레이어당 복잡도**: Self-Attention은 시퀀스 길이($n$)가 차원($d$)보다 작을 때 RNN보다 효율적이다.
 - **순차 연산 및 최대 경로 길이**: Self-Attention은 순차 연산이 O(1)로 병렬화에 유리하며, 단어 간 경로 길이가 O(1)로 장기 의존성 문제에 강하다.
 
