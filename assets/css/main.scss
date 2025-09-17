@@ -45,23 +45,26 @@
 
 /* 화면 너비가 1200px 이하일 때 적용 */
 @media screen and (max-width: 1200px) {
-  
-  /* 텍스트 메뉴 항목들을 강제로 숨김 처리 */
-  .masthead__inner-wrap .greedy-nav > a {
-    display: none !important;
-  }
+ 
+ /* 텍스트 메뉴 항목들을 강제로 숨김 처리 */
+ .masthead__inner-wrap .greedy-nav > a {
+  display: none !important;
+ }
 
-  /* 햄버거 메뉴 버튼을 강제로 표시 */
-  .masthead__inner-wrap .greedy-nav button.navicon {
-    display: block !important;
-    visibility: visible !important; /* 추가: 투명하게 숨기는 것도 방지 */
-    opacity: 1 !important;          /* 추가: 투명하게 숨기는 것도 방지 */
-  }
+ /* 햄버거 메뉴 버튼을 강제로 표시 (이 부분은 유지) */
+ .masthead__inner-wrap .greedy-nav button.navicon {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+ }
 
-  /* JavaScript가 햄버거 버튼을 숨기기 위해 사용하는 클래스를 무력화 */
-  .masthead__inner-wrap .greedy-nav .hidden,
-  .masthead__inner-wrap .greedy-nav [hidden] {
-    display: block !important;
-    visibility: visible !important;
-  }
+ /* * 문제의 원인이었던 이 부분을 삭제하거나 주석 처리합니다.
+   * 이 코드가 JS의 메뉴 숨김 기능을 방해했습니다.
+   */
+ /* .masthead__inner-wrap .greedy-nav .hidden,
+   .masthead__inner-wrap .greedy-nav [hidden] {
+     display: block !important;
+     visibility: visible !important;
+   } 
+   */
 }
