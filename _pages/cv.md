@@ -15,6 +15,8 @@ author_profile: true
 
 ## 💻 경력 (Experience)
 
+- **광주교육대학교 영재교육원 SW&AI 중급 보조교사** 
+  - *광주교육대학교 영재교육원*, 2024.03 - 2024.07
 - **Naver BoostCamp AI Tech 8기** 
   - *네이버 커넥트재단*, 2025.09 - 2026.02
 
