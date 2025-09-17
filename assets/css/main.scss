@@ -41,20 +41,27 @@
     "vendor/font-awesome/solid",
     "vendor/font-awesome/brands"
 ;
-/* --- 상단 네비게이션 메뉴 반응형 수정 --- */
-
 /* --- 상단 네비게이션 메뉴 반응형 최종 수정 --- */
 
-/* 화면 너비가 1024px 이하일 때 적용 */
+/* 화면 너비가 1200px 이하일 때 적용 */
 @media screen and (max-width: 1200px) {
   
-  /* 기존의 수평 메뉴 항목들을 강제로 숨김 처리 */
-  .masthead__inner-wrap .greedy-nav a {
+  /* 텍스트 메뉴 항목들을 강제로 숨김 처리 */
+  .masthead__inner-wrap .greedy-nav > a {
     display: none !important;
   }
 
-  /* 햄버거 메뉴(토글) 버튼을 강제로 표시 */
+  /* 햄버거 메뉴 버튼을 강제로 표시 */
   .masthead__inner-wrap .greedy-nav button.navicon {
     display: block !important;
+    visibility: visible !important; /* 추가: 투명하게 숨기는 것도 방지 */
+    opacity: 1 !important;          /* 추가: 투명하게 숨기는 것도 방지 */
+  }
+
+  /* JavaScript가 햄버거 버튼을 숨기기 위해 사용하는 클래스를 무력화 */
+  .masthead__inner-wrap .greedy-nav .hidden,
+  .masthead__inner-wrap .greedy-nav [hidden] {
+    display: block !important;
+    visibility: visible !important;
   }
 }
