@@ -12,7 +12,7 @@ math: true
 
 # 과제3_Implement_Multi_head_Self-Attention
 
-$\text{Attention}(Q,K,V)=\text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$
+$$\text{Attention}(Q,K,V)=\text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
 
 - Multi-head Self-Attention의 개념을 이해하고 코드로 구현하기
 - Self-Attention의 수식을 이해하고 코드로 구현하기
@@ -91,6 +91,6 @@ Multi-Head Attention 계산을 위해 하나로 합쳐진 Q, K, V텐서를 각 �
 
 `self.tp_atten()` 함수를 이용해서 헤드별로 쪼갠 Q, K, V를 Q_layer, V_layer, K_layer로 받는다.
 
-그 후  $\text{Attention}(Q,K,V)=\text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$연산을 진행한다. 이때 Q와 K의 차원을 맞춰주기 위해 K벡터를 transpose해준다.
+그 후  $$\text{Attention}(Q,K,V)=\text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$연산을 진행한다. 이때 Q와 K의 차원을 맞춰주기 위해 K벡터를 transpose해준다.
 
 이후에 output을 `permute` 를 이용해서 `[배치, 헤드 수, 시퀀스 길이, 헤드차원]` 에서 `[배치, 시퀀스 길이, 헤드, 차원]` 으로 바꾼다. → 이렇게 해서 여러 헤드에서 나온 헤드와 헤드차원을 나란히 붙여서 view로 concat할 수 있게 한다. → 헤드*헤드차원으로 concat하면 텐서의 shape이 output _shape에 맞게 변경된다.
