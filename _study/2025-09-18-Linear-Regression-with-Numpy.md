@@ -1,6 +1,6 @@
 ---
 title: "[3주차_과제_1] Linear Regression with Numpy"
-date: 2025-09-15
+date: 2025-09-18
 tags:
   - Linear Regression
   - 3주차 과제
