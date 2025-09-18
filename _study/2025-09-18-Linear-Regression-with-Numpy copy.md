@@ -177,7 +177,7 @@ def mean_squared_error(y_true, y_pred):
     return mse
 ```
 
-$$MSE = \frac{1}{n}\Sigma_{i=1}^{n}(y_i - \hat{y}_i)^2$$
+$MSE = \frac{1}{n}\Sigma_{i=1}^{n}(y_i - \hat{y}_i)^2$
 
 ```python
 def r_squared(y_true, y_pred):
@@ -199,7 +199,7 @@ def r_squared(y_true, y_pred):
     return r2
 ```
 
-$$R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}$$
+$R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}$
 
 ```python
 plt.scatter(X_test, y_test, color='blue', label='Data')  # Scatter plot

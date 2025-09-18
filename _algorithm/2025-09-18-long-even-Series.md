@@ -12,6 +12,7 @@ toc_sticky: true
 
 ![](/assets/images/2025-09-18-11-22-58.png)
 ![](/assets/images/2025-09-18-11-23-14.png)
+
 ## 풀이
 
 ```python
