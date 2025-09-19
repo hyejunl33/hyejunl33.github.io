@@ -1,5 +1,5 @@
 ---
-title: "Week3_AIMath_학습회고"
+title: "Week3_AI_LifeCycle_학습회고"
 date: 2025-09-19
 tags:
   - AI LifeCycle
