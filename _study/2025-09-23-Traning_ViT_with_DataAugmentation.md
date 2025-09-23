@@ -56,7 +56,7 @@ plt.imshow(transformed_img)
 plt.axis('off')  # 축을 표시하지 않기
 ```
 
-32*32 이미지를 불러와서 224*224로 ViT모델에 맞는 크기로 Resize해준 다음 이미지로 변환하기
+32\*32 이미지를 불러와서 224\*224로 ViT모델에 맞는 크기로 Resize해준 다음 이미지로 변환하기
 
 ### Augmentation을 하는 transforms 정의하기
 

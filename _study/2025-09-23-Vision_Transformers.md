@@ -97,7 +97,7 @@ for i in range(1, pos_embed.shape[1]):
 학습가능한 class token이 patch embedding vector의 1번째 순서에 합쳐져야 한다. 각 패치들의 Attention결과 값은 버려지고 Class token의 결과값만 MLP Head에 들어간다.
 
 ```python
-transformer_input = torch.cat((model.cls_token, patches), dim = 1) + pos_embe
+transformer_input = torch.cat((model.cls_token, patches), dim = 1) + pos_embed
 ```
 
 기존의 패치와 `cls_token` 을 concat한 후, `pos_embed` 을 더한다.
