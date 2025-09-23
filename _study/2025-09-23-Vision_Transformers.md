@@ -20,7 +20,7 @@ CNN과 달리 ViT는 이미지를 패치로 분할하고, 각 패치를 sequence
 
 ![](/assets/images/![128160932-6c92920e-b996-4208-9f71-c5caeb4d7285.png](128160932-6c92920e-b996-4208-9f71-c5caeb4d7285.png).png)
 
-1. 이미지를 (16*16) stride를 가지는 2D Conv Filter를 이용해서 224*224이미지를 14*14의 패치로 나누기
+1. 이미지를 (16\*16) stride를 가지는 2D Conv Filter를 이용해서 224\*224이미지를 14\*14의 패치로 나누기
 2. Positional Embedding 더하기
 3. Multi-Head Self-Attention을 통해 Encoding
 4. MLP Head를 통해 Classification 결과 출력
