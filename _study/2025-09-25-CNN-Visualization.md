@@ -366,6 +366,6 @@ def vis_gradcam(vgg, img):
   return grad_CAM
 ```
 
-![](assets/images/2025-09-25-16-02-46.png)
+![](assets/images/2025-09-25-16-05-10.png)
 
 시각화한 결과 grad_CAM을 시각화해서 Saliency map을 얻어냈다. → 모델의 변형없이 한번의 back_propagation으로 Class activation map을 구함.
