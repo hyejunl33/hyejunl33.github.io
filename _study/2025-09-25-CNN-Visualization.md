@@ -9,7 +9,7 @@ tags:
 excerpt: "CNN-Visualization"
 math: true
 ---
-![image](/assets/images/2025-09-25-17-05-28.png)
+
 # 심화_1:CNN-Visualization
 
 CNN Visualization 방법을 구현해보기
@@ -177,7 +177,7 @@ conv1_filters_data = model.backbone.conv1.weight.data
 plot_filters(conv1_filters_data, title="Filters in conv1 layer")
 ```
 
-![](../assets/image/2025-09-25-16-23-15.png)
+![image](/assets/images/2025-09-25-17-07-20.png)
 
 ### 3. Visualizing model activations
 
@@ -222,9 +222,9 @@ _ = model(img)
 
 conv1 layer와 bn4_1 layer를 거치면서 hook_fn을 거친 결과는 다음과 같다.
 
-![](../assets/image/2025-09-25-16-23-04.png)
+![image](/assets/images/2025-09-25-17-07-34.png)
 
-![](../assets/image/2025-09-25-16-22-57.png)
+![image](/assets/images/2025-09-25-17-07-40.png)
 ## Visualizing saliency
 
 saliency map을 시각화해보자. 
@@ -233,9 +233,9 @@ saliency map(중요한 맵):CNN에서 각 pixel이 기여하고 있는 정도를
 
 (1) Input image에 대한 gradient s_y(score at index class_idx)를 return하는 함수 `compute_gradient_score` 만들기
 
-${\partial s_y \over \partial I}$를 계산해서 이미지의 class score($s_y$)에 대한 gradient를 게산할 수 있다.
+$${\partial s_y \over \partial I}$$를 계산해서 이미지의 class score($$s_y$$)에 대한 gradient를 게산할 수 있다.
 
-$s_y$는 class $y$에 대한 logit이다. (softmax layer를 통과하기 이전의 값)
+$$s_y$$는 class $$y$$에 대한 logit이다. (softmax layer를 통과하기 이전의 값)
 
 Gradient를 계산한 다음에 해당 값들을 시각화 → input image에 대한 saliency를 확인할 수 있다.
 
@@ -262,9 +262,9 @@ def compute_gradient_score(scores, image, class_idx):
 
 계산한 Gradient를 시각화하면 아래사진과 같이 나타난다.
 
-![](../assets/images/2025-09-25-16-19-37.png)
+![image](/assets/images/2025-09-25-17-07-51.png)
 
-![](../assets/images/2025-09-25-16-19-26.png)
+![image](/assets/images/2025-09-25-17-07-57.png)
 (2) Grad-CAM을 시각화하기
 
 `vis_gradcam` 함수를 만들자.
@@ -272,11 +272,11 @@ def compute_gradient_score(scores, image, class_idx):
 - Layer의 activation을 저장할 function을 hook하고 forward하기
 - gradients를 저장하기 위해 hook을 register하고 출력에 대한 최댓값에 해당하는 score를 backwawrd하기
 
-${\partial y^c \over \partial A^k}$를 통해 $\alpha^k_c$를 구할 수 있다.
+$${\partial y^c \over \partial A^k}$$를 통해 $$\alpha^k_c$$를 구할 수 있다.
 
-$y^c$는 class $c$에 대한 score이고, $A^k$는 target layer인 $k$번째 feature map의 Activation이다.
+$$y^c$$는 class $$c$$에 대한 score이고, $$A^k$$는 target layer인 $$k$$번째 feature map의 Activation이다.
 
-$\alpha^k_c$를 weight로 하여 forwawrd activation maps$A$의 Weighted sum을 얻고, ReLU를 통과하여 $L_{Grad-CAM}^c(i.e,ReLU (\sum_k \alpha_c^k A^k)$를 얻는다.
+$$\alpha^k_c$$를 weight로 하여 forwawrd activation maps$A$의 Weighted sum을 얻고, ReLU를 통과하여 $$L_{Grad-CAM}^c(i.e,ReLU (\sum_k \alpha_c^k A^k)$$를 얻는다.
 
 ```python
 save_feat=[]
@@ -365,5 +365,5 @@ def vis_gradcam(vgg, img):
 
   return grad_CAM
 ```
-![image](../assets/images/2025-09-25-16-58-44.png)
+![image](/assets/images/2025-09-25-17-08-08.png)
 시각화한 결과 grad_CAM을 시각화해서 Saliency map을 얻어냈다. → 모델의 변형없이 한번의 back_propagation으로 Class activation map을 구함.
