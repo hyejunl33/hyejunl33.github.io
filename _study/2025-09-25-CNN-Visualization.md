@@ -177,7 +177,7 @@ conv1_filters_data = model.backbone.conv1.weight.data
 plot_filters(conv1_filters_data, title="Filters in conv1 layer")
 ```
 
-![](assets/images/2025-09-25-15-20-37.png)
+![](assets/images/2025-09-25-16-01-23.png)
 
 ### 3. Visualizing model activations
 
@@ -222,10 +222,9 @@ _ = model(img)
 
 conv1 layer와 bn4_1 layer를 거치면서 hook_fn을 거친 결과는 다음과 같다.
 
-![제목 없음.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C.png)
+![](assets/images/2025-09-25-16-02-08.png)
 
-![제목 없음-1.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C-1.png)
-
+![](assets/images/2025-09-25-16-01-55.png)
 ## Visualizing saliency
 
 saliency map을 시각화해보자. 
@@ -263,10 +262,9 @@ def compute_gradient_score(scores, image, class_idx):
 
 계산한 Gradient를 시각화하면 아래사진과 같이 나타난다.
 
-![제목 없음.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C%201.png)
+![](assets/images/2025-09-25-16-02-18.png)
 
-![제목 없음-1.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C-1%201.png)
-
+![](assets/images/2025-09-25-16-02-24.png)
 (2) Grad-CAM을 시각화하기
 
 `vis_gradcam` 함수를 만들자.
@@ -368,6 +366,6 @@ def vis_gradcam(vgg, img):
   return grad_CAM
 ```
 
-![제목 없음.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C%202.png)
+![](assets/images/2025-09-25-16-02-46.png)
 
 시각화한 결과 grad_CAM을 시각화해서 Saliency map을 얻어냈다. → 모델의 변형없이 한번의 back_propagation으로 Class activation map을 구함.
