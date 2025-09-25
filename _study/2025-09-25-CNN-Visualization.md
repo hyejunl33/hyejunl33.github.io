@@ -9,7 +9,7 @@ tags:
 excerpt: "CNN-Visualization"
 math: true
 ---
-
+![image](../assets/images/2025-09-25-16-58-53.png)
 # 심화_1:CNN-Visualization
 
 CNN Visualization 방법을 구현해보기
@@ -365,7 +365,5 @@ def vis_gradcam(vgg, img):
 
   return grad_CAM
 ```
-
-![](../assets/images/2025-09-25-16-18-07.png)
-
+![image](../assets/images/2025-09-25-16-58-44.png)
 시각화한 결과 grad_CAM을 시각화해서 Saliency map을 얻어냈다. → 모델의 변형없이 한번의 back_propagation으로 Class activation map을 구함.
