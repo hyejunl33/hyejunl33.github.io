@@ -9,7 +9,7 @@ tags:
 excerpt: "CNN-Visualization"
 math: true
 ---
-![image](../assets/images/2025-09-25-16-58-53.png)
+![image](/assets/images/2025-09-25-17-05-28.png)
 # 심화_1:CNN-Visualization
 
 CNN Visualization 방법을 구현해보기
