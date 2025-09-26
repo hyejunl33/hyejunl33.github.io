@@ -35,7 +35,7 @@ CNN은 이미지의 공간적, 지역적 특징을 효과적으로 학습하기 
 -**핵심 모델: ResNet (2016)과 Degradation Problem 극복**
 네트워크가 무작정 깊어지면 오히려 학습 에러와 테스트 에러가 모두 커지는 **Degradation Problem(성능 저하 문제)**이 발생한다. 이는 과적합과는 다른 최적화의 문제다. ResNet은 이 문제를 해결하기 위해 **Residual Block**을 제안했다.
 
--**Residual Block (잔차 블록)**: 핵심 아이디어는 **Skip Connection (Shortcut)**이다. 입력 $x$를 여러 레이어를 건너뛰어 출력에 그대로 더해줌으로써, 네트워크는 전체 출력 $H(x)$를 학습하는 대신 변화량(residual)인 $F(x)$만 학습하면 된다. 이는 Gradient가 소실되지 않고 깊은 레이어까지 잘 전달되도록 돕는다.
+-**Residual Block**: 핵심 아이디어는 **Skip Connection (Shortcut)**이다. 입력 $x$를 여러 레이어를 건너뛰어 출력에 그대로 더해줌으로써, 네트워크는 전체 출력 $H(x)$를 학습하는 대신 변화량(residual)인 $F(x)$만 학습하면 된다. 이는 Gradient가 소실되지 않고 깊은 레이어까지 잘 전달되도록 돕는다.
 -목표 함수: $$H(x) = F(x) + x$$        
 -학습 대상 (Residual):$$F(x) = H(x) - x$$
 
@@ -78,7 +78,9 @@ CNN은 종종 '블랙박스'로 불리지만, 시각화 도구를 통해 내부 
 -   **Filter Visualization**: 초기 레이어의 필터는 색상, 엣지 등 Low-level feature를, 깊은 레이어는 더 복잡한 High-level feature를 학습하는 경향이 있다.
 -   **Embedding Feature Analysis**:
 -   **Nearest Neighbors**: 특정 이미지의 Feature Vector와 가장 가까운 다른 이미지들을 찾아, 모델이 어떤 이미지를 '유사하다'고 판단하는지 분석한다.
+![image](/assets/images/2025-09-26-19-41-13.png)
 -   **t-SNE**: 고차원의 Feature Vector를 2차원으로 차원 축소하여 시각화함으로써, 모델이 클래스를 얼마나 잘 군집화하는지 확인할 수 있다.
+![image](/assets/images/2025-09-26-19-41-43.png)
 -   **Activation Investigation**:
 -   **Maximally Activating Patches**: 특정 뉴런(채널)을 가장 강하게 활성화시키는 이미지 패치들을 모아 해당 뉴런의 역할을 유추한다.
 -   **Class Visualization**: 특정 클래스의 점수를 최대화하는 이미지를 생성(**Gradient Ascent**)하여, 모델이 해당 클래스를 어떻게 '상상'하는지 본다.
@@ -86,9 +88,9 @@ CNN은 종종 '블랙박스'로 불리지만, 시각화 도구를 통해 내부 
 -   **모델 결정 설명 (Model Decision Explanation)**
 -   **CAM (Class Activation Mapping)**: 모델이 이미지의 어느 부분을 보고 특정 클래스로 판단했는지 히트맵으로 보여준다. 이를 위해 마지막 FC Layer를 **GAP (Global Average Pooling)** Layer로 대체하고 재학습해야 하는 단점이 있다.
 -   **Grad-CAM**: CAM의 단점을 보완하여 모델 구조 변경 없이 Gradient 정보를 이용해 중요도 가중치를 계산한다. 특정 클래스에 대한 예측 점수를 마지막 컨볼루션 레이어의 Feature Map으로 미분하여 그래디언트를 구하고, 이를 GAP하여 각 채널의 중요도($$\alpha_k^c$$)를 얻는다.
--   가중치 계산: $$\alpha_k^c = \frac{1}{Z}\sum_i \sum_j \frac{\partial y^c}{\partial A_{ij}^k}$$
- -   Grad-CAM 생성:$$L_{Grad-CAM}^c = ReLU(\sum_k \alpha_k^c A^k)$$
-        ReLU를 통해 양의 영향을 미친 부분에만 집중한다.
+-가중치 계산: $$\alpha_k^c = \frac{1}{Z}\sum_i \sum_j \frac{\partial y^c}{\partial A_{ij}^k}$$
+- Grad-CAM 생성:$$L_{Grad-CAM}^c = ReLU(\sum_k \alpha_k^c A^k)$$
+ReLU를 통해 양의 영향을 미친 부분에만 집중한다.
 
 ![image](/assets/images/2025-09-26-19-01-57.png)
 
