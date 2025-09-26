@@ -8,7 +8,7 @@ tags:
 excerpt: "3주차 AI LifeCycle내용 회고"
 math: true
 ---
-# AI LifeCycle 학습 회고 (1주차)
+# AI LifeCycle 학습 회고 (3주차)
 ## 목차
 1.  강의 복습 내용
 2.  과제 결과물 정리

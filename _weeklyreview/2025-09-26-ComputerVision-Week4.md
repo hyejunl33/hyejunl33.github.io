@@ -12,7 +12,6 @@ math: true
 ## 목차
 1.  강의 복습 내용
 2.  학습 회고
----
 
 # 1. 강의 복습 내용
 ## 1. Introduction to Computer Vision
@@ -30,15 +29,15 @@ math: true
 CNN은 이미지의 공간적, 지역적 특징을 효과적으로 학습하기 위해 고안된 모델이다. 모든 픽셀을 연결하는 Fully Connected 방식과 달리 **Local feature learning(지역적 특징 학습)**과 **Parameter sharing(파라미터 공유)**을 통해 효율적인 학습이 가능하다.
 
 -   **CNN의 발전사: AlexNet부터 ResNet까지**
-    -   **AlexNet (2012)**: ILSVRC에서 우승하며 딥러닝 시대의 서막을 연 모델이다. **ReLU 활성화 함수**를 통해 Vanishing Gradient 문제를 완화하고, **Dropout**을 사용해 과적합을 방지했다.
-    -   **VGGNet (2014)**: 3x3의 작은 컨볼루션 필터와 2x2 맥스 풀링만을 사용하여 더 깊고 간단한 구조를 구현했다. 이를 통해 더 큰 **Receptive Field(수용 영역)**를 확보하면서도 파라미터 수를 줄이는 효과를 보았다.
+-   **AlexNet (2012)**: ILSVRC에서 우승하며 딥러닝 시대의 서막을 연 모델이다. **ReLU 활성화 함수**를 통해 Vanishing Gradient 문제를 완화하고, **Dropout**을 사용해 과적합을 방지했다.
+-   **VGGNet (2014)**: 3x3의 작은 컨볼루션 필터와 2x2 맥스 풀링만을 사용하여 더 깊고 간단한 구조를 구현했다. 이를 통해 더 큰 **Receptive Field(수용 영역)**를 확보하면서도 파라미터 수를 줄이는 효과를 보았다.
 
--   **핵심 모델: ResNet (2016)과 Degradation Problem 극복**
-    네트워크가 무작정 깊어지면 오히려 학습 에러와 테스트 에러가 모두 커지는 **Degradation Problem(성능 저하 문제)**이 발생한다. 이는 과적합과는 다른 최적화의 문제다. ResNet은 이 문제를 해결하기 위해 **Residual Block**을 제안했다.
+-**핵심 모델: ResNet (2016)과 Degradation Problem 극복**
+네트워크가 무작정 깊어지면 오히려 학습 에러와 테스트 에러가 모두 커지는 **Degradation Problem(성능 저하 문제)**이 발생한다. 이는 과적합과는 다른 최적화의 문제다. ResNet은 이 문제를 해결하기 위해 **Residual Block**을 제안했다.
 
-- **Residual Block (잔차 블록)**: 핵심 아이디어는 **Skip Connection (Shortcut)**이다. 입력 $x$를 여러 레이어를 건너뛰어 출력에 그대로 더해줌으로써, 네트워크는 전체 출력 $H(x)$를 학습하는 대신 변화량(residual)인 $F(x)$만 학습하면 된다. 이는 Gradient가 소실되지 않고 깊은 레이어까지 잘 전달되도록 돕는다.
--   목표 함수: $$H(x) = F(x) + x$$        
--   학습 대상 (Residual):$$F(x) = H(x) - x$$
+-**Residual Block (잔차 블록)**: 핵심 아이디어는 **Skip Connection (Shortcut)**이다. 입력 $x$를 여러 레이어를 건너뛰어 출력에 그대로 더해줌으로써, 네트워크는 전체 출력 $H(x)$를 학습하는 대신 변화량(residual)인 $F(x)$만 학습하면 된다. 이는 Gradient가 소실되지 않고 깊은 레이어까지 잘 전달되도록 돕는다.
+-목표 함수: $$H(x) = F(x) + x$$        
+-학습 대상 (Residual):$$F(x) = H(x) - x$$
 
 ![image](/assets/images/2025-09-26-18-58-09.png)
 
@@ -50,7 +49,8 @@ CNN은 이미지의 공간적, 지역적 특징을 효과적으로 학습하기 
     RNN의 Long-term dependency 문제를 해결하기 위해 등장했다. 입력 시퀀스 내의 모든 요소 간의 관계를 한 번에 계산하여 거리에 상관없이 의존성을 모델링한다.
 -   입력 feature $X$로부터 가중치 행렬 $W^Q, W^K, W^V$를 곱해 **Query(Q), Key(K), Value(V)** 세 벡터를 생성한다.
 -   어텐션 스코어는 Query와 Key의 유사도를 계산하고, 이를 Value에 가중합하여 최종 출력 Z를 얻는다. 이 과정은 다음 수식으로 요약된다.
-        $$Attention(Q, K, V) = softmax(\frac{QK^T}{\sqrt{d_k}})V$$
+
+$$Attention(Q, K, V) = softmax(\frac{QK^T}{\sqrt{d_k}})V$$
 
 - **ViT 아키텍처**
 1.  **이미지 패치화 (Image Patching)**: 이미지를 고정된 크기(e.g., 16x16)의 여러 패치(Patch)로 나눈다.
@@ -98,8 +98,10 @@ CNN은 종종 '블랙박스'로 불리지만, 시각화 도구를 통해 내부 
 
 - **기본 및 최신 기법**:
 - **기본 기법**: `Rotate`, `Flip`, `Crop`, `Brightness` 조절 등 기본적인 이미지 변환을 적용한다.
+
+
 ```python
- # 예시: OpenCV를 이용한 이미지 회전 및 뒤집기
+# 예시: OpenCV를 이용한 이미지 회전 및 뒤집기
 img_rotated = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
 img_flipped = cv2.rotate(image, cv2.ROTATE_180)
 
@@ -110,9 +112,9 @@ img[:,:,0] = img[:,:,0] + 100 # add 100 to R value
 img[:,:,1] = img[:,:,1] + 100 # add 100 to G value
 img[:,:,2] = img[:,:,2] + 100 # add 100 to B value
 img[:,:,0][img[:,:,0] > 255] = 255 # clip R values over 255
- img[:,:,1][img[:,:,1] > 255] = 255 # clip G values over 255
- img[:,:,2][img[:,:,2] > 255] = 255 # clip B values over 255
- return img
+img[:,:,1][img[:,:,1] > 255] = 255 # clip G values over 255
+img[:,:,2][img[:,:,2] > 255] = 255 # clip B values over 255
+return img
 ```
 -**CutMix**: 두 이미지를 잘라 붙여 새로운 학습 데이터를 생성한다. 레이블도 잘린 영역의 비율에 따라 soft label(e.g., `[0.7, 0.3]`)로 혼합하여 모델이 객체를 더 잘 지역화(localize)하도록 돕는다.
 -**RandAugment**: 수많은 증강 기법 중 최적의 조합과 강도를 자동으로 탐색하여 적용한다.
