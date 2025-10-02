@@ -124,6 +124,8 @@ Semantic analogies(의미적 유추): 예시:  “국가”:”수도”
 # Learning Phrases
 
 ![image](/assets/images/2025-10-02-18-05-28.png)
+
+
 개별 단어를 넘어 여러단어가 합성하여 고유한 의미를 갖는 Phrase를 학습할 필요가 있다.
 
 예를들어 New와 york이 합쳐져서 newyork라는 고유한 의미를 갖는 phrases를 만든다. → 이러한 구들은 의미있는 하나의 단위이므로 텍스트 내에서 고유한 토큰으로 대체된다.
@@ -144,7 +146,7 @@ $$score(w_i,w_j)$$: 두 단어가 전체 횟수중 연달아 등장한 횟수가
 
 ![image](/assets/images/2025-10-02-18-05-44.png)
 
-일반적으로 Negative sample size인 k를 높여줄때 더 나은 성능을 보였다. 그리고 Subsampling을 적용했을때 Hierarchical Softmax의 성능이 가장 높아졌다. → Sumsample을 적용했을때 학습속도를 높일 뿐 아니라 정확도까지 향상시킬 수 있음을 보여준다.
+일반적으로 Negative sample size인 k를 높여줄때 더 나은 성능을 보였다. 그리고 Subsampling을 적용했을때 Hierarchical Softmax의 성능이 가장 높아졌다. → Subsample을 적용했을때 학습속도를 높일 뿐 아니라 정확도까지 향상시킬 수 있음을 보여준다.
 
 dataset크기를 키워주고 dimension을 키워주니깐 정확도가 72%까지 향상되었다고 한다. 따라서 data의 크기를 키우는게 중요하다고 한다.
 
