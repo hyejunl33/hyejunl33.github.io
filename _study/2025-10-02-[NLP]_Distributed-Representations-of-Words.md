@@ -1,6 +1,6 @@
 ---
 title: "[논문 리뷰] [NLP]_Distributed Representations of Words and phrases and their Compositionality"
-date: 2025-09-15
+date: 2025-10-02
 tags:
   - NLP
   - Representations of Words
@@ -83,7 +83,7 @@ $P_n(w)$:노이즈 분포: Negative sample을 어떤 확률 분포에서 뽑을�
 
 $$P(오답) = 1 - P(정답) = 1 - σ(v'_wiᵀ v_wI)$$
 
-**$1 - σ(x) = σ(-x)$**임을 활용함
+$$1 - σ(x) = σ(-x)$$임을 활용함
 
 ## Sub-sampling of Frequent Words
 
