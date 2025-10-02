@@ -1,5 +1,5 @@
 ---
-title: "[5주차_심회과제] Word2Vec구현&Embedding시각화"
+title: "[5주차_심화과제] Word2Vec구현&Embedding시각화"
 date: 2025-10-01
 tags:
   - Word2Vec구현&Embedding시각화

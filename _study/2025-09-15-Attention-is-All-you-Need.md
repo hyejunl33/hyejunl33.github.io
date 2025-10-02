@@ -1,5 +1,5 @@
 ---
-title: "[논문 리뷰] Attention Is All You need (2017) 심층 분석"
+title: "[논문 리뷰]_[NLP]_Attention Is All You need (2017) 심층 분석"
 date: 2025-09-15
 tags:
   - NLP
