@@ -144,9 +144,9 @@ abcde ==> ab cd e _
 
 이런식으로 greedy를 이용해서 인코딩을 할 수도 있지만 이 과제에서는 가장 길게 매칭되는 것을 전체 텍스트에 대해 먼저 토큰화하는 방법을 사용
 
-```
-Vocab: bcde ab cd bc de a b c d e _
-abcde ==> a bcde _
+```python
+'''Vocab: bcde ab cd bc de a b c d e _
+abcde ==> a bcde _ '''
 ```
 
 이 방법은 첫번째 greedy방법보단 느리지만 텍스트를 더 짧게 인코딩할 수 있다.
@@ -243,7 +243,6 @@ def decode(
 
 id에 해당하는 서브워드로 만든 뒤 합치면 됨
 
-```
-[ 196 62 20 6 ] ==> [ I_ li ke_ it_ ]
- ==> "I_like_it_" ==> "I like it " ==> "I like it"  
+```python
+'''[ 196 62 20 6 ] ==> [ I_ li ke_ it_ ]==> "I_like_it_" ==> "I like it " ==> "I like it" '''
 ```
