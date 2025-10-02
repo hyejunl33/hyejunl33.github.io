@@ -57,14 +57,25 @@
   visibility: visible !important;
   opacity: 1 !important;
  }
+} /* @media 블록은 여기서 끝납니다. */
 
- /* * 문제의 원인이었던 이 부분을 삭제하거나 주석 처리합니다.
-   * 이 코드가 JS의 메뉴 숨김 기능을 방해했습니다.
-   */
- /* .masthead__inner-wrap .greedy-nav .hidden,
-   .masthead__inner-wrap .greedy-nav [hidden] {
-     display: block !important;
-     visibility: visible !important;
-   } 
-   */
+
+/* --- 인라인 수식 스타일 (Notion 스타일) --- */
+/* 이 코드는 @media 블록 밖에 있어야 합니다. */
+:not(pre) > code {
+  background-color: #2d2d2d; /* 어두운 배경색 */
+  color: #ff5e5e; /* 밝은 빨간색 텍스트 */
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  border-radius: 6px;
+  border: none;
+}
+
+/* MathJax v3 사용자를 위한 구체적인 선택자 */
+mjx-container[jax="CHTML"][display="false"] {
+    background-color: #2d2d2d !important;
+    color: #ff5e5e !important;
+    padding: 0.2em 0.4em !important;
+    border-radius: 6px !important;
 }
