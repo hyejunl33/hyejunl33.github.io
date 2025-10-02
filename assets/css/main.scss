@@ -79,3 +79,8 @@ mjx-container[jax="CHTML"][display="false"] {
     padding: 0.2em 0.4em !important;
     border-radius: 6px !important;
 }
+/* --- 코드 블록 기본 텍스트 색상 변경 --- */
+.highlight pre,
+.highlight code {
+  color: #f8f8f2; /* 밝은 회색 계열 (원하는 색상으로 변경 가능) */
+}
