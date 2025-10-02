@@ -43,11 +43,11 @@ math: true
 
 C: Window_size → 중심 단어 왼쪽으로 C개만큼, 오른쪽으로 C개만큼 단어를 형성한다.
 
-최적화하는 목적함수:는 -C에서 C사이에있는 단어들의 평균 $log$ 확률을 Maximize하는것이다.
+최적화하는 목적함수:는 -C에서 C사이에있는 단어들의 평균 $$log$$ 확률을 Maximize하는것이다.
 
 ![image](/assets/images/2025-10-02-18-04-18.png)
 
-이때 확률함수로 Softmax를 쓰면 분모에서 Vocab에 있는 모든단어에 대해 미분한 결과를 업데이트 해줘야 하므로 효율적이지 않다.시간복잡도가  $O(W)$이다. (W는 vocab의 모든 단어 개수)
+이때 확률함수로 Softmax를 쓰면 분모에서 Vocab에 있는 모든단어에 대해 미분한 결과를 업데이트 해줘야 하므로 효율적이지 않다.시간복잡도가  $$O(W)$$이다. (W는 vocab의 모든 단어 개수)
 
 따라서 Hierarchical Softmax가 제시되었다.
 
@@ -55,9 +55,9 @@ C: Window_size → 중심 단어 왼쪽으로 C개만큼, 오른쪽으로 C개�
 
 ![image](/assets/images/2025-10-02-18-04-25.png)
 
-전체 어휘가 아닌 이진트리를 사용하여 계산 복잡도를 $O(W)$에서 $O(log_2(W))$로 줄였다.
+전체 어휘가 아닌 이진트리를 사용하여 계산 복잡도를 $$O(W)$$에서 $$O(log_2(W))$$로 줄였다.
 
-**Hierarchical softmax**에서는 전체 어휘를 평가하는 대신에 이진트리를 이용해서 $log_2(W)$의 node만 평가한다.
+**Hierarchical softmax**에서는 전체 어휘를 평가하는 대신에 이진트리를 이용해서 $$log_2(W)$$의 node만 평가한다.
 
 이 논문에서는 huffman tree를 사용해서 등장빈도가 높은 단어에 더 짧은 경로를 할당하기 때문에 자주 나오는 단어들을 더 빠르게 학습할 수 있다.
 
@@ -75,11 +75,11 @@ Positive Sample과 Negative Sample은 (Word,Word)쌍으로 만들고, Positve는
 
 ![image](/assets/images/2025-10-02-18-04-35.png)
 
-$k$: Negative Sample의 수: 하나의 Positive Sample에 몇개의 Negative Sample을 뽑을지 결정하는 값이다. 논문에서는 작은 데이터셋에서는 $5≤k≤20$으로, 큰 데이터셋에서는 $2<=k<=5$정도로 값을 설정하는게 유용하다고 한다.
+$k$: Negative Sample의 수: 하나의 Positive Sample에 몇개의 Negative Sample을 뽑을지 결정하는 값이다. 논문에서는 작은 데이터셋에서는 $$5≤k≤20$$으로, 큰 데이터셋에서는 $$2<=k<=5$$정도로 값을 설정하는게 유용하다고 한다.
 
-$P_n(w)$:노이즈 분포: Negative sample을 어떤 확률 분포에서 뽑을지 결정한다. 논문에서는 unigram distribution에서 3/4제곱을 한 분포가 다른 분포들보다 좋은 성능을 보였다고 한다.
+$$P_n(w)$$:노이즈 분포: Negative sample을 어떤 확률 분포에서 뽑을지 결정한다. 논문에서는 unigram distribution에서 3/4제곱을 한 분포가 다른 분포들보다 좋은 성능을 보였다고 한다.
 
-이 목적함수를 최대화 함으로써 실제 정답쌍의 내적값을 logit으로 갖는 $log$확률을 최대화하고, Negative sample된 오답쌍의 음수값이 커져서 sigmoid값이 1에 가까워지도록 학습을 한다.
+이 목적함수를 최대화 함으로써 실제 정답쌍의 내적값을 logit으로 갖는 $$log$$확률을 최대화하고, Negative sample된 오답쌍의 음수값이 커져서 sigmoid값이 1에 가까워지도록 학습을 한다.
 
 $$P(오답) = 1 - P(정답) = 1 - σ(v'_wiᵀ v_wI)$$
 
@@ -91,13 +91,13 @@ $$1 - σ(x) = σ(-x)$$임을 활용함
 
 ![image](/assets/images/2025-10-02-18-04-49.png)
 
-$w_i$:단어
+$$w_i$$:단어
 
-$t$:임계값(threshold)
+$$t$$:임계값(threshold)
 
-$f(w_i)$: 단어의 빈도
+$$f(w_i)$$: 단어의 빈도
 
-$P(w_i)$에 따라 너무 많이 등장하는 단어는 버린다.
+$$P(w_i)$$에 따라 너무 많이 등장하는 단어는 버린다.
 
 ![image](/assets/images/2025-10-02-18-05-19.png)
 
@@ -132,11 +132,11 @@ Semantic analogies(의미적 유추): 예시:  “국가”:”수도”
 
 구를 식별하기 위해 모든 n-gram을 사용하는것은 메모리소모가 매우 크기 때문에 위이 수식을 이용해서  threshold보다 높은 쌍을 구로 간주한다.
 
-여기서$\delta$는 discounting coefficient로 매우 드물게 등장하는 단어가 높은점수를 받는것을 방지한다.
+여기서$$\delta$$는 discounting coefficient로 매우 드물게 등장하는 단어가 높은점수를 받는것을 방지한다.
 
-$count(w_i,w_j)$:$w_i$와 $w_j$가 연달아 등장한 횟수
+$$count(w_i,w_j)$$:$$w_i$$와 $$w_j$$가 연달아 등장한 횟수
 
-$score(w_i,w_j)$: 두 단어가 전체 횟수중 연달아 등장한 횟수가 높을수록 score가 높고, threshold를 넘으면 한 phrase로 간주한다.
+$$score(w_i,w_j)$$: 두 단어가 전체 횟수중 연달아 등장한 횟수가 높을수록 score가 높고, threshold를 넘으면 한 phrase로 간주한다.
 
 일반적으로 이 과정을 2~4회 반복하면서 매번 임계값을 낮추며 여러 단어로 구성된 더 긴 구가 형성될 수 있도록 한다.
 
