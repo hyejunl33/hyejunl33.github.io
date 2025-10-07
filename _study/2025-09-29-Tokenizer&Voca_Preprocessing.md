@@ -1,5 +1,5 @@
 ---
-title: "[5주차_기본과제_1] Data_Preprocessing&Tokenization"
+title: "[NLP][5주차_기본과제_1] Data_Preprocessing&Tokenization"
 date: 2025-09-29
 tags:
   - Data_Preprocessing&Tokenization

@@ -1,5 +1,5 @@
 ---
-title: "[3주차_과제_3] Implement_Multi_head_Self-Attention"
+title: "[AILifeCycle][3주차_과제_3] Implement_Multi_head_Self-Attention"
 date: 2025-09-19
 tags:
   - Multi-head Self-Attention

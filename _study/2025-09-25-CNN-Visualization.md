@@ -1,5 +1,5 @@
 ---
-title: "[4주차_심화과제_1] CNN-Visualization"
+title: "[CV][4주차_심화과제_1] CNN-Visualization"
 date: 2025-09-25
 tags:
   - CNN-Visualization

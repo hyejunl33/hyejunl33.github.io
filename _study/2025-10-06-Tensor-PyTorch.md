@@ -1,6 +1,6 @@
 ---
-title: "[1주차_기본과제_1] Tensor의 생성/조작/연산"
-date: 2025-10-07
+title: "[PyTorch][1주차_기본과제_1] Tensor의 생성/조작/연산"
+date: 2025-10-06
 tags:
   - Tensor의 생성/조작/연산
   - 1주차 과제

@@ -1,5 +1,5 @@
 ---
-title: "[3주차_과제_2] BackPropagation with Numpy"
+title: "[AILifeCycle][3주차_과제_2] BackPropagation with Numpy"
 date: 2025-09-18
 tags:
   - Back Propagation

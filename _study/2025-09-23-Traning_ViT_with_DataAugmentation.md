@@ -1,5 +1,5 @@
 ---
-title: "[4주차_과제_2] Traning ViT with DataAugmentation"
+title: "[CV][4주차_과제_2] Traning ViT with DataAugmentation"
 date: 2025-09-23
 tags:
   - ViT

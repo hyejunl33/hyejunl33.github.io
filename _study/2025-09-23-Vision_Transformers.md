@@ -1,5 +1,5 @@
 ---
-title: "[4주차_과제_1] Vision Transformers"
+title: "[CV][4주차_과제_1] Vision Transformers"
 date: 2025-09-23
 tags:
   - ViT

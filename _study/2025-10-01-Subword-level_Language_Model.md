@@ -1,5 +1,5 @@
 ---
-title: "[5주차_기본과제_2] Subword-level Language Model"
+title: "[NLP][5주차_기본과제_2] Subword-level Language Model"
 date: 2025-10-01
 tags:
   - Subword-level Language Model
