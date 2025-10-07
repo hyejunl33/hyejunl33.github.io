@@ -1,3 +1,15 @@
+---
+title: "[1주차_기본과제_1] Tensor의 생성/조작/연산"
+date: 2025-10-07
+tags:
+  - Tensor의 생성/조작/연산
+  - 1주차 과제
+  - PyTorch
+  - 과제
+excerpt: "Tensor의 생성/조작/연산"
+math: true
+---
+
 # 과제1_Tensor의 생성/조작/연산
 
 Pytorch를 이용한 Tensor의 생성/조작/연산에 익숙해지기
@@ -158,11 +170,11 @@ tensor_c2 = torch.tensor(tensor_2).cuda()
 
 - tensor가 cpu에 있을때의 연산 시간
 
-![image.png](image.png)
+![image](/assets/images/2025-10-07-11-50-56.png)
 
 - tensor를 gpu에 올리고 나서 연산시간
 
-![image.png](image%201.png)
+![image](/assets/images/2025-10-07-11-51-02.png)
 
 cpu보다 gpu에 올리고 나서 연산이 매우 빨라진 것을 알 수 있다.
 
@@ -310,7 +322,7 @@ t1, t2텐서의 코사인, 유클리디안, 맨해튼 유사도를 구하기
 
 컬러이미지는 red, green, blue 세개의 채널로 이루어져 있따. 세개의 채널이 조합되어 하나의 컬러 이미지를 출력한다.  반면 흑백 이미지는 하나의 채널만을 가진다.
 
-![제목 없음.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C.png)
+![image](/assets/images/2025-10-07-11-51-18.png)
 
 ```python
 # numpy array인 image로 부터 Tensor를 생성
@@ -350,11 +362,11 @@ def add_random_noise(img_t, scale=30):
 
 - 노이즈가 들어가기전 이미지
 
-![제목 없음.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C%201.png)
+![image](/assets/images/2025-10-07-11-51-29.png)
 
 - 노이즈가 들어간 후 이미지
 
-![제목 없음-1.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C-1.png)
+![image](/assets/images/2025-10-07-11-51-35.png)
 
 ```python
 plt.imshow(add_random_noise(img_t, scale=55)
@@ -362,7 +374,7 @@ plt.imshow(add_random_noise(img_t, scale=55)
 
 노이즈의 scale을 조정하면서 노이즈의 변화에 따른 이미지를 시각화 할 수 있다. → noise의 값이 과하지 않도록 값을 제한하는 것이 좋다. 이미지는 `uint8` 로 0~255사이의 값을 가짐을 고려.
 
-![제목 없음.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C%202.png)
+![image](/assets/images/2025-10-07-11-51-43.png)
 
 ```python
 img_tp = img_t.transpose(0,1)
@@ -370,4 +382,4 @@ img_tp = img_t.transpose(0,1)
 
 0차원과 1차원을 transpose해줌으로써 가로세로 방향을 바꿀 수도 있다.
 
-![제목 없음-1.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C-1%201.png)
+![image](/assets/images/2025-10-07-11-51-50.png)
