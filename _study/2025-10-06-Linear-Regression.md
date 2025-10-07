@@ -144,7 +144,7 @@ epoch이 100단위로 커질때마다 RMSE Loss를 출력한다. 이 학습에�
 
 RMSE = Root Mean Squared Error: 평균 제곱근 오차
 
-$\text{RMSE}(y, \hat{y}) = \sqrt{\frac{\sum_{i=0}^{N - 1} (y_i - \hat{y}_i)^2}{N}}$
+$$\text{RMSE}(y, \hat{y}) = \sqrt{\frac{\sum_{i=0}^{N - 1} (y_i - \hat{y}_i)^2}{N}}$$
 
 ```python
 b0 = list(model.parameters())[1]
