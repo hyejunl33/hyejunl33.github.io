@@ -52,29 +52,6 @@ ValueError가 발생하지 않기 위해서 행렬곱 연산이 가능하려면 
 import numpy as np
 
 def get_matmul(number_matrix1, number_matrix2):
-    """
-    주어진 두 행렬의 행렬곱을 반환함
-        Parameters:
-            number_matrix1 (array): integer 값으로만 구성된 array
-            ex - [[1, 2, 3],
-                  [4, 5, 6]]
-            number_matrix2 (array): integer 값으로만 구성된 array
-            ex - [[1, 2],
-                  [3, 4],
-                  [5, 6]]
-        Returns:
-            multiplicated_matrix (array): parameter number_matrices의 행렬곱
-        Examples:
-            >>> number_matrix1 = [[1, 2, 3],
-                                  [4, 5, 6]]
-            >>> number_matrix2 = [[1, 2],
-                                  [3, 4],
-                                  [5, 6]]
-            >>> import basic_math as bm
-            >>> bm.get_matmul(number_matrix1, number_matrix2)
-            [[22, 28],
-             [49, 64]]
-    """
     # 출력으로 쓸 multiplicated_matrix를 출력 size에 맞게 0으로 채우기
     multiplicated_matrix = np.zeros((len(number_matrix1),len(number_matrix2[0])))
 
