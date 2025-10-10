@@ -69,8 +69,8 @@ $$w = \frac{\partial S_c}{\partial I}\bigg|_{I_0}$$
 
 1. Gradient w를 역전파를 통해 찾는다.
 2. w 벡터의 원소들을 재배열하여 saliency 맵을 얻는다.
-3. 그레이스케일 이미지의 경우, 맵은 $$M_{ij} = \left|w_{h(i,j)}\right|$$로 계산된다.
-4. 다중 채널(예: RGB) 이미지의 경우, 각 픽셀 (i, j)에 대해 모든 색상 채널에 걸쳐 w의 최대 크기를 취한다: $$M_{ij} = \max_c\left|w_{h(i,j,c)}\right|$$
+3. 그레이스케일 이미지의 경우, 맵은 $$M\_{ij} = \left|w\_{h(i,j)}\right|$$로 계산된다.
+4. 다중 채널(예: RGB) 이미지의 경우, 각 픽셀 (i, j)에 대해 모든 색상 채널에 걸쳐 w의 최대 크기를 취한다: $$M\_{ij} = \max\_c\left|w\_{h(i,j,c)}\right|$$
 
 
 이 saliency 맵은 이미지 레이블에 대해 훈련된 분류 ConvNet을 사용하여 추출되므로, Bounding Box나 Mask와 같은 추가적인 Supervising이 필요하지 않다. 계산은 단일 역전파 통과만 필요하므로 매우 빠르다.
