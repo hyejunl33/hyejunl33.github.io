@@ -1,3 +1,16 @@
+---
+title: "[PyTorch][심화과제] Without_torch.nn"
+date: 2025-10-08
+tags:
+  - Without_torch.nn
+  - 심화과제
+  - Without torch.nn
+  - Xavier초기화
+  - irisdataset
+excerpt: "WithOut_torch.nn"
+math: true
+---
+
 # 심화과제_Without_torch.nn
 
 - `torch.nn`을 사용하지 않고 MLP를 구현하고, `torch.nn`을 사용해서 구현한 MLP와 비교
