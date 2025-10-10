@@ -27,8 +27,8 @@ Iris 데이터셋은 꽃잎과 꽃받침의 길이와 너비를 이용하여 iri
 
 - Iris 데이터셋을 불러오고 Pytorch의 Dataset 클래스를 상속받아 정의된 클래스로 변환하기
 1. `__init__` 메소드에서 `self.X, self.y` 를 각각 iris 데이터와 iris target으로 초기화하기
-2. **`__len**__` 메소드에서 데이터셋의 길이를 반환하기
-3. **`__getitem**__` 메소드에서 index에 해당하는 데이터와 레이블을 반환하기
+2. `__len__` 메소드에서 데이터셋의 길이를 반환하기
+3. `__getitem__` 메소드에서 index에 해당하는 데이터와 레이블을 반환하기
 
 `sklearn.datasets.load_iris()` :iris 데이터셋을 불러오는 함수
 
@@ -128,19 +128,19 @@ class WithoutNNLinear:
 
 ## Linear layer의 계산 시각화
 
-가중치행렬 Weight: $W = \begin{bmatrix} 1.0 \\ 2.0 \\ 3.0 \\ \end{bmatrix}$
+가중치행렬 Weight: $$W = \begin{bmatrix} 1.0 \\ 2.0 \\ 3.0 \\ \end{bmatrix}$$
 
-편향벡터 bias: $b = \begin{bmatrix} 1.0 & 1.0 & 1.0 \end{bmatrix}$
+편향벡터 bias: $$b = \begin{bmatrix} 1.0 & 1.0 & 1.0 \end{bmatrix}$$
 
-입력데이터 x : $x = [1.0]$
+입력데이터 x : $$x = [1.0]$$
 
-$y = xW^T + b$인 선형계산을 하는과정
+$$y = xW^T + b$$인 선형계산을 하는과정
 
-$W^T = \begin{bmatrix}1.0 &2.0 & 3.0 \end{bmatrix}$
+$$W^T = \begin{bmatrix}1.0 &2.0 & 3.0 \end{bmatrix}$$
 
 연산차원을 맞춰주기 위해서 Weight에 Transpose를 해준다.
 
-$xW^T = \begin{bmatrix}1.0 * 1.0 & 1.0 * 2.0 & 1.0 * 3.0\end{bmatrix}$
+$$xW^T = \begin{bmatrix}1.0 * 1.0 & 1.0 * 2.0 & 1.0 * 3.0\end{bmatrix}$$
 
 x와 elementwise 곱연산을 해준다.
 
@@ -154,7 +154,7 @@ $$y = \begin{bmatrix}2.0 & 3.0 & 4.0\end{bmatrix}$$
 
 ## Define ReLU layer
 
-$ReLU(x) = max(0,x)$
+$$ReLU(x) = max(0,x)$$
 
 ReLU연산은 0과 x중 더 큰값을 선택하는 연산이다. 즉 입력이 양수면 그대로를 출력하고, 그렇지 않으면 0을 출력한다.
 
@@ -203,18 +203,18 @@ class WithoutNNMLP:
 
 ## Define CrossEntropyLoss
 
-$\hat{y}_{i,c} = \text{softmax}(z_{i,c}) = \frac{e^{z_{i,c}}}{\sum_{j=1}^{C} e^{z_{i,j}}}$
+$$\hat{y}_{i,c} = \text{softmax}(z_{i,c}) = \frac{e^{z_{i,c}}}{\sum_{j=1}^{C} e^{z_{i,j}}}$$
 
-$\hat{y}$는 입력x를 통해 예측한값임
+$$\hat{y}$$는 입력x를 통해 예측한값임
 
-- $z_i$는 클래스 $i$에 대한 입력값 $logit$
-- $\sum_{j=1}^{c} e^{z_j}$는 모든 클래스에 대한 입력값 지수의 합
+- $$z_i$$는 클래스 $$i$$에 대한 입력값 $$logit$$
+- $$\sum_{j=1}^{c} e^{z_j}$$는 모든 클래스에 대한 입력값 지수의 합
 
-$L = - \frac{1}{N} \sum_{i=1}^{N} \sum_{c=1}^{C} y_{i,c} \log(\hat{y}_{i,c})$
+$$L = - \frac{1}{N} \sum_{i=1}^{N} \sum_{c=1}^{C} y_{i,c} \log(\hat{y}_{i,c})$$
 
-- $CrossEntropyLoss$ 공식 적용하면 정답 label인 $y$와 예측값인 $\hat{y}$사이의 loss를 구할 수 있음
-- $N$은 샘플의 수
-- $C$는 클래스의 수
+- $$CrossEntropyLoss$$ 공식 적용하면 정답 label인 $$y$$와 예측값인 $$\hat{y}$$사이의 loss를 구할 수 있음
+- $$N$$은 샘플의 수
+- $$C$$는 클래스의 수
 
 ```python
 class WithoutNNCrossEntropyLoss:
