@@ -129,7 +129,7 @@ class WordEmbedding(nn.Module):
 
 - RNN cell의 forward 연산을 구현하자.
 
-$h_t = \text{tanh}(h_{prev} \cdot W_{hh} + x_t \cdot W_{xh} + b_h)$
+$$h_t = \text{tanh}(h_{prev} \cdot W_{hh} + x_t \cdot W_{xh} + b_h)$$
 
 - x_t: 현재 시점 입력 `(batch_size, input_size)`
 - h_prev: 이전 시점 은닉상태 `(batch_size, hidden_size)`
