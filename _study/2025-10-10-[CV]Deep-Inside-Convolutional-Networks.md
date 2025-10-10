@@ -12,7 +12,6 @@ excerpt: "[CV][논문 리뷰]: Deep Inside Convolutional Networks: Visualising I
 math: true
 ---
 
-# [CV][논문 리뷰]: Deep Inside Convolutional Networks: Visualising Image Classification Models and Saliency Maps
 
 ## 논문 리뷰: Deep Inside Convolutional Networks: Visualising Image Classification Models and Saliency Maps
 
@@ -70,8 +69,9 @@ $$w = \frac{\partial S_c}{\partial I}\bigg|_{I_0}$$
 
 1. Gradient w를 역전파를 통해 찾는다.
 2. w 벡터의 원소들을 재배열하여 saliency 맵을 얻는다.
-3. 그레이스케일 이미지의 경우, 맵은 $$M_{ij} = |w_{h(i,j)}|$$로 계산된다.
-4. 다중 채널(예: RGB) 이미지의 경우, 각 픽셀 (i, j)에 대해 모든 색상 채널에 걸쳐 w의 최대 크기를 취한다: $$M_{ij} = \max_c|w_{h(i,j,c)}|$$
+3. 그레이스케일 이미지의 경우, 맵은 $$M_{ij} = \left|w_{h(i,j)}\right|$$로 계산된다.
+4. 다중 채널(예: RGB) 이미지의 경우, 각 픽셀 (i, j)에 대해 모든 색상 채널에 걸쳐 w의 최대 크기를 취한다: $$M_{ij} = \max_c\left|w_{h(i,j,c)}\right|$$
+
 
 이 saliency 맵은 이미지 레이블에 대해 훈련된 분류 ConvNet을 사용하여 추출되므로, Bounding Box나 Mask와 같은 추가적인 Supervising이 필요하지 않다. 계산은 단일 역전파 통과만 필요하므로 매우 빠르다.
 
@@ -85,7 +85,7 @@ $$w = \frac{\partial S_c}{\partial I}\bigg|_{I_0}$$
 
 클래스 saliency 맵은 주어진 이미지에서 해당 클래스 객체의 위치를 인코딩하므로 객체 탐지에 사용될 수 있다.
 
-하지만 이렇게 얻어낸 saliency map은 객체탐지의 결정적인 부분만 강조하고(예를들어 강아지의 얼굴) 객체 전체를 보여주지 않을 수 있다. 따라서 상위 95%의 quantile보다 높은 픽셀에서 foreground를 추출하고, 하위 30%에서 backgrond를 추출해서 GraphCut알고리즘을 돌려서 최종 mask를 생성해서 전체 객체를 나타낸다. 아래 사진속 3번째 사진에서 파란색은 Foreground, 빨간색은 BackGround이고 마지막 4번재 사진은 GraphCut알고리즘을 돌객체탐지를 마친 사진이다. 객체 전체의 모습을 잘 탐지함을 볼 수 있다.
+하지만 이렇게 얻어낸 saliency map은 객체탐지의 결정적인 부분만 강조하고(예를들어 강아지의 얼굴) 객체 전체를 보여주지 않을 수 있다. 따라서 상위 95%의 quantile보다 높은 픽셀에서 foreground를 추출하고, 하위 30%에서 backgrond를 추출해서 GraphCut알고리즘을 돌려서 최종 mask를 생성해서 전체 객체를 나타낸다. 아래 사진속 3번째 사진에서 파란색은 Foreground, 빨간색은 BackGround이고 마지막 4번재 사진은 GraphCut알고리즘을 돌려서 객체탐지를 마친 사진이다. 객체 전체의 모습을 잘 탐지함을 볼 수 있다.
 
 ---
 
