@@ -98,14 +98,14 @@ math: true
 
 ### 5.3 Pre-train 데이터 요구 사항
 
-![image](/assets/images/2025-10-10-14-17-49.png)
+![image](/assets/images/2025-10-10-14-26-53.png)
 
 - ViT 모델을 점차 큰 데이터셋(ImageNet → ImageNet-21k → JFT-300M)으로 사전 훈련한 결과, 가장 작은 ImageNet에서는 ViT-Large 모델이 ViT-Base보다도 성능이 낮았지만, 데이터셋이 커질수록 ViT가 CNN을 능가했다. 이는 큰 ViT 모델이 작은 데이터셋에서는 과적합되기 쉽다는 것을 의미한다.
 - JFT-300M의 부분 집합(9M, 30M, 90M)으로 훈련했을 때도, 적은 데이터에서는 ResNet이 우수했지만 90M 이상의 데이터에서는 ViT가 더 나은 성능을 보였다. 이는 CNN의 Inductive biases가 작은 데이터셋에서는 유용하지만, 큰 데이터셋에서는 데이터로부터 직접 패턴을 학습하는 것이 더 효과적임을 명확히 시사한다.
 
 ### 5.4 확장성 연구 (Scaling Study)
 
-![image](/assets/images/2025-10-08-19-27-10.png)
+![image](/assets/images/2025-10-10-14-25-17.png)
 
 - 데이터 크기가 병목이 아닌 JFT-300M 환경에서 사전 훈련 비용 대비 성능을 비교한 결과, ViT는 ResNet보다 동일 성능 달성에 약 2-4배 적은 계산량을 사용하며 압도적인 효율성을 보였다.
 - 하이브리드 모델은 작은 계산 예산에서는 순수 ViT보다 약간 우수했지만, 모델이 커지면서 그 차이는 사라졌다. 이는 모델 규모가 충분히 크면 CNN의 Low-level Feature 추출 능력이 ViT의 학습 능력에 흡수될 수 있음을 시사한다.
