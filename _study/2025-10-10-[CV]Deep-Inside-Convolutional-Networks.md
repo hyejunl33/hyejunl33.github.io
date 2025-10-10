@@ -2,12 +2,12 @@
 title: "[CV][논문 리뷰]: Deep Inside Convolutional Networks: Visualising Image Classification Models and Saliency Maps"
 date: 2025-10-10
 tags:
-  - CV
-  - Deep ConvNet Visualization
-  - Visualization
-  - saliency map
-  - Image Classification
-  - 논문리뷰
+- CV
+- Deep ConvNet Visualization
+- Visualization
+- saliency map
+- Image Classification
+- 논문리뷰
 excerpt: "[CV][논문 리뷰]: Deep Inside Convolutional Networks: Visualising Image Classification Models and Saliency Maps"
 math: true
 ---
