@@ -42,7 +42,7 @@ df_train, df_test = train_test_split(
 
 ![image](/assets/images/2025-10-16-14-58-38.png)
 
-$r^{(i)}$는 각각의 n개의 item에 대한 rating을 담고있는 input이자 output이다. input으로 $r^{(i)}$를 넣어주면 모델을 거쳐서 masking된(빈칸) 입력에 대한 output rating을 예측(reconstruction)하는 모델이다.
+$$r^{(i)}$는 각각의 n개의 item에 대한 rating을 담고있는 input이자 output이다. input으로 $$r^{(i)}$$를 넣어주면 모델을 거쳐서 masking된(빈칸) 입력에 대한 output rating을 예측(reconstruction)하는 모델이다.
 
 ```python
 class AutoRec(nn.Module):
@@ -253,7 +253,7 @@ class VAE(nn.Module):
 
 VAE모델에서  Minimize해야할 목적식은 2개가 있다.
 
-$${MSE} =\sum_{i=1}^{N} |x_i - \hat{x}_i|^2_2$$ 를 이용해서 입력데이터와 decoder를 거쳐 나온 출력간의 차이를 최소화한다.
+$${MSE} =\sum_{i=1}^{N} \mid x_i - \hat{x}_i\mid ^2_2$$ 를 이용해서 입력데이터와 decoder를 거쳐 나온 출력간의 차이를 최소화한다.
 
 $${KLD} = -\frac{1}{2} \sum_{i=1}^{D} (1 + \log(\text{var}) - \mu^2 - \exp(\log(\text{var})))$$를 이용해서 잠재변수의 확률분포$N(\mu,\Sigma)$와 표준 Gaussian distribution $p(z)$ 간의 KL-divergence를 최소화 한다. 이를통해 잠재공간을 구조화 해서 Gaussian distribution과 가깝게 만들어주는 정규화를 하는 것이다.
 
