@@ -117,6 +117,8 @@ def generate_recommendations(input_text, model, tokenizer):
 
     return recommendations
 ```
+이때 max_length에 따라서도 출력이 달라진다고 한다. max_length를 300이나 더 큰 숫자로 주면, 영화 제목을 추천하는게 아니라, 영화와 관련된 문장을 생성한다. 그런데, 100으로 주면 문장을 쓰기에는 짧은 제한이기 때문에, 영화 제목을 추천하는식으로 LLM이 동작한다.
+
 
 ## Prompt 형식 비교
 
