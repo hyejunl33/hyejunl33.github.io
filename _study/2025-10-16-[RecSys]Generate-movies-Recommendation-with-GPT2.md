@@ -158,7 +158,7 @@ Recommendations:
 
 하지만 `“,”` 로 공백을 포함해서 input을 주지않으면, 구분된 영화 제목이라는것을 모델이 인지하지 않고, 의미없는 문장의 나열을 출력한다. → LLM의 입력 prompt의 형식에 따라 출력이 매우 달라진다.
 
-### Prompt 1) if you like<$m_1$…$m_n$>, you will like <$m_i$>
+### Prompt 1) if you like<$$m_1$$…$$m_n$$>, you will like <$$m_i$$>
 
 ```python
 userId = 16
@@ -177,7 +177,7 @@ print(recommendations)
 
 prompt 1의 결과는 위에서 비교한 결과에서 볼 수 있듯이 “the social network”라는 영화를 추천으로 생성한 것을 볼 수 있다.
 
-### Prompt 2) <$m_1$…$m_n$>,<$m_i$>
+### Prompt 2) <$$m_1$$…$$m_n$$>,<$$m_i$$>
 
 ```python
 userId = 16
