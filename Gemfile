@@ -2,12 +2,16 @@
 
 source 'https://rubygems.org'
 
-# GitHub Pages가 사용하는 jekyll 버전을 명시적으로 지정
-gem 'jekyll', '~> 3.9.0'
+gem 'jekyll', '~> 4.3.2' # Jekyll 최신 안정 버전 사용
 
-# GitHub Pages에서 사용하는 플러그인 그룹을 그대로 가져옴
-# 이렇게 하면 버전 충돌을 최소화할 수 있음
-gem 'github-pages', group: :jekyll_plugins
+group :jekyll_plugins do
+  gem 'jekyll-feed'
+  gem 'jekyll-sitemap'
+  gem 'jekyll-redirect-from'
+  gem 'jemoji'
+  gem 'jekyll-seo-tag'
+  # 필요에 따라 다른 플러그인을 추가할 수 있습니다.
+end
 
-# 추가로 사용하는 플러그인이 있다면 여기에 선언
-# 예: gem 'your-plugin'
+# Jekyll 3.x 버전과의 호환성을 위한 webrick 추가
+gem 'webrick', '~> 1.8'
