@@ -17,6 +17,7 @@ math: true
 - conjugate prior의 의미를 실습으로 체득할 수 있다.
 - 확률분포를 코드로 구현하는 방법과 plot하는 방법을 배울 수 있다.
 
+---
 # 중심극한정리(CLT)
 
 $$\lim_{{n \to \infty}} P\left(\frac{{X_1 + X_2 + \ldots + X_n - n\mu}}{{\sigma \sqrt{n}}} \leq x\right) = \Phi(x)$$
