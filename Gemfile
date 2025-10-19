@@ -13,7 +13,9 @@ group :jekyll_plugins do
   gem 'jekyll-redirect-from'
   gem 'jemoji'
   gem 'jekyll-seo-tag'
+  gem 'jekyll-gist'      # <-- 누락된 플러그인 추가
+  gem 'jekyll-paginate'  # <-- 누락된 플러그인 추가
 end
 
-# 로컬 서버 실행 시 필요한 webrick 추가
+# 로컬 서버 실행을 위한 webrick 추가
 gem 'webrick', '~> 1.8'
