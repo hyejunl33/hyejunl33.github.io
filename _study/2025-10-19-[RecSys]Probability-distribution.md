@@ -1,3 +1,16 @@
+---
+title: "[RecSys][과제1] 기본통계학"
+date: 2025-10-10
+tags:
+  - RecSys
+  - 과제
+  - 기본 통계학
+  - CLT
+  - Conjugate Prior
+excerpt: "[RecSys][과제1] 기본통계학"
+math: true
+---
+
 # 과제1_기본통계학
 
 - 중심 극한 정리의 개념을 실습을 통해 이해할 수 있다.
@@ -56,11 +69,9 @@ for size in n:
 
 ```
 
-![제목 없음.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C.png)
-
-![제목 없음.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C%201.png)
-
-![제목 없음-1.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C-1.png)
+![image](/assets/images/2025-10-19-19-53-09.png)
+![image](/assets/images/2025-10-19-19-53-16.png)
+![image](/assets/images/2025-10-19-19-53-21.png)
 
 `sample_size` 를 100으로 고정하고 표본추출 횟수 n을 10, 50, 1000으로 늘려보면 표본 추출 횟수 $n$이 커질수록 표본평균은 정규분포와 가까워짐을 확인할 수 있다.
 
@@ -130,7 +141,7 @@ plt.show()
 
 ```
 
-![제목 없음-1.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C-1%201.png)
+![image](/assets/images/2025-10-19-19-53-38.png)
 
 prior의 초기상태에서 Posterior를 업데이트 해서 베르누이 분포의 0.7에서의 확률이 가장 높게 파라미터가 업데이트 됐음을 알 수 있다.
 
@@ -188,7 +199,7 @@ plt.legend()
 plt.show()
 ```
 
-![제목 없음.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C%202.png)
+![image](/assets/images/2025-10-19-19-53-53.png)
 
 ## 정규분포 - 정규분포
 
@@ -236,7 +247,7 @@ plt.show()
 
 ```
 
-![제목 없음.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C%203.png)
+![image](/assets/images/2025-10-19-19-54-05.png)
 
 prior와 posterior 둘다 모두 정규분포임을 볼 수 있다.
 
@@ -299,7 +310,7 @@ plt.show()
 
 ```
 
-![제목 없음.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C%204.png)
+![image](/assets/images/2025-10-19-19-54-13.png)
 
 $\alpha = 1, \beta = 1$에서 파란색과 빨간색 그래프가 일치함을 확인할 수 있다.
 
@@ -352,7 +363,7 @@ plt.show()
 
 ```
 
-![제목 없음.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C%205.png)
+![image](/assets/images/2025-10-19-19-54-25.png)
 
 감마분포에서 $\alpha=1$로 주었을때 지수분포와 같음을 확인할 수 있다..
 
@@ -400,6 +411,6 @@ plt.show()
 
 ```
 
-![제목 없음-1.png](%EC%A0%9C%EB%AA%A9_%EC%97%86%EC%9D%8C-1%202.png)
+![image](/assets/images/2025-10-19-19-54-33.png)
 
 $n=20$이고 $p=0.5$인 이항분포는 정규분포를 따름을 확인할 수 있다.
