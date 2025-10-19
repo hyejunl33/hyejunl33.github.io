@@ -1,6 +1,6 @@
 ---
 title: "[RecSys][과제1] 기본통계학"
-date: 2025-10-10
+date: 2025-10-19
 tags:
   - RecSys
   - 과제
