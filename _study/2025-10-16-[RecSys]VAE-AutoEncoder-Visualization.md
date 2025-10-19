@@ -1,13 +1,13 @@
 ---
-title: "[RecSys][과제4] 변분추론 기반의 생성모델 학습구현"
-date: 2025-10-16
+title: "[RecSys][과제1] 기본통계학"
+date: 2025-10-10
 tags:
   - RecSys
   - 과제
-  - AutoEncoder
-  - Variational Auto Encoder
-  - Visualization
-excerpt: "[RecSys][과제4] 변분추론 기반의 생성모델 학습구현"
+  - 기본 통계학
+  - CLT
+  - Conjugate Prior
+excerpt: "[RecSys][과제1] 기본통계학"
 math: true
 ---
 
@@ -92,7 +92,7 @@ train_user_item_matrix.cluster.value_counts()
 
 클러스터별로 속하는 사람 숫자 수를 표로 출력할 수 있다.
 
-
+![image](/assets/images/2025-10-16-15-18-16.png)
 
 t-SNE를 이용해서 각 클러스터링에 속하는 사람들을 2차원 공간상에 시각화 할 수 있다.
 
