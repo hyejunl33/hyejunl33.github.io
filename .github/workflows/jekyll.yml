@@ -4,7 +4,7 @@ name: Deploy Jekyll site to Pages
 
 on:
   push:
-    branches: ["main"]  # 'main' 브랜치에 푸시될 때마다 실행됩니다. (브랜치 이름이 master라면 master로 변경)
+    branches: ["master"]  # 'main' 변브랜치에 푸시될 때마다 실행됩니다. (브랜치 이름이 master라면 master로 경)
   workflow_dispatch:
 
 permissions:
