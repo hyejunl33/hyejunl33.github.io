@@ -97,9 +97,9 @@ $$q^*(z_n\mid x_n) = p(z_n\mid x_n;\theta)$$
 
 ---
 
-### 최적의 `$$\theta^*$$` 찾기 (M-step의 원리)
+### 최적의 $$\theta^*$$ 찾기 (M-step의 원리)
 
-다음으로, 분포 `q`를 고정한 상태에서 ELBO를 최대화하는 최적의 파라미터 $$\theta^*$$를 찾는다. ELBO 식에서 `$$\theta$$`와 무관한 항인 $$log q(z_n\mid x_n)$$을 제외하고 식을 정리하면 다음과 같다.
+다음으로, 분포 `q`를 고정한 상태에서 ELBO를 최대화하는 최적의 파라미터 $$\theta^*$$를 찾는다. ELBO 식에서 $$\theta$$와 무관한 항인 $$log q(z_n\mid x_n)$$을 제외하고 식을 정리하면 다음과 같다.
 
 $$
 \begin{aligned}
