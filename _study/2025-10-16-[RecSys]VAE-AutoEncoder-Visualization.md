@@ -1,13 +1,13 @@
 ---
-title: "[RecSys][과제1] 기본통계학"
-date: 2025-10-10
+title: "[RecSys][과제4] 변분추론 기반의 생성모델 학습구현"
+date: 2025-10-16
 tags:
   - RecSys
   - 과제
-  - 기본 통계학
-  - CLT
-  - Conjugate Prior
-excerpt: "[RecSys][과제1] 기본통계학"
+  - AutoEncoder
+  - Variational Auto Encoder
+  - Visualization
+excerpt: "[RecSys][과제4] 변분추론 기반의 생성모델 학습구현"
 math: true
 ---
 
