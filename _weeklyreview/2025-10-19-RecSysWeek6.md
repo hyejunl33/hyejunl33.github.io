@@ -77,7 +77,7 @@ GMM과 같은 잠재 변수 모델의 학습 목표는 로그 가능도($$log p(
 
 ELBO의 기본 식은 다음과 같다.
 
-$$ELBO(q, \theta) = \sum_{n=1}^{N} E_{z_n \sim q(z_n|x_n)} \left[ log \frac{p(x_n, z_n; \theta)}{q(z_n|x_n)} \right]$$
+$$ELBO(q, \theta) = \sum_{n=1}^{N} E_{z_n \sim q(z_n\mid x_n)} \left[ log \frac{p(x_n, z_n; \theta)}{q(z_n\mid x_n)} \right]$$
 
 ---
 
@@ -85,13 +85,13 @@ $$ELBO(q, \theta) = \sum_{n=1}^{N} E_{z_n \sim q(z_n|x_n)} \left[ log \frac{p(x_
 
 먼저, 파라미터 $$\theta$$를 고정한 상태에서 ELBO를 최대화하는 최적의 분포 $$q^*$$를 찾아본다. ELBO와 로그 가능도의 관계식은 다음과 같다.
 
-$$log p(x_n;\theta) = ELBO + D_{KL}(q(z_n|x_n) || p(z_n|x_n;\theta))$$
+$$log p(x_n;\theta) = ELBO + D_{KL}(q(z_n\mid x_n) \mid \mid  p(z_n\mid x_n;\theta))$$
 
-여기서 $$log p(x_n;\theta)$$는 현재 $$\theta$$에 대해 고정된 상수 값이다. 따라서 ELBO를 최대화하는 것은 $$D_{KL}(q(z_n|x_n) || p(z_n|x_n;\theta))$$ 항을 최소화하는 것과 같다.
+여기서 $$log p(x_n;\theta)$$는 현재 $$\theta$$에 대해 고정된 상수 값이다. 따라서 ELBO를 최대화하는 것은 $$D_{KL}(q(z_n\mid x_n) \mid \mid  p(z_n\mid x_n;\theta))$$ 항을 최소화하는 것과 같다.
 
 KL Divergence는 두 분포가 동일할 때 그 값이 0으로 최소가 된다. 그러므로 최적의 $$q^*$$는 실제 사후 분포(true posterior)와 같다.
 
-$$q^*(z_n|x_n) = p(z_n|x_n;\theta)$$
+$$q^*(z_n\mid x_n) = p(z_n\mid x_n;\theta)$$
 
 이 과정이 EM 알고리즘에서 현재 파라미터를 바탕으로 각 데이터 포인트의 잠재 변수 사후 확률$$\gamma(z_{nk})$$을 계산하는 **E-step**에 해당한다.
 
@@ -99,23 +99,23 @@ $$q^*(z_n|x_n) = p(z_n|x_n;\theta)$$
 
 ### 최적의 `$$\theta^*$$` 찾기 (M-step의 원리)
 
-다음으로, 분포 `q`를 고정한 상태에서 ELBO를 최대화하는 최적의 파라미터 $$\theta^*$$를 찾는다. ELBO 식에서 `$$\theta$$`와 무관한 항인 $$log q(z_n|x_n)$$을 제외하고 식을 정리하면 다음과 같다.
+다음으로, 분포 `q`를 고정한 상태에서 ELBO를 최대화하는 최적의 파라미터 $$\theta^*$$를 찾는다. ELBO 식에서 `$$\theta$$`와 무관한 항인 $$log q(z_n\mid x_n)$$을 제외하고 식을 정리하면 다음과 같다.
 
 $$
 \begin{aligned}
-\theta^* &= \underset{\theta}{\mathrm{argmax}} \sum_{n=1}^{N} E_{z_n \sim q(z_n|x_n)} [log p(x_n, z_n; \theta)] \\
-&= \underset{\theta}{\mathrm{argmax}} \sum_{n=1}^{N} E_{z_n \sim q(z_n|x_n)} [log p(z_n; \theta) + log p(x_n|z_n; \theta)]
+\theta^* &= \underset{\theta}{\mathrm{argmax}} \sum_{n=1}^{N} E_{z_n \sim q(z_n\mid x_n)} [log p(x_n, z_n; \theta)] \\
+&= \underset{\theta}{\mathrm{argmax}} \sum_{n=1}^{N} E_{z_n \sim q(z_n\mid x_n)} [log p(z_n; \theta) + log p(x_n\mid z_n; \theta)]
 \end{aligned}
 $$
 
 이 식은 **로그 가능도의 기댓값**을 최대화하는 것과 같다. GMM의 경우, 이 기댓값은 다음과 같이 구체적으로 표현할 수 있다.
 
 * $$log p(z_n; \theta)$$는 `k`번째 가우시안이 선택될 사전 확률이므로 $$log \pi_k$$에 해당한다.
-* $$log p(x_n|z_n; \theta)$$는 `k`가 주어졌을 때 $$x_n$$이 나타날 확률이므로 $$log \mathcal{N}(x_n; \mu_k, \Sigma_k)$$에 해당한다 .
+* $$log p(x_n\mid z_n; \theta)$$는 `k`가 주어졌을 때 $$x_n$$이 나타날 확률이므로 $$log \mathcal{N}(x_n; \mu_k, \Sigma_k)$$에 해당한다 .
 
 따라서 GMM에 대한 목적식 $$J(\mathcal{X};\theta)$$는 다음과 같이 정리된다.
 
-$$J(\mathcal{X};\theta) = \underset{\theta}{\mathrm{argmax}} \sum_{n=1}^{N} \sum_{k=1}^{K} q(z_n=k|x_n) (log \pi_k + log \mathcal{N}(x_n; \mu_k, \Sigma_k))$$
+$$J(\mathcal{X};\theta) = \underset{\theta}{\mathrm{argmax}} \sum_{n=1}^{N} \sum_{k=1}^{K} q(z_n=k\mid x_n) (log \pi_k + log \mathcal{N}(x_n; \mu_k, \Sigma_k))$$
 
 이 목적식을 각 파라미터($$\mu_k, \Sigma_k, \pi_k$$)에 대해 미분하여 0이 되는 지점을 찾으면, 이것이 바로 EM 알고리즘의 **M-step**에서 파라미터를 업데이트하는 수식과 동일한 결과를 얻게 된다.
 
