@@ -99,7 +99,6 @@ $$P(\theta\mid D) = \frac{P(\theta) \cdot P(D\mid \theta)}{P(D)}$$
 
 베타분포를 prior로, 베르누이분포를 likelihood로 모델링하면 사후분포 또한 베타분포이다.
 
-$$(\alpha, \beta)$$
 $$\alpha_{\text{new}} = \alpha + \sum_{i=1}^{n} x_i, \quad \beta_{\text{new}}=\beta + n - \sum_{i=1}^{n} x_i$$
 
 베타분포의 PDF는 $\alpha, \beta$에 의해서 결정된다.
