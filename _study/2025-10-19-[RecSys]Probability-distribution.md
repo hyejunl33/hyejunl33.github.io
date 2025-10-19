@@ -23,13 +23,13 @@ $$\lim_{{n \to \infty}} P\left(\frac{{X_1 + X_2 + \ldots + X_n - n\mu}}{{\sigma 
 
 중심극한정리는 독립적인 확률 변수들의 합이나 평균이 표본의 크기가 커질수록 정규분포에 근사하는 현상이다.
 
-$$X_n$$은 독립적이고 동일한 분포를 가진($$i.i.d$$)확률변수
+$X_n$은 독립적이고 동일한 분포를 가진($i.i.d$)확률변수
 
-$$n$$:표본의 크기
+$n$:표본의 크기
 
-$$\mu$$: 확률변수의 평균
+$\mu$: 확률변수의 평균
 
-$$\sigma$$: 확률변수의 표준편차
+$\sigma$: 확률변수의 표준편차
 
 ```python
 import numpy as np
@@ -87,7 +87,7 @@ for size in n:
 
 원래 Posterior를 정확히 계산하려면 베이즈정리의 분모에 해당하는 복잡한 적분계산이 필요하다. 하지만 켤레 관계를 이용하면 이 과정을 생략하고, 사전 분포의 파라미터를 데이터의 정보를 이용해서 업데이트하는것 만으로도 Posterior를 얻을 수 있다.
 
-$$P(\theta|D) = \frac{P(\theta) \cdot P(D|\theta)}{P(D)}$$
+$$P(\theta\mid D) = \frac{P(\theta) \cdot P(D\mid \theta)}{P(D)}$$
 
 즉 분모의 $$P(D)$$를 구하려면 복잡한 적분과정을 거쳐야 하는데, 그러한 과정 없이 파라미터 업데이트만으로 Posterior를 구할 수 있음.
 
@@ -97,9 +97,9 @@ $$P(\theta|D) = \frac{P(\theta) \cdot P(D|\theta)}{P(D)}$$
 
 베타분포: 0과 1사이의 값을 가지는 연속 확률분포
 
-베타분포를 prior로, 베르누이분포를 likelihood로 모델링하면 사후분포또한 베타분포이다.
+베타분포를 prior로, 베르누이분포를 likelihood로 모델링하면 사후분포 또한 베타분포이다.
 
-$$\text{사후분포 파라미터 추정식 (}\alpha, \beta \text{)}$$
+$$(\alpha, \beta)$$를 파라미터로 갖는다.
 $$\alpha_{\text{new}} = \alpha + \sum_{i=1}^{n} x_i, \quad \beta_{\text{new}}=\beta + n - \sum_{i=1}^{n} x_i$$
 
 베타분포의 PDF는 $\alpha, \beta$에 의해서 결정된다.
@@ -150,8 +150,7 @@ prior의 초기상태에서 Posterior를 업데이트 해서 베르누이 분포
 
 **포아송분포**: 주어진 시간간격동안 발생한 사건의 횟수를 모델링하는 이산 확률 분포
 
-$$\text{포아송 분포 확률 밀도 함수}$$
-$$f(x|\lambda)=\frac{\lambda ^ x}{x!}e^{-\lambda}\;,\;x=0,1,\dots,\infty$$
+$$f(x\mid \lambda)=\frac{\lambda ^ x}{x!}e^{-\lambda}\;,\;x=0,1,\dots,\infty$$
 
 $$\lambda$$: 시간간격동안 사건이 발생할 횟수의 기댓값
 
@@ -379,7 +378,7 @@ $$f(x; n, p) = \binom{n}{x} p^x (1-p)^{n-x}$$
 
 이항분포에서 시행횟수 n이 충분히 크고 성공 확률 p가 0또는 1에 가깝지 않을때 CLT(중심 극한 정리)에 의하여 정규분포에 가까워 진다.
 
-$$X \sim \text{Binomial}(n, p)$$$$\mathbb{E}[X]=np, \quad \text{Var}(X)=np(1-p)$$$$X \approx N(np,np(1-p))$$
+$$X \sim \text{Binomial}(n, p)$$ $$E[X]=np, \quad {Var}(X)=np(1-p)$$ $$X \approx N(np,np(1-p))$$
 
 ```python
 import numpy as np
