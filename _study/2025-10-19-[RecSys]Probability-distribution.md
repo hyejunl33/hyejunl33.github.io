@@ -99,7 +99,7 @@ $$P(\theta\mid D) = \frac{P(\theta) \cdot P(D\mid \theta)}{P(D)}$$
 
 베타분포를 prior로, 베르누이분포를 likelihood로 모델링하면 사후분포 또한 베타분포이다.
 
-$$(\alpha, \beta)$$를 파라미터로 갖는다.
+$$(\alpha, \beta)$$
 $$\alpha_{\text{new}} = \alpha + \sum_{i=1}^{n} x_i, \quad \beta_{\text{new}}=\beta + n - \sum_{i=1}^{n} x_i$$
 
 베타분포의 PDF는 $\alpha, \beta$에 의해서 결정된다.
@@ -378,7 +378,9 @@ $$f(x; n, p) = \binom{n}{x} p^x (1-p)^{n-x}$$
 
 이항분포에서 시행횟수 n이 충분히 크고 성공 확률 p가 0또는 1에 가깝지 않을때 CLT(중심 극한 정리)에 의하여 정규분포에 가까워 진다.
 
-$$X \sim \text{Binomial}(n, p)$$ $$E[X]=np, \quad {Var}(X)=np(1-p)$$ $$X \approx N(np,np(1-p))$$
+$$X \sim \text{Binomial}(n, p)$$
+$$E[X]=np, {Var}(X)=np(1-p)$$
+$$X \approx N(np,np(1-p))$$
 
 ```python
 import numpy as np
