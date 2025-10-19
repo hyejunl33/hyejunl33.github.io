@@ -19,17 +19,17 @@ math: true
 
 # 중심극한정리(CLT)
 
-$\lim_{{n \to \infty}} P\left(\frac{{X_1 + X_2 + \ldots + X_n - n\mu}}{{\sigma \sqrt{n}}} \leq x\right) = \Phi(x)$
+$$\lim_{{n \to \infty}} P\left(\frac{{X_1 + X_2 + \ldots + X_n - n\mu}}{{\sigma \sqrt{n}}} \leq x\right) = \Phi(x)$$
 
 중심극한정리는 독립적인 확률 변수들의 합이나 평균이 표본의 크기가 커질수록 정규분포에 근사하는 현상이다.
 
-$X_n$은 독립적이고 동일한 분포를 가진($i$$.i.d$)확률변수
+$$X_n$$은 독립적이고 동일한 분포를 가진($$i$$$$.i.d$$)확률변수
 
-$n$:표본의 크기
+$$n$$:표본의 크기
 
-$\mu$: 확률변수의 평균
+$$\mu$$: 확률변수의 평균
 
-$\sigma$: 확률변수의 표준편차
+$$\sigma$$: 확률변수의 표준편차
 
 ```python
 import numpy as np
@@ -87,9 +87,9 @@ for size in n:
 
 원래 Posterior를 정확히 계산하려면 베이즈정리의 분모에 해당하는 복잡한 적분계산이 필요하다. 하지만 켤레 관계를 이용하면 이 과정을 생략하고, 사전 분포의 파라미터를 데이터의 정보를 이용해서 업데이트하는것 만으로도 Posterior를 얻을 수 있다.
 
- $P(\theta|D) = \frac{P(\theta) \cdot P(D|\theta)}{P(D)}$
+ $$P(\theta|D) = \frac{P(\theta) \cdot P(D|\theta)}{P(D)}$$
 
-즉 분모의 $P(D)$를 구하려면 복잡한 적분과정을 거쳐야 하는데, 그러한 과정 없이 파라미터 업데이트만으로 Posterior를 구할 수 있음.
+즉 분모의 $$P(D)$$를 구하려면 복잡한 적분과정을 거쳐야 하는데, 그러한 과정 없이 파라미터 업데이트만으로 Posterior를 구할 수 있음.
 
 ## 베르누이 - 베타분포
 
@@ -99,13 +99,13 @@ for size in n:
 
 베타분포를 prior로, 베르누이분포를 likelihood로 모델링하면 사후분포또한 베타분포이다.
 
-$\text{사후분포 파라미터 추정식 (}\alpha, \beta \text{)} \\\alpha_{\text{new}} = \alpha + \sum_{i=1}^{n} x_i, \quad \beta_{\text{new}}=\beta + n - \sum_{i=1}^{n} x_i$
+$$\text{사후분포 파라미터 추정식 (}\alpha, \beta \text{)} \\\alpha_{\text{new}} = \alpha + \sum_{i=1}^{n} x_i, \quad \beta_{\text{new}}=\beta + n - \sum_{i=1}^{n} x_i$$
 
 베타분포의 PDF는 $\alpha, \beta$에 의해서 결정된다.
 
-$f(y;α,β)=\frac{y^{α−1}(1−y)^{β−1}}{B(α,β)}​$
+$$f(y;α,β)=\frac{y^{α−1}(1−y)^{β−1}}{B(α,β)}​$$
 
-$B(α,β)=∫_0^1t^{α−1}(1−t)^{β−1}dt$
+$$B(α,β)=∫_0^1t^{α−1}(1−t)^{β−1}dt$$
 
 따라서 알파와 베타를 파라미터 추정식으로 업데이트 해준다.
 
@@ -149,25 +149,25 @@ prior의 초기상태에서 Posterior를 업데이트 해서 베르누이 분포
 
 **포아송분포**: 주어진 시간간격동안 발생한 사건의 횟수를 모델링하는 이산 확률 분포
 
-$\text{포아송 분포 확률 밀도 함수} \\f(x|\lambda)=\frac{\lambda ^ x}{x!}e^{-\lambda}\;,\;x=0,1,\dots,\infty$
+$$\text{포아송 분포 확률 밀도 함수} \\f(x|\lambda)=\frac{\lambda ^ x}{x!}e^{-\lambda}\;,\;x=0,1,\dots,\infty$$
 
-$\lambda$: 시간간격동안 사건이 발생할 횟수의 기댓값
+$$\lambda$$: 시간간격동안 사건이 발생할 횟수의 기댓값
 
-$x$: 사건 발생 횟수
+$$x$$: 사건 발생 횟수
 
-$\lambda$번 사건이 발생할떄 $x$번의 사건 발생이 관측될 확률을 모델링한다.
+$$\lambda$$번 사건이 발생할떄 $x$번의 사건 발생이 관측될 확률을 모델링한다.
 
 감마분포: 시간을 모델링하는 연속 확률 분포
 
-$f(x;\alpha,\beta) = \frac{e^{(-\beta x)}\beta^\alpha}{\Gamma(\alpha)}x^{(\alpha-1)}$
+$$f(x;\alpha,\beta) = \frac{e^{(-\beta x)}\beta^\alpha}{\Gamma(\alpha)}x^{(\alpha-1)}$$
 
-$\alpha$는 shape parameter로 분포의 기본적인 형태를 결정한다. $\alpha$가 증가할 수록 대칭적인 형태에 가까워지며 $\alpha$가 커질수록 분포의 평균과 분산이 증가한다.
+$$\alpha$$는 shape parameter로 분포의 기본적인 형태를 결정한다. $$\alpha$$가 증가할 수록 대칭적인 형태에 가까워지며 $$\alpha$$가 커질수록 분포의 평균과 분산이 증가한다.
 
-$\beta$는 Rate Parameter로 분포의 규모를 조정한다.
+$$\beta$$는 Rate Parameter로 분포의 규모를 조정한다.
 
 아래의 수식을 통해 파라미터를 업데이트한다.
 
-$\\\alpha_{\text{new}} =\alpha + \sum_{i} x_i, \quad \beta_{\text{new}}= \beta + n$
+$$\\\alpha_{\text{new}} =\alpha + \sum_{i} x_i, \quad \beta_{\text{new}}= \beta + n$$
 
 ```python
 import numpy as np
@@ -205,13 +205,13 @@ plt.show()
 
 정규분포는 CLT의 성질을 활용할 수 있는 이점이 있기 때문에 모델링할때 자주 사용되는 연속확률 분포이다.
 
-$\mu, \sigma^2$를 파라미토로 이용해서 모델링한다.
+$$\mu, \sigma^2$$를 파라미터로 이용해서 모델링한다.
 
-정규분포의 PDF:$f(x;\mu,\sigma^2)=\frac{1}{\sigma \sqrt{2\pi}} \times exp(-\frac{(x-\mu)^2}{2\sigma^2}$
+정규분포의 PDF:$$f(x;\mu,\sigma^2)=\frac{1}{\sigma \sqrt{2\pi}} \times exp(-\frac{(x-\mu)^2}{2\sigma^2}$$
 
 Prior를 정규분포로 가정했을때 사후분포도 정규분포가 된다.
 
-$\mu_{\text{new}}=\frac{1}{ \frac{1}{ \sigma_0^2} + \frac{n}{\sigma^2} }\left( \frac{\mu_0}{\sigma_0^2} + \frac{\sum_{i=1}^{n} x_i}{\sigma^2} \right) ,\quad  \sigma^2_{\text{new}}=\left( \frac{1}{ \sigma_0^2} + \frac{n}{\sigma^2} \right)^{-1}$
+$$\mu_{\text{new}}=\frac{1}{ \frac{1}{ \sigma_0^2} + \frac{n}{\sigma^2} }\left( \frac{\mu_0}{\sigma_0^2} + \frac{\sum_{i=1}^{n} x_i}{\sigma^2} \right) ,\quad  \sigma^2_{\text{new}}=\left( \frac{1}{ \sigma_0^2} + \frac{n}{\sigma^2} \right)^{-1}$$
 
 위의 식을 이용해서 파라미터를 업데이트 한다.
 
@@ -255,23 +255,23 @@ prior와 posterior 둘다 모두 정규분포임을 볼 수 있다.
 
 ## 베타분포 - UniForm분포
 
-beta분포는 $\alpha, \beta$가 1일때 Uniform분포가 된다.
+beta분포는 $$\alpha, \beta$$가 1일때 Uniform분포가 된다.
 
-$f(x; \alpha, \beta) = \frac{{x^{\alpha - 1} \cdot (1 - x)^{\beta - 1}}}{{B(\alpha, \beta)}}$
+$$f(x; \alpha, \beta) = \frac{{x^{\alpha - 1} \cdot (1 - x)^{\beta - 1}}}{{B(\alpha, \beta)}}$$
 
-Beta분포의 PDF식에서 $\alpha = 1, \beta = 1$로두면
+Beta분포의 PDF식에서 $$\alpha = 1, \beta = 1$$로두면
 
-$f(x; \alpha=1, \beta=1) = \frac{1}{{B(1, 1)}}$
+$$f(x; \alpha=1, \beta=1) = \frac{1}{{B(1, 1)}}$$
 
 여기서 분모를 계산하면
 
-$B(\alpha,\beta)=\int _0^1 t^{\alpha -1}(1-t)^{\beta-1}dt\\B(1,1)=\int _0^1 t^0(1-t)^0dt=\int_0^11dt=1$
+$$B(\alpha,\beta)=\int _0^1 t^{\alpha -1}(1-t)^{\beta-1}dt\\B(1,1)=\int _0^1 t^0(1-t)^0dt=\int_0^11dt=1$$
 
-따라서 PDF = 1이다.$f(x;1,1)=1$
+따라서 PDF = 1이다.$$f(x;1,1)=1$$
 
-Uniform분포$U(0,1)$는 [0,1]구간에서 모든 값이 균등한 확률을 가지며, PDF는 아래와 같다.
+Uniform분포$$U$(0,1)$$는 [0,1]구간에서 모든 값이 균등한 확률을 가지며, PDF는 아래와 같다.
 
-$f(x; a, b) = \frac{1}{{b - a}}, \quad \text{for } a \leq x \leq b\\f(x;0,1)=\frac{1}{{1-0}}=1$
+$$f(x; a, b) = \frac{1}{{b - a}}, \quad \text{for } a \leq x \leq b\\f(x;0,1)=\frac{1}{{1-0}}=1$$
 
 ```python
 import numpy as np
@@ -312,21 +312,21 @@ plt.show()
 
 ![image](/assets/images/2025-10-19-19-54-13.png)
 
-$\alpha = 1, \beta = 1$에서 파란색과 빨간색 그래프가 일치함을 확인할 수 있다.
+$$\alpha = 1, \beta = 1$$에서 파란색과 빨간색 그래프가 일치함을 확인할 수 있다.
 
 ## Gamma분포 - Exponential분포
 
 감마 분포는 두개의 파라미터를 가지며 확률 밀도 함수(PDF)는 아래와 같다.
 
-$f(x; \alpha, \beta) = \frac{{x^{\alpha - 1} \cdot e^{-x/\beta}}}{{\beta^\alpha \cdot \Gamma(\alpha)}}$
+$$f(x; \alpha, \beta) = \frac{{x^{\alpha - 1} \cdot e^{-x/\beta}}}{{\beta^\alpha \cdot \Gamma(\alpha)}}$$
 
-지수분포는 감마분포에서 shape parameter인 $\alpha = 1$일때의 분포이다. 지수분포는 $\lambda$(rare parameter)평균 발생률을 매개변수로 가지며, 확률 밀도 함수는 아래와 같다.
+지수분포는 감마분포에서 shape parameter인 $$\alpha = 1$$일때의 분포이다. 지수분포는 $$\lambda$$(rare parameter)평균 발생률을 매개변수로 가지며, 확률 밀도 함수는 아래와 같다.
 
-$f(x; \lambda) = \lambda e^{-\lambda x}, \quad \text{for } x \geq 0$
+$$$f(x; \lambda) = \lambda e^{-\lambda x}, \quad \text{for } x \geq 0$$
 
-$f(x; \alpha=1, \beta) = \frac{{x^{1 - 1} \cdot e^{-x/\beta}}}{{\beta^1 \cdot \Gamma(1)}}=\frac{1}{\beta}e^{-x/\beta}$
+$$f(x; \alpha=1, \beta) = \frac{{x^{1 - 1} \cdot e^{-x/\beta}}}{{\beta^1 \cdot \Gamma(1)}}=\frac{1}{\beta}e^{-x/\beta}$$
 
-여기서 $\lambda = \frac{1}{\beta}$로 치환하면 지수분포의 확률 밀도 함수가 된다.
+여기서 $$\lambda = \frac{1}{\beta}$$로 치환하면 지수분포의 확률 밀도 함수가 된다.
 
 ```python
 import numpy as np
@@ -365,17 +365,17 @@ plt.show()
 
 ![image](/assets/images/2025-10-19-19-54-25.png)
 
-감마분포에서 $\alpha=1$로 주었을때 지수분포와 같음을 확인할 수 있다..
+감마분포에서 $$\alpha=1$$로 주었을때 지수분포와 같음을 확인할 수 있다..
 
 ## Binomial분포 - Normal분포
 
 이항분포의 PDF는 다음과 같다.
 
-$f(x; n, p) = \binom{n}{x} p^x (1-p)^{n-x}$
+$$f(x; n, p) = \binom{n}{x} p^x (1-p)^{n-x}$$
 
 이항분포에서 시행횟수 n이 충분히 크고 성공 확률 p가 0또는 1에 가깝지 않을때 CLT(중심 극한 정리)에 의하여 정규분포에 가까워 진다.
 
-$X \sim Binomial(n, p)\\\mathbb E[X]=np, \quad Var(X)=np(1-p)\\X \approx N(np,np(1-p))$
+$$X \sim Binomial(n, p)\\\mathbb E[X]=np, \quad Var(X)=np(1-p)\\X \approx N(np,np(1-p))$$
 
 ```python
 import numpy as np
@@ -413,4 +413,4 @@ plt.show()
 
 ![image](/assets/images/2025-10-19-19-54-33.png)
 
-$n=20$이고 $p=0.5$인 이항분포는 정규분포를 따름을 확인할 수 있다.
+$$n=20$$이고 $$p=0.5$$인 이항분포는 정규분포를 따름을 확인할 수 있다.
