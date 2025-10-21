@@ -1,6 +1,6 @@
 ---
 title: "[Domain_Common_Project][과제2] 데이터 누수 탐지 및 방지하기"
-date: 2025-10-19
+date: 2025-10-21
 tags:
   - Domain_Common_Project
   - 과제
@@ -124,3 +124,9 @@ except Exception as e:
 `check_leaky_features()` 함수에서는 상호 정보량이 threshold인 0.2보다 큰 feature들을 리턴한다.
 
 이떄 `sklearn`의`mutual_info_classif()` 함수를 이용해서 정답 레이블과 features간의 상호 정보량을 계산한다.
+
+# Living Point
+
+- 파이프라인 설계중 train_test를 나누기전에 scaler를 돌려서 데이터누수가 발생하는것은 매우 흔한 경우라고 한다. 데이터누수가 없으려면 scaler는 데이터셋을 나눈후 꼭! 따로 적용해줘야 한다!!
+- train과 test데이터에 중복샘플이 있으면 제거해줘야한다!
+- 정답 레이블과 Input간의 상호 정보량이 너무 크다면 데이터 누수가 발생한다는 증거이다! → `mutual_info_classif()` 로 상호정보량을 계산해서 threshold가 넘는지 안넘는지 검사해야된다!
