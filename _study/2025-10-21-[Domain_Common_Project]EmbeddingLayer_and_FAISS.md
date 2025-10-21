@@ -1,6 +1,6 @@
 ---
 title: "[Domain_Common_Project][과제1] 임베딩 레이어 구현 및 FAISS를 활용한 유사문장 검색 과제"
-date: 2025-10-19
+date: 2025-10-21
 tags:
   - Domain_Common_Project
   - 과제
