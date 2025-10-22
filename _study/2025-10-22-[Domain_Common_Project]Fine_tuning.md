@@ -1,6 +1,6 @@
 ---
 title: "[Domain_Common_Project][과제3]Pretrained 모델파인튜닝"
-date: 2025-10-21
+date: 2025-10-22
 tags:
   - Domain_Common_Project
   - Bert
