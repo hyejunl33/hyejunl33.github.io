@@ -1,4 +1,5 @@
 ---
+layout: single
 title: "[Domain_Common_Project][study]메트릭 선택은 기술이 아니라 의사결정의 정치다."
 date: 2025-10-21
 tags:
@@ -11,6 +12,7 @@ tags:
 excerpt: "[Domain_Common_Project][study] 메트릭 선택은 기술이 아니라 의사결정의 정치다."
 math: true
 ---
+
 이 글은 원본글을 바탕으로 학습목적으로 정리한 글임을 밝힙니다.
 원본 글: https://stages.ai/en/competitions/370/board/community/post/3051
 
