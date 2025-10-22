@@ -1,3 +1,19 @@
+---
+title: "[Domain_Common_Project][과제3]Pretrained 모델파인튜닝"
+date: 2025-10-21
+tags:
+  - Domain_Common_Project
+  - Bert
+  - Pretrained
+  - Fine-tuning
+  - NLP
+  - Tokenization
+  - 과제
+excerpt: "[Domain_Common_Project][과제3] Pretrained 모델파인튜닝"
+math: true
+---
+
+
 # 과제3_Pretrained 모델파인튜닝
 
 Transformer 라이브러리를 활용하여 BERT 기반 모델을 IMDB 감성 분석 데이터셋에 대해 영화 리뷰 문장이 긍정인지 부정인지 분류하는 모델을 파인튜닝하는 과제이다.
@@ -142,9 +158,18 @@ trainer.evaluate()
 - `train_dataset`, `eval_dataset` :train과 검증 데이터셋을 넘겨준다.
 - `compute_metrics:` 위에서 정의한 함수를 넘겨줘서 acc,recall, precision, f1을 측정한다.
 
-![image.png](image.png)
+![image](/assets/images/2025-10-22-22-45-32.png)
 
 처음에 epoch을 5로 뒀는데 총 학습시간이 3시간이 나와서 epoch을 2로 줄였다.. 확실히 데이터셋이 2만개가 넘어가니깐 epoch한번 도는데 시간이 상당히 많이 소요됨을 알 수 있다. 이런 학습을 CPU로 돌릴려고 했으니 당연히 리소스가 넘쳐서 튕길만도 하다.
+
+![image](/assets/images/2025-10-22-23-15-29.png)
+![image](/assets/images/2025-10-22-23-15-34.png)
+![image](/assets/images/2025-10-22-23-15-39.png)
+![image](/assets/images/2025-10-22-23-15-46.png)
+
+1시간 23분+12분에 거쳐서 2에폭 학습을 완료시켰다.
+
+학습결과 94퍼센트의 정확도, 93퍼센트의 recall, 94퍼센트의 f1등 예쁘게 점수가 나온것을 확인할 수 있다.
 
 # 새로운 문장에서의 Inference
 
@@ -180,6 +205,10 @@ with torch.no_grad():
 새로운 문장들인 `new_sentences` 를 학습할때와 마찬가지로 토크나이저로 토큰화를 한 후 모델을 돌린다.
 
 logit값인 probs를 `argmax` 에 넣어서 pred값을 얻는다. 따라서 pred가 1이면 긍정으로 예측하고 pred가 0이면 부정으로 예측한다.
+
+![image](/assets/images/2025-10-22-23-15-58.png)
+
+새로운 문장에대해서 Inference를 해보면 긍정적인 문장과 부정적인 문장은 거의 99%의 확신을 가지고 예측해냄을 볼 수 있다. 뭔가 대견하고 기특하다.
 
 # Living point
 

@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "[Domain_Common_Project][study]메트릭 선택은 기술이 아니라 의사결정의 정치다."
-date: 2025-10-21
+date: 2025-10-22
 tags:
   - Domain_Common_Project
   - study
@@ -34,15 +34,16 @@ math: true
 <aside>
 💡
 
-acc만 올리면 무조건 좋은 모델인가요?
+**acc만 올리면 무조건 좋은 모델인가요?**
 
 </aside>
+
 
 어떤 질병이 있는 환자의 비율이 1%라고 할때 질병이 없는 환자의 비율은 99%이다. 어떤 모델은 input과 상관없이 질병이 없다라고만 판단을 내릴때 Accuracy는 99%이다. 얼핏보면 좋은 모델인것 처럼 보이지만, 인풋과 상관없이 질병이 없다라고만 판단을 내리므로 좋은 모델은 아니다.
 
 즉 Classification에서 Class간 불균형 데이터에서는 ACC만을 올리는것이 좋은모델은 아니다.
 
-예시2: Multi-class classification
+### 예시2: Multi-class classification
 
 영화리뷰 감성분류를 한다고 해보자.
 
@@ -50,7 +51,7 @@ acc만 올리면 무조건 좋은 모델인가요?
 - Neutral: 20%
 - Negative: 10%
 
-Positive의 학습뎅리터가 많으므로 당연히 모델을 돌렸을떄 positive는 잘 맞히지만, Neutral과 Negative를 Positive로 많이 오분류 한다.
+Positive의 학습데이터가 많으므로 당연히 모델을 돌렸을떄 positive는 잘 맞히지만, Neutral과 Negative를 Positive로 많이 오분류 한다.
 
 ## Macro-F1 vs Micro-F1
 
@@ -85,7 +86,7 @@ Positive의 학습뎅리터가 많으므로 당연히 모델을 돌렸을떄 pos
 
 즉 클래스별로 맞히기 어려운 샘플일수록 Loss 비중을 높인다.
 
-$\gamma$에 따라 Loss Function의 형태 자체가 달라짐을 볼 수 있다.  $\gamma$가 0에 가까울수록 예측확률이 낮을때, 즉 확신이 없을때의 Loss가 매우 커서, 학습이 더 강하게 일어남을 확인할 수 있다.
+$$\gamma$$에 따라 Loss Function의 형태 자체가 달라짐을 볼 수 있다.  $$\gamma$$가 0에 가까울수록 예측확률이 낮을때, 즉 확신이 없을때의 Loss가 매우 커서, 학습이 더 강하게 일어남을 확인할 수 있다.
 
 ![image](/assets/images/2025-10-22-22-42-16.png)
 
