@@ -1,8 +1,21 @@
-# [모델최적화]-FocalLoss
+---
+layout: single
+title: "[Domain_Common_Project][모델최적화]-FocalLoss"
+date: 2025-10-26
+tags:
+  - Domain_Common_Project
+  - study
+  - Feature_Engineering
+  - Focal_Loss
+excerpt: "[모델최적화]-FocalLoss"
+math: true
+---
+
+
 
 # Introduction
 
-![image.png](image.png)
+![image](/assets/images/2025-10-26-15-50-21.png)
 
 이전에 Weighted Cross Entropy를 적용한 모델은 이상할정도로 과적합되어 Training Loss는 하락하는 추세를 보이지만, Validation Loss는 줄어들지 않는 문제가 있었다.
 
@@ -19,7 +32,7 @@ Weighted CrossEntropy는 소수의 클래스에 더 높은 가중치를 부여�
 
 베이스모델은 이전실험들에서 가장 좋은 성능을 보였던 Custom_Tokenizer모델을 사용한다.
 
-![image.png](image%201.png)
+![image](/assets/images/2025-10-26-15-50-31.png)
 
 # Focal Loss Implementaion
 
@@ -175,7 +188,7 @@ class CustomTrainerWithFocalLoss(Trainer):
 
 `FocalLossSoftLabels` 클래스안에서 FocalLoss를 정의한다. 
 
-![image.png](image%202.png)
+![image](/assets/images/2025-10-26-15-50-42.png)
 
 Focal Loss는 모델이 이미 쉽게 맞히는 샘플보다는, 계속 틀리는 어려운 샘플에 더 집중하도록 Lossfunction 자체를 조정한다. 즉 클래스별로 맞히기 어려운 샘플일수록 Loss 비중을 높인다.
 
@@ -280,7 +293,7 @@ except Exception as e:
 
 `lr_scheduler_type`을 `“cosine”` 으로 줘서 선형적으로 learning rate가 조정되는게 아닌 cosine개형으로 바뀌도록 설정해주었다. 일반적으로 Overfitting을 막고, Learning rate가 cosine개형으로 달라지기때문에, Regularization의 방법중 하나라고 한다.
 
-![image.png](image%203.png)
+![image](/assets/images/2025-10-26-15-50-53.png)
 
 실제로 wandb에서 learning_rate를 관찰해보면 주황색 그래프는 선형적으로 감소하는데 비해 코사인 개형을 따르는것을 볼 수 있다.
 
@@ -288,12 +301,11 @@ Trainer에서는    `focal_loss_alpha=[0.11, 0.45, 0.12, 0.32]` 를통해서 기
 
 # 결과
 
-![image.png](image%204.png)
+![image](/assets/images/2025-10-26-15-51-03.png)
 
 정규화를 해주었지만, 그럼에도 Training Loss는 감소할때 Validation Loss는 2epoch이후 계속 증가함을 볼 수 있다. 따라서 더 강한 정규화 전략을 짜고, 하이퍼파라미터 튜닝을 해봐야겠다.
 
-![image.png](image%205.png)
-
+![image](/assets/images/2025-10-26-15-51-09.png)
 에폭을 8로 설정한 탓이었을까? Focal Loss를 적용하고, Regularization을 도입했음에도 오히려 test성능이 줄어든 0.78을 기록했다.
 
 이후실험에서는 하이퍼파라미터 튜닝을 통한 더 나은 정규화 방향을 찾아갈 예정이다. 그리고 Back Translation을 통한 데이터 증강, 확률적 가중치 평균 (Stochastic Weight Averaging - SWA) 기법을 이용해서 조금더 일반화 성능을 늘려볼 예정이다. 그리고 Early stopping의 기준을 Accuracy가 아니라 validationLoss로 설정해서 Validation Loss가 3에폭 이상에서 증가하면 학습을 종료하도록 설정을 해서 Overfitting을 막아봐야겠다.
