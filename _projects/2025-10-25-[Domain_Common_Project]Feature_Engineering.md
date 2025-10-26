@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[모델최적화]-Feature_Engineering"
+title: "[Domain_Common_Project][모델최적화]-Feature_Engineering"
 date: 2025-10-25
 tags:
   - Domain_Common_Project
