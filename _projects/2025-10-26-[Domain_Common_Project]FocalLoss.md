@@ -192,11 +192,11 @@ class CustomTrainerWithFocalLoss(Trainer):
 
 Focal Loss는 모델이 이미 쉽게 맞히는 샘플보다는, 계속 틀리는 어려운 샘플에 더 집중하도록 Lossfunction 자체를 조정한다. 즉 클래스별로 맞히기 어려운 샘플일수록 Loss 비중을 높인다.
 
-$\gamma$에 따라 Loss Function의 형태 자체가 달라짐을 볼 수 있다.  $\gamma$가 0에 가까울수록 예측확률이 낮을때, 즉 확신이 없을때의 Loss가 매우 커서, 학습이 더 강하게 일어남을 확인할 수 있다.
+$$\gamma$$에 따라 Loss Function의 형태 자체가 달라짐을 볼 수 있다.  $$\gamma$$가 0에 가까울수록 예측확률이 낮을때, 즉 확신이 없을때의 Loss가 매우 커서, 학습이 더 강하게 일어남을 확인할 수 있다.
 
 이때 ground Truth Class의 확률이 적을수록, 즉 해당 레이블에 모델이 확신이 없을수록 Loss값이 커지는것을 알 수 있다. 따라서 모델이 확신을 갖지 못하는 각 step의 판단에서, Loss가 더 커지도록 한다.
 
-그리고 $\alpha$는 Weighted Cross Entropy와 같이 불균형 클래스에서 클래스간의 가중치를 설정하는 하이퍼 파라미터이다. 우선은 WCE에서처럼 각 클래스 백분율의 역수를 가중치로 줬는데 $\alpha,\beta$는 추후 하이퍼파라미터 튜닝 툴로 튜닝을 해봐야겠다.
+그리고 $$\alpha$$는 Weighted Cross Entropy와 같이 불균형 클래스에서 클래스간의 가중치를 설정하는 하이퍼 파라미터이다. 우선은 WCE에서처럼 각 클래스 백분율의 역수를 가중치로 줬는데 $\alpha,\beta$는 추후 하이퍼파라미터 튜닝 툴로 튜닝을 해봐야겠다.
 
 ## 훈련 및 정규화
 
@@ -297,7 +297,7 @@ except Exception as e:
 
 실제로 wandb에서 learning_rate를 관찰해보면 주황색 그래프는 선형적으로 감소하는데 비해 코사인 개형을 따르는것을 볼 수 있다.
 
-Trainer에서는    `focal_loss_alpha=[0.11, 0.45, 0.12, 0.32]` 를통해서 기본적인 focal_loss의 각 클래스별 가중치를 클래스의 백분율의 역수로 설정해주었다. 그리고 `focal_loss_gamma=2.0` 를 통해 $\gamma$가 2를 갖는 focal loss의 개형을 설정해주었다. 이 $\gamma$값은 이후 하이퍼파라미터 튜닝으로 튜닝을 할 예정이다.
+Trainer에서는    `focal_loss_alpha=[0.11, 0.45, 0.12, 0.32]` 를통해서 기본적인 focal_loss의 각 클래스별 가중치를 클래스의 백분율의 역수로 설정해주었다. 그리고 `focal_loss_gamma=2.0` 를 통해 $$\gamma$$가 2를 갖는 focal loss의 개형을 설정해주었다. 이 $$\gamma$$값은 이후 하이퍼파라미터 튜닝으로 튜닝을 할 예정이다.
 
 # 결과
 
