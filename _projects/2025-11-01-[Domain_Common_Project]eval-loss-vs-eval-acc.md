@@ -1,14 +1,26 @@
-# [모델최적화]-eval/loss vs eval/acc
+---
+layout: single
+title: "[Domain_Common_Project][모델최적화]-eval/loss vs eval/acc"
+date: 2025-11-01
+tags:
+  - Domain_Common_Project
+  - study
+  - ModelOptimization
+excerpt: "[모델최적화]-eval/loss vs eval/acc"
+math: true
+---
+
+
 
 # Introduction
 
 해당 test의 평가 지표는 test/acc이다. 지금까지의 실험 가설은 eval/loss를 줄여서 과적합을 막으면 자동으로 test/acc도 올라갈것이라는 가정이 있었다. 하지만 eval/loss를 metric으로 모델을 선택해서 test를 해본 결과, 성능이 오히려 하락하는 문제가 있었다.
 
-![image.png](image.png)
+![image](/assets/images/2025-11-01-13-30-04.png)
 
-![image.png](image%201.png)
+![image](/assets/images/2025-11-01-13-30-13.png)
 
-그리고 두번째로, 모델이 과하게 소수클래스를 중요하게 보는 문제가 있었다. test데이터셋의 분포는 알 수 없지만, 일반적으로 전체데이터셋과 같다고 생각할때, Focal Loss의 $\alpha$의 가중치로 인해 소수클래스만을 너무 중요하게 여겨서, 전체 데이터셋의 분포와 예측 분포를 볼때, 소수클래스의 비율이 과장되게 예측됨을 확인할 수 있었다.
+그리고 두번째로, 모델이 과하게 소수클래스를 중요하게 보는 문제가 있었다. test데이터셋의 분포는 알 수 없지만, 일반적으로 전체데이터셋과 같다고 생각할때, Focal Loss의 $$\alpha$$의 가중치로 인해 소수클래스만을 너무 중요하게 여겨서, 전체 데이터셋의 분포와 예측 분포를 볼때, 소수클래스의 비율이 과장되게 예측됨을 확인할 수 있었다.
 
 따라서 이번실험에서는 평가지표를 eval/acc로 바꿔본 후, Focal Loss의 가중치를 모두 1로 두고 성능을 관찰해본다. 시간관계상 앙상블한 모델이 아닌 단일모델로 실험을 한다. 평가지표를 acc로 바꿨기 때문에 eval/acc만 상승하고 eval/loss는 폭발하는 상황을 막기 위해서 기존에 8이었던 에폭을 5로 설정한다.
 
@@ -56,15 +68,15 @@
 
 # 결과
 
-![image.png](image%202.png)
+![image](/assets/images/2025-11-01-13-30-26.png)
 
 기존 실험들 중 가장 높은 성능을 보인 0.8211의 acc가 나왔다. 이제 확실한건, focal_loss의 alpha가중치를 신중하게 수정해야 한다는점, 그리고 모델을 선정할때는 최종 test를 위해서 accuracy를 기준으로 선정해야 한다는점이 확실해졌다.
 
-![image.png](image%203.png)
+![image](/assets/images/2025-11-01-13-30-32.png)
 
 긍정적인 부분은 alpha가중치를 모두 1로 뒀음에도 f1이 accuracy와 비슷한 정도의 score를 갖는다는것이다. 따라서 가중치가 모두 같음에도 recall성능이 나쁘지 않다는것으로, alpha가중치를 이전에 백분율의 역수로 준게 매우 악영향을 미쳤었다는것을 추측할 수 있었다.
 
-![image.png](image%204.png)
+![image](/assets/images/2025-11-01-13-30-41.png)
 
 모델의 최종 예측분포를 보면 EDA했을때 전체 데이터셋의 분포와 비슷함을 알 수 있다. 약한 부정비율은 많이 낮아졌지만, 그래도 다수의 클래스에서 Ground Truth와 같은 정답을 예측하는 숫자가 늘어났기 때문에 acc가 향상된것 같다.
 
@@ -377,11 +389,11 @@ print("=" * 50)
 
 ### 앙상블한 결과
 
-![image.png](image%205.png)
+![image](/assets/images/2025-11-01-13-30-56.png)
 
 모델 3개를 앙상블한 결과 acc가 0.7% 올랐다. 즉 유의미한 효과가 있었다.
 
-![image.png](image%206.png)
+![image](/assets/images/2025-11-01-13-31-02.png)
 
 이전 실험과 마찬가지로 최종 예측분포를 보면 전체 데이터셋의 분포와 비슷하게 맞춤을 알 수 있다. acc를 높이려면 test 데이터의 분포와 유사해야함을 시사한다. 그리고 소수를 차지하는 분포인 약한부정은 더 덜맞추는 경향성이 있지만, 0,1,3레이블은 더 정교하게 원래 데이터분포와 비슷해졌음을 알 수 있다. 대다수의 레이블을 잘 못추면 역시 acc가 올라감을 확인할 수 있었다.
 
