@@ -90,14 +90,14 @@ FocalLoss 및 정규화를 적용한 모델 성능
 이 과정에서 세 가지 근본적인 문제를 발견했다.
 
 1. **평가지표의 불일치:** 과적합을 막기 위해 `eval/loss`를 모니터링 기준으로 삼았으나, 대회의 최종 평가지표는 `test/accuracy`였다. `eval/loss`가 낮아도 `accuracy`가 높지 않은 경우가 발생했다. 그리고 평가지표가 `eval/loss` 여서 `eval/accuracy`가 감소하며 모델이 과적합 되고 있음에도 early stopping의 기준은 loss여서 early stopping이 작동하지 않는 문제가 있었다.
-2. **잘못된 $$\alpha$ 가중치:** 데이터 불균형을 해결하기 위해 클래스 빈도의 역수를 Focal Loss의 `alpha` 가중치로 설정했다(`[0.11, 0.45, 0.12, 0.32]`). 하지만 이는 모델이 소수 클래스를 **과도하게 예측**하도록 만들었고, 오히려 다수 클래스의 `accuracy`를 깎아 먹는 원인이 되었다. 이전의 WCE와 같은 가중치를 주어서 같은 결과를 얻게 되었다. WCE를 사용할떄는 K-Fold, 커스텀토크나이저와 함께 실험을 해서, 어떤것이 성능에 악영향을 미치는지 알 수 없었지만, 나머지 요인들을 통제변인으로 설정하고 조작변인으로 가중치만을 두어서 실험한 결과, 소수 클래스를 과도하게 예측하는것이 성능에 오히려 악영향을 미침을 확인할 수 있었다.
+2. **잘못된 $$\alpha$$ 가중치:** 데이터 불균형을 해결하기 위해 클래스 빈도의 역수를 Focal Loss의 `alpha` 가중치로 설정했다(`[0.11, 0.45, 0.12, 0.32]`). 하지만 이는 모델이 소수 클래스를 **과도하게 예측**하도록 만들었고, 오히려 다수 클래스의 `accuracy`를 깎아 먹는 원인이 되었다. 이전의 WCE와 같은 가중치를 주어서 같은 결과를 얻게 되었다. WCE를 사용할떄는 K-Fold, 커스텀토크나이저와 함께 실험을 해서, 어떤것이 성능에 악영향을 미치는지 알 수 없었지만, 나머지 요인들을 통제변인으로 설정하고 조작변인으로 가중치만을 두어서 실험한 결과, 소수 클래스를 과도하게 예측하는것이 성능에 오히려 악영향을 미침을 확인할 수 있었다.
 3. **하이퍼파라미터 튜닝:** Early Stopping, Label Smooting, Learning Rate Scheduler종류, Weight Decay등 모델의 성능에 영향을 미치는 수치들을 임의로 설정해서 정규화를 적용했음에도 성능이 나오지 않는것 같았다. 따라서 하이퍼파라미터 튜닝을 통해 최적의 세팅값을 찾아나가야 함을 발견했다.
 
 **전환점:** 위의 세가지 문제를 해결하기 위해 세가지를 동시에 수정했다.
 
 - 평가 지표를 eval/loss에서 eval/accuracy로 변경.
-- Focal Loss의 $\alpha$가중치를 [1,1,1,1], 즉 균등분포로 설정
-- 하이퍼파라미터 튜닝. Focal Loss의 $\gamma$, label Smoothing, Learning Rate Scheduler종류, Weight Decay, Epoch 수 등을 `sweep_config` 에 넣어서 `wandb_sweep`으로 하이퍼파라미터 튜닝을 함
+- Focal Loss의 $$$\alpha$$가중치를 [1,1,1,1], 즉 균등분포로 설정
+- 하이퍼파라미터 튜닝. Focal Loss의 $$\gamma$$, label Smoothing, Learning Rate Scheduler종류, Weight Decay, Epoch 수 등을 `sweep_config` 에 넣어서 `wandb_sweep`으로 하이퍼파라미터 튜닝을 함
 
 ![image](/assets/images/2025-11-03-11-42-06.png)
 
@@ -109,9 +109,9 @@ Wandb Sweep을 이용한 하이퍼파라미터 튜닝
 
 ## 2-5 시행착오3: 시간부족으로 시도해보지 못한 시도들..
 
-이전에서 $\alpha$가중치를 균등분포로 둔 이후 이 $\alpha$가중치를 더 정교하게 튜닝하려고 시도했다. 단순히 균등 가중치와 클래스 빈도 역수 가중치를 혼합하는 새로운 공식을 도입하여 `alpha_beta_smooth`라는변수명을 추가해서 HyperParameter를 다시 설계했다.
+이전에서 $$\alpha$$가중치를 균등분포로 둔 이후 이 $$\alpha$$가중치를 더 정교하게 튜닝하려고 시도했다. 단순히 균등 가중치와 클래스 빈도 역수 가중치를 혼합하는 새로운 공식을 도입하여 `alpha_beta_smooth`라는변수명을 추가해서 HyperParameter를 다시 설계했다.
 
-$W_{final} = (1-\beta)\cdot W_{inversefreq} + \beta\cdot W_{uniform}$
+$$W_{final} = (1-\beta)\cdot W_{inversefreq} + \beta\cdot W_{uniform}$$
 
 이 튜닝은 `focal_loss_gamma`, `SWA_K`, `learning_rate` 등 다른 주요 하이퍼파라미터까지 모두 포함하는 복잡한 실험이었다. 하지만 대회 마감 시간이 임박하여, **HPT는 13 스텝밖에 수행하지 못했다.**
 
