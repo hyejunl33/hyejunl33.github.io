@@ -22,7 +22,7 @@ math: true
 
 저번실험까지 해서 기껏 하이퍼파라미터 튜닝을 해뒀는데 TAPT라는 새로운 기법에 대해 알게됐다. 일반적으로 BERT모델을 내가 원하는 TASK에 FineTuning하는 기법인데, 이 기법을 사용하면 성능이 일반적으로 향상된다고 한다. 이 기법을 하이퍼파라미터 튜닝을 한 후에 알게되어서, 대회 종료까지 2일 남은 시점에서, 다시 하이퍼파라미터 튜닝을 해야하는 상황에 처해졌다. 따라서 TAPT를 일단 적용해보고, 기존에 찾았던 하이퍼파라미터를 이용해서 성능을 테스트해보기로 했다.
 
-[TAPT정리글]([https://hyejunl33.github.io/projects/2025-11-01-[Domain_Common_Project]TAPT/](https://hyejunl33.github.io/projects/2025-11-01-%5BDomain_Common_Project%5DTAPT/))
+[TAPT정리글](https://hyejunl33.github.io/projects/2025-11-01-%5BDomain_Common_Project%5DTAPT/)
 
 그 외에도 모델마다 acc성능이 다르므로, 추론단계에서 모델을 앙상블 할때 그냥 logit을 softvoting하는게 아니라, 모델간의 acc를 가중치로 줘서 softvoting하는 방법을 구현했다.
 
