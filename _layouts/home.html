@@ -8,13 +8,18 @@ layout: default
       <h1>Recent Posts</h1>
       <div class="post-list">
         
-        {% assign collections = "weeklyreview,projects,study,algorithm,etc" | split: "," %}
-        {% assign all_posts = "" | split: "," %}
+        {% comment %} 1. _posts 폴더의 글들을 기본 목록으로 가져옵니다. {% endcomment %}
+        {% assign all_posts = site.posts %}
         
+        {% comment %} 2. 추가할 다른 컬렉션 목록을 정의합니다. (etc 포함) {% endcomment %}
+        {% assign collections = "weeklyreview,projects,study,algorithm,etc" | split: "," %}
+        
+        {% comment %} 3. 기본 목록에 다른 컬렉션 글들을 합칩니다. {% endcomment %}
         {% for collection in collections %}
           {% assign all_posts = all_posts | concat: site[collection] %}
         {% endfor %}
         
+        {% comment %} 4. 합쳐진 모든 글을 날짜순으로 정렬합니다. {% endcomment %}
         {% assign sorted_posts = all_posts | sort: 'date' | reverse %}
         
         {% for post in sorted_posts %}
