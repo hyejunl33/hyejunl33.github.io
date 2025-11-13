@@ -23,10 +23,9 @@ layout: default
         {% assign sorted_posts = all_posts | sort: 'date' | reverse %}
         
         {% for post in sorted_posts %}
-          {% include archive-single.html %}
+          {% include archive-single.html type="list" %}
         {% endfor %}
-        
-      </div>
+        </div>
     </div>
   </div>
 </div>
