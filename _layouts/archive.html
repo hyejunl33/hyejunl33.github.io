@@ -19,6 +19,14 @@ layout: default
     {% unless page.header.overlay_color or page.header.overlay_image %}
       <h1 class="page__title">{{ page.title }}</h1>
     {% endunless %}
+    
     {{ content }}
-  </div>
+
+    {% if page.collection %}
+      {% assign collection = page.collection %}
+      {% for post in site[collection] %}
+        {% include archive-single.html type="list" %}
+      {% endfor %}
+    {% endif %}
+    </div>
 </div>
