@@ -231,6 +231,9 @@ collections:
   weeklyreview:
     output: true
     permalink: /:collection/:path/
+  etc:
+    output: true
+    permalink: /:collection/:path/
 
 
 # These settings control how pages and collections are included in the site
@@ -288,6 +291,14 @@ defaults:
       layout: single
       author_profile: true
       share: true
+  - scope:
+      path: "_etc"
+      type: etc
+    values:
+      layout: single
+      author_profile: true
+      share: true
+      comments: true  # 댓글 사용 여부 (다른 컬렉션과 동일하게 설정)
 
 
 # Sass/SCSS
