@@ -5,13 +5,17 @@ layout: default
 <div class="page-content">
   <div class="wrapper">
     <div class="home">
-      <h1>Recent Posts</h1>
+      <h1>Recent Posts (Debugging Mode)</h1>
+      
       <div class="post-list">
         
-        {% comment %} 1. 배열 초기화 및 글 수집 {% endcomment %}
+        {% comment %} 1. 배열 초기화 {% endcomment %}
         {% assign all_posts = "" | split: "" %}
+        
+        {% comment %} 2. 기본 포스트(site.posts) 추가 {% endcomment %}
         {% assign all_posts = all_posts | concat: site.posts %}
         
+        {% comment %} 3. 컬렉션 추가 {% endcomment %}
         {% assign collections = "weeklyreview,projects,study,algorithm,etc" | split: "," %}
         {% for collection in collections %}
           {% if site[collection] %}
@@ -19,10 +23,21 @@ layout: default
           {% endif %}
         {% endfor %}
         
-        {% comment %} 2. 중복 제거(uniq) 및 정렬 {% endcomment %}
+        {% comment %} 4. 중복 제거 전/후 개수 확인 (화면에 출력됨) {% endcomment %}
+        <p style="color:red; font-weight:bold;">
+          [DEBUG] 전체 글 개수(중복제거 전): {{ all_posts.size }} <br>
+          [DEBUG] site.posts 개수: {{ site.posts.size }}
+        </p>
+
+        {% comment %} 5. 정렬 및 중복 제거 {% endcomment %}
         {% assign sorted_posts = all_posts | sort: 'date' | reverse | uniq %}
+
+        <p style="color:blue; font-weight:bold;">
+          [DEBUG] 최종 출력될 글 개수(uniq 적용 후): {{ sorted_posts.size }}
+        </p>
         
-        {% comment %} 3. 출력 (limit:20 등으로 개수 제한 가능) {% endcomment %}
+        <hr>
+
         {% for post in sorted_posts %}
           {% include archive-single.html type="list" %}
         {% endfor %}
