@@ -9,7 +9,7 @@ layout: default
       
       <div class="post-list">
         
-        {% comment %} 1. 모든 글(Posts + Collections)을 하나의 배열로 합치기 {% endcomment %}
+        {% comment %} 1. 모든 글(Posts + Collections) 수집 {% endcomment %}
         {% assign all_posts = "" | split: "" %}
         {% assign all_posts = all_posts | concat: site.posts %}
         
@@ -20,10 +20,10 @@ layout: default
           {% endif %}
         {% endfor %}
         
-        {% comment %} 2. 날짜순 정렬(최신순) 및 중복 제거(uniq) {% endcomment %}
-        {% assign sorted_posts = all_posts | sort: 'date' | reverse | uniq %}
+        {% comment %} 2. 날짜순 정렬(sort) 후 뒤집기(reverse) -> 최신순 {% endcomment %}
+        {% assign sorted_posts = all_posts | sort: 'date' | reverse %}
         
-        {% comment %} 3. 화면 출력 (필요시 limit:10 등을 for문 옆에 추가 가능) {% endcomment %}
+        {% comment %} 3. 화면 출력 {% endcomment %}
         {% for post in sorted_posts %}
           {% include archive-single.html type="list" %}
         {% endfor %}
