@@ -24,9 +24,12 @@ layout: default
 
     {% if page.collection %}
       {% assign collection = page.collection %}
-      {% for post in site[collection] %}
+      {% comment %} 수정됨: 날짜 역순 정렬(최신글이 위로) {% endcomment %}
+      {% assign sorted_posts = site[collection] | sort: 'date' | reverse %}
+      
+      {% for post in sorted_posts %}
         {% include archive-single.html type="list" %}
       {% endfor %}
     {% endif %}
-    </div>
+  </div>
 </div>
