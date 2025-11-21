@@ -1,4 +1,13 @@
-# AI개발기초 학습회고
+---
+title: "Week10_AI개발기초_학습회고"
+date: 2025-11-21
+tags:
+  - Project
+  - WeeklyReview
+excerpt: "AI개발기초_학습회고"
+math: true
+---
+
 
 # 목차
 
@@ -19,7 +28,7 @@
 
 좋은 소프트웨어 설계는 유지보수가 쉽고 확장이 유연한 시스템을 만드는 것을 목표로 한다. 이를 위해 **모듈성(Modularity)**, **응집도(Cohesion)**, **결합도(Coupling)**와 같은 핵심 원칙을 이해하는 것이 중요하다.
 
-![Screenshot-2994.png](Screenshot-2994.png)
+![image](/assets/images/2025-11-21-19-58-00.png)
 
 [https://www.geeksforgeeks.org/software-engineering/effective-modular-design-in-software-engineering/](https://www.geeksforgeeks.org/software-engineering/effective-modular-design-in-software-engineering/)
 
@@ -108,7 +117,7 @@ FAILED test_sample.py::test_answer - assert 4 == 5
 
 머신러닝 모델을 만드는 것 역시 소프트웨어 엔지니어링 활동의 일부다. 특히, 개발한 머신러닝 모델을 실제 유저가 사용하는 서비스로 만들려면 소프트웨어 엔지니어링에 대한 깊은 이해가 필수적이다.
 
-![image.png](image.png)
+![image](/assets/images/2025-11-21-20-00-31.png)
 
 출처: Hidden Technical Debt in Machine Learning Systems
 
@@ -122,7 +131,7 @@ FAILED test_sample.py::test_answer - assert 4 == 5
 
 AI 엔지니어링은 개발된 AI 모델이 웹이나 앱과 같은 실제 서비스에서 안정적으로 동작할 수 있도록 시스템을 구축하는 것을 의미한다. 이는 **데이터, 모델, 코드, 인프라** 네 가지 요소를 모두 다루는 종합적인 분야다.
 
-![image.png](image%201.png)
+![image](/assets/images/2025-11-21-20-00-37.png)
 
 소프트웨어 엔지니어와 AI 엔지니어는 역할과 관심사에서 차이를 보인다.
 
@@ -185,7 +194,7 @@ AI 엔지니어로서 성장하려면 어떻게 해야할까?
 
 문제가 발생했을 때, 체계적인 절차에 따라 디버깅을 진행하면 보다 효율적으로 문제를 해결할 수 있다.
 
-![image.png](image%202.png)
+![image](/assets/images/2025-11-21-20-00-51.png)
 
 - **문제 인식 및 오류 분류**: 가장 먼저 오류 메시지를 주의 깊게 읽고 원인을 파악한다. 문제가 코드의 오류인지, 인프라의 문제인지, 혹은 원인을 알 수 없는 오류인지 분류한다.
 - **해결책 찾기**: 과거에 비슷한 문제를 경험했는지 자신의 기록(오답노트)을 찾아본다. 경험이 없다면 구글, Stack Overflow, 공식 문서, GitHub Issue 등에서 해결책을 검색한다. 최근에는 ChatGPT와 같은 LLM을 활용하는 것도 좋은 방법이다. 오픈소스 프로젝트의 경우, GitHub 레포지토리의 `issue` 탭에서 에러 메시지로 검색해보면 동일한 문제를 겪은 다른 개발자의 논의를 찾을 수 있으며, 해결된 버그는 `closed`된 이슈에서 확인할 수 있다.
@@ -236,7 +245,7 @@ Streamlit은 복잡한 웹 개발 지식 없이 파이썬 스크립트 코드만
 
 ## 3.3 Streamlit 개발 흐름
 
-![image.png](image%203.png)
+![image](/assets/images/2025-11-21-20-01-00.png)
 
 - **AI/ML 모델링**: 먼저 파이썬 스크립트 형태로 동작하는 모델이나 데이터 처리 로직을 준비한다.
 - **Streamlit 설계**: 프로토타입의 목적과 기능을 정의하고, UI 레이아웃과 사용할 컴포넌트(버튼, 슬라이더, 차트 등)를 결정한다.
@@ -247,8 +256,7 @@ Streamlit은 복잡한 웹 개발 지식 없이 파이썬 스크립트 코드만
 
 Streamlit은 다양한 UI 컴포넌트를 제공하여 손쉽게 인터랙티브한 웹 페이지를 만들 수 있게 한다.
 
-![image.png](image%204.png)
-
+![image](/assets/images/2025-11-21-20-01-05.png)
 ### UI Components
 
 - **Text 출력**: 제목, 헤더, 일반 텍스트 등을 표시한다.
