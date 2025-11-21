@@ -11,7 +11,7 @@ math: true
 ---
 
 
-# 프로젝트아이디어 - 에듀테크
+# [FinalProject]프로젝트아이디어 - 에듀테크
 
 ## LMS(Learning Management System) **With AI**
 
