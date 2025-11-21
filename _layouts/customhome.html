@@ -2,33 +2,35 @@
 layout: default
 ---
 
-<div class="page-content">
-  <div class="wrapper">
-    <div class="home">
-      <h1>Recent Posts</h1>
+<div id="main" role="main">
+  
+  {% comment %} 1. 사이드바(프로필) 추가 {% endcomment %}
+  {% include sidebar.html %}
+
+  <div class="archive">
+    <h1>Recent Posts</h1>
+    
+    <div class="post-list">
       
-      <div class="post-list">
-        
-        {% comment %} 1. 모든 글(Posts + Collections) 수집 {% endcomment %}
-        {% assign all_posts = "" | split: "" %}
-        {% assign all_posts = all_posts | concat: site.posts %}
-        
-        {% assign collections = "weeklyreview,projects,study,algorithm,etc" | split: "," %}
-        {% for collection in collections %}
-          {% if site[collection] %}
-            {% assign all_posts = all_posts | concat: site[collection] %}
-          {% endif %}
-        {% endfor %}
-        
-        {% comment %} 2. 날짜순 정렬(sort) 후 뒤집기(reverse) -> 최신순 {% endcomment %}
-        {% assign sorted_posts = all_posts | sort: 'date' | reverse %}
-        
-        {% comment %} 3. 화면 출력 {% endcomment %}
-        {% for post in sorted_posts %}
-          {% include archive-single.html type="list" %}
-        {% endfor %}
-        
-      </div>
+      {% comment %} 2. 모든 글 수집 로직 (기존과 동일) {% endcomment %}
+      {% assign all_posts = "" | split: "" %}
+      {% assign all_posts = all_posts | concat: site.posts %}
+      
+      {% assign collections = "weeklyreview,projects,study,algorithm,etc" | split: "," %}
+      {% for collection in collections %}
+        {% if site[collection] %}
+          {% assign all_posts = all_posts | concat: site[collection] %}
+        {% endif %}
+      {% endfor %}
+      
+      {% comment %} 3. 최신순 정렬 (기존과 동일) {% endcomment %}
+      {% assign sorted_posts = all_posts | sort: 'date' | reverse %}
+      
+      {% comment %} 4. 화면 출력 {% endcomment %}
+      {% for post in sorted_posts %}
+        {% include archive-single.html type="list" %}
+      {% endfor %}
+      
     </div>
   </div>
 </div>
