@@ -8,22 +8,23 @@ layout: default
       <h1>Recent Posts</h1>
       <div class="post-list">
         
-        {% comment %} 1. 'all_posts'를 빈 배열(empty array)로 초기화합니다. {% endcomment %}
+        {% comment %} 1. 배열 초기화 {% endcomment %}
         {% assign all_posts = "" | split: "" %}
         
-        {% comment %} 2. _posts 폴더의 글들을 합칩니다. (없으면 그냥 넘어갑니다) {% endcomment %}
+        {% comment %} 2. 기본 포스트 추가 {% endcomment %}
         {% assign all_posts = all_posts | concat: site.posts %}
         
-        {% comment %} 3. 추가할 다른 컬렉션 목록을 정의합니다. {% endcomment %}
+        {% comment %} 3. 컬렉션 추가 {% endcomment %}
         {% assign collections = "weeklyreview,projects,study,algorithm,etc" | split: "," %}
         
-        {% comment %} 4. 다른 컬렉션 글들을 합칩니다. {% endcomment %}
         {% for collection in collections %}
-          {% assign all_posts = all_posts | concat: site[collection] %}
+          {% if site[collection] %}
+            {% assign all_posts = all_posts | concat: site[collection] %}
+          {% endif %}
         {% endfor %}
         
-        {% comment %} 5. 합쳐진 모든 글을 날짜순으로 정렬합니다. {% endcomment %}
-        {% assign sorted_posts = all_posts | sort: 'date' | reverse %}
+        {% comment %} 4. 정렬 및 'uniq' 필터로 혹시 모를 데이터 중복 제거 {% endcomment %}
+        {% assign sorted_posts = all_posts | sort: 'date' | reverse | uniq %}
         
         {% for post in sorted_posts %}
           {% include archive-single.html type="list" %}
