@@ -6,9 +6,12 @@ author_profile: true
 
 ---
 **이름**: 이혜준
+
 **Mail**: rydnsj200@naver.com
-**블로그**: https://hyejunl33.github.io/
-**Github**: https://github.com/hyejunl33
+
+**블로그**: <https://hyejunl33.github.io/>
+
+**Github**: <https://github.com/hyejunl33>
 
 
 ## 핵심 역량
