@@ -3,7 +3,7 @@ title: "Week7-8_DomainCommonProject_WrapupReport"
 date: 2025-11-03
 tags:
   - Project
-  - WeeklyRevuew
+  - WeeklyReview
 excerpt: "WrapupReport"
 math: true
 ---
