@@ -13,7 +13,7 @@ math: true
 
 ## 1.1 프로젝트 주제
 
-![](../assets/images/20260125202059.png)
+![image](/assets/images/20260125202059.png)
 
 사진에서 쓰레기를 Detection 하는 모델을 만들어서 일반 쓰레기, 플라스틱, 종이, 유리 등 10 종류의 쓰레기가 찍힌 사진 데이터셋에서 Detection을 하는 분류모델을 개발
 
