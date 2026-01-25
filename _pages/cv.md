@@ -14,12 +14,13 @@ author_profile: true
 
 
 ## 핵심 역량
-1. **글 작성 능력, 빠르게 학습하는 능력 및 커뮤니케이션**
+
+1. **AI 및 Machine Learning에 대한 이해**
+    - 블로그 study글 제목 달아서 링크달아놓기
+
+2. **글 작성 능력, 빠르게 학습하는 능력 및 커뮤니케이션**
     -  Naver BoostCamp AITech 8기 영화 리뷰 감성 분류 및 예측 프로젝트 **Wrap-Up Report 우수사례** 선정
     -  개인 기술블로그 운영 및 학습회고 작성
-
-2. **AI 및 Machine Learning에 대한 이해**
-    - 블로그 study글 제목 달아서 링크달아놓기
 
 3. **EDA 및 데이터 전처리 능력**
     - Naver BoostCamp AITech 8기 손가락 뼈 Semantic Segmentation 프로젝트에서 EDA 및 데이터전처리
