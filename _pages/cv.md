@@ -5,13 +5,10 @@ layout: single
 author_profile: true
 
 ---
-### 이름: 이혜준
-
-### Mail: rydnsj200@naver.com
-
-### 블로그: https://hyejunl33.github.io/
-
-### Github: https://github.com/hyejunl33
+**이름**: 이혜준
+**Mail**: rydnsj200@naver.com
+**블로그**: https://hyejunl33.github.io/
+**Github**: https://github.com/hyejunl33
 
 
 ## 핵심 역량
@@ -34,8 +31,8 @@ author_profile: true
 ## 프로젝트 경험
 
 1. 영화 리뷰 감성 분류 및 예측 (2025.10)
-   - 문제정의:
-   - 역할:
+   - 문제정의: 영화 리뷰 데이터를 이용하여 영화 리뷰의 감성을 분류하는 모델을 구축
+   - 역할: 모델 구축, 평가, 최적화
    - 해결방법: 
    - 배운내용:
 2. 재활용 쓰레기 Object Detection 및 분류 (2025.11)
