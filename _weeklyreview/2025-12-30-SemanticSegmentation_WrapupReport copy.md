@@ -63,36 +63,8 @@ Annotation을 시각화한 이미지
 환자 ID별로 성별, 나이, 키, 몸무게가 엑셀파일로 주어졌다. 성별의 경우 남, 여로 표준화되어 구분되어있지 않고, 노이즈가 포함된 데이터가 있었다. 메타데이터를 활용하기 위해서 표준화하는 과정을 추가로 진행했다.
 
 # 2. 프로젝트 팀 구성 및 역할
+![image](/assets/images/2026-01-25-20-51-06.png)
 
-| 이름/역할 |  |
-| --- | --- |
-| 박상범🥝 | **EDA**: 이미지 평균, 메타데이터에 따른 차이, 클래스별 픽셀 비율 확인
-**Preprocessing**: Outlier확인, 객체 외부 노이즈 제거
-**Augmentation**: 좌우반전 증강, RandomBrightnessContrast, 증강 조합 실험
-**손실함수 평가**: BCE, Dice, Tversky, Focal
-**모델 탐색 및 실험**: SegFormer, ConvNeXt, UperNet
-**앙상블**: 5-Fold 앙상블, ConvNeXT + UperNet |
-| 안진경🍋 | **Augmentation**: Elastic, Crop
-**손실함수 평가**: Focal Loss, lovasz
-**threshold 평가**
-**앙상블** |
-| 이가현🍉 | **베이스라인 코드 작성, 모델 및 앙상블 코드구현 
-Preprocessing: CLAHE
-Augmentation:** VerticalFLIP, Elastic, BrightnessContrast
-**모델탐색 및 실험**: Unet++, Unet, efficientNetv2, mobileNet, ConvNeXt
-**Training Strategy:** Sliding Window, Combined Loss |
-| 이혜준🍎 | **WrapUp Report작성
-EDA:** 메타데이터(키, 몸무게, 성별)과 MaskSize관계 시각화, 회전된 손 비율분석 및 시각화
-**FeatureEngineering: I**nput denoising(EdgeCutting), 메타데이터를 활용한 회전된 손 OverSamppling, 메타데이터를 활용한 Multimodal Embedding, 이상치제거, GroupStratifiedK-Fold
-**손실함수 평가:** tversky 클래스별 $\alpha, \beta$가중치조정**,** Focal과 BCE 차이분석, HausdroffDistanceLoss, BoundaryLoss, Lovasz
-**모델 탐색 및 실험:** HRNet, MaxViT, mask2former**,** Swin-L, AMP구현, EMA(ExponentialMovingAverage), PointRend, GroupNorm, CosineWarmupRestartScheduler구현
-**앙상블:** HRNet 5-Fold 앙상블 |
-| 황은배🍊 | **MetaData분석**: 다변량분석(mask크기와 메타데이터), data split분석
-**손실함수 평가**: BCE, Dice, Tversky, Focal
-**Augmentation평가:** RandomBrightnessContrast, SSR, GridDistortion, GridDropOut
-**CLAHE 전처리 효과 검증**
-**모델탐색 및 실험:** HRNet, mit, ConvNeXtv2
-**앙상블:** mit 5-Fold 앙상블 |
 
 # 3. 프로젝트 수행 절차 및 방법
 
@@ -406,19 +378,135 @@ Batch Norm에서 GroupNorm으로 바꾼 이후로 배치사이즈를 줄여도 �
 
 ## 3.4 단일 모델 실험 및 결과
 
-### 3.4.1 MiT(Max Vision Transformer)
+모델실험은 이전의 실험결과에서 효과가 있었던 방법들을 적용하여, 다양한 인코더, 디코더 조합을 사용해서 각자 진행함.
 
-### 3.4.2 HRNet
+### 3.4.1 모델실험1
 
-실험을 통해 좋다고 알려진 기법이었던 elastic, HorizontalFLIP, ShiftScaleRotate, EdgeCutting, 이상치제거를 적용했고, 추가로 **Group Norm, EMA, TTA, Point Rend, Cosine Warmup restart**를 적용했다.
+- 다양한 아키텍처 비교 실험 진행. 최종적으로 **Mask R-CNN (ConvNeXtV2)** 선정.
 
-- **결과**
+| **Model** | **Backbone** | **비고** |
+| --- | --- | --- |
+| **Unet++** | **EfficientNetV2-L** | **최종 베이스 모델 선정 (Exp55_v3). 가장 높은 성능 달성.** |
+| SegFormer | MiT-B4 | 빠른 수렴(50 epoch)과 준수한 성능(Dice 0.9645), 학습 속도 우수. |
+| Unet++ | MobileNetV2 | 경량화 모델 실험. 학습 속도는 빠르나 정확도 면에서 V2-L에 비해 열세. |
+| Unet | ConvNeXt | Multi-scale Attention 적용 시도. Swin 대비 효율적이나 최종 성능은 낮음. |
 
-Val/Dice: **0.9755**
+### 3.4.2모델실험 2
 
-Public score: **0.9728**
+- HRNet
+- Mix Vision Transformer (mit)
+- ConvNeXt V2
 
-Fold 0기준 0.9728을 달성했고, 
+| 모델명 | Validation Score |
+| --- | --- |
+| hrnet_w18 | 0.9570 |
+| hrnet_w32 | 0.9581 |
+| hrnet_w48 | 0.9595 |
+| mit_b2 | 0.9523 |
+| mit_b3 | 0.9552 |
+| mit_b4 | 0.9571 |
+| convnextv2_tiny | 0.9532 |
+| convnextv2_base | 0.9538 |
+
+⇒ `0.1` 보다 `0.5` 일 경우, 더 높은 성능을 보임
+
+⇒ 사전 학습 가중치가 x-ray 이미지에 적응이 필요한 것으로 해석됨
+
+- convnextv2와 2가지 decoder(FPN, UNET) 조합 확인
+    - 2가지 사이즈에서 동일한 결과를 보일 줄 알았는데 예상과는 다름
+        - `tiny` 의 경우, fpn과의 조합이 더 좋은 성능을 보임 (+0.0045)
+        - `base` 의 경우, UNET과의 조합이 더 좋은 성능을 보임 (+0.0021)
+
+| ConvNeXt V2 | FPN | UNET |
+| --- | --- | --- |
+| convnextv2_tiny | 0.9670 | 0.9625 |
+| convnextv2_base | 0.9685 | 0.9706 |
+
+의료영상 데이터에 특화된 monai 라이브러리의 swin unetr 모델 scratch로 학습
+기대한만큼 성능이 나오진 않았다.
+
+### 3.4.3 모델실험 3
+
+- SegFormer : 0.9665
+    - 이전 데이터 전처리 단계에서 효과를 본 실험들 간단하게 점검 : 모델 변경 + 나머지 그대로 vs 모델 변경 + 전처리 + 증강
+    - 학습 안정화 : gradient accumulation, gradient clipping, cosine annealing, ema 개별 적용 후 결과 확인
+- ConvNeXt + UperNet : 0.9747
+    - 이전 데이터 전처리 단계에서 효과를 본 실험들 간단하게 점검 : 모델 변경 + 나머지 그대로 vs 모델 변경 + 전처리 + 증강
+    - 높은 Dice 점수 확인 후, 5-Fold 학습
+
+### 3.4.4 모델실험 4
+
+우선 주어진 베이스라인 코드에서는 해상도 512가 적용되어있었다. 하지만 **원본 이미지의 크기인 2048을 512로 압축하는 것은 정보 손실이 발생하여 성능 하락의 주요 원인이 될 것이라고 보았다**.
+
+실제로 아래의 표는 베이스라인 모델에서 클래스별 Dice Score를 오름차순으로 정리한 결과인데, 상대적으로 크기가 작은 뼈인 손등 뼈와, 손가락 끝 뼈(finger 4, 8, 12, 16)이 모두 순위권 상단을 차지하고, 크기가 큰 뼈인 팔목 뼈(Ulna, Radius)는 모두 하위권을 차지하는 것을 볼 수 있다. 이로 인해 작은 객체를 탐지하는 능력을 보완하는 것이 중요하다는 것을 깨달았고, 512로 이미지를 압축하여 정보가 손실되는 것은 더욱 치명적일 것이라고 생각되었다.
+
+또한 이미 베이스라인의 Dice 점수는 0.94로 높은 점수인 상황이기에 경계선의 디테일을 보존하는 것이 성능을 향상시키는 주요한 원인이 될 것이라고 보았고, 따라서 굳이 파라미터가 많은 무거운 모델을 사용하여 해상도를 낮추는 것 보다는, **적은 파라미터 수를 가진 모델을 활용하여 이미지를 최대한 완전하게 보존하는 방향을 선택**하였다.
+
+***모델 실험***
+
+아래 표는 Loss와 Optimizer, Learning Rate, 해상도 2048, 배치 사이즈 2 등 통제 변인을 갖추고 Backbone과 Decoder를 다양하게 조합하며 실험한 결과이다. 고해상도의 이미지 Input을 입력하고도 OOM이 발생하는 것을 방지하기 위해 경량 모델인 MobileNet과 EfficientNet 위주로 탐색하게 되었으며, 예외적으로 EfficientNet-b4 모델에는 해상도 2048, 배치 2로 학습을 시작할 때 OOM이 발생하여 배치 사이즈를 1로 두고 실험을 진행하였다. 실험 결과 Backbone으로 EfficientNet-b0를 사용하는 것이 가장 높은 성능이 나타나는 것으로 확인 되었다. 
+
+뛰어난 모델은 적은 epoch에서도 높은 성능을 띌 것이라 생각하여 MobileNet-v3 + LRASPP와 EfficientNet-b4에서는 초기 성능이 낮아 실험을 중단하였는데, 학습 후반에 급격한 성능이 향상되는 모델의 가능성을 배제하고 성급하게 단정했다는 점이 아쉽고, 이는 차후 실험에서는 모델을 탐색할 때 충분한 epoch를 설정해서 보완해야 한다고 생각되었다.
+
+| Backbone | Decoder | ep10 dice | ep50 dice | loss | 배치 |
+| --- | --- | --- | --- | --- | --- |
+| MobileNet-v3 | DeepLab-v3 | 0.9607 | 0.9639 | bce + dice | 2 |
+| MobileNet-v3 | LRASPP | 0.9596 | x | bce + dice | 2 |
+| EfficientNet-b0 | PAN | 0.9299 | 0.9626 | bce + dice | 2 |
+| EfficientNet-b0 | FPN | 0.9652 | **0.9706** | bce + dice | 2 |
+| EfficientNet-b0 | Unet++ | 0.8210 | **0.9713** | bce + dice | 2 |
+| EfficientNet-b4 | FPN | 0.9528 | x | bce + dice | 1 |
+
+***Decoder 실험***
+
+Backbone을 EfficientNet-b0로 고정한 뒤 디코더를 FPN, UNet++, PAN로 교체하며 실험을 진행하였다. 아래 그래프를 보았을 때 UNet++의 Validation 점수가 가장 높았으나 Public 점수는 0.01가량 큰 폭으로 하락한 것을 확인할 수 있다. 반면 FPN의 경우, Validation 점수는 UNet++보다 낮았지만, Public에서 약 0.003으로 소폭 하락하여 public에서 최종적으로 가장 높은 성능을 나타내는 것을 확인할 수 있다. 
+
+이론적으로 UNet++은 복잡한 Skip Connection이 적용되어 풍부한 Feature Map을 활용하기 때문에 FPN보다 높은 성능을 띌 것이라고 예상하였고, 실제로 Validation에서는 높은 성적을 띄었지만 Public에서는 크게 점수가 하락한 점에서 의문이 들었다. 이러한 의문점에 대해 다음과 같은 두 가지 가설을 세웠다.
+
+1. UNet++ 모델 복잡도에 의해 Train 데이터에 과적합 되어서 Public에서는 좋지 못한 성능을 띄었다.
+2. 스케쥴러 미사용으로 인해 Local Minima에 수렴되었다.
+
+결론적으로 이론과 실험의 차이에서 어떤 디코더를 사용해야할 지에 대한 고민이 되었지만, 현재 데이터셋에는 실험적으로 입증한 FPN이 더욱 우세할 것이라고 판단되어 최종 모델에도 FPN을 적용하게 되었다.
+
+![image](/assets/images/2026-01-25-20-55-11.png)
+
+***성능 향상을 위한 모델 실험***
+
+최종적으로 성능 향상을 위해 해상도 2048, 배치 사이즈 2를 수용 가능하면서 가능한 OOM이 발생하지 않으면서 GPU 사용량을 최대화할 수 있는 모델을 탐색하게 되었다. Backbone은 기존 EfficientNet-b0 모델에서 파라미터수가 더 많아 정교한 Feature Map을 추출할 수 있는 EfficientNet-b3와 ConvNeXtv2-base 모델로 교체할 수 있었고, 실험 결과 EfficientNet-b3 모델에서 0.0005 더 향상되었다. 따라서 **최종 모델로 Backbone에는 EfficientNet-b3 모델을, Decoder는 FPN을 선택**하게 되었다. 
+
+| Backbone | Decoder | ep50 dice |
+| --- | --- | --- |
+| ConvNeXtv2-base | FPN | 0.9723 |
+| EfficientNet-b3 | FPN | 0.9728 |
+
+최종 모델은 여러 실험적으로 얻은 결과중 성능 향상이 있었던 방법론들만 적용하였으며, 최종 Private Dice 0.9729을 달성하였다.
+
+| Decoder | FPN |
+| --- | --- |
+| Backbone | EfficientNet-b3 |
+| 해상도 | 2048 |
+| 배치 | 2 |
+| epoch | 50 |
+| Loss | bce 3 dice 4 focal 3 |
+| Scheduler | Cosine Warmup(ratio 0.1) |
+| Optimizer | AdamW |
+| Learning Rate | 0.0001 |
+| Augmentation | Elastic, Resize(2048) |
+
+### 3.4.5 모델실험 5
+
+2개의 Stage로 나눠서 학습 진행
+
+- 첫번째 Stage에서는 20epoch로 Dice를 안정시키는것을 목적으로 함
+    - bce_dice를 이용해서 빠른 수렴
+    - bce(0.5) + dice(0.5) + pointrend(0.5)
+- 두번째 Stage에서는 80Epoch로 FineTuning을 목적으로 함
+    - bce_lovasz를 사용해서 Hard Example에 대해서 Finetuning
+    - bce(0.5) + dice(0.5) + pointrend(1.0)
+        - Point Render의 Weight를 0.5에서 1로 올려서 경계에 대해 더 많은 학습
+
+![image](/assets/images/2026-01-25-20-54-58.png)
+
 
 ## 3.5 모델 앙상블
 
@@ -508,8 +596,8 @@ OOM으로 인해 배치사이즈를 키우는데 한계가 있어서, Group Norm
 
 ## 5. Reference
 
-- https://www.kaggle.com/competitions/siim-acr-pneumothorax-segmentation/writeups/dsmlkz-aimoldin-anuar-1st-place-solution-with-code
-- On the Effect of Image Resolution on Semantic Segmentationhttps://arxiv.org/pdf/2402.05398
-- https://arxiv.org/abs/1703.01780
-- https://research.facebook.com/publications/pointrend-image-segmentation-as-rendering/
-- https://arxiv.org/abs/1803.08494
+- <https://www.kaggle.com/competitions/siim-acr-pneumothorax-segmentation/writeups/dsmlkz-aimoldin-anuar-1st-place-solution-with-code>
+- On the Effect of Image Resolution on Semantic Segmentation<https://arxiv.org/pdf/2402.05398
+- https://arxiv.org/abs/1703.01780>
+- <https://research.facebook.com/publications/pointrend-image-segmentation-as-rendering/>
+- <https://arxiv.org/abs/1803.08494>
