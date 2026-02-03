@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[Domain_Common_Project][study]메트릭 선택은 기술이 아니라 의사결정의 정치다."
+title: "[영화리뷰 감성분류][study]메트릭 선택은 기술이 아니라 의사결정의 정치다."
 date: 2025-10-22
 tags:
   - Domain_Common_Project

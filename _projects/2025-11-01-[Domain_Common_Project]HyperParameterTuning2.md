@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[모델최적화]하이퍼파라미터튜닝2"
+title: "[영화리뷰 감성분류][모델최적화]하이퍼파라미터튜닝2"
 date: 2025-11-01
 tags:
   - Domain_Common_Project

@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[Domain_Common_Project][모델최적화]-EDA"
+title: "[영화리뷰 감성분류][모델최적화]-EDA"
 date: 2025-10-24
 tags:
   - Domain_Common_Project

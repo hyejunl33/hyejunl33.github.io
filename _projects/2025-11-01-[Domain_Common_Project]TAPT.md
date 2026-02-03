@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[모델최적화]TAPT"
+title: "[영화리뷰 감성분류][모델최적화]TAPT"
 date: 2025-11-01
 tags:
   - Domain_Common_Project
