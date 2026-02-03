@@ -1,11 +1,11 @@
 ---
 layout: single
-title: "네이버지도에서 서울시 카페 전부 크롤링"
+title: "[이미지기반 카페추천 프로젝트]네이버지도에서 서울시 카페 전부 크롤링"
 date: 2026-01-30
 tags:
-  - 이미지기반 분위기로 카페 찾기 프로젝트
+  - 이미지기반 카페추천 프로젝트
   - Crawling
-excerpt: ""
+excerpt: "서울시 카페 크롤링"
 math: true
 ---
 
@@ -41,7 +41,7 @@ math: true
 - **해결**: Playwright의 **Frame Locator** API를 사용하여 프레임 간 전환 비용 없이 DOM 요소에 즉시 접근함.
     - *Code*: `self.page.frame_locator("#entryIframe").locator(...)`
 
-### 3. 고속 데이터 추출 (Fast Evaluation)
+### 3. 데이터 추출 빠름
 
 - **문제**: Selenium의 `execute_script`는 대용량 데이터 전송 시 직렬화 병목이 발생함.
 - **해결**: Playwright는 브라우저 엔진(V8)과 직접 통신하는 `evaluate()` 메서드를 제공함. 이를 통해 수 MB 크기의 `__APOLLO_STATE__` 객체를 지연 없이 즉시 Python 객체로 변환함.
