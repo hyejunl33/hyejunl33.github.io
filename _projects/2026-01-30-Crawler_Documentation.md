@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "네이버지도에서 서울시 카페 전부 크롤링"
-date: 2026-1-30
+date: 2026-01-30
 tags:
   - 이미지기반 분위기로 카페 찾기 프로젝트
   - Crawling
