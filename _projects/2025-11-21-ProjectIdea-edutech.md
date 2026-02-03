@@ -10,9 +10,6 @@ excerpt: "프로젝트아이디어 - 에듀테크"
 math: true
 ---
 
-
-# [FinalProject]프로젝트아이디어 - 에듀테크
-
 ## LMS(Learning Management System) **With AI**
 
 교육청, 학교, 교사를 대상으로 하는 학급 관리 프로그램. 교사는 **OCR**된 학생의 포트폴리오를 이용해서 개인맞춤형 피드백을 제공할 수 있음.
