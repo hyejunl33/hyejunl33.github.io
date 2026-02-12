@@ -13,9 +13,6 @@ excerpt: "[NLP]_Distributed Representations of Words and phrases and their Compo
 math: true
 ---
 
-
-# 논문리뷰_[NLP]_Distributed Representations of Words and phrases and their Compositionality
-
 # Introduction
 
 - Skip-gram모델을 확장해서 SubSampling과 Negative Sampling을 이용해 학습속도를 향상시키고 vector의 품질을 향상시켰다.

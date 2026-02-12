@@ -202,13 +202,13 @@ Pydantic의 `model_dump_json()`으로 상태를 JSON 문자열로 변환한 후,
 - **LoopAgent**: 에이전트들을 순차 실행하며, `escalate=True` 발생 시까지 반복
 - **ADK Viewer**: 웹 기반 디버깅 UI 제공
 
-![image.png](image.png)
+![image](/assets/images/2026-02-12-17-04-18.png)
 
 ---
 
 ## 파일별 역할 및 상세 동작
 
-![image.png](image%201.png)
+![image](/assets/images/2026-02-12-17-04-24.png)
 
 ```
 backend/
@@ -534,7 +534,7 @@ return RecommendedPlacesResponse(
 
 ## 전체 데이터 흐름도
 
-![image.png](image%203.png)
+![image](/assets/images/2026-02-12-17-05-18.png)
 
 전체 흐름을 요약하면 사용자 요청이 들어오면 LoopAgent가 Router → Location → Search/QnA 순서로 에이전트를 실행한다. 각 에이전트는 `state.intent`를 확인해 자신이 처리해야 할 요청인지 판단하고, 해당되지 않으면 조기 반환한다. 최종적으로 검색 결과와 추천 질문을 함께 응답한다.
 
@@ -546,9 +546,9 @@ return RecommendedPlacesResponse(
 
 동작: Location(동네)는 변경하지 않고 이전의 HyDE 쿼리에 추가로 HyDE쿼리를 생성해서 두 HyDE쿼리를 합친 후 다시 검색함
 
-![image.png](image%204.png)
+![image](/assets/images/2026-02-12-17-05-24.png)
 
-![image.png](image%205.png)
+![image](/assets/images/2026-02-12-17-05-31.png)
 
 > 상황: 성수동 검색 결과가 마음에 안 들어서 "더 개방감 있는 분위기로 찾아줘"라고 했을 때
 > 
@@ -561,7 +561,7 @@ return RecommendedPlacesResponse(
 
 ### Case 2 (QnA): 검색된 카페에 대한 메타정보를 물어볼때
 
-![image.png](image%206.png)
+![image](/assets/images/2026-02-12-17-05-36.png)
 
 > 상황: 검색된 결과 중 "첫 번째 곳 주차 돼?"라고 물었을 때
 > 
@@ -574,7 +574,7 @@ return RecommendedPlacesResponse(
 
 ### Case 3(new Search): 이전의 지역이 아니라 새로운 지역에 대해서 검색하고 싶을때
 
-![image.png](image%207.png)
+![image](/assets/images/2026-02-12-17-05-43.png)
 
 > 상황: "강남역 근처 카공하기 좋은 곳 추천해줘"라고 했을 때
 > 
