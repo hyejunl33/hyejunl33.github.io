@@ -9,8 +9,6 @@ excerpt: "ADK 기반 에이전트 챗봇 구현"
 math: true
 ---
 
-# ADK 기반 에이전트 챗봇 구현
-
 ## 목차
 1. [필요한 기능](#필요한-기능)
 2. [동네 처리 (Location Agent)](#동네-처리--location-agent)
@@ -18,6 +16,7 @@ math: true
 4. [ADK 마이그레이션](#adk-마이그레이션)
 5. [Context 기반 추천 질문 생성 (Suggestion)](#context-기반-추천-질문-생성-suggestion)
 6. [실험 및 검증](#실험-및-검증)
+
 ---
 
 ## 필요한 기능
