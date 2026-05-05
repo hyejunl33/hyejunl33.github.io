@@ -69,7 +69,7 @@ Object Detection 프로젝트, Semantic Segmentation 프로젝트, 그리고 최
 
 살면서 실제로 회사에 면접을 온게 처음이었다. 강남에 온것도 처음이었다. 처음 면접보러 회사에 갔을때 웅장함에 압도되었다..
 
-![](/assets/images/20260505100112.png)
+![image](/assets/images/2026-05-05-10-48-45.png)
 
 지금은 익숙한 스파크플러스 회의실..
 
