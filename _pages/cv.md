@@ -7,7 +7,7 @@ author_profile: true
 ---
 
 ## Career
-- **뤼튼 테크놀로지스**
+- **Wrtn technologies**
   - *Internal Agent Builder*, Intern, 2026.03 ~
 
 ## Education
