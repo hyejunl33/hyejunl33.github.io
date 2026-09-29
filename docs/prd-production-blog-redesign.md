@@ -33,7 +33,7 @@
 - OpenAI 웹사이트에서 넓은 여백, 강한 제목 위계, 절제된 메뉴와 콘텐츠 중심 섹션 구성을 참고한다.
 - [SEED React](https://seed-design.io/react)의 composition, responsive design, interaction states처럼 반복 UI를 일관된 토큰과 조합 가능한 구성 요소로 만든다.
 - [Toss Apps React Native 문서](https://developers-apps-in-toss.toss.im/documentation/react-native)의 화면 단위 정보 위계와 예측 가능한 내비게이션 흐름을 참고한다.
-- [Pokémon Cards CSS Holographic Effect](https://poke-holo.simey.me/)의 pointer-driven highlight, blend mode, sparkle texture를 글 카드와 상세 헤더에 절제해 적용한다.
+- [Pokémon Cards CSS Holographic Effect](https://poke-holo.simey.me/)에서 포인터 좌표에 따른 3D transform 원리만 참고한다. 광택, blend mode, sparkle texture는 글 카드에 적용하지 않는다.
 - 레퍼런스의 시각물을 복제하지 않는다. 현재 데모의 색상·궤도·카드 표현을 사이트 고유의 디자인으로 발전시킨다.
 
 ## 2. 문제 정의와 목표
@@ -590,7 +590,7 @@ bundle exec jekyll build
 - [ ] 시각화 카드는 설명 문구 없이 최적화 과정 자체만 보여주며 마우스·터치 드래그로 자유롭게 회전한다.
 - [ ] surface geometry와 vertex color는 GPU에 한 번만 업로드하고 회전 중에는 shader uniform만 갱신해 프레임 랙을 방지한다.
 - [ ] 홈 정보 순서는 최적화 시각화 → MCP mode → Featured Project → Latest Notes이며 Collections를 노출하지 않는다.
-- [ ] 모든 글 카드와 상세 헤더는 제목 해시로 6종 이상의 유기적인 색면 gradient를 안정적으로 분배하며, 고정 장식 도형 없이 포인터 좌표·중심 거리·배경 이동에 따라 prism shine과 glare가 반응한다.
+- [ ] 모든 글 카드와 상세 헤더는 제목 해시로 6종 이상의 유기적인 색면 gradient를 안정적으로 분배한다. 카드에는 광택·prism·glare 합성을 사용하지 않고 포인터를 따르는 가벼운 3D tilt만 적용한다.
 - [ ] 홈과 Project 갤러리는 장식용 영문 eyebrow나 설명형 부제를 두지 않고 제목·콘텐츠·행동만 표시한다.
 - [ ] Project 갤러리는 카페 추천·감성 분류 두 프로젝트 단위로 글을 필터링하고 선택 상태를 URL에 보존한다. EduTech 글은 전체 목록에만 남긴다.
 - [ ] 컬렉션 목록과 글 상세가 실제 Liquid 데이터로 렌더링된다.
