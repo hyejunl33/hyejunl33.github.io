@@ -531,7 +531,7 @@ bundle exec jekyll build
 
 ### Phase 2 — Home & Archive
 
-- 운영 홈의 실시간 LLM 처리 그래프, SEED 원칙 기반 MCP 안내, featured project, latest notes
+- 운영 홈의 실시간 3D loss landscape 최적화 시각화, SEED 원칙 기반 MCP 안내, featured project, latest notes
 - 프로젝트별 이미지형 갤러리와 URL 공유 가능한 글 필터
 - 컬렉션 공통 목록 및 Study 통합 허브
 - 모바일 전역 메뉴
@@ -586,8 +586,8 @@ bundle exec jekyll build
 
 - [ ] 좌측 상단에 `Archive for AI Study`가 모든 화면에서 표시된다.
 - [ ] 여섯 개 전역 메뉴가 데스크톱과 모바일에서 접근 가능하다.
-- [ ] 홈의 실시간 LLM 그래프와 featured aurora 카드가 승인 데모의 절제된 디자인 언어를 유지한다.
-- [ ] 홈 정보 순서는 LLM 시각화 → MCP mode → Featured Project → Latest Notes이며 Collections를 노출하지 않는다.
+- [ ] 홈의 3D loss surface와 gradient descent 궤적은 설명 문구 없이 최적화 과정 자체만 보여준다.
+- [ ] 홈 정보 순서는 최적화 시각화 → MCP mode → Featured Project → Latest Notes이며 Collections를 노출하지 않는다.
 - [ ] 모든 글 카드와 상세 헤더에 제목 기반 gradient art가 있고 포인터에 반응한다.
 - [ ] Project 갤러리는 카페 추천·감성 분류·EduTech 단위로 글을 필터링하고 선택 상태를 URL에 보존한다.
 - [ ] 컬렉션 목록과 글 상세가 실제 Liquid 데이터로 렌더링된다.

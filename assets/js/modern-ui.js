@@ -120,26 +120,46 @@
     var dpr = Math.min(2, window.devicePixelRatio || 1);
     var width = 0;
     var height = 0;
-    var pointer = { x: 0, y: 0, tx: 0, ty: 0 };
-    var layers = [6, 9, 11, 9, 7, 4];
-    var nodes = [];
-    var edges = [];
-    var particles = [];
+    var camera = { pitch: -.62, yaw: -.62, targetPitch: -.62, targetYaw: -.62 };
+    var gridSize = 29;
+    var surface = [];
+    var cells = [];
+    var descent = [];
     var start = performance.now();
-    var lastStat = 0;
 
-    layers.forEach(function (count, layer) {
-      for (var row = 0; row < count; row += 1) {
-        nodes.push({ layer: layer, row: row, count: count, x: (layer - 2.5) * 1.18, y: (row - (count - 1) / 2) * .48, z: Math.sin((row + layer) * 1.7) * .42 });
+    function loss(x, z) {
+      return .17 * (x * x + z * z) + .34 * Math.sin(1.3 * x) * Math.cos(1.15 * z) + .1 * Math.sin(2.2 * x + .7 * z) + .38;
+    }
+
+    function gradient(x, z) {
+      return {
+        x: .34 * x + .442 * Math.cos(1.3 * x) * Math.cos(1.15 * z) + .22 * Math.cos(2.2 * x + .7 * z),
+        z: .34 * z - .391 * Math.sin(1.3 * x) * Math.sin(1.15 * z) + .07 * Math.cos(2.2 * x + .7 * z)
+      };
+    }
+
+    for (var row = 0; row < gridSize; row += 1) {
+      var line = [];
+      for (var column = 0; column < gridSize; column += 1) {
+        var x = -3.15 + column / (gridSize - 1) * 6.3;
+        var z = -3.15 + row / (gridSize - 1) * 6.3;
+        line.push({ x: x, y: loss(x, z), z: z });
       }
-    });
-    for (var a = 0; a < nodes.length; a += 1) {
-      for (var b = 0; b < nodes.length; b += 1) {
-        if (nodes[b].layer !== nodes[a].layer + 1) continue;
-        if ((a * 7 + b * 11) % 9 < 2) edges.push({ from: nodes[a], to: nodes[b] });
+      surface.push(line);
+    }
+    for (var gridRow = 0; gridRow < gridSize - 1; gridRow += 1) {
+      for (var gridColumn = 0; gridColumn < gridSize - 1; gridColumn += 1) {
+        cells.push([surface[gridRow][gridColumn], surface[gridRow][gridColumn + 1], surface[gridRow + 1][gridColumn + 1], surface[gridRow + 1][gridColumn]]);
       }
     }
-    for (var particle = 0; particle < 34; particle += 1) particles.push({ edge: edges[particle % edges.length], offset: (particle * .137) % 1, speed: .00008 + (particle % 7) * .000012 });
+
+    var position = { x: 2.75, z: -2.55 };
+    for (var step = 0; step < 92; step += 1) {
+      descent.push({ x: position.x, y: loss(position.x, position.z) + .055, z: position.z });
+      var slope = gradient(position.x, position.z);
+      var rate = .085 * (1 - step / 150);
+      position = { x: position.x - slope.x * rate, z: position.z - slope.z * rate };
+    }
 
     function resize() {
       var rect = stage.getBoundingClientRect();
@@ -151,53 +171,67 @@
     }
 
     function project(node) {
-      var cy = Math.cos(pointer.y); var sy = Math.sin(pointer.y);
-      var cx = Math.cos(pointer.x); var sx = Math.sin(pointer.x);
+      var cy = Math.cos(camera.yaw); var sy = Math.sin(camera.yaw);
+      var cx = Math.cos(camera.pitch); var sx = Math.sin(camera.pitch);
       var rx = node.x * cy - node.z * sy;
       var rz = node.x * sy + node.z * cy;
-      var ry = node.y * cx - rz * sx;
-      rz = node.y * sx + rz * cx;
-      var perspective = 1 / (1 + (rz + 5.5) * .045);
-      var scale = Math.min(width, height) * .125;
-      return { x: width * (width < 720 ? .58 : .67) + rx * scale * perspective, y: height * .43 + ry * scale * perspective, z: rz, p: perspective };
+      var centeredY = node.y - .75;
+      var ry = centeredY * cx - rz * sx;
+      var depth = centeredY * sx + rz * cx;
+      var perspective = 1 / (1 + (depth + 4.7) * .035);
+      var scale = Math.min(width, height) * (width < 640 ? .15 : .17);
+      return { x: width * .5 + rx * scale * perspective, y: height * .52 - ry * scale * perspective, depth: depth, p: perspective };
+    }
+
+    function surfaceColor(value, alpha) {
+      var normalized = Math.max(0, Math.min(1, (value + .1) / 3.8));
+      var hue = 266 - normalized * 186;
+      var lightness = 31 + normalized * 29;
+      return 'hsla(' + hue.toFixed(0) + ', 68%, ' + lightness.toFixed(0) + '%, ' + alpha + ')';
     }
 
     function draw(now) {
-      pointer.x += (pointer.tx - pointer.x) * .045;
-      pointer.y += (pointer.ty - pointer.y) * .045;
+      camera.pitch += (camera.targetPitch - camera.pitch) * .045;
+      camera.yaw += (camera.targetYaw - camera.yaw) * .045;
       context.clearRect(0, 0, width, height);
-      var projected = new Map();
-      nodes.forEach(function (node) { projected.set(node, project(node)); });
+      var projectedCells = cells.map(function (cell) {
+        var points = cell.map(project);
+        return { cell: cell, points: points, depth: points.reduce(function (sum, point) { return sum + point.depth; }, 0) / 4 };
+      }).sort(function (one, two) { return one.depth - two.depth; });
 
-      edges.forEach(function (edge) {
-        var from = projected.get(edge.from); var to = projected.get(edge.to);
-        var fade = .07 + Math.max(0, (from.z + to.z + 2) * .012);
-        context.beginPath(); context.moveTo(from.x, from.y); context.lineTo(to.x, to.y);
-        context.strokeStyle = 'rgba(164, 219, 196, ' + fade.toFixed(3) + ')'; context.lineWidth = .7; context.stroke();
+      projectedCells.forEach(function (entry) {
+        var averageLoss = entry.cell.reduce(function (sum, point) { return sum + point.y; }, 0) / 4;
+        context.beginPath();
+        context.moveTo(entry.points[0].x, entry.points[0].y);
+        for (var pointIndex = 1; pointIndex < entry.points.length; pointIndex += 1) context.lineTo(entry.points[pointIndex].x, entry.points[pointIndex].y);
+        context.closePath();
+        context.fillStyle = surfaceColor(averageLoss, .82);
+        context.fill();
+        context.strokeStyle = 'rgba(225, 242, 233, .12)';
+        context.lineWidth = .55;
+        context.stroke();
       });
 
-      nodes.slice().sort(function (one, two) { return projected.get(one).z - projected.get(two).z; }).forEach(function (node) {
-        var point = projected.get(node); var radius = (node.layer === layers.length - 1 ? 3.4 : 2.3) * point.p;
-        context.beginPath(); context.arc(point.x, point.y, radius, 0, Math.PI * 2);
-        context.fillStyle = node.layer === 0 ? 'rgba(169,146,255,.86)' : node.layer === layers.length - 1 ? 'rgba(199,242,103,.92)' : 'rgba(213,240,228,.58)'; context.fill();
-      });
-
-      particles.forEach(function (moving) {
-        var t = reduceMotion ? moving.offset : (moving.offset + (now - start) * moving.speed) % 1;
-        var from = projected.get(moving.edge.from); var to = projected.get(moving.edge.to);
-        var x = from.x + (to.x - from.x) * t; var y = from.y + (to.y - from.y) * t;
-        var glow = context.createRadialGradient(x, y, 0, x, y, 8);
-        glow.addColorStop(0, 'rgba(199,242,103,.95)'); glow.addColorStop(1, 'rgba(199,242,103,0)');
-        context.fillStyle = glow; context.beginPath(); context.arc(x, y, 8, 0, Math.PI * 2); context.fill();
-      });
-
-      if (now - lastStat > 850) {
-        var token = stage.querySelector('[data-llm-tokens]'); var path = stage.querySelector('[data-llm-paths]'); var latency = stage.querySelector('[data-llm-latency]');
-        if (token) token.textContent = String(128 + Math.floor((now / 850) % 47));
-        if (path) path.textContent = String(22 + Math.floor((now / 1200) % 9));
-        if (latency) latency.textContent = String(16 + Math.floor((now / 980) % 7));
-        lastStat = now;
+      var cycle = reduceMotion ? descent.length - 1 : Math.min(descent.length - 1, Math.floor(((now - start) % 9000) / 72));
+      var projectedDescent = descent.slice(0, cycle + 1).map(project);
+      if (projectedDescent.length) {
+        context.beginPath();
+        context.moveTo(projectedDescent[0].x, projectedDescent[0].y);
+        projectedDescent.forEach(function (point) { context.lineTo(point.x, point.y); });
+        context.strokeStyle = 'rgba(236, 255, 214, .78)';
+        context.lineWidth = 2;
+        context.stroke();
+        var head = projectedDescent[projectedDescent.length - 1];
+        var glow = context.createRadialGradient(head.x, head.y, 0, head.x, head.y, 24);
+        glow.addColorStop(0, 'rgba(220, 255, 145, 1)');
+        glow.addColorStop(.18, 'rgba(199, 242, 103, .95)');
+        glow.addColorStop(1, 'rgba(199, 242, 103, 0)');
+        context.fillStyle = glow;
+        context.beginPath(); context.arc(head.x, head.y, 24, 0, Math.PI * 2); context.fill();
+        context.fillStyle = '#efffc8';
+        context.beginPath(); context.arc(head.x, head.y, 4.2, 0, Math.PI * 2); context.fill();
       }
+
       if (!reduceMotion && !document.hidden) window.requestAnimationFrame(draw);
     }
 
@@ -207,10 +241,10 @@
     if (!reduceMotion) {
       stage.addEventListener('pointermove', function (event) {
         var rect = stage.getBoundingClientRect();
-        pointer.ty = ((event.clientX - rect.left) / rect.width - .5) * .3;
-        pointer.tx = (.5 - (event.clientY - rect.top) / rect.height) * .2;
+        camera.targetYaw = -.62 + ((event.clientX - rect.left) / rect.width - .5) * .48;
+        camera.targetPitch = -.62 + (.5 - (event.clientY - rect.top) / rect.height) * .28;
       });
-      stage.addEventListener('pointerleave', function () { pointer.tx = 0; pointer.ty = 0; });
+      stage.addEventListener('pointerleave', function () { camera.targetPitch = -.62; camera.targetYaw = -.62; });
       document.addEventListener('visibilitychange', function () {
         if (!document.hidden) window.requestAnimationFrame(draw);
       });
