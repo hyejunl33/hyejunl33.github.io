@@ -1,4 +1,14 @@
+<div class="modern-optimizer-controls" data-optimizer-controls aria-label="Optimizer 궤적 선택">
+  <button type="button" class="is-active" data-optimizer="all" aria-pressed="true">All</button>
+  <button type="button" data-optimizer="sgd" aria-pressed="false"><i style="--optimizer-color:#ff806f"></i>SGD</button>
+  <button type="button" data-optimizer="momentum" aria-pressed="false"><i style="--optimizer-color:#c7f267"></i>Momentum</button>
+  <button type="button" data-optimizer="adagrad" aria-pressed="false"><i style="--optimizer-color:#87ebcf"></i>Adagrad</button>
+  <button type="button" data-optimizer="rmsprop" aria-pressed="false"><i style="--optimizer-color:#77bff5"></i>RMSprop</button>
+  <button type="button" data-optimizer="adam" aria-pressed="false"><i style="--optimizer-color:#c1a8ff"></i>Adam</button>
+  <button type="button" data-optimizer="adamw" aria-pressed="false"><i style="--optimizer-color:#ff9ad5"></i>AdamW</button>
+</div>
 <div class="modern-llm-stage" data-llm-visual>
+  <canvas aria-hidden="true" data-loss-surface></canvas>
   <canvas aria-hidden="true" data-llm-canvas></canvas>
-  <p class="sr-only">손실 함수의 3차원 표면 위에서 gradient descent가 최솟값을 찾아 내려가는 실시간 시각화</p>
+  <p class="sr-only">손실 함수의 3차원 표면 위에서 여러 optimizer가 최솟값을 찾아 내려가는 실시간 시각화. 마우스나 터치로 회전할 수 있습니다.</p>
 </div>

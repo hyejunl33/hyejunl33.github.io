@@ -1,12 +1,18 @@
 .modern-home-hero { min-height: min(760px, calc(100vh - 72px)); padding-block: 34px 0; }
 .modern-llm-stage {
   position: relative; min-height: min(690px, calc(100vh - 106px)); overflow: hidden; isolation: isolate;
-  border: 1px solid var(--m-line); border-radius: var(--m-radius-lg); background: #0b0e0d; box-shadow: 0 34px 100px rgba(13,17,14,.18); cursor: grab;
+  border: 1px solid var(--m-line); border-radius: var(--m-radius-lg); background: #0b0e0d; box-shadow: 0 34px 100px rgba(13,17,14,.18); cursor: grab; touch-action: pan-y; user-select: none;
 }
 .modern-llm-stage:active { cursor: grabbing; }
 .modern-llm-stage::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(circle at 50% 46%, rgba(135,235,207,.07), transparent 42%), linear-gradient(155deg, #121715, #090b0a 70%); }
 .modern-llm-stage::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(circle at center, transparent 43%, rgba(4,6,5,.42) 100%); }
 .modern-llm-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+.modern-llm-stage [data-llm-canvas] { z-index: 1; }
+.modern-optimizer-controls { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px; padding: 0 0 15px; }
+.modern-optimizer-controls button { display: inline-flex; align-items: center; gap: 7px; padding: 7px 11px; border: 1px solid transparent; border-radius: 999px; background: transparent; color: var(--m-muted); cursor: pointer; font-size: 11px; transition: color .2s ease, border-color .2s ease, background .2s ease, transform .2s var(--m-ease); }
+.modern-optimizer-controls button:hover { color: var(--m-ink); transform: translateY(-1px); }
+.modern-optimizer-controls button.is-active { border-color: var(--m-line); background: var(--m-bg-raised); color: var(--m-ink); box-shadow: 0 5px 18px rgba(20,24,20,.05); }
+.modern-optimizer-controls i { width: 7px; height: 7px; border-radius: 50%; background: var(--optimizer-color); box-shadow: 0 0 8px color-mix(in srgb, var(--optimizer-color) 60%, transparent); }
 
 .modern-feature-card {
   --aurora-x: 75%; --aurora-y: 25%; position: relative; display: grid; min-height: 390px; grid-template-columns: 1fr auto; align-items: end;
@@ -47,6 +53,8 @@
 @media (max-width: 640px) {
   .modern-home-hero { width: 100%; padding-top: 0; }
   .modern-llm-stage { min-height: 540px; border-width: 0 0 1px; border-radius: 0 0 26px 26px; }
+  .modern-optimizer-controls { padding-inline: 14px; }
+  .modern-optimizer-controls button { padding: 6px 8px; font-size: 10px; }
   .modern-feature-card { min-height: 430px; }
   .modern-section--mcp { padding-top: 24px; }
   .modern-recruiter-callout { min-height: 0; padding: 28px 22px; }

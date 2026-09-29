@@ -115,17 +115,73 @@
   function initLlmArchitecture() {
     var stage = document.querySelector('[data-llm-visual]');
     var canvas = stage && stage.querySelector('[data-llm-canvas]');
-    if (!stage || !canvas) return;
+    var surfaceCanvas = stage && stage.querySelector('[data-loss-surface]');
+    if (!stage || !canvas || !surfaceCanvas) return;
     var context = canvas.getContext('2d');
+    var gl = surfaceCanvas.getContext('webgl', { alpha: true, antialias: true, premultipliedAlpha: true });
+    var glProgram;
+    var glPosition;
+    var glColor;
+    var glBuffer;
+    var glPitch;
+    var glYaw;
+    var glScale;
+    var surfaceLayer = document.createElement('canvas');
+    var surfaceContext = surfaceLayer.getContext('2d');
+    var surfaceDirty = true;
     var dpr = Math.min(2, window.devicePixelRatio || 1);
     var width = 0;
     var height = 0;
     var camera = { pitch: -.62, yaw: -.62, targetPitch: -.62, targetYaw: -.62 };
-    var gridSize = 29;
+    var gridSize = 45;
     var surface = [];
     var cells = [];
-    var descent = [];
+    var trajectories = {};
+    var optimizerStyles = {
+      sgd: { color: '#ff806f', rgb: '255,128,111' },
+      momentum: { color: '#c7f267', rgb: '199,242,103' },
+      adagrad: { color: '#87ebcf', rgb: '135,235,207' },
+      rmsprop: { color: '#77bff5', rgb: '119,191,245' },
+      adam: { color: '#c1a8ff', rgb: '193,168,255' },
+      adamw: { color: '#ff9ad5', rgb: '255,154,213' }
+    };
+    var activeOptimizer = 'all';
+    var drag = { active: false, x: 0, y: 0 };
     var start = performance.now();
+
+    if (gl) {
+      var vertexSource = 'attribute vec3 a_position; attribute vec4 a_color; uniform float u_pitch; uniform float u_yaw; uniform vec2 u_scale; varying vec4 v_color; void main(){ float cy=cos(u_yaw); float sy=sin(u_yaw); float cx=cos(u_pitch); float sx=sin(u_pitch); float rx=a_position.x*cy-a_position.z*sy; float rz=a_position.x*sy+a_position.z*cy; float centeredY=a_position.y-.75; float ry=centeredY*cx-rz*sx; float depth=centeredY*sx+rz*cx; float perspective=1.0/(1.0+(depth+4.7)*.035); gl_Position=vec4(rx*u_scale.x*perspective, -.04+ry*u_scale.y*perspective, -depth/8.0, 1.0); v_color=a_color; }';
+      var fragmentSource = 'precision mediump float; varying vec4 v_color; void main(){ gl_FragColor=v_color; }';
+      function compileShader(type, source) {
+        var shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        return gl.getShaderParameter(shader, gl.COMPILE_STATUS) ? shader : null;
+      }
+      var vertexShader = compileShader(gl.VERTEX_SHADER, vertexSource);
+      var fragmentShader = compileShader(gl.FRAGMENT_SHADER, fragmentSource);
+      if (vertexShader && fragmentShader) {
+        glProgram = gl.createProgram();
+        gl.attachShader(glProgram, vertexShader);
+        gl.attachShader(glProgram, fragmentShader);
+        gl.linkProgram(glProgram);
+        if (!gl.getProgramParameter(glProgram, gl.LINK_STATUS)) glProgram = null;
+      }
+      if (glProgram) {
+        glPosition = gl.getAttribLocation(glProgram, 'a_position');
+        glColor = gl.getAttribLocation(glProgram, 'a_color');
+        glPitch = gl.getUniformLocation(glProgram, 'u_pitch');
+        glYaw = gl.getUniformLocation(glProgram, 'u_yaw');
+        glScale = gl.getUniformLocation(glProgram, 'u_scale');
+        glBuffer = gl.createBuffer();
+        gl.enable(gl.DEPTH_TEST);
+        gl.depthFunc(gl.LEQUAL);
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+      } else {
+        gl = null;
+      }
+    }
 
     function loss(x, z) {
       return .17 * (x * x + z * z) + .34 * Math.sin(1.3 * x) * Math.cos(1.15 * z) + .1 * Math.sin(2.2 * x + .7 * z) + .38;
@@ -153,13 +209,64 @@
       }
     }
 
-    var position = { x: 2.75, z: -2.55 };
-    for (var step = 0; step < 92; step += 1) {
-      descent.push({ x: position.x, y: loss(position.x, position.z) + .055, z: position.z });
-      var slope = gradient(position.x, position.z);
-      var rate = .085 * (1 - step / 150);
-      position = { x: position.x - slope.x * rate, z: position.z - slope.z * rate };
+    if (gl) {
+      var surfaceVertices = [];
+      cells.forEach(function (cell) {
+        [0, 1, 2, 0, 2, 3].forEach(function (index) {
+          var vertex = cell[index];
+          var color = surfaceChannels(vertex.y);
+          surfaceVertices.push(vertex.x, vertex.y, vertex.z, color[0] / 255, color[1] / 255, color[2] / 255, .98);
+        });
+      });
+      gl.bindBuffer(gl.ARRAY_BUFFER, glBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(surfaceVertices), gl.STATIC_DRAW);
     }
+
+    function makeTrajectory(type) {
+      var points = [];
+      var position = { x: 2.75, z: -2.55 };
+      var velocity = { x: 0, z: 0 };
+      var firstMoment = { x: 0, z: 0 };
+      var secondMoment = { x: 0, z: 0 };
+      for (var step = 1; step <= 112; step += 1) {
+        points.push({ x: position.x, y: loss(position.x, position.z) + .045, z: position.z });
+        var slope = gradient(position.x, position.z);
+        if (type === 'sgd') {
+          position.x -= slope.x * .075;
+          position.z -= slope.z * .075;
+        } else if (type === 'momentum') {
+          velocity.x = .84 * velocity.x + slope.x;
+          velocity.z = .84 * velocity.z + slope.z;
+          position.x -= velocity.x * .027;
+          position.z -= velocity.z * .027;
+        } else if (type === 'adagrad') {
+          secondMoment.x += slope.x * slope.x;
+          secondMoment.z += slope.z * slope.z;
+          position.x -= .2 * slope.x / (Math.sqrt(secondMoment.x) + .06);
+          position.z -= .2 * slope.z / (Math.sqrt(secondMoment.z) + .06);
+        } else if (type === 'rmsprop') {
+          secondMoment.x = .9 * secondMoment.x + .1 * slope.x * slope.x;
+          secondMoment.z = .9 * secondMoment.z + .1 * slope.z * slope.z;
+          position.x -= .052 * slope.x / (Math.sqrt(secondMoment.x) + .09);
+          position.z -= .052 * slope.z / (Math.sqrt(secondMoment.z) + .09);
+        } else {
+          firstMoment.x = .9 * firstMoment.x + .1 * slope.x;
+          firstMoment.z = .9 * firstMoment.z + .1 * slope.z;
+          secondMoment.x = .99 * secondMoment.x + .01 * slope.x * slope.x;
+          secondMoment.z = .99 * secondMoment.z + .01 * slope.z * slope.z;
+          var correctedX = firstMoment.x / (1 - Math.pow(.9, step));
+          var correctedZ = firstMoment.z / (1 - Math.pow(.9, step));
+          var varianceX = secondMoment.x / (1 - Math.pow(.99, step));
+          var varianceZ = secondMoment.z / (1 - Math.pow(.99, step));
+          var weightDecay = type === 'adamw' ? .022 : 0;
+          position.x -= .058 * (correctedX / (Math.sqrt(varianceX) + .1) + weightDecay * position.x);
+          position.z -= .058 * (correctedZ / (Math.sqrt(varianceZ) + .1) + weightDecay * position.z);
+        }
+      }
+      return points;
+    }
+
+    Object.keys(optimizerStyles).forEach(function (type) { trajectories[type] = makeTrajectory(type); });
 
     function resize() {
       var rect = stage.getBoundingClientRect();
@@ -168,6 +275,13 @@
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
+      surfaceCanvas.width = Math.round(width * dpr);
+      surfaceCanvas.height = Math.round(height * dpr);
+      if (gl) gl.viewport(0, 0, surfaceCanvas.width, surfaceCanvas.height);
+      surfaceLayer.width = Math.round(width * dpr);
+      surfaceLayer.height = Math.round(height * dpr);
+      surfaceContext.setTransform(dpr, 0, 0, dpr, 0, 0);
+      surfaceDirty = true;
     }
 
     function project(node) {
@@ -183,54 +297,109 @@
       return { x: width * .5 + rx * scale * perspective, y: height * .52 - ry * scale * perspective, depth: depth, p: perspective };
     }
 
-    function surfaceColor(value, alpha) {
-      var normalized = Math.max(0, Math.min(1, (value + .1) / 3.8));
-      var hue = 266 - normalized * 186;
-      var lightness = 31 + normalized * 29;
-      return 'hsla(' + hue.toFixed(0) + ', 68%, ' + lightness.toFixed(0) + '%, ' + alpha + ')';
+    function surfaceChannels(value) {
+      var palette = [
+        [64, 34, 125], [76, 67, 184], [47, 116, 207], [43, 190, 196],
+        [75, 195, 128], [190, 221, 75], [240, 170, 75], [235, 99, 96]
+      ];
+      var normalized = Math.max(0, Math.min(1, (value - .04) / 2.45));
+      var scaled = normalized * (palette.length - 1);
+      var lower = Math.floor(scaled);
+      var upper = Math.min(palette.length - 1, lower + 1);
+      var mix = scaled - lower;
+      return palette[lower].map(function (channel, index) { return channel + (palette[upper][index] - channel) * mix; });
     }
 
-    function draw(now) {
-      camera.pitch += (camera.targetPitch - camera.pitch) * .045;
-      camera.yaw += (camera.targetYaw - camera.yaw) * .045;
-      context.clearRect(0, 0, width, height);
+    function surfaceColor(value, alpha) {
+      var color = surfaceChannels(value).map(function (channel) { return Math.round(channel); });
+      return 'rgba(' + color.join(',') + ',' + alpha + ')';
+    }
+
+    function renderSurface() {
+      if (gl) {
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        gl.useProgram(glProgram);
+        gl.bindBuffer(gl.ARRAY_BUFFER, glBuffer);
+        gl.enableVertexAttribArray(glPosition);
+        gl.vertexAttribPointer(glPosition, 3, gl.FLOAT, false, 28, 0);
+        gl.enableVertexAttribArray(glColor);
+        gl.vertexAttribPointer(glColor, 4, gl.FLOAT, false, 28, 12);
+        var scale = Math.min(width, height) * (width < 640 ? .15 : .17);
+        gl.uniform1f(glPitch, camera.pitch);
+        gl.uniform1f(glYaw, camera.yaw);
+        gl.uniform2f(glScale, 2 * scale / width, 2 * scale / height);
+        gl.drawArrays(gl.TRIANGLES, 0, cells.length * 6);
+        surfaceDirty = false;
+        return;
+      }
+      surfaceContext.clearRect(0, 0, width, height);
       var projectedCells = cells.map(function (cell) {
         var points = cell.map(project);
         return { cell: cell, points: points, depth: points.reduce(function (sum, point) { return sum + point.depth; }, 0) / 4 };
       }).sort(function (one, two) { return one.depth - two.depth; });
 
       projectedCells.forEach(function (entry) {
-        var averageLoss = entry.cell.reduce(function (sum, point) { return sum + point.y; }, 0) / 4;
-        context.beginPath();
-        context.moveTo(entry.points[0].x, entry.points[0].y);
-        for (var pointIndex = 1; pointIndex < entry.points.length; pointIndex += 1) context.lineTo(entry.points[pointIndex].x, entry.points[pointIndex].y);
-        context.closePath();
-        context.fillStyle = surfaceColor(averageLoss, .82);
-        context.fill();
-        context.strokeStyle = 'rgba(225, 242, 233, .12)';
-        context.lineWidth = .55;
-        context.stroke();
+        var samples = entry.cell.map(function (point, index) { return { loss: point.y, point: entry.points[index] }; })
+          .sort(function (one, two) { return one.loss - two.loss; });
+        var low = samples[0];
+        var high = samples[samples.length - 1];
+        var fill = surfaceContext.createLinearGradient(low.point.x, low.point.y, high.point.x, high.point.y);
+        fill.addColorStop(0, surfaceColor(low.loss, .95));
+        fill.addColorStop(.5, surfaceColor((low.loss + high.loss) / 2, .95));
+        fill.addColorStop(1, surfaceColor(high.loss, .95));
+        surfaceContext.beginPath();
+        surfaceContext.moveTo(entry.points[0].x, entry.points[0].y);
+        for (var pointIndex = 1; pointIndex < entry.points.length; pointIndex += 1) surfaceContext.lineTo(entry.points[pointIndex].x, entry.points[pointIndex].y);
+        surfaceContext.closePath();
+        surfaceContext.fillStyle = fill;
+        surfaceContext.fill();
+        surfaceContext.strokeStyle = fill;
+        surfaceContext.lineWidth = 1.4;
+        surfaceContext.lineJoin = 'round';
+        surfaceContext.stroke();
       });
+      surfaceDirty = false;
+    }
 
-      var cycle = reduceMotion ? descent.length - 1 : Math.min(descent.length - 1, Math.floor(((now - start) % 9000) / 72));
-      var projectedDescent = descent.slice(0, cycle + 1).map(project);
-      if (projectedDescent.length) {
-        context.beginPath();
-        context.moveTo(projectedDescent[0].x, projectedDescent[0].y);
-        projectedDescent.forEach(function (point) { context.lineTo(point.x, point.y); });
-        context.strokeStyle = 'rgba(236, 255, 214, .78)';
-        context.lineWidth = 2;
-        context.stroke();
-        var head = projectedDescent[projectedDescent.length - 1];
-        var glow = context.createRadialGradient(head.x, head.y, 0, head.x, head.y, 24);
-        glow.addColorStop(0, 'rgba(220, 255, 145, 1)');
-        glow.addColorStop(.18, 'rgba(199, 242, 103, .95)');
-        glow.addColorStop(1, 'rgba(199, 242, 103, 0)');
-        context.fillStyle = glow;
-        context.beginPath(); context.arc(head.x, head.y, 24, 0, Math.PI * 2); context.fill();
-        context.fillStyle = '#efffc8';
-        context.beginPath(); context.arc(head.x, head.y, 4.2, 0, Math.PI * 2); context.fill();
-      }
+    function drawTrajectory(type, cycle) {
+      var trajectory = trajectories[type];
+      var style = optimizerStyles[type];
+      var projectedTrajectory = trajectory.slice(0, Math.min(cycle + 1, trajectory.length)).map(project);
+      if (!projectedTrajectory.length) return;
+      context.beginPath();
+      context.moveTo(projectedTrajectory[0].x, projectedTrajectory[0].y);
+      projectedTrajectory.forEach(function (point) { context.lineTo(point.x, point.y); });
+      context.strokeStyle = style.color;
+      context.globalAlpha = activeOptimizer === 'all' ? .76 : .98;
+      context.lineWidth = activeOptimizer === 'all' ? 1.8 : 2.8;
+      context.stroke();
+      context.globalAlpha = 1;
+      var head = projectedTrajectory[projectedTrajectory.length - 1];
+      var radius = activeOptimizer === 'all' ? 17 : 25;
+      var glow = context.createRadialGradient(head.x, head.y, 0, head.x, head.y, radius);
+      glow.addColorStop(0, 'rgba(' + style.rgb + ',1)');
+      glow.addColorStop(.22, 'rgba(' + style.rgb + ',.9)');
+      glow.addColorStop(1, 'rgba(' + style.rgb + ',0)');
+      context.fillStyle = glow;
+      context.beginPath(); context.arc(head.x, head.y, radius, 0, Math.PI * 2); context.fill();
+      context.fillStyle = '#ffffff';
+      context.beginPath(); context.arc(head.x, head.y, activeOptimizer === 'all' ? 3 : 4.2, 0, Math.PI * 2); context.fill();
+    }
+
+    function draw(now) {
+      var previousPitch = camera.pitch;
+      var previousYaw = camera.yaw;
+      camera.pitch += (camera.targetPitch - camera.pitch) * .045;
+      camera.yaw += (camera.targetYaw - camera.yaw) * .045;
+      if (Math.abs(camera.pitch - previousPitch) > .00005 || Math.abs(camera.yaw - previousYaw) > .00005) surfaceDirty = true;
+      context.clearRect(0, 0, width, height);
+      if (surfaceDirty) renderSurface();
+      if (!gl) context.drawImage(surfaceLayer, 0, 0, width, height);
+
+      var cycle = reduceMotion ? 111 : Math.min(111, Math.floor(((now - start) % 11000) / 72));
+      var visibleTypes = activeOptimizer === 'all' ? Object.keys(trajectories) : [activeOptimizer];
+      visibleTypes.forEach(function (type) { drawTrajectory(type, cycle); });
 
       if (!reduceMotion && !document.hidden) window.requestAnimationFrame(draw);
     }
@@ -239,16 +408,40 @@
     if ('ResizeObserver' in window) new ResizeObserver(resize).observe(stage);
     window.addEventListener('resize', resize, { passive: true });
     if (!reduceMotion) {
-      stage.addEventListener('pointermove', function (event) {
-        var rect = stage.getBoundingClientRect();
-        camera.targetYaw = -.62 + ((event.clientX - rect.left) / rect.width - .5) * .48;
-        camera.targetPitch = -.62 + (.5 - (event.clientY - rect.top) / rect.height) * .28;
+      stage.addEventListener('pointerdown', function (event) {
+        drag.active = true;
+        drag.x = event.clientX;
+        drag.y = event.clientY;
+        stage.setPointerCapture(event.pointerId);
       });
-      stage.addEventListener('pointerleave', function () { camera.targetPitch = -.62; camera.targetYaw = -.62; });
+      stage.addEventListener('pointermove', function (event) {
+        if (!drag.active) return;
+        camera.targetYaw += (event.clientX - drag.x) * .009;
+        camera.targetPitch = Math.max(-1.32, Math.min(-.12, camera.targetPitch + (event.clientY - drag.y) * .007));
+        drag.x = event.clientX;
+        drag.y = event.clientY;
+      });
+      function stopDragging(event) {
+        drag.active = false;
+        if (stage.hasPointerCapture(event.pointerId)) stage.releasePointerCapture(event.pointerId);
+      }
+      stage.addEventListener('pointerup', stopDragging);
+      stage.addEventListener('pointercancel', stopDragging);
       document.addEventListener('visibilitychange', function () {
         if (!document.hidden) window.requestAnimationFrame(draw);
       });
     }
+    document.querySelectorAll('[data-optimizer]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        activeOptimizer = button.dataset.optimizer;
+        start = performance.now();
+        document.querySelectorAll('[data-optimizer]').forEach(function (candidate) {
+          var selected = candidate.dataset.optimizer === activeOptimizer;
+          candidate.classList.toggle('is-active', selected);
+          candidate.setAttribute('aria-pressed', String(selected));
+        });
+      });
+    });
     window.requestAnimationFrame(draw);
   }
 

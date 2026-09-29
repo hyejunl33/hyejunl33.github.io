@@ -586,7 +586,9 @@ bundle exec jekyll build
 
 - [ ] 좌측 상단에 `Archive for AI Study`가 모든 화면에서 표시된다.
 - [ ] 여섯 개 전역 메뉴가 데스크톱과 모바일에서 접근 가능하다.
-- [ ] 홈의 3D loss surface와 gradient descent 궤적은 설명 문구 없이 최적화 과정 자체만 보여준다.
+- [ ] 홈의 3D loss surface는 cell 경계가 드러나지 않는 연속 다중 색상 보간을 사용하고, SGD·Momentum·Adagrad·RMSprop·Adam·AdamW를 전체 또는 개별 궤적으로 비교한다.
+- [ ] 시각화 카드는 설명 문구 없이 최적화 과정 자체만 보여주며 마우스·터치 드래그로 자유롭게 회전한다.
+- [ ] surface geometry와 vertex color는 GPU에 한 번만 업로드하고 회전 중에는 shader uniform만 갱신해 프레임 랙을 방지한다.
 - [ ] 홈 정보 순서는 최적화 시각화 → MCP mode → Featured Project → Latest Notes이며 Collections를 노출하지 않는다.
 - [ ] 모든 글 카드와 상세 헤더에 제목 기반 gradient art가 있고 포인터에 반응한다.
 - [ ] Project 갤러리는 카페 추천·감성 분류·EduTech 단위로 글을 필터링하고 선택 상태를 URL에 보존한다.
