@@ -8,10 +8,6 @@
 .modern-article-summary { max-width: 730px; color: var(--m-muted); font-size: clamp(17px, 2vw, 21px); }
 .modern-article-meta { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 32px; color: var(--m-muted); font-size: 12px; }
 .modern-article-meta strong { margin-left: 5px; color: var(--m-ink); font-weight: 620; }
-.modern-article-art { min-height: 360px; margin-top: 52px; border-radius: var(--m-radius-lg); }
-.modern-article-art i:nth-child(1) { width: 240px; height: 240px; top: -45px; right: 13%; }
-.modern-article-art i:nth-child(2) { width: 25px; height: 25px; }
-.modern-article-art i:nth-child(3) { width: 90px; height: 90px; }
 .modern-article-layout { display: grid; grid-template-columns: 180px minmax(0, var(--m-reading)) 1fr; gap: 54px; align-items: start; }
 .modern-toc { position: sticky; top: 104px; grid-column: 1; max-height: calc(100vh - 130px); padding: 4px 10px 12px 0; overflow-y: auto; scrollbar-width: thin; }
 .modern-toc > p { margin: 0 0 13px; color: var(--m-faint); font-size: 10px; font-weight: 720; letter-spacing: .12em; text-transform: uppercase; }
@@ -106,7 +102,6 @@
 @media (max-width: 720px) {
   .modern-article { padding-top: 55px; }
   .modern-article-hero { margin-bottom: 54px; }
-  .modern-article-art { min-height: 240px; margin-top: 38px; border-radius: var(--m-radius); }
   .modern-breadcrumb { margin-bottom: 28px; }
   .modern-pagination { grid-template-columns: 1fr; }
   .modern-read-more { margin-top: 82px; padding-top: 42px; }

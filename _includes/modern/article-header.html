@@ -14,5 +14,4 @@
     {% if page.date %}<span>Published <strong><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y.%m.%d' }}</time></strong></span>{% endif %}
     {% if page.read_time %}<span>Reading <strong>{% include read-time.html %}</strong></span>{% endif %}
   </div>
-  <div class="modern-article-art" data-gradient-card data-gradient-art data-art-key="{{ page.title | escape }}" aria-hidden="true"></div>
 </header>
