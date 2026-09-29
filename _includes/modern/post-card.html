@@ -4,9 +4,7 @@
 {% assign collection_label = collection_data.label %}
 {% unless collection_label %}{% assign collection_label = collection_key | capitalize %}{% endunless %}
 <a class="modern-post-card" href="{{ item.url | relative_url }}" data-gradient-card>
-  <span class="modern-post-card__art" data-gradient-art data-art-key="{{ item.title | escape }}" aria-hidden="true">
-    <i></i><i></i><i></i><b></b>
-  </span>
+  <span class="modern-post-card__art" data-gradient-art data-art-key="{{ item.title | escape }}" aria-hidden="true"></span>
   <span class="modern-post-card__body">
     <span class="modern-post-card__meta">{{ collection_label }}{% if item.date %} · {{ item.date | date: '%Y.%m.%d' }}{% endif %}</span>
     <h2>{{ include.title | default: item.title | markdownify | strip_html }}</h2>

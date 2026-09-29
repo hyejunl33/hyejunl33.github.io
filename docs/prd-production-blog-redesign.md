@@ -179,7 +179,7 @@
 
 - 최신 또는 frontmatter `featured: true`인 프로젝트 1건을 표시한다.
 - `featured: true`가 없으면 `site.projects | sort: 'date' | reverse | first`를 사용한다.
-- 대형 Aurora 효과는 이 카드에 적용하고, 일반 글 표지는 제목 해시로 색상·구도·도형이 결정되는 여러 gradient variant와 가벼운 홀로그램 광택을 사용한다.
+- 대형 Aurora 효과는 이 카드에 적용한다. 일반 글 표지는 제목 해시로 색상과 흐름이 결정되는 넓고 부드러운 gradient variant를 사용하며, 원·선·리본 같은 독립 장식 도형은 넣지 않는다.
 - 제목·요약·태그·날짜·상세 링크는 효과 없이도 항상 읽혀야 한다.
 
 #### Recent Notes
@@ -590,9 +590,9 @@ bundle exec jekyll build
 - [ ] 시각화 카드는 설명 문구 없이 최적화 과정 자체만 보여주며 마우스·터치 드래그로 자유롭게 회전한다.
 - [ ] surface geometry와 vertex color는 GPU에 한 번만 업로드하고 회전 중에는 shader uniform만 갱신해 프레임 랙을 방지한다.
 - [ ] 홈 정보 순서는 최적화 시각화 → MCP mode → Featured Project → Latest Notes이며 Collections를 노출하지 않는다.
-- [ ] 모든 글 카드와 상세 헤더는 제목 해시로 6종 이상의 색상·구도·도형 variant를 안정적으로 분배하며, 포인터를 따라 홀로그램 광택과 sparkle이 반응한다.
+- [ ] 모든 글 카드와 상세 헤더는 제목 해시로 6종 이상의 유기적인 색면 gradient를 안정적으로 분배하며, 고정 장식 도형 없이 포인터 좌표·중심 거리·배경 이동에 따라 prism shine과 glare가 반응한다.
 - [ ] 홈과 Project 갤러리는 장식용 영문 eyebrow나 설명형 부제를 두지 않고 제목·콘텐츠·행동만 표시한다.
-- [ ] Project 갤러리는 카페 추천·감성 분류·EduTech 단위로 글을 필터링하고 선택 상태를 URL에 보존한다.
+- [ ] Project 갤러리는 카페 추천·감성 분류 두 프로젝트 단위로 글을 필터링하고 선택 상태를 URL에 보존한다. EduTech 글은 전체 목록에만 남긴다.
 - [ ] 컬렉션 목록과 글 상세가 실제 Liquid 데이터로 렌더링된다.
 - [ ] 글 상세의 breadcrumb, 현재 구간 목차, 메타, 진행 표시, 최근 글 3개가 동작한다.
 - [ ] CV는 Hyejun, Career, Education 정보만 본문에 노출하며 프로필 사진과 연락 바로가기를 제거한다.

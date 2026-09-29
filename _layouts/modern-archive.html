@@ -14,11 +14,11 @@ layout: modern-base
 
 <section class="modern-archive modern-container" aria-label="{{ page.title }} 글 목록">
   {% if page.collection == 'projects' %}
-    {% assign cafe_count = 0 %}{% assign sentiment_count = 0 %}{% assign edutech_count = 0 %}
+    {% assign cafe_count = 0 %}{% assign sentiment_count = 0 %}
     {% for item in archive_items %}
       {% if item.tags contains '이미지기반 카페추천 프로젝트' %}{% assign cafe_count = cafe_count | plus: 1 %}
       {% elsif item.tags contains 'Domain_Common_Project' %}{% assign sentiment_count = sentiment_count | plus: 1 %}
-      {% else %}{% assign edutech_count = edutech_count | plus: 1 %}{% endif %}
+      {% endif %}
     {% endfor %}
     <div class="modern-project-gallery" data-project-gallery aria-label="프로젝트별 보기">
       <div class="modern-project-gallery__toolbar">
@@ -27,10 +27,9 @@ layout: modern-base
       <div class="modern-project-gallery__grid">
         {% for group in site.data.project_groups %}
           {% if group.key == 'cafe-recommendation' %}{% assign group_count = cafe_count %}
-          {% elsif group.key == 'sentiment-classification' %}{% assign group_count = sentiment_count %}
-          {% else %}{% assign group_count = edutech_count %}{% endif %}
+          {% else %}{% assign group_count = sentiment_count %}{% endif %}
           <button type="button" class="modern-project-tile modern-project-tile--{{ group.accent }}" data-project-filter="{{ group.key }}" aria-pressed="false">
-            <span class="modern-project-tile__art" aria-hidden="true"><i></i><i></i><b></b></span>
+            <span class="modern-project-tile__art" aria-hidden="true"></span>
             <span class="modern-project-tile__meta">{{ group.label }} · {{ group_count }} notes</span>
             <strong>{{ group.title }}</strong>
             <small>{{ group.description }}</small>

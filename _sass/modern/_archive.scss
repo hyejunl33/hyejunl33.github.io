@@ -19,16 +19,11 @@
 .modern-project-tile:first-child { grid-column: 1 / -1; min-height: 360px; }
 .modern-project-tile:hover, .modern-project-tile.is-active { transform: translateY(-4px); border-color: var(--m-line-strong); box-shadow: var(--m-shadow); }
 .modern-project-tile.is-active { box-shadow: 0 0 0 2px var(--m-lime), var(--m-shadow); }
-.modern-project-tile__art { position: relative; display: block; height: 150px; overflow: hidden; border-radius: 14px; background: radial-gradient(circle at 70% 26%, rgba(199,242,103,.9), transparent 16%), conic-gradient(from 135deg at 52% 50%, #19221d, #397f6d, #a992ff, #151a17); }
+.modern-project-tile__art { position: relative; display: block; height: 150px; overflow: hidden; border-radius: 14px; background: radial-gradient(ellipse 155% 92% at -12% 110%, rgba(118,221,187,.92), transparent 65%), radial-gradient(ellipse 130% 105% at 110% -8%, rgba(183,155,255,.9), transparent 68%), linear-gradient(135deg, #17221e, #527e70); }
 .modern-project-tile:first-child .modern-project-tile__art { height: 190px; }
-.modern-project-tile--sentiment .modern-project-tile__art { background: radial-gradient(circle at 28% 28%, rgba(135,235,207,.85), transparent 18%), conic-gradient(from 225deg at 52% 50%, #161b1e, #38658a, #8e75e7, #18201d); }
-.modern-project-tile--edutech .modern-project-tile__art { background: radial-gradient(circle at 72% 68%, rgba(255,223,140,.9), transparent 17%), conic-gradient(from 45deg at 48% 50%, #241b18, #a7665c, #a992ff, #17201d); }
+.modern-project-tile--sentiment .modern-project-tile__art { background: radial-gradient(ellipse 150% 110% at 108% 114%, rgba(135,235,207,.9), transparent 67%), radial-gradient(ellipse 130% 95% at -10% -5%, rgba(142,117,231,.9), transparent 66%), linear-gradient(155deg, #172028, #46658a); }
 .modern-project-tile__art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.22), transparent 64%); transform: translateX(-100%); transition: transform .8s var(--m-ease); }
 .modern-project-tile:hover .modern-project-tile__art::after { transform: translateX(100%); }
-.modern-project-tile__art i { position: absolute; border: 1px solid rgba(255,255,255,.35); border-radius: 50%; }
-.modern-project-tile__art i:first-child { width: 112px; height: 112px; top: -25px; right: 12%; background: rgba(255,255,255,.08); }
-.modern-project-tile__art i:nth-child(2) { width: 36px; height: 36px; left: 20%; bottom: 16%; background: rgba(255,255,255,.16); backdrop-filter: blur(8px); }
-.modern-project-tile__art b { position: absolute; width: 8px; height: 8px; right: 30%; bottom: 22%; border-radius: 50%; background: #fff; box-shadow: 0 0 20px #fff; }
 .modern-project-tile__meta { margin: 14px 12px 0; color: var(--m-faint); font-size: 9px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
 .modern-project-tile > strong { margin: 8px 12px 2px; font-size: 20px; line-height: 1.25; letter-spacing: -.035em; }
 .modern-project-tile > small { margin: 5px 42px 12px 12px; color: var(--m-muted); font-size: 11px; line-height: 1.55; }

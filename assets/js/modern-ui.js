@@ -105,9 +105,16 @@
           art.style.setProperty('--art-y', (y * 100).toFixed(1) + '%');
           art.style.setProperty('--spark-x', (x * 100).toFixed(1) + '%');
           art.style.setProperty('--spark-y', (y * 100).toFixed(1) + '%');
+          art.style.setProperty('--foil-x', (18 + (x * 64)).toFixed(1) + '%');
+          art.style.setProperty('--foil-y', (18 + (y * 64)).toFixed(1) + '%');
+          art.style.setProperty('--foil-angle', (112 + ((x - y) * 28)).toFixed(1) + 'deg');
+          var distance = Math.min(1, Math.hypot(x - .5, y - .5) * 1.42);
+          art.style.setProperty('--holo-distance', distance.toFixed(3));
+          art.style.setProperty('--holo-brightness', (.8 + (distance * .42)).toFixed(3));
+          art.style.setProperty('--holo-opacity', '.82');
           if (card.classList.contains('modern-post-card')) {
-            card.style.setProperty('--card-rx', ((.5 - y) * 2.4).toFixed(2) + 'deg');
-            card.style.setProperty('--card-ry', ((x - .5) * 3.2).toFixed(2) + 'deg');
+            card.style.setProperty('--card-rx', ((.5 - y) * 6).toFixed(2) + 'deg');
+            card.style.setProperty('--card-ry', ((x - .5) * 8).toFixed(2) + 'deg');
           }
           frame = 0;
         });
@@ -119,6 +126,11 @@
         art.style.setProperty('--art-y', '24%');
         art.style.setProperty('--spark-x', '50%');
         art.style.setProperty('--spark-y', '50%');
+        art.style.setProperty('--foil-x', '50%');
+        art.style.setProperty('--foil-y', '50%');
+        art.style.setProperty('--holo-distance', '0');
+        art.style.setProperty('--holo-brightness', '.8');
+        art.style.setProperty('--holo-opacity', '0');
       });
     });
   }

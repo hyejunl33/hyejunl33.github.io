@@ -26,48 +26,36 @@
 }
 .modern-post-card:hover { border-color: var(--m-line-strong); box-shadow: var(--m-shadow); }
 .modern-post-card__art, .modern-article-art {
-  --art-hue: 150; --art-hue-alt: 252; --art-angle: 140deg; --art-x: 68%; --art-y: 24%; --art-x2: 22%; --art-y2: 76%; --spark-x: 50%; --spark-y: 50%;
+  --art-hue: 150; --art-hue-alt: 252; --art-angle: 140deg; --art-x: 68%; --art-y: 24%; --art-x2: 22%; --art-y2: 76%;
+  --spark-x: 50%; --spark-y: 50%; --foil-x: 50%; --foil-y: 50%; --foil-angle: 118deg; --holo-distance: 0; --holo-brightness: .8; --holo-opacity: 0;
   position: relative; display: block; min-height: 150px; overflow: hidden; isolation: isolate; border-radius: 14px;
   background:
-    radial-gradient(circle at var(--art-x) var(--art-y), hsla(var(--art-hue), 94%, 78%, .96), transparent 18%),
-    radial-gradient(ellipse at var(--art-x2) var(--art-y2), hsla(var(--art-hue-alt), 88%, 69%, .72), transparent 36%),
-    conic-gradient(from var(--art-angle) at 54% 52%, hsl(calc(var(--art-hue) + 170), 38%, 12%), hsl(var(--art-hue-alt), 58%, 45%), hsl(var(--art-hue), 69%, 59%), hsl(calc(var(--art-hue-alt) + 130), 42%, 13%));
+    radial-gradient(ellipse 130% 105% at -14% 112%, hsla(var(--art-hue), 82%, 65%, .96) 0%, transparent 62%),
+    radial-gradient(ellipse 118% 92% at 112% -12%, hsla(var(--art-hue-alt), 78%, 72%, .9) 0%, transparent 66%),
+    linear-gradient(132deg, hsl(calc(var(--art-hue) + 155), 35%, 18%), hsl(var(--art-hue-alt), 58%, 48%));
+  background-size: 112% 112%; background-position: center; transform: translateZ(.01px);
 }
 .modern-post-card__art::before, .modern-article-art::before {
-  content: ""; position: absolute; inset: -35%; z-index: 4; pointer-events: none; opacity: .14;
+  content: ""; position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: var(--holo-opacity);
   background:
-    radial-gradient(circle at var(--spark-x) var(--spark-y), rgba(255,255,255,.98) 0 2%, rgba(255,255,255,.34) 7%, transparent 24%),
-    repeating-linear-gradient(var(--art-angle), transparent 0 9%, hsla(48,100%,75%,.28) 12%, hsla(160,100%,75%,.3) 17%, hsla(216,100%,78%,.32) 22%, hsla(302,100%,82%,.28) 27%, transparent 34% 44%);
-  background-blend-mode: screen; mix-blend-mode: color-dodge; filter: saturate(1.35); transform: rotate(-4deg) scale(1.05); transition: opacity .28s ease;
+    radial-gradient(circle, rgba(255,255,255,.48) 0 .7px, transparent 1.2px),
+    radial-gradient(circle, rgba(255,255,255,.3) 0 .55px, transparent 1px),
+    repeating-linear-gradient(var(--foil-angle), transparent 0 7%, hsla(8,100%,76%,.42) 10%, hsla(52,100%,72%,.48) 14%, hsla(145,100%,74%,.45) 18%, hsla(204,100%,76%,.48) 22%, hsla(286,100%,79%,.45) 26%, transparent 34% 43%);
+  background-size: 13px 13px, 19px 19px, 260% 260%;
+  background-position: var(--foil-x) var(--foil-y), calc(100% - var(--foil-x)) calc(100% - var(--foil-y)), var(--foil-x) var(--foil-y);
+  background-blend-mode: soft-light, overlay, color-dodge; mix-blend-mode: color-dodge;
+  filter: brightness(var(--holo-brightness)) contrast(2.15) saturate(1.28); transform: translateZ(1px); transition: opacity .22s ease;
 }
 .modern-post-card__art::after, .modern-article-art::after {
-  content: ""; position: absolute; inset: 0; z-index: 5; pointer-events: none; opacity: .18;
-  background-image: radial-gradient(circle, rgba(255,255,255,.78) 0 1px, transparent 1.5px), radial-gradient(circle, rgba(255,255,255,.36) 0 .7px, transparent 1.3px);
-  background-position: 0 0, 7px 8px; background-size: 17px 17px, 13px 13px; mix-blend-mode: screen; mask-image: radial-gradient(circle at var(--spark-x) var(--spark-y), #000, transparent 62%); transition: opacity .28s ease;
+  content: ""; position: absolute; inset: 0; z-index: 5; pointer-events: none; opacity: var(--holo-opacity);
+  background: radial-gradient(farthest-corner ellipse at var(--spark-x) var(--spark-y), rgba(255,255,255,.9) 0%, rgba(255,255,255,.28) 18%, rgba(12,18,22,.08) 48%, rgba(8,10,12,.4) 118%);
+  mix-blend-mode: hard-light; filter: brightness(.96) contrast(1.35); transform: translateZ(1.2px); transition: opacity .22s ease;
 }
-.modern-post-card:hover .modern-post-card__art::before, .modern-post-card:hover .modern-post-card__art::after, .modern-article-art:hover::before, .modern-article-art:hover::after { opacity: .68; }
-.modern-post-card__art i, .modern-post-card__art b, .modern-article-art i, .modern-article-art b { position: absolute; z-index: 2; display: block; border: 1px solid rgba(255,255,255,.3); border-radius: 50%; transition: transform .45s var(--m-ease); }
-.modern-post-card__art i:nth-child(1), .modern-article-art i:nth-child(1) { width: 110px; height: 110px; top: -20px; right: 9%; background: rgba(255,255,255,.07); backdrop-filter: blur(7px); }
-.modern-post-card__art i:nth-child(2), .modern-article-art i:nth-child(2) { width: 17px; height: 17px; top: 56%; left: 23%; background: rgba(255,255,255,.75); box-shadow: 0 0 28px rgba(255,255,255,.72); }
-.modern-post-card__art i:nth-child(3), .modern-article-art i:nth-child(3) { width: 46px; height: 46px; right: 29%; bottom: -14px; background: rgba(8,12,9,.22); }
-.modern-post-card__art b, .modern-article-art b { width: 7px; height: 7px; top: 22%; left: 14%; background: var(--m-lime); border: 0; box-shadow: 0 0 18px var(--m-lime); }
-.modern-post-card__art[data-art-variant="1"], .modern-article-art[data-art-variant="1"] { background: linear-gradient(var(--art-angle), hsl(calc(var(--art-hue) + 185), 42%, 11%) 4%, hsla(var(--art-hue-alt), 78%, 57%, .9) 37%, hsla(var(--art-hue), 94%, 73%, .96) 51%, hsl(calc(var(--art-hue-alt) + 82), 68%, 37%) 64%, hsl(calc(var(--art-hue) + 160), 40%, 12%) 96%); }
-.modern-post-card__art[data-art-variant="1"] i:nth-child(1), .modern-article-art[data-art-variant="1"] i:nth-child(1) { width: 150%; height: 38px; top: 22%; right: -25%; border-radius: 999px; transform: rotate(-13deg); }
-.modern-post-card__art[data-art-variant="1"] i:nth-child(3), .modern-article-art[data-art-variant="1"] i:nth-child(3) { width: 70%; height: 58px; right: -8%; bottom: -16px; border-radius: 50%; }
-.modern-post-card__art[data-art-variant="2"], .modern-article-art[data-art-variant="2"] { background: repeating-radial-gradient(circle at var(--art-x2) var(--art-y2), hsla(var(--art-hue), 90%, 72%, .95) 0 7%, hsla(var(--art-hue-alt), 72%, 48%, .88) 11% 18%, hsl(calc(var(--art-hue) + 155), 40%, 13%) 25% 33%); }
-.modern-post-card__art[data-art-variant="2"] i:nth-child(1), .modern-article-art[data-art-variant="2"] i:nth-child(1) { width: 170px; height: 170px; top: -82px; right: -12px; }
-.modern-post-card__art[data-art-variant="2"] i:nth-child(2), .modern-article-art[data-art-variant="2"] i:nth-child(2) { top: 66%; left: 66%; }
-.modern-post-card__art[data-art-variant="3"], .modern-article-art[data-art-variant="3"] { background: conic-gradient(from var(--art-angle) at var(--art-x2) var(--art-y2), hsl(calc(var(--art-hue) + 160), 40%, 11%), hsl(var(--art-hue), 88%, 68%) 18%, hsl(var(--art-hue-alt), 70%, 58%) 32%, hsl(calc(var(--art-hue-alt) + 120), 72%, 61%) 48%, hsl(calc(var(--art-hue) + 170), 38%, 12%) 68% 100%); }
-.modern-post-card__art[data-art-variant="3"] i:nth-child(1), .modern-article-art[data-art-variant="3"] i:nth-child(1) { width: 46%; height: 180%; top: -40%; right: 24%; border-radius: 50%; transform: rotate(32deg); }
-.modern-post-card__art[data-art-variant="3"] i:nth-child(3), .modern-article-art[data-art-variant="3"] i:nth-child(3) { right: 8%; bottom: 12%; }
-.modern-post-card__art[data-art-variant="4"], .modern-article-art[data-art-variant="4"] { background: radial-gradient(ellipse at 52% 112%, hsla(var(--art-hue), 98%, 75%, .96) 0 12%, hsla(var(--art-hue-alt), 81%, 59%, .8) 28%, transparent 57%), linear-gradient(174deg, hsl(calc(var(--art-hue-alt) + 150), 39%, 11%), hsl(var(--art-hue-alt), 57%, 36%) 54%, hsl(calc(var(--art-hue) + 120), 44%, 15%)); }
-.modern-post-card__art[data-art-variant="4"] i:nth-child(1), .modern-article-art[data-art-variant="4"] i:nth-child(1) { width: 140%; height: 130px; top: 42%; right: -20%; border-radius: 50%; }
-.modern-post-card__art[data-art-variant="4"] i:nth-child(2), .modern-article-art[data-art-variant="4"] i:nth-child(2) { top: 22%; left: 72%; }
-.modern-post-card__art[data-art-variant="5"], .modern-article-art[data-art-variant="5"] { background: radial-gradient(ellipse at var(--art-x) var(--art-y), hsla(var(--art-hue), 96%, 80%, .98), hsla(var(--art-hue), 81%, 58%, .74) 17%, transparent 43%), linear-gradient(var(--art-angle), hsl(calc(var(--art-hue-alt) + 130), 42%, 12%), hsl(var(--art-hue-alt), 62%, 43%) 54%, hsl(calc(var(--art-hue) + 175), 42%, 10%)); }
-.modern-post-card__art[data-art-variant="5"] i:nth-child(1), .modern-article-art[data-art-variant="5"] i:nth-child(1) { width: 230px; height: 230px; top: -128px; right: 30%; }
-.modern-post-card__art[data-art-variant="5"] i:nth-child(3), .modern-article-art[data-art-variant="5"] i:nth-child(3) { width: 88px; height: 88px; right: -24px; bottom: -26px; }
-.modern-post-card:hover .modern-post-card__art i:nth-child(1) { transform: translate(calc((var(--art-x) - 50%) * .1), -7px) rotate(9deg); }
-.modern-post-card:hover .modern-post-card__art i:nth-child(2) { transform: translate(9px, -8px) scale(1.12); }
+.modern-post-card__art[data-art-variant="1"], .modern-article-art[data-art-variant="1"] { background: radial-gradient(ellipse 155% 84% at 52% -18%, hsla(var(--art-hue), 82%, 74%, .95), transparent 68%), radial-gradient(ellipse 120% 120% at 108% 112%, hsla(var(--art-hue-alt), 76%, 58%, .88), transparent 66%), linear-gradient(155deg, hsl(calc(var(--art-hue-alt) + 140), 34%, 17%), hsl(var(--art-hue), 58%, 46%)); }
+.modern-post-card__art[data-art-variant="2"], .modern-article-art[data-art-variant="2"] { background: linear-gradient(112deg, hsla(var(--art-hue), 80%, 70%, .18), hsla(var(--art-hue-alt), 84%, 72%, .75) 46%, transparent 72%), radial-gradient(ellipse 160% 105% at 18% 110%, hsla(var(--art-hue), 86%, 62%, .94), transparent 65%), linear-gradient(24deg, hsl(calc(var(--art-hue) + 170), 36%, 16%), hsl(var(--art-hue-alt), 55%, 48%)); }
+.modern-post-card__art[data-art-variant="3"], .modern-article-art[data-art-variant="3"] { background: radial-gradient(ellipse 180% 76% at 50% 118%, hsla(var(--art-hue-alt), 88%, 72%, .92), transparent 62%), linear-gradient(166deg, hsla(var(--art-hue), 76%, 69%, .88), transparent 57%), linear-gradient(42deg, hsl(calc(var(--art-hue-alt) + 150), 35%, 16%), hsl(var(--art-hue), 61%, 45%)); }
+.modern-post-card__art[data-art-variant="4"], .modern-article-art[data-art-variant="4"] { background: radial-gradient(ellipse 104% 150% at -8% 44%, hsla(var(--art-hue), 86%, 68%, .94), transparent 67%), radial-gradient(ellipse 116% 136% at 108% 55%, hsla(var(--art-hue-alt), 82%, 73%, .86), transparent 70%), linear-gradient(96deg, hsl(calc(var(--art-hue) + 150), 34%, 16%), hsl(var(--art-hue-alt), 60%, 46%)); }
+.modern-post-card__art[data-art-variant="5"], .modern-article-art[data-art-variant="5"] { background: linear-gradient(148deg, hsla(var(--art-hue-alt), 84%, 75%, .84), transparent 54%), radial-gradient(ellipse 145% 110% at 82% 112%, hsla(var(--art-hue), 88%, 64%, .92), transparent 64%), linear-gradient(18deg, hsl(calc(var(--art-hue-alt) + 155), 36%, 15%), hsl(var(--art-hue), 59%, 46%)); }
 .modern-post-card__body { display: flex; min-height: 230px; flex: 1; flex-direction: column; padding: 18px 17px 16px; }
 .modern-post-card__meta { margin-bottom: auto; color: var(--m-muted); font-size: 11px; font-weight: 620; letter-spacing: .04em; }
 .modern-post-card h2 { margin: 28px 0 10px; font-size: 20px; line-height: 1.35; letter-spacing: -.035em; }
