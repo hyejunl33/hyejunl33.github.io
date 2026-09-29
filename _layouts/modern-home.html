@@ -1,0 +1,60 @@
+---
+layout: modern-base
+---
+{% assign project_items = site.projects | sort: 'date' | reverse %}
+{% assign featured_items = project_items | where: 'featured', true %}
+{% assign featured = featured_items.first | default: project_items.first %}
+{% assign all_notes = site.projects | concat: site.algorithm | concat: site.weeklyreview | concat: site.etc | concat: site.study | sort: 'date' | reverse %}
+
+<section class="modern-home-hero modern-container modern-reveal is-visible" aria-label="LLM 실시간 정보 처리 시각화">
+  {% include modern/llm-architecture.html %}
+</section>
+
+<section class="modern-section modern-section--mcp modern-container modern-reveal" aria-labelledby="recruiter-heading">
+  <a class="modern-recruiter-callout" href="{{ '/recruiter/' | relative_url }}">
+    <div class="modern-recruiter-callout__content">
+      <span class="modern-mcp-chip"><i aria-hidden="true"></i> MCP mode</span>
+      <p class="modern-eyebrow">For recruiters &amp; interviewers</p>
+      <h2 id="recruiter-heading">포트폴리오를 읽는 대신,<br>근거를 질문하세요.</h2>
+      <p>LLM이 프로젝트 글과 CV를 직접 탐색하고, 답변마다 확인 가능한 원문을 함께 제시합니다.</p>
+      <span class="modern-button modern-button--primary">MCP mode 열기 <span aria-hidden="true">→</span></span>
+    </div>
+    <div class="modern-recruiter-callout__steps" aria-hidden="true">
+      <div><span>01</span><strong>Connect</strong><small>읽기 전용 endpoint 연결</small></div>
+      <div><span>02</span><strong>Ask</strong><small>역량과 경험을 자연어로 질문</small></div>
+      <div><span>03</span><strong>Verify</strong><small>원문 링크에서 근거 확인</small></div>
+    </div>
+  </a>
+</section>
+
+<section class="modern-section modern-container modern-reveal" aria-labelledby="featured-heading">
+  <div class="modern-section-heading">
+    <div><p class="modern-eyebrow">Selected work</p><h2 id="featured-heading">Featured Project</h2></div>
+    <a class="modern-text-link" href="{{ '/projects/' | relative_url }}">모든 프로젝트</a>
+  </div>
+  {% if featured %}
+    <a class="modern-feature-card" href="{{ featured.url | relative_url }}" data-aurora-card>
+      <span class="modern-feature-card__aurora" aria-hidden="true"></span>
+      <div class="modern-feature-card__body">
+        <span class="modern-chip">Project</span>
+        <h3>{{ featured.title | markdownify | strip_html }}</h3>
+        {% assign featured_excerpt = featured.excerpt | default: featured.content %}
+        <p>{{ featured_excerpt | markdownify | strip_html | strip_newlines | truncate: 210 }}</p>
+        {% if featured.tags %}<div class="modern-tag-row">{% for tag in featured.tags limit: 4 %}<span>{{ tag }}</span>{% endfor %}</div>{% endif %}
+      </div>
+      <span class="modern-feature-card__arrow" aria-hidden="true">↗</span>
+    </a>
+  {% else %}
+    <p class="modern-empty">아직 공개된 프로젝트가 없습니다.</p>
+  {% endif %}
+</section>
+
+<section class="modern-section modern-container modern-reveal" aria-labelledby="latest-heading">
+  <div class="modern-section-heading">
+    <div><p class="modern-eyebrow">Recently documented</p><h2 id="latest-heading">Latest Notes</h2></div>
+    <a class="modern-text-link" href="{{ '/study/' | relative_url }}">전체 기록</a>
+  </div>
+  <div class="modern-card-grid modern-card-grid--three">
+    {% for item in all_notes limit: 3 %}{% include modern/post-card.html post=item %}{% endfor %}
+  </div>
+</section>

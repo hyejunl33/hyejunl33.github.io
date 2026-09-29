@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: modern-single
 title: "[이미지기반 카페추천 프로젝트]네이버지도에서 서울시 카페 전부 크롤링"
 date: 2026-01-30
 tags:

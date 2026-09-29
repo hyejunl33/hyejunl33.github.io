@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: modern-single
 title: "[이미지기반 카페추천 프로젝트] Apache Airflow 파이프라인 자동화 구현"
 date: 2026-01-30
 tags:

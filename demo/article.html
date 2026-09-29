@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Archive for AI Study — Article</title>
+  <style>
+    :root{--ink:#172117;--muted:#617061;--faint:#8f988f;--line:rgba(23,33,23,.14);--paper:#f7f7f2;--card:#fff;--soft:#e9ece5;--mint:#a7e2c0;--violet:#bdb6f0;--code:#17231b;--code-text:#dcecdf;--code-comment:#8ca593;--code-keyword:#d8a5f3;--code-function:#7fd8c2;--code-string:#f3ce8d;--code-number:#89c7f0}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:-.022em}a{color:inherit}.header{height:74px;position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,72px);border-bottom:1px solid var(--line);background:#f7f7f2de;backdrop-filter:blur(14px);text-decoration:none}.brand{font-size:18px;font-weight:720;letter-spacing:-.07em}.brand span{color:var(--muted)}.back{color:var(--muted);font-size:13px;text-decoration:none}.back:hover{color:var(--ink)}.progress{position:fixed;z-index:8;top:73px;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--mint),var(--violet));transition:width .1s}.article-hero{max-width:1100px;margin:auto;padding:clamp(62px,9vw,132px) clamp(20px,5vw,72px) clamp(58px,8vw,100px)}.crumb{display:flex;gap:8px;color:var(--muted);font-size:13px}.crumb a{color:var(--muted);text-decoration:none}.crumb a:hover{text-decoration:underline}.type{display:inline-block;margin-top:37px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:11px;font-weight:720;letter-spacing:.1em;text-transform:uppercase}.article-hero h1{max-width:930px;margin:20px 0 22px;font-size:clamp(46px,7vw,96px);line-height:.92;letter-spacing:-.09em;font-weight:630}.summary{max-width:670px;margin:0;color:var(--muted);font-size:clamp(16px,1.8vw,20px);line-height:1.58}.meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:34px;color:var(--faint);font-size:13px}.meta strong{color:var(--ink);font-weight:650}.article-layout{display:grid;grid-template-columns:190px minmax(0,700px);gap:clamp(32px,8vw,120px);max-width:1100px;margin:auto;padding:0 clamp(20px,5vw,72px) 130px}.toc{position:sticky;top:108px;align-self:start;padding-top:6px}.toc-label{color:var(--faint);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}.toc a{display:block;margin-top:13px;color:var(--muted);font-size:13px;line-height:1.35;text-decoration:none}.toc a:hover{color:var(--ink)}.content{min-width:0;font-size:17px;line-height:1.8}.content h2{margin:70px 0 19px;font-size:clamp(29px,4vw,43px);line-height:1.02;letter-spacing:-.07em}.content h3{margin:42px 0 13px;font-size:23px;line-height:1.15;letter-spacing:-.055em}.content p{margin:0 0 20px}.content ul{padding-left:21px;margin:0 0 22px}.content li{padding-left:5px;margin:5px 0}.content blockquote{margin:33px 0;padding:20px 23px;border-left:2px solid var(--ink);background:var(--soft);font-size:18px}.content pre{position:relative;overflow:auto;margin:28px 0;padding:45px 22px 22px;border:1px solid rgba(255,255,255,.08);border-radius:15px;background:var(--code);color:var(--code-text);font:13px/1.72 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:0;box-shadow:0 13px 28px rgba(23,33,23,.11)}.content pre::before{position:absolute;top:14px;left:17px;content:attr(data-language);color:#9daf9f;font:700 10px/1 Inter,ui-sans-serif,sans-serif;letter-spacing:.1em;text-transform:uppercase}.content pre::after{position:absolute;top:15px;right:17px;width:30px;height:7px;content:"";border-radius:9px;background:radial-gradient(circle at 3px 3px,#f2c274 0 3px,transparent 3.4px),radial-gradient(circle at 15px 3px,#8ed4a7 0 3px,transparent 3.4px),radial-gradient(circle at 27px 3px,#879be5 0 3px,transparent 3.4px)}.content code{padding:.12em .32em;border-radius:4px;background:var(--soft);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em}.content pre code{padding:0;background:transparent;font-size:inherit}.tok-comment{color:var(--code-comment);font-style:italic}.tok-keyword{color:var(--code-keyword);font-weight:650}.tok-function{color:var(--code-function)}.tok-string{color:var(--code-string)}.tok-number{color:var(--code-number)}.table-wrap{overflow-x:auto;margin:30px 0;border:1px solid var(--line);border-radius:13px;background:var(--card)}.content table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.5}.content th,.content td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}.content th{background:var(--soft);font-size:12px;font-weight:720;letter-spacing:.04em}.content tr:last-child td{border-bottom:0}.note{margin:48px 0;padding:27px;border:1px solid var(--line);border-radius:17px;background:var(--card)}.note span{color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}.note p{margin:9px 0 0;color:var(--muted);font-size:14px;line-height:1.6}.article-footer{display:flex;justify-content:space-between;gap:18px;margin-top:70px;padding-top:24px;border-top:1px solid var(--line)}.article-footer a{font-size:14px;font-weight:650;text-decoration:none}.article-footer a:last-child{text-align:right}@media(max-width:760px){.header{height:64px}.progress{top:63px}.article-layout{grid-template-columns:1fr;padding-bottom:78px}.toc{position:static;display:flex;gap:13px;overflow:auto;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.toc-label{display:none}.toc a{margin:0;white-space:nowrap}.content{font-size:16px}.article-hero{padding-top:58px}.article-footer{flex-direction:column}.article-footer a:last-child{text-align:left}.content th,.content td{min-width:130px;padding:13px 14px}}
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"></div><header class="header"><a class="brand" href="index.html">Archive for <span>AI Study</span></a><a class="back" href="archive.html?category=study">← Back to archive</a></header>
+  <main><section class="article-hero"><div class="crumb"><a href="index.html">Home</a><span>/</span><a id="category-link" href="archive.html?category=project">Project</a><span>/</span><span>Note</span></div><span class="type" id="type">Project</span><h1 id="title"></h1><p class="summary" id="summary"></p><div class="meta"><span>Published <strong id="date"></strong></span><span>Reading <strong id="reading"></strong></span></div></section><section class="article-layout"><aside class="toc" id="toc"><span class="toc-label">On this page</span></aside><article class="content" id="content"></article></section></main>
+  <script>
+    const notes={
+      'adk-multi-agent':{category:'Project',key:'project',date:'2026.01.30',reading:'7 min',title:'[이미지기반 카페추천 프로젝트] ADK 기반 에이전트 챗봇 구현',summary:'위치 처리, stateful 채팅, Context 기반 다음 질문 생성을 연결한 멀티 에이전트 설계 및 구현 기록.',sections:[
+        ['필요한 기능',`<ul><li>인풋 쿼리에서 위치를 받아 해당 동네 내의 카페만 검색 결과로 보여주기</li><li>이전 Context를 기억해 다른 카페를 이어서 추천하는 stateful 채팅</li><li>대화 맥락에 맞는 다음 예상 질문 생성</li></ul><blockquote>핵심 목표: “홍대”처럼 자유로운 위치 표현을 실제 행정동 리스트로 변환해 검색 재현율을 높인다.</blockquote>`],
+        ['동네 처리 — Location Agent',`<p>사용자 쿼리에는 홍대, 롯데월드 근처, 잠실역처럼 다양한 위치 표현이 들어온다. Location Agent는 이 표현을 검색 가능한 행정동 그룹으로 바꾼다.</p><div class="table-wrap"><table><thead><tr><th>입력</th><th>처리</th><th>출력</th></tr></thead><tbody><tr><td>홍대 조용한 카페 추천</td><td>랜드마크 → 행정동 변환</td><td>서교 · 연남 · 동교 · 상수 · 합정</td></tr><tr><td>잠실역 근처</td><td>역 이름 → 행정동 변환</td><td>잠실 인근 검색 그룹</td></tr></tbody></table></div><pre><code>def run(self, user_query: str) -&gt; dict:
+    prompt_result = self._call_llm(user_query)
+    try:
+        result_json = json.loads(prompt_result)
+    except JSONDecodeError:
+        start = prompt_result.find('{')
+        end = prompt_result.rfind('}') + 1
+        result_json = json.loads(prompt_result[start:end])
+    return {
+        "is_location_query": result_json.get("is_location_query", False),
+        "region_names": result_json.get("region_names", []),
+        "original_query": user_query
+    }</code></pre><p>예를 들어 “홍대 조용한 카페 추천해줘”는 <code>["서교", "연남", "동교", "상수", "합정"]</code>으로 변환된다.</p>`],
+        ['Stateful 채팅 구현',`<p>한 번의 검색으로 끝나지 않고, 이전 추천과 사용자의 후속 질문을 함께 다루기 위해 Context를 상태로 정의한다. 멀티 에이전트가 이 상태를 참고하면서 검색 범위와 추천을 조정한다.</p><div class="note"><span>Source note</span><p>이 글은 원본 <code>_projects/2026-01-30-ADK-Multi-agent.md</code>의 제목, 본문 구조, 코드 예시를 사용한 UI 데모입니다.</p></div>`]
+      ]},
+      'n-expression':{category:'Algorithm',key:'algorithm',date:'2025.09.16',reading:'5 min',title:'[Programmers/Python] Level_3: N으로 표현',summary:'숫자 N과 사칙연산만 사용해 목표 숫자를 표현할 때, N 사용 횟수의 최솟값을 찾는 DP 풀이.',sections:[
+        ['문제: N으로 표현',`<p>5와 사칙연산만으로 12를 표현하는 방법 중, 5를 가장 적게 쓰는 경우를 찾는다. 답은 N을 최대 8번 사용할 때까지만 탐색한다.</p><blockquote>점화식은 만들어야 하는 숫자가 아니라, N을 사용한 횟수 <code>i</code>에서 찾을 수 있었다.</blockquote>`],
+        ['점화식 찾기',`<p><code>dp[i]</code>는 N을 i번 사용해 만들 수 있는 수의 집합이다. i를 두 부분으로 나누는 모든 경우에 사칙연산을 적용하고, 중복은 set으로 관리한다.</p><pre><code>dp = {i: set() for i in range(1, 9)}
+dp[1].add(N)
+for i in range(2, 9):
+    dp[i].add(int(str(N) * i))
+    for j in range(1, i):
+        for num1 in dp[j]:
+            for num2 in dp[i-j]:
+                dp[i].add(num1 + num2)
+                dp[i].add(num1 - num2)
+                if num2 != 0:
+                    dp[i].add(num1 // num2)
+                dp[i].add(num1 * num2)</code></pre>`],
+        ['배울 점',`<p>DP에서는 문제의 표면적인 대상이 아니라, 반복되는 결정 단위를 찾는 것이 중요하다. 여기서는 “만들고 싶은 number”가 아니라 “N을 사용하는 횟수”가 상태였다.</p><div class="note"><span>Source note</span><p>원본 파일: <code>_algorithm/2025-09-16-N-DP.md</code></p></div>`]
+      ]},
+      'wrapup-report':{category:'WeeklyReview',key:'weeklyreview',date:'2025.11.03',reading:'9 min',title:'Week7-8 DomainCommonProject WrapupReport',summary:'영화 리뷰 텍스트를 네 가지 감성 클래스로 분류하는 BERT 기반 모델의 실험, 실패, 성능 개선 과정.',sections:[
+        ['프로젝트 개요',`<p>영화 리뷰 텍스트를 강한 부정·약한 부정·약한 긍정·강한 긍정의 네 클래스로 분류하는 모델을 개발했다.</p><ul><li>H/W: Tesla V100 GPU</li><li>S/W: Python, PyTorch, Pandas, Scikit-learn</li><li>실험 관리: Weights & Biases</li></ul>`],
+        ['실험과 가설',`<p>데이터 불균형과 자음/모음 반복, 이모티콘이 많은 텍스트 패턴을 발견했다. Weighted Cross Entropy, Focal Loss, 커스텀 토크나이저를 각 가설로 검증했다.</p><blockquote>여러 변경을 한 번에 적용하면 성능 하락의 원인을 알기 어렵다. 이후에는 변인을 통제해 한 가지 가설씩 실험했다.</blockquote>`],
+        ['핵심 발견',`<p>평가 지표와 loss의 기준이 다르면 early stopping이 실제 목표를 돕지 못할 수 있다. 평가 지표를 accuracy로 바꾸고, 가중치와 하이퍼파라미터를 조정한 뒤 단일 모델 0.8211, 앙상블 0.8278을 달성했다.</p><div class="note"><span>Source note</span><p>원본 파일: <code>_weeklyreview/2025-11-03-WrapupReport.md</code></p></div>`]
+      ]},
+      'wrtn-onboarding':{category:'ETC',key:'etc',date:'2026.05.04',reading:'6 min',title:'평범한 교대생이던 내가 뤼튼에서 개발자? 무리무리!(무리가아니었다!?)',summary:'합격 메일부터 입사 준비, 그리고 AI Engineer 인턴으로서 서울에서 시작한 첫 업무 기록.',sections:[
+        ['합격하고 나서부터 입사 전까지',`<p>연속된 과제 전형으로 지쳐 있던 중 합격 메일을 받았다. 인턴을 통해 소프트웨어 엔지니어라는 진로에 한 발 더 가까이 갈 기회가 생겼다.</p><h3>해야 할 일</h3><ul><li>남은 면접 보기</li><li>학교 휴학</li><li>서울로 테라포밍</li><li>입사</li></ul>`],
+        ['무엇을 얻어가고자 하는가',`<ul><li>현업에서 Multi Agent를 이용해 업무를 자동화하는 프로세스 경험</li><li>AI Engineer들이 협업하고 문제를 해결하는 방식을 보고 배우기</li></ul><blockquote>최대한 스펀지처럼 배우고 성장하자. 내 자신의 심지는 잃지 말자.</blockquote>`],
+        ['입사 이후',`<p>그로스 마케팅팀 업무자동화(AX)를 맡게 됐다. 학교를 다니던 일상에서 일주일 만에 서울로 출근하는 엔지니어가 된 변화와, 업무와 도메인에서 배운 내용을 기록했다.</p><div class="note"><span>Source note</span><p>원본 파일: <code>_etc/2026-05-04-WRTN-Onboarding.md</code></p></div>`]
+      ]}
+    };
+    const post=notes[new URLSearchParams(location.search).get('post')]||notes['adk-multi-agent'];
+    document.title=`${post.title} — Archive for AI Study`;document.querySelector('#title').textContent=post.title;document.querySelector('#summary').textContent=post.summary;document.querySelector('#type').textContent=post.category;document.querySelector('#date').textContent=post.date;document.querySelector('#reading').textContent=post.reading;const category=document.querySelector('#category-link');category.textContent=post.category;category.href=`archive.html?category=${post.key}`;
+    const content=document.querySelector('#content'),toc=document.querySelector('#toc');post.sections.forEach((section,index)=>{const id=`section-${index}`;content.insertAdjacentHTML('beforeend',`<section id="${id}"><h2>${section[0]}</h2>${section[1]}</section>`);const link=document.createElement('a');link.href=`#${id}`;link.textContent=section[0];toc.append(link)});
+    const escapeHtml=(value)=>value.replace(/[&<>"]/g,(char)=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' })[char]);
+    document.querySelectorAll('pre code').forEach((code)=>{const source=code.textContent;const tokens=/(#.*$)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|\b(def|return|try|except|for|in|if|else|elif|while|class|import|from|as|True|False|None)\b|\b([A-Za-z_]\w*)(?=\()|\b(\d+(?:\.\d+)?)\b/gm;let result='',last=0;for(const match of source.matchAll(tokens)){result+=escapeHtml(source.slice(last,match.index));const kind=match[1]?'comment':match[2]?'string':match[3]?'keyword':match[4]?'function':'number';result+=`<span class="tok-${kind}">${escapeHtml(match[0])}</span>`;last=match.index+match[0].length}code.innerHTML=result+escapeHtml(source.slice(last));code.parentElement.dataset.language='Python'});
+    const progress=document.querySelector('.progress');addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=`${max?scrollY/max*100:0}%`},{passive:true});
+  </script>
+</body>
+</html>

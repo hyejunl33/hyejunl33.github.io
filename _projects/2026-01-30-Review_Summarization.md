@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: modern-single
 title: "[이미지기반 카페추천 프로젝트]서울시 카페 리뷰 데이터 정제 및 요약"
 date: 2026-01-30
 tags:

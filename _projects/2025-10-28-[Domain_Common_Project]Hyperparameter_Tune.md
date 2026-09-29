@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: modern-single
 title: "[영화리뷰 감성분류][모델최적화]하이퍼파라미터 튜닝"
 date: 2025-10-28
 tags:

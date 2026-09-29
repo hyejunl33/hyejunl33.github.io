@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: modern-single
 title: "[이미지기반 카페추천 프로젝트] CLIP으로 이미지 전처리"
 date: 2026-01-30
 tags:

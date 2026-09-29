@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: modern-single
 title: "[Programmers/Python] Level 3: 양과 늑대"
 categories:
   - algorithm

@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: modern-single
 title: "[Programmers/Python] Level 1"
 date: 2025-10-21
 categories:

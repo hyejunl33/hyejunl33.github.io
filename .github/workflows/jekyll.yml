@@ -27,6 +27,8 @@ jobs:
         with:
           ruby-version: '3.1' # Ruby 버전 지정
           bundler-cache: true # 의존성 캐시 활성화
+      - name: Generate recruiter portfolio data
+        run: node scripts/build-recruiter-data.mjs
       - name: Build with Jekyll
         run: bundle exec jekyll build
       - name: Upload artifact

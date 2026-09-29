@@ -1,0 +1,21 @@
+{% assign item = include.post %}
+{% assign collection_key = item.collection | default: 'posts' %}
+{% assign collection_data = site.data.collections[collection_key] %}
+{% assign collection_label = collection_data.label %}
+{% unless collection_label %}{% assign collection_label = collection_key | capitalize %}{% endunless %}
+<a class="modern-post-card" href="{{ item.url | relative_url }}" data-gradient-card>
+  <span class="modern-post-card__art" data-gradient-art data-art-key="{{ item.title | escape }}" aria-hidden="true">
+    <i></i><i></i><i></i><b></b>
+  </span>
+  <span class="modern-post-card__body">
+    <span class="modern-post-card__meta">{{ collection_label }}{% if item.date %} · {{ item.date | date: '%Y.%m.%d' }}{% endif %}</span>
+    <h2>{{ include.title | default: item.title | markdownify | strip_html }}</h2>
+    {% assign item_excerpt = item.excerpt | default: item.content %}
+    <p>{{ item_excerpt | markdownify | strip_html | strip_newlines | truncate: 150 }}</p>
+    {% if item.tags and include.show_tags != false %}
+      <span class="modern-post-card__tags">
+        {% for tag in item.tags limit: 3 %}<span>{{ tag }}</span>{% endfor %}
+      </span>
+    {% endif %}
+  </span>
+</a>

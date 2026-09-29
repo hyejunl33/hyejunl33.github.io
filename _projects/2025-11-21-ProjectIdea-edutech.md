@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: modern-single
 title: "프로젝트아이디어 - 에듀테크"
 date: 2025-11-21
 tags:

@@ -1,0 +1,68 @@
+---
+layout: modern-base
+---
+{% assign collection_meta = site.data.collections[page.collection] %}
+{% if page.collection == 'study' %}
+  {% assign archive_items = site.projects | concat: site.algorithm | concat: site.weeklyreview | concat: site.etc | concat: site.study | sort: 'date' | reverse %}
+{% else %}
+  {% assign archive_items = site[page.collection] | sort: 'date' | reverse %}
+{% endif %}
+
+<section class="modern-archive-hero modern-container">
+  <h1>{{ page.title }}</h1>
+</section>
+
+<section class="modern-archive modern-container" aria-label="{{ page.title }} 글 목록">
+  {% if page.collection == 'projects' %}
+    {% assign cafe_count = 0 %}{% assign sentiment_count = 0 %}{% assign edutech_count = 0 %}
+    {% for item in archive_items %}
+      {% if item.tags contains '이미지기반 카페추천 프로젝트' %}{% assign cafe_count = cafe_count | plus: 1 %}
+      {% elsif item.tags contains 'Domain_Common_Project' %}{% assign sentiment_count = sentiment_count | plus: 1 %}
+      {% else %}{% assign edutech_count = edutech_count | plus: 1 %}{% endif %}
+    {% endfor %}
+    <div class="modern-project-gallery" data-project-gallery aria-label="프로젝트별 보기">
+      <div class="modern-project-gallery__intro">
+        <p class="modern-eyebrow">Project gallery</p>
+        <h2>프로젝트 단위로<br>작업의 맥락을 살펴보세요.</h2>
+        <button type="button" class="modern-project-all is-active" data-project-filter="all" aria-pressed="true">전체 {{ archive_items.size }}개 글</button>
+      </div>
+      <div class="modern-project-gallery__grid">
+        {% for group in site.data.project_groups %}
+          {% if group.key == 'cafe-recommendation' %}{% assign group_count = cafe_count %}
+          {% elsif group.key == 'sentiment-classification' %}{% assign group_count = sentiment_count %}
+          {% else %}{% assign group_count = edutech_count %}{% endif %}
+          <button type="button" class="modern-project-tile modern-project-tile--{{ group.accent }}" data-project-filter="{{ group.key }}" aria-pressed="false">
+            <span class="modern-project-tile__art" aria-hidden="true"><i></i><i></i><b></b></span>
+            <span class="modern-project-tile__meta">{{ group.label }} · {{ group_count }} notes</span>
+            <strong>{{ group.title }}</strong>
+            <small>{{ group.description }}</small>
+            <span class="modern-project-tile__arrow" aria-hidden="true">↗</span>
+          </button>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+  <div class="modern-archive-toolbar">
+    <p><strong data-project-result-count>{{ archive_items.size }}</strong>개의 기록<span data-project-result-label></span></p>
+    <label class="modern-search">
+      <span class="sr-only">글 검색</span>
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m21 21-4.4-4.4m2.4-5.1a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
+      <input type="search" placeholder="제목, 요약, 태그 검색" data-archive-search>
+    </label>
+  </div>
+  <div class="modern-archive-list" id="project-notes" data-archive-list>
+    {% for item in archive_items %}
+      {% assign project_group = 'edutech' %}
+      {% assign display_title = item.title %}
+      {% if item.tags contains '이미지기반 카페추천 프로젝트' %}
+        {% assign project_group = 'cafe-recommendation' %}
+        {% assign display_title = display_title | replace: '[이미지기반 카페추천 프로젝트]', '' %}
+      {% elsif item.tags contains 'Domain_Common_Project' %}
+        {% assign project_group = 'sentiment-classification' %}
+        {% assign display_title = display_title | replace: '[영화리뷰 감성분류]', '' %}
+      {% endif %}
+      <div data-search-item{% if page.collection == 'projects' %} data-project-group="{{ project_group }}"{% endif %}>{% include modern/post-card.html post=item title=display_title %}</div>
+    {% endfor %}
+  </div>
+  <p class="modern-empty" data-search-empty hidden>검색 결과가 없습니다.</p>
+</section>

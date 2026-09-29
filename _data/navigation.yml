@@ -8,16 +8,16 @@
 #      Markdown formatted page while the second is generated using JSON.
 
 main:
-  - title: "projects"
+  - title: "Project"
     url: /projects/
 
-  - title: "study"
+  - title: "Study"
     url: /study/    
 
-  - title: "algorithm"
+  - title: "Algorithm"
     url: /algorithm/    
     
-  - title: "weeklyreview"
+  - title: "WeeklyReview"
     url: /weeklyreview/
         
   #- title: "Blog Posts"
@@ -26,7 +26,7 @@ main:
   - title: "CV"
     url: /cv/
     
-  - title: "Etc"
+  - title: "ETC"
     url: /etc/
     
   #- title: "gallery"

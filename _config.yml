@@ -9,14 +9,16 @@ math: true
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default" # Currently available options are "default", "air"
-title                    : "Archive for AI study"
+title                    : "Archive for AI Study"
 title_separator          : "-"
 name                     : &name "Hyejunl33"
-description              : &description "Studing AI in Naver BoostCamp AItech"   # Update this with a general description of your site, this is the default if not overridden by a page
+description              : &description "AI 프로젝트, 알고리즘, 학습 회고를 연결해 기록하는 Hyejun의 개인 아카이브"
 url                      : "https://hyejunl33.github.io" # The base hostname & protocol for your site e.g. "https://[your GitHub username].github.io",
                                                            # or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "hyejunl33/hyejunl33.github.io"
+mcp_endpoint             : ""
+portfolio_data_url       : "/assets/data/recruiter-portfolio.json"
 # Site Author - The following control what appear as part of the author content on the side bar.
 #               If a field is blank the icon and link will not vappear, otherwise it will be shown.
 #               Additional customization can be done by editing /_includes/author-profile.html
@@ -175,12 +177,15 @@ exclude:
   - Capfile
   - config
   - Dockerfile
+  - demo
+  - docs
   - Gemfile
   - Gruntfile.js
   - gulpfile.js
   - LICENSE
   - local
   - log
+  - mcp-server
   - node_modules
   - package.json*
   - Rakefile
@@ -243,8 +248,8 @@ defaults:
       path: ""
       type: posts
     values:
-      layout: single
-      author_profile: true
+      layout: modern-single
+      author_profile: false
       read_time: true
       comments: true
       share: true
@@ -254,15 +259,16 @@ defaults:
       path: ""
       type: pages
     values:
-      layout: single
-      author_profile: true
+      layout: modern-single
+      author_profile: false
   # _projects
   - scope:
       path: "_projects"
       type: projects
     values:
-      layout: single
-      author_profile: true
+      layout: modern-single
+      author_profile: false
+      read_time: true
       share: true
       comments: true
   # _study
@@ -270,8 +276,9 @@ defaults:
       path: "_study"
       type: study
     values:
-      layout: single
-      author_profile: true
+      layout: modern-single
+      author_profile: false
+      read_time: true
       share: true
       comments: true
   # _algorithm
@@ -279,8 +286,9 @@ defaults:
       path: "_algorithm"
       type: algorithm
     values:
-      layout: single
-      author_profile: true
+      layout: modern-single
+      author_profile: false
+      read_time: true
       share: true
       comment: true
   # _weeklyreview
@@ -288,15 +296,17 @@ defaults:
       path: ""
       type: weeklyreview
     values:
-      layout: single
-      author_profile: true
+      layout: modern-single
+      author_profile: false
+      read_time: true
       share: true
   - scope:
       path: "_etc"
       type: etc
     values:
-      layout: single
-      author_profile: true
+      layout: modern-single
+      author_profile: false
+      read_time: true
       share: true
       comments: true  # 댓글 사용 여부 (다른 컬렉션과 동일하게 설정)
 
@@ -311,7 +321,7 @@ sass:
 permalink: /:categories/:title/
 # paginate: 5 # amount of posts to show
 # paginate_path: /page:num/
-timezone: Etc/UTC # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: Asia/Seoul
 
 
 # Plugins

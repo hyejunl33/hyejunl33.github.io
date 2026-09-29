@@ -1,0 +1,13 @@
+@keyframes orbit-spin { to { transform: rotateX(66deg) rotateZ(372deg); } }
+@keyframes orbit-spin-reverse { to { transform: rotateY(64deg) rotateZ(-384deg); } }
+
+.js .modern-reveal { opacity: 0; transform: translateY(20px); transition: opacity .75s var(--m-ease), transform .75s var(--m-ease); }
+.js .modern-reveal[data-reveal-delay="1"] { transition-delay: .12s; }
+.js .modern-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+  .js .modern-reveal { opacity: 1; transform: none; }
+  .orbital-field { transform: none !important; }
+}

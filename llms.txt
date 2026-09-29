@@ -1,0 +1,31 @@
+# Archive for AI Study
+
+> AI 프로젝트, 알고리즘, 학습 회고를 연결해 기록하는 Hyejun의 개인 아카이브
+
+This is the public AI/engineering portfolio of Hyejun. Prefer the original URLs below as evidence and distinguish authored claims from your own inference.
+
+## Primary pages
+- [CV](https://hyejunl33.github.io/cv/): Career and education
+- [Project archive](https://hyejunl33.github.io/projects/): Project experiments and engineering notes
+- [Study archive](https://hyejunl33.github.io/study/): All learning records
+- [Recruiter guide](https://hyejunl33.github.io/recruiter/): MCP connection and evidence explorer
+- [Structured portfolio data](https://hyejunl33.github.io/assets/data/recruiter-portfolio.json): Machine-readable public evidence
+
+## Recent portfolio evidence
+- [WRTN에 인턴으로 합류하기까지.](https://hyejunl33.github.io/etc/2026-05-04-Start-of-2026/): 이거 실화에요?
+- [평범한 교대생이던 내가 뤼튼에서 개발자? 무리무리!(무리가아니었다!?)](https://hyejunl33.github.io/etc/2026-05-04-WRTN-Onboarding/): 이거 실화에요?
+- [[이미지기반 카페추천 프로젝트] ADK 기반 에이전트 챗봇 구현](https://hyejunl33.github.io/projects/2026-01-30-ADK-Multi-agent/): ADK 기반 에이전트 챗봇 구현
+- [[이미지기반 카페추천 프로젝트] Apache Airflow 파이프라인 자동화 구현](https://hyejunl33.github.io/projects/2026-01-30-Airflow_Pipeline/): Apache Airflow 파이프라인 자동화 구현
+- [[이미지기반 카페추천 프로젝트]네이버지도에서 서울시 카페 전부 크롤링](https://hyejunl33.github.io/projects/2026-01-30-Crawler_Documentation/): 서울시 카페 크롤링
+- [[이미지기반 카페추천 프로젝트] CLIP으로 이미지 전처리](https://hyejunl33.github.io/projects/2026-01-30-Preprocessing-with-CLIP/): CLIP으로 이미지 전처리
+- [[이미지기반 카페추천 프로젝트]서울시 카페 리뷰 데이터 정제 및 요약](https://hyejunl33.github.io/projects/2026-01-30-Review_Summarization/): 리뷰데이터 정제 및 요약
+- [[이미지기반 카페추천 프로젝트] SigLip으로 텍스트 임베딩](https://hyejunl33.github.io/projects/2026-01-30-SigLip/): SigLip으로 텍스트 임베딩
+- [Week13-15_HandBone X-Ray Image Semantic Segmentation Project ](https://hyejunl33.github.io/weeklyreview/2025-12-30-SemanticSegmentation_WrapupReport%20copy/): WrapupReport
+- [WrapUp Report 우수사례 선정](https://hyejunl33.github.io/etc/2025-12-30-philosophy%20copy/): WrapUp Report 우수사례 선정
+- [우리팀은 어떻게 협업하는가?: 팀협업 진화기](https://hyejunl33.github.io/etc/2026-01-25-cowork/): 우리팀은 어떻게 협업하는가?: 팀협업 진화기
+- [Week11-12_ObjectDetection_WrapupReport](https://hyejunl33.github.io/weeklyreview/2025-11-30-ObjectDetecvtion_WrapupReport%20copy/): WrapupReport
+- [프로젝트아이디어 - 에듀테크](https://hyejunl33.github.io/projects/2025-11-21-ProjectIdea-edutech/): 프로젝트아이디어 에듀테크
+- [Week10_AI개발기초_학습회고](https://hyejunl33.github.io/weeklyreview/2025-11-21-AIBasic-week10/): AI개발기초 학습회고
+- [부조리주의, 포스트구조주의, 그리고 반항](https://hyejunl33.github.io/etc/2025-11-13-philosophy/): 부조리주의, 포스트구조주의, 그리고 반항
+- [Week7-8_DomainCommonProject_WrapupReport](https://hyejunl33.github.io/weeklyreview/2025-11-03-WrapupReport/): WrapupReport
+

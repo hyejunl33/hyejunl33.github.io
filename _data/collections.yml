@@ -1,0 +1,29 @@
+projects:
+  label: Project
+  url: /projects/
+  description: AI 프로젝트의 문제 정의, 실험, 구현과 회고
+
+study:
+  label: Study
+  url: /study/
+  description: 프로젝트, 알고리즘, 주간 회고를 한곳에서 보는 통합 학습 기록
+
+algorithm:
+  label: Algorithm
+  url: /algorithm/
+  description: 문제를 분해하고 풀이를 일반화한 알고리즘 기록
+
+weeklyreview:
+  label: WeeklyReview
+  url: /weeklyreview/
+  description: 주차별 학습과 프로젝트 진행을 되돌아보는 기록
+
+etc:
+  label: ETC
+  url: /etc/
+  description: 커리어, 협업, 일상과 생각에 관한 기록
+
+cv:
+  label: CV
+  url: /cv/
+  description: 경력과 교육, 활동 이력

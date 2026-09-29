@@ -1,0 +1,20 @@
+{% assign collection_data = site.data.collections[page.collection] %}
+{% assign collection_label = collection_data.label %}
+{% unless collection_label %}{% assign collection_label = page.collection | capitalize %}{% endunless %}
+<header class="modern-article-hero">
+  <nav class="modern-breadcrumb" aria-label="현재 위치">
+    <a href="{{ '/' | relative_url }}">Home</a><span>/</span>
+    {% if collection_data %}<a href="{{ collection_data.url | relative_url }}">{{ collection_label }}</a><span>/</span>{% endif %}
+    <span>Note</span>
+  </nav>
+  {% if page.collection %}<span class="modern-chip">{{ collection_label }}</span>{% endif %}
+  <h1>{{ page.title | markdownify | strip_html }}</h1>
+  {% if page.excerpt %}<p class="modern-article-summary">{{ page.excerpt | markdownify | strip_html }}</p>{% endif %}
+  <div class="modern-article-meta">
+    {% if page.date %}<span>Published <strong><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y.%m.%d' }}</time></strong></span>{% endif %}
+    {% if page.read_time %}<span>Reading <strong>{% include read-time.html %}</strong></span>{% endif %}
+  </div>
+  <div class="modern-article-art" data-gradient-card data-gradient-art data-art-key="{{ page.title | escape }}" aria-hidden="true">
+    <i></i><i></i><i></i><b></b>
+  </div>
+</header>

@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: modern-single
 title: "[백준/Python] 16234번: 인구 이동"
 categories:
   - algorithm

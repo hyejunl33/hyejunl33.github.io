@@ -1,0 +1,22 @@
+<a class="modern-skip-link" href="#main-content">본문으로 바로가기</a>
+<header class="modern-header">
+  <a class="modern-brand" href="{{ '/' | relative_url }}" aria-label="Archive for AI Study 홈">
+    Archive for <span>AI Study</span>
+  </a>
+  <div class="modern-nav-wrap">
+    <nav class="modern-nav" aria-label="주요 메뉴">
+      {% for item in site.data.navigation.main %}
+        {% assign current = false %}
+        {% if page.url == item.url %}
+          {% assign current = true %}
+        {% elsif item.url != '/' and page.url contains item.url %}
+          {% assign current = true %}
+        {% endif %}
+        <a href="{{ item.url | relative_url }}"{% if current %} aria-current="page"{% endif %}>{{ item.title }}</a>
+      {% endfor %}
+    </nav>
+    <button class="modern-theme-toggle" type="button" aria-label="다크 테마로 전환" aria-pressed="false" data-theme-toggle>
+      <span aria-hidden="true">◐</span>
+    </button>
+  </div>
+</header>

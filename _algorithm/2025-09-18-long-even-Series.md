@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: modern-single
 title: "[백준/Python] 22862: 가장 긴 짝수 연속한 부분 수열"
 categories:
   - algorithm

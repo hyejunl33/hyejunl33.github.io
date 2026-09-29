@@ -1,0 +1,81 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+
+body.modern-shell {
+  margin: 0;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 75% 5%, rgba(135, 235, 207, .08), transparent 28rem),
+    var(--m-bg);
+  color: var(--m-ink);
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .25s ease, color .25s ease;
+}
+
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; }
+img { display: block; max-width: 100%; height: auto; }
+::selection { background: var(--m-lime); color: #111; }
+
+.modern-container { width: min(calc(100% - 48px), var(--m-content)); margin-inline: auto; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+.modern-skip-link {
+  position: fixed; z-index: 1000; top: 8px; left: 12px; padding: 10px 16px;
+  border-radius: 999px; background: var(--m-ink); color: var(--m-bg); transform: translateY(-160%);
+}
+.modern-skip-link:focus { transform: translateY(0); }
+
+.modern-header {
+  position: sticky; z-index: 100; top: 0; display: flex; align-items: center; justify-content: space-between;
+  width: min(calc(100% - 48px), var(--m-content)); min-height: 72px; margin-inline: auto;
+  background: var(--m-header); border-bottom: 1px solid var(--m-line); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+}
+.modern-brand { font-size: 16px; font-weight: 640; letter-spacing: -.025em; white-space: nowrap; }
+.modern-brand span { color: var(--m-muted); font-weight: 480; }
+.modern-nav-wrap, .modern-nav { display: flex; align-items: center; }
+.modern-nav-wrap { gap: 18px; }
+.modern-nav { gap: 2px; }
+.modern-nav a {
+  position: relative; padding: 11px 12px; color: var(--m-muted); border-radius: 10px; font-size: 13px; font-weight: 560;
+  transition: color .2s ease, background .2s ease;
+}
+.modern-nav a:hover, .modern-nav a[aria-current="page"] { color: var(--m-ink); background: var(--m-surface-soft); }
+.modern-nav a[aria-current="page"]::after { content: ""; position: absolute; inset: auto 12px 5px; height: 2px; border-radius: 2px; background: var(--m-lime); }
+.modern-theme-toggle {
+  display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--m-line); border-radius: 50%;
+  background: transparent; color: var(--m-ink); cursor: pointer; transition: transform .2s ease, background .2s ease;
+}
+.modern-theme-toggle:hover { transform: rotate(18deg); background: var(--m-surface-soft); }
+
+#main-content:focus { outline: none; }
+
+.modern-footer {
+  display: flex; justify-content: space-between; gap: 24px; width: min(calc(100% - 48px), var(--m-content));
+  margin: 120px auto 0; padding: 32px 0 40px; border-top: 1px solid var(--m-line); color: var(--m-muted); font-size: 13px;
+}
+.modern-footer nav { display: flex; gap: 18px; }
+.modern-footer a:hover { color: var(--m-ink); }
+
+@media (max-width: 900px) {
+  .modern-header { width: 100%; padding: 0 24px; }
+  .modern-nav-wrap { min-width: 0; }
+  .modern-nav { max-width: calc(100vw - 270px); overflow-x: auto; scrollbar-width: none; }
+  .modern-nav::-webkit-scrollbar { display: none; }
+  .modern-nav a { flex: 0 0 auto; }
+}
+
+@media (max-width: 640px) {
+  .modern-container { width: min(calc(100% - 32px), var(--m-content)); }
+  .modern-header { display: grid; min-height: 98px; grid-template-columns: 1fr auto; grid-template-rows: 50px 42px; padding: 0 16px; }
+  .modern-brand { grid-column: 1; grid-row: 1; font-size: 13px; }
+  .modern-nav-wrap { display: contents; }
+  .modern-nav { grid-column: 1 / -1; grid-row: 2; width: 100%; max-width: none; padding-bottom: 4px; }
+  .modern-nav a { padding: 8px 9px; font-size: 11px; }
+  .modern-theme-toggle { grid-column: 2; grid-row: 1; width: 34px; height: 34px; align-self: center; }
+  .modern-footer { width: calc(100% - 32px); margin-top: 80px; flex-direction: column; }
+}

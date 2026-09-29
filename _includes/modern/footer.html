@@ -1,0 +1,9 @@
+<footer class="modern-footer">
+  <span>© {{ site.time | date: '%Y' }} {{ site.author.name | default: site.name }}. An evolving learning archive.</span>
+  <nav aria-label="보조 메뉴">
+    {% unless page.url == '/cv/' %}{% if site.author.github %}<a href="https://github.com/{{ site.author.github }}">GitHub</a>{% endif %}{% endunless %}
+    <a href="{{ '/cv/' | relative_url }}">CV</a>
+    {% unless page.url == '/cv/' %}{% if site.author.email %}<a href="mailto:{{ site.author.email }}">Email</a>{% endif %}{% endunless %}
+    <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+  </nav>
+</footer>

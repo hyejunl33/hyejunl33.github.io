@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: modern-single
 title: Gallery
 permalink: /gallery/
 ---

@@ -1,0 +1,17 @@
+- key: cafe-recommendation
+  title: 이미지 기반 카페 추천
+  label: Multi-modal AI service
+  description: 크롤링부터 멀티모달 검색, 리뷰 요약, 에이전트 경험까지 연결한 추천 시스템
+  accent: cafe
+
+- key: sentiment-classification
+  title: 영화 리뷰 감성 분류
+  label: NLP experiment system
+  description: 데이터 분석과 토크나이징부터 TAPT, 손실 함수, 앙상블까지 이어진 모델 개선 기록
+  accent: sentiment
+
+- key: edutech
+  title: AI EduTech
+  label: Product exploration
+  description: 교육 현장의 문제를 AI 기반 학습 관리와 개인화 피드백으로 풀어낸 제품 아이디어
+  accent: edutech

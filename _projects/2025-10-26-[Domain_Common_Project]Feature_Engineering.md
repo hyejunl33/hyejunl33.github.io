@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: modern-single
 title: "[Domain_Common_Project][모델최적화]-Feature_Engineering"
 date: 2025-10-25
 tags:

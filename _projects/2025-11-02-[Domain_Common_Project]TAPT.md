@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: modern-single
 title: "[영화리뷰 감성분류][모델최적화]마지막 시도, 그리고 반성"
 date: 2025-11-01
 tags:

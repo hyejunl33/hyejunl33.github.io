@@ -2,6 +2,7 @@
 title: "Study"
 layout: archive
 permalink: /study/
+published: false
 ---
 
 {% assign posts = site.study | sort: 'date' | reverse %}

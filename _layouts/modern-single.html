@@ -1,0 +1,40 @@
+---
+layout: modern-base
+---
+<div class="modern-reading-progress" aria-hidden="true"><span data-reading-progress></span></div>
+<article class="modern-article modern-container">
+  {% include modern/article-header.html %}
+  <div class="modern-article-layout">
+    <aside class="modern-toc" aria-label="이 글의 목차" data-toc>
+      <p>On this page</p><nav data-toc-list></nav>
+    </aside>
+    <div class="modern-prose" data-article-body>
+      {{ content }}
+    </div>
+  </div>
+  <footer class="modern-article-footer">
+    {% if page.tags %}<div class="modern-tag-row" aria-label="태그">{% for tag in page.tags %}<span>{{ tag }}</span>{% endfor %}</div>{% endif %}
+    <button class="modern-copy-link" type="button" data-copy-link>링크 복사</button>
+  </footer>
+  <nav class="modern-pagination" aria-label="이전 및 다음 글">
+    {% if page.previous %}<a href="{{ page.previous.url | relative_url }}"><span>이전 글</span><strong>{{ page.previous.title | markdownify | strip_html }}</strong></a>{% else %}<span></span>{% endif %}
+    {% if page.next %}<a href="{{ page.next.url | relative_url }}"><span>다음 글</span><strong>{{ page.next.title | markdownify | strip_html }}</strong></a>{% endif %}
+  </nav>
+  {% assign recent_notes = site.projects | concat: site.algorithm | concat: site.weeklyreview | concat: site.etc | concat: site.study | sort: 'date' | reverse %}
+  <section class="modern-read-more" aria-labelledby="read-more-heading">
+    <div class="modern-section-heading">
+      <div><p class="modern-eyebrow">Continue exploring</p><h2 id="read-more-heading">더 읽어보기</h2></div>
+      <a class="modern-text-link" href="{{ '/study/' | relative_url }}">모든 글</a>
+    </div>
+    <div class="modern-card-grid modern-card-grid--three">
+      {% assign recent_count = 0 %}
+      {% for item in recent_notes %}
+        {% unless item.url == page.url %}
+          {% include modern/post-card.html post=item %}
+          {% assign recent_count = recent_count | plus: 1 %}
+          {% if recent_count == 3 %}{% break %}{% endif %}
+        {% endunless %}
+      {% endfor %}
+    </div>
+  </section>
+</article>
