@@ -33,7 +33,7 @@
 - OpenAI 웹사이트에서 넓은 여백, 강한 제목 위계, 절제된 메뉴와 콘텐츠 중심 섹션 구성을 참고한다.
 - [SEED React](https://seed-design.io/react)의 composition, responsive design, interaction states처럼 반복 UI를 일관된 토큰과 조합 가능한 구성 요소로 만든다.
 - [Toss Apps React Native 문서](https://developers-apps-in-toss.toss.im/documentation/react-native)의 화면 단위 정보 위계와 예측 가능한 내비게이션 흐름을 참고한다.
-- [Pokémon Cards CSS Holographic Effect](https://poke-holo.simey.me/)의 pointer-driven gradient, blend mode, CSS 3D transform을 대표 카드에만 제한적으로 적용한다.
+- [Pokémon Cards CSS Holographic Effect](https://poke-holo.simey.me/)의 pointer-driven highlight, blend mode, sparkle texture를 글 카드와 상세 헤더에 절제해 적용한다.
 - 레퍼런스의 시각물을 복제하지 않는다. 현재 데모의 색상·궤도·카드 표현을 사이트 고유의 디자인으로 발전시킨다.
 
 ## 2. 문제 정의와 목표
@@ -179,7 +179,7 @@
 
 - 최신 또는 frontmatter `featured: true`인 프로젝트 1건을 표시한다.
 - `featured: true`가 없으면 `site.projects | sort: 'date' | reverse | first`를 사용한다.
-- Aurora 효과는 이 카드에만 적용한다.
+- 대형 Aurora 효과는 이 카드에 적용하고, 일반 글 표지는 제목 해시로 색상·구도·도형이 결정되는 여러 gradient variant와 가벼운 홀로그램 광택을 사용한다.
 - 제목·요약·태그·날짜·상세 링크는 효과 없이도 항상 읽혀야 한다.
 
 #### Recent Notes
@@ -250,7 +250,7 @@
 
 목적은 LLM이 지원자를 대신 평가하게 만드는 것이 아니라, 블로그에 실제로 작성된 근거를 빠르게 찾고 원문으로 검증하게 하는 것이다.
 
-- 홈 하단에 `Recruiter mode · MCP ready` 진입 카드를 둔다.
+- 홈 상단 시각화 다음에 짧은 설명과 단일 진입점만 있는 `MCP mode` 안내 카드를 둔다. 질문을 유도하거나 과장된 홍보 문구는 사용하지 않는다.
 - 페이지 상단에는 MCP endpoint 상태, 복사 버튼과 데이터 공개 원칙을 표시한다.
 - MCP 미연결 상태에서도 같은 데이터셋을 검색하는 `Evidence explorer`를 제공한다.
 - 추천 질문은 multi-agent 협업, MLOps 파이프라인, 모델 최적화, 팀 협업을 기본으로 제공하되 검색어는 자유 입력 가능하다.
@@ -590,7 +590,8 @@ bundle exec jekyll build
 - [ ] 시각화 카드는 설명 문구 없이 최적화 과정 자체만 보여주며 마우스·터치 드래그로 자유롭게 회전한다.
 - [ ] surface geometry와 vertex color는 GPU에 한 번만 업로드하고 회전 중에는 shader uniform만 갱신해 프레임 랙을 방지한다.
 - [ ] 홈 정보 순서는 최적화 시각화 → MCP mode → Featured Project → Latest Notes이며 Collections를 노출하지 않는다.
-- [ ] 모든 글 카드와 상세 헤더에 제목 기반 gradient art가 있고 포인터에 반응한다.
+- [ ] 모든 글 카드와 상세 헤더는 제목 해시로 6종 이상의 색상·구도·도형 variant를 안정적으로 분배하며, 포인터를 따라 홀로그램 광택과 sparkle이 반응한다.
+- [ ] 홈과 Project 갤러리는 장식용 영문 eyebrow나 설명형 부제를 두지 않고 제목·콘텐츠·행동만 표시한다.
 - [ ] Project 갤러리는 카페 추천·감성 분류·EduTech 단위로 글을 필터링하고 선택 상태를 URL에 보존한다.
 - [ ] 컬렉션 목록과 글 상세가 실제 Liquid 데이터로 렌더링된다.
 - [ ] 글 상세의 breadcrumb, 현재 구간 목차, 메타, 진행 표시, 최근 글 3개가 동작한다.

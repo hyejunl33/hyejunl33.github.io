@@ -76,15 +76,22 @@
     });
   }
 
-  function stringHue(value) {
+  function stringHash(value) {
     var hash = 0;
     for (var index = 0; index < value.length; index += 1) hash = ((hash << 5) - hash + value.charCodeAt(index)) | 0;
-    return 105 + Math.abs(hash % 190);
+    return hash >>> 0;
   }
 
   function initGradientCards() {
     document.querySelectorAll('[data-gradient-art]').forEach(function (art) {
-      art.style.setProperty('--art-hue', String(stringHue(art.dataset.artKey || 'archive')));
+      var hash = stringHash(art.dataset.artKey || 'archive');
+      var hue = hash % 360;
+      art.dataset.artVariant = String(hash % 6);
+      art.style.setProperty('--art-hue', String(hue));
+      art.style.setProperty('--art-hue-alt', String((hue + 72 + (hash % 83)) % 360));
+      art.style.setProperty('--art-angle', String(18 + (hash % 310)) + 'deg');
+      art.style.setProperty('--art-x2', String(14 + ((hash >>> 3) % 72)) + '%');
+      art.style.setProperty('--art-y2', String(16 + ((hash >>> 7) % 68)) + '%');
       if (reduceMotion || !window.matchMedia('(pointer: fine)').matches) return;
       var card = art.closest('[data-gradient-card]') || art;
       var frame = 0;
@@ -96,6 +103,8 @@
           var y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
           art.style.setProperty('--art-x', (x * 100).toFixed(1) + '%');
           art.style.setProperty('--art-y', (y * 100).toFixed(1) + '%');
+          art.style.setProperty('--spark-x', (x * 100).toFixed(1) + '%');
+          art.style.setProperty('--spark-y', (y * 100).toFixed(1) + '%');
           if (card.classList.contains('modern-post-card')) {
             card.style.setProperty('--card-rx', ((.5 - y) * 2.4).toFixed(2) + 'deg');
             card.style.setProperty('--card-ry', ((x - .5) * 3.2).toFixed(2) + 'deg');
@@ -108,6 +117,8 @@
         card.style.setProperty('--card-ry', '0deg');
         art.style.setProperty('--art-x', '68%');
         art.style.setProperty('--art-y', '24%');
+        art.style.setProperty('--spark-x', '50%');
+        art.style.setProperty('--spark-y', '50%');
       });
     });
   }

@@ -31,24 +31,22 @@
 .modern-feature-card:hover .modern-feature-card__arrow { transform: translate(5px, -5px); }
 
 .modern-section--mcp { padding-top: 36px; }
-.modern-recruiter-callout { position: relative; display: grid; min-height: 430px; grid-template-columns: minmax(0, 1.05fr) minmax(310px, .95fr); gap: clamp(36px, 7vw, 90px); align-items: center; padding: clamp(30px, 5vw, 62px); overflow: hidden; border: 1px solid var(--m-line); border-radius: var(--m-radius-lg); background: var(--m-surface); box-shadow: var(--m-shadow); }
-.modern-recruiter-callout::before { content: ""; position: absolute; inset: 0 0 auto auto; width: 48%; aspect-ratio: 1.4; pointer-events: none; background: radial-gradient(circle at 70% 15%, rgba(135,235,207,.15), transparent 58%); }
+.modern-recruiter-callout { position: relative; display: grid; min-height: 270px; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(30px, 7vw, 100px); align-items: end; padding: clamp(30px, 5vw, 58px); overflow: hidden; border: 1px solid var(--m-line); border-radius: var(--m-radius-lg); background: var(--m-surface); box-shadow: var(--m-shadow); }
+.modern-recruiter-callout::before { content: ""; position: absolute; inset: -70% -8% auto auto; width: 56%; aspect-ratio: 1; pointer-events: none; border-radius: 50%; background: radial-gradient(circle, rgba(135,235,207,.16), rgba(169,146,255,.06) 38%, transparent 68%); transition: transform .6s var(--m-ease); }
 .modern-recruiter-callout__content { position: relative; z-index: 1; }
-.modern-mcp-chip { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 26px; padding: 7px 11px; border: 1px solid var(--m-line); border-radius: 999px; color: var(--m-muted); font-size: 11px; font-weight: 650; }
+.modern-mcp-chip { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 30px; padding: 7px 11px; border: 1px solid var(--m-line); border-radius: 999px; color: var(--m-muted); font-size: 11px; font-weight: 650; }
 .modern-mcp-chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--m-lime); box-shadow: 0 0 0 4px rgba(199,242,103,.18); }
-.modern-recruiter-callout h2 { margin: 0 0 18px; font-size: clamp(34px, 4.6vw, 58px); line-height: 1.05; letter-spacing: -.06em; }
-.modern-recruiter-callout__content > p:not(.modern-eyebrow) { max-width: 600px; margin-bottom: 28px; color: var(--m-muted); }
-.modern-recruiter-callout__steps { position: relative; z-index: 1; display: grid; gap: 1px; overflow: hidden; border: 1px solid var(--m-line); border-radius: 18px; background: var(--m-line); }
-.modern-recruiter-callout__steps div { display: grid; grid-template-columns: 28px 1fr; gap: 2px 12px; padding: 20px; background: var(--m-bg-raised); }
-.modern-recruiter-callout__steps span { grid-row: 1 / 3; color: var(--m-faint); font: 10px/1.5 "SFMono-Regular", Consolas, monospace; }
-.modern-recruiter-callout__steps strong { font-size: 15px; }
-.modern-recruiter-callout__steps small { color: var(--m-muted); font-size: 11px; }
-.modern-recruiter-callout:hover .modern-button { transform: translateY(-2px); background: var(--m-lime); border-color: var(--m-lime); color: var(--m-lime-ink); }
+.modern-recruiter-callout h2 { margin: 0 0 14px; font-size: clamp(30px, 4vw, 48px); line-height: 1.06; letter-spacing: -.055em; }
+.modern-recruiter-callout__content > p { max-width: 610px; margin: 0; color: var(--m-muted); }
+.modern-recruiter-callout__action { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 34px; padding: 13px 18px; border: 1px solid var(--m-line-strong); border-radius: 999px; background: var(--m-ink); color: var(--m-bg); font-size: 13px; font-weight: 650; white-space: nowrap; transition: transform .25s var(--m-ease), background .2s ease, color .2s ease; }
+.modern-recruiter-callout:hover::before { transform: translate(-3%, 4%) scale(1.08); }
+.modern-recruiter-callout:hover .modern-recruiter-callout__action { transform: translateY(-3px); background: var(--m-lime); color: var(--m-lime-ink); }
 
 @media (max-width: 900px) {
   .modern-home-hero { min-height: auto; }
   .modern-llm-stage { min-height: 650px; }
-  .modern-recruiter-callout { grid-template-columns: 1fr; gap: 32px; }
+  .modern-recruiter-callout { grid-template-columns: 1fr; gap: 32px; align-items: start; }
+  .modern-recruiter-callout__action { width: fit-content; }
 }
 @media (max-width: 640px) {
   .modern-home-hero { width: 100%; padding-top: 0; }

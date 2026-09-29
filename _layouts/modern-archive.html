@@ -21,9 +21,7 @@ layout: modern-base
       {% else %}{% assign edutech_count = edutech_count | plus: 1 %}{% endif %}
     {% endfor %}
     <div class="modern-project-gallery" data-project-gallery aria-label="프로젝트별 보기">
-      <div class="modern-project-gallery__intro">
-        <p class="modern-eyebrow">Project gallery</p>
-        <h2>프로젝트 단위로<br>작업의 맥락을 살펴보세요.</h2>
+      <div class="modern-project-gallery__toolbar">
         <button type="button" class="modern-project-all is-active" data-project-filter="all" aria-pressed="true">전체 {{ archive_items.size }}개 글</button>
       </div>
       <div class="modern-project-gallery__grid">
