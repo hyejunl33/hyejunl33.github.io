@@ -17,7 +17,7 @@ url                      : "https://hyejunl33.github.io" # The base hostname & p
                                                            # or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "hyejunl33/hyejunl33.github.io"
-mcp_endpoint             : ""
+mcp_endpoint             : "https://hyejunl33-blog-mcp.hyejunl33-blog-mcp.workers.dev/mcp"
 blog_data_url            : "/assets/data/blog-content.json"
 # Site Author - The following control what appear as part of the author content on the side bar.
 #               If a field is blank the icon and link will not vappear, otherwise it will be shown.
