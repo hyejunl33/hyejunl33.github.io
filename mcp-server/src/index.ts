@@ -3,7 +3,7 @@ import { createMcpHandler } from 'agents/mcp/server';
 import { z } from 'zod';
 
 interface Env {
-  PORTFOLIO_DATA_URL: string;
+  BLOG_DATA_URL: string;
 }
 
 interface PortfolioDocument {
@@ -18,29 +18,31 @@ interface PortfolioDocument {
   content: string;
 }
 
-interface PortfolioData {
+interface BlogData {
   schemaVersion: string;
   generatedAt: string;
   source: { site: string; repository: string; cv: string };
-  candidate: { name: string; location: string; email: string; github: string; summary: string; cvMarkdown: string };
+  profile: { name: string; location: string; email: string; github: string; summary: string; cvMarkdown: string };
   collectionCounts: Record<string, number>;
   topTags: Array<{ name: string; count: number }>;
   documents: PortfolioDocument[];
 }
 
-let cached: { url: string; expiresAt: number; data: PortfolioData } | undefined;
+let cached: { url: string; expiresAt: number; data: BlogData } | undefined;
 
-async function loadPortfolio(url: string): Promise<PortfolioData> {
+async function loadBlog(url: string): Promise<BlogData> {
   if (cached && cached.url === url && cached.expiresAt > Date.now()) return cached.data;
   const response = await fetch(url, { headers: { accept: 'application/json' }, cf: { cacheTtl: 300, cacheEverything: true } });
   if (!response.ok) throw new Error(`Portfolio source returned ${response.status}`);
-  const data = await response.json<PortfolioData>();
+  const data = await response.json<BlogData>();
   cached = { url, expiresAt: Date.now() + 300_000, data };
   return data;
 }
 
 function terms(value: string): string[] {
-  return value.toLocaleLowerCase().split(/[^\p{Letter}\p{Number}+#.-]+/u).filter((term) => term.length > 1);
+  const particles = /(으로|에서|에게|부터|까지|은|는|이|가|을|를|과|와|의|에|도|만|로)$/u;
+  const rawTerms = value.toLocaleLowerCase().match(/[\p{Script=Latin}\p{Number}+#.-]+|[\p{Script=Hangul}]+/gu) ?? [];
+  return [...new Set(rawTerms.flatMap((term) => [term, term.replace(particles, '')]).filter((term) => term.length > 1))];
 }
 
 function rankDocument(document: PortfolioDocument, query: string): number {
@@ -51,8 +53,9 @@ function rankDocument(document: PortfolioDocument, query: string): number {
   return queryTerms.reduce((score, term) => score + (title.includes(term) ? 8 : 0) + (tags.includes(term) ? 5 : 0) + (body.includes(term) ? 2 : 0), 0);
 }
 
-function evidence(document: PortfolioDocument) {
+function documentSummary(document: PortfolioDocument) {
   return {
+    id: document.id,
     title: document.title,
     collection: document.collectionLabel,
     date: document.date,
@@ -68,93 +71,67 @@ function textResult(value: unknown) {
 
 function createServer(env: Env) {
   const server = new McpServer({
-    name: 'Archive for AI Study — Recruiter Portfolio',
+    name: 'Archive for AI Study — Blog MCP',
     version: '1.0.0'
   }, {
-    instructions: 'Use this read-only server to inspect Hyejun’s public portfolio. Cite returned source URLs, separate facts from inference, and do not infer employment claims that are not present in the evidence.'
+    instructions: 'Use this read-only server to explore Hyejun’s public blog and portfolio. Search before fetching full posts, cite each returned canonical URL, and treat posts as authored material rather than evidence of unstated claims.'
   });
 
-  server.registerTool('get_candidate_snapshot', {
-    title: 'Candidate snapshot',
-    description: 'Return the public CV, archive counts, recurring technologies, and canonical profile links for a fast recruiter briefing.'
+  server.registerTool('get_profile', {
+    title: 'Get blog profile',
+    description: 'Return the public profile, archive counts, recurring tags, and canonical links for this blog.',
+    annotations: { readOnlyHint: true }
   }, async () => {
-    const data = await loadPortfolio(env.PORTFOLIO_DATA_URL);
-    return textResult({ candidate: data.candidate, collectionCounts: data.collectionCounts, topTags: data.topTags, source: data.source, generatedAt: data.generatedAt });
+    const data = await loadBlog(env.BLOG_DATA_URL);
+    return textResult({ profile: data.profile, collectionCounts: data.collectionCounts, topTags: data.topTags, source: data.source, generatedAt: data.generatedAt });
   });
 
-  server.registerTool('search_portfolio', {
-    title: 'Search portfolio evidence',
-    description: 'Search authored project, algorithm, review, and ETC posts. Returns evidence snippets and original URLs; use the URLs when making recruiter-facing claims.',
+  server.registerTool('search', {
+    title: 'Search blog posts',
+    description: 'Search public project, study, algorithm, weekly review, and ETC posts. Returns matching post summaries and canonical URLs.',
+    annotations: { readOnlyHint: true },
     inputSchema: {
-      query: z.string().min(2).max(240).describe('Skills, role requirements, project topics, or a natural-language evidence question'),
+      query: z.string().min(2).max(240).describe('Topic, technology, project name, or a natural-language request about published posts'),
       collection: z.enum(['all', 'projects', 'study', 'algorithm', 'weeklyreview', 'etc']).default('all'),
       limit: z.number().int().min(1).max(10).default(6)
     }
   }, async ({ query, collection, limit }) => {
-    const data = await loadPortfolio(env.PORTFOLIO_DATA_URL);
-    const candidates = collection === 'all' ? data.documents : data.documents.filter((document) => document.collection === collection);
-    const matches = candidates.map((document) => ({ document, score: rankDocument(document, query) }))
+    const data = await loadBlog(env.BLOG_DATA_URL);
+    const documents = collection === 'all' ? data.documents : data.documents.filter((document) => document.collection === collection);
+    const matches = documents.map((document) => ({ document, score: rankDocument(document, query) }))
       .filter(({ score }) => score > 0)
       .sort((a, b) => b.score - a.score || String(b.document.date || '').localeCompare(String(a.document.date || '')))
       .slice(0, limit)
-      .map(({ document, score }) => ({ score, ...evidence(document) }));
-    return textResult({ query, matches, note: matches.length ? 'Scores rank textual relevance only; they are not candidate evaluation scores.' : 'No direct authored evidence matched this query.' });
+      .map(({ document }) => documentSummary(document));
+    return textResult({ query, matches, note: matches.length ? 'Results are ranked by textual relevance. Fetch a post by id to read its authored content.' : 'No published post matched this query.' });
   });
 
-  server.registerTool('get_project_case_study', {
-    title: 'Read a project case study',
-    description: 'Return the closest matching project note with a longer authored excerpt and its canonical URL.',
-    inputSchema: { titleOrTopic: z.string().min(2).max(240) }
-  }, async ({ titleOrTopic }) => {
-    const data = await loadPortfolio(env.PORTFOLIO_DATA_URL);
-    const match = data.documents.filter((document) => document.collection === 'projects')
-      .map((document) => ({ document, score: rankDocument(document, titleOrTopic) }))
-      .sort((a, b) => b.score - a.score)[0];
-    if (!match || match.score === 0) return { content: [{ type: 'text', text: 'No matching project case study was found.' }], isError: true };
-    return textResult({ ...evidence(match.document), authoredContent: match.document.content.slice(0, 8000) });
+  server.registerTool('fetch', {
+    title: 'Fetch a blog post',
+    description: 'Fetch the full published content and metadata for a post returned by search.',
+    annotations: { readOnlyHint: true },
+    inputSchema: { id: z.string().min(2).max(500).describe('The post id or canonical URL returned by search') }
+  }, async ({ id }) => {
+    const data = await loadBlog(env.BLOG_DATA_URL);
+    const document = data.documents.find((item) => item.id === id)
+      ?? data.documents.find((item) => item.url === id);
+    if (!document) return { content: [{ type: 'text', text: 'No published post was found for that id or URL. Run search first and use its id.' }], isError: true };
+    return textResult({ ...documentSummary(document), authoredContent: document.content });
   });
 
-  server.registerTool('get_role_evidence', {
-    title: 'Gather evidence for a role',
-    description: 'Gather authored evidence relevant to a job description without producing a hiring score or unsupported claim.',
-    inputSchema: { roleOrRequirements: z.string().min(10).max(2000), limit: z.number().int().min(3).max(12).default(8) }
-  }, async ({ roleOrRequirements, limit }) => {
-    const data = await loadPortfolio(env.PORTFOLIO_DATA_URL);
-    const matches = data.documents.map((document) => ({ document, score: rankDocument(document, roleOrRequirements) }))
-      .filter(({ score }) => score > 0)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, limit)
-      .map(({ document }) => evidence(document));
-    return textResult({ roleOrRequirements, evidence: matches, guidance: 'Assess fit using only the linked authored evidence. Explicitly identify missing evidence and keep any conclusion separate from facts.' });
-  });
-
-  server.registerResource('candidate-profile', 'portfolio://candidate/profile', {
-    title: 'Candidate profile', mimeType: 'application/json'
+  server.registerResource('blog-profile', 'blog://profile', {
+    title: 'Blog profile', mimeType: 'application/json'
   }, async (uri) => {
-    const data = await loadPortfolio(env.PORTFOLIO_DATA_URL);
-    return { contents: [{ uri: uri.href, mimeType: 'application/json', text: JSON.stringify({ candidate: data.candidate, source: data.source, collectionCounts: data.collectionCounts, topTags: data.topTags }, null, 2) }] };
+    const data = await loadBlog(env.BLOG_DATA_URL);
+    return { contents: [{ uri: uri.href, mimeType: 'application/json', text: JSON.stringify({ profile: data.profile, source: data.source, collectionCounts: data.collectionCounts, topTags: data.topTags }, null, 2) }] };
   });
 
-  server.registerResource('portfolio-index', 'portfolio://evidence/index', {
-    title: 'Portfolio evidence index', mimeType: 'application/json'
+  server.registerResource('blog-index', 'blog://posts/index', {
+    title: 'Blog post index', mimeType: 'application/json'
   }, async (uri) => {
-    const data = await loadPortfolio(env.PORTFOLIO_DATA_URL);
-    return { contents: [{ uri: uri.href, mimeType: 'application/json', text: JSON.stringify(data.documents.map(evidence), null, 2) }] };
+    const data = await loadBlog(env.BLOG_DATA_URL);
+    return { contents: [{ uri: uri.href, mimeType: 'application/json', text: JSON.stringify(data.documents.map(documentSummary), null, 2) }] };
   });
-
-  server.registerPrompt('evaluate_candidate_with_evidence', {
-    title: 'Evidence-based candidate review',
-    description: 'Prepare a recruiter review grounded in this portfolio and a role description.',
-    argsSchema: { role: z.string().describe('Role title or job description') }
-  }, ({ role }) => ({
-    messages: [{
-      role: 'user',
-      content: {
-        type: 'text',
-        text: `Review Hyejun's public portfolio for the following role: ${role}\n\nFirst call get_candidate_snapshot and get_role_evidence. Then write: (1) verified strengths with source URLs, (2) relevant project evidence, (3) missing or unclear evidence, and (4) focused interview questions. Never fabricate a skill or produce a numeric hiring score.`
-      }
-    }]
-  }));
 
   return server;
 }
@@ -163,7 +140,7 @@ export default {
   async fetch(request: Request, env: Env, context: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
     if (url.pathname === '/health') {
-      return Response.json({ ok: true, service: 'hyejunl33-portfolio-mcp', dataSource: env.PORTFOLIO_DATA_URL });
+      return Response.json({ ok: true, service: 'hyejunl33-blog-mcp', dataSource: env.BLOG_DATA_URL });
     }
     if (url.pathname !== '/mcp') return new Response('Not found', { status: 404 });
 

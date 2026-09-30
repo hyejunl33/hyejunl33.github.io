@@ -606,7 +606,7 @@
     });
   }
 
-  function initRecruiterMode() {
+  function initBlogMcp() {
     var status = document.querySelector('[data-mcp-endpoint]');
     var endpointButton = document.querySelector('[data-mcp-copy]');
     if (status && endpointButton && status.dataset.mcpEndpoint) {
@@ -618,25 +618,29 @@
       });
     }
 
-    var lab = document.querySelector('[data-portfolio-source]');
-    var form = document.querySelector('[data-evidence-form]');
-    var input = document.querySelector('[data-evidence-input]');
-    var results = document.querySelector('[data-evidence-results]');
+    var lab = document.querySelector('[data-blog-source]');
+    var form = document.querySelector('[data-blog-form]');
+    var input = document.querySelector('[data-blog-input]');
+    var results = document.querySelector('[data-blog-results]');
     if (!lab || !form || !input || !results) return;
-    var portfolioPromise;
+    var blogPromise;
 
-    function loadPortfolio() {
-      if (!portfolioPromise) {
-        portfolioPromise = fetch(lab.dataset.portfolioSource, { headers: { accept: 'application/json' } }).then(function (response) {
-          if (!response.ok) throw new Error('Portfolio data unavailable');
+    function loadBlog() {
+      if (!blogPromise) {
+        blogPromise = fetch(lab.dataset.blogSource, { headers: { accept: 'application/json' } }).then(function (response) {
+          if (!response.ok) throw new Error('Blog data unavailable');
           return response.json();
         });
       }
-      return portfolioPromise;
+      return blogPromise;
     }
 
     function searchDocuments(documents, query) {
-      var terms = query.toLocaleLowerCase().split(/[^\p{Letter}\p{Number}+#.-]+/u).filter(function (term) { return term.length > 1; });
+      var particles = /(으로|에서|에게|부터|까지|은|는|이|가|을|를|과|와|의|에|도|만|로)$/u;
+      var rawTerms = query.toLocaleLowerCase().match(/[\p{Script=Latin}\p{Number}+#.-]+|[\p{Script=Hangul}]+/gu) || [];
+      var terms = Array.from(new Set(rawTerms.reduce(function (all, term) {
+        return all.concat([term, term.replace(particles, '')]);
+      }, []).filter(function (term) { return term.length > 1; })));
       return documents.map(function (document) {
         var title = document.title.toLocaleLowerCase();
         var tags = document.tags.join(' ').toLocaleLowerCase();
@@ -652,13 +656,13 @@
       results.replaceChildren();
       if (!items.length) {
         var empty = document.createElement('p');
-        empty.textContent = '“' + query + '”와 직접 연결되는 작성 근거를 찾지 못했습니다.';
+        empty.textContent = '“' + query + '”와 일치하는 공개 글을 찾지 못했습니다.';
         results.appendChild(empty);
         return;
       }
       items.forEach(function (item) {
         var document = item.document;
-        var link = documentNode('a', 'modern-evidence-result');
+        var link = documentNode('a', 'modern-blog-search-result');
         link.href = document.url;
         var meta = documentNode('span');
         meta.textContent = document.collectionLabel + (document.date ? ' · ' + document.date : '');
@@ -683,9 +687,9 @@
       if (query.length < 2) return;
       results.replaceChildren();
       var loading = documentNode('p');
-      loading.textContent = '공개 기록에서 근거를 찾는 중…';
+      loading.textContent = '공개 글을 찾는 중…';
       results.appendChild(loading);
-      loadPortfolio().then(function (data) {
+      loadBlog().then(function (data) {
         render(searchDocuments(data.documents || [], query), query);
       }).catch(function () {
         results.replaceChildren();
@@ -695,9 +699,9 @@
       });
     });
 
-    document.querySelectorAll('[data-evidence-prompt]').forEach(function (button) {
+    document.querySelectorAll('[data-blog-prompt]').forEach(function (button) {
       button.addEventListener('click', function () {
-        input.value = button.dataset.evidencePrompt;
+        input.value = button.dataset.blogPrompt;
         form.requestSubmit();
       });
     });
@@ -718,5 +722,5 @@
   initArchiveSearch();
   initArticle();
   initCopyLink();
-  initRecruiterMode();
+  initBlogMcp();
 }());

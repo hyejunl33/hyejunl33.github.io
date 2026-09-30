@@ -1,10 +1,10 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "hyejunl33-portfolio-mcp",
+  "name": "hyejunl33-blog-mcp",
   "main": "src/index.ts",
   "compatibility_date": "2026-09-29",
   "compatibility_flags": ["nodejs_compat"],
   "vars": {
-    "PORTFOLIO_DATA_URL": "https://hyejunl33.github.io/assets/data/recruiter-portfolio.json"
+    "BLOG_DATA_URL": "https://hyejunl33.github.io/assets/data/blog-content.json"
   }
 }

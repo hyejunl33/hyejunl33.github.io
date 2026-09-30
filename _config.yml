@@ -18,7 +18,7 @@ url                      : "https://hyejunl33.github.io" # The base hostname & p
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "hyejunl33/hyejunl33.github.io"
 mcp_endpoint             : ""
-portfolio_data_url       : "/assets/data/recruiter-portfolio.json"
+blog_data_url            : "/assets/data/blog-content.json"
 # Site Author - The following control what appear as part of the author content on the side bar.
 #               If a field is blank the icon and link will not vappear, otherwise it will be shown.
 #               Additional customization can be done by editing /_includes/author-profile.html

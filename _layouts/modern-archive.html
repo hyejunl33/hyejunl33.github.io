@@ -2,8 +2,11 @@
 layout: modern-base
 ---
 {% assign collection_meta = site.data.collections[page.collection] %}
+{% assign all_notes = site.projects | concat: site.algorithm | concat: site.weeklyreview | concat: site.etc | concat: site.study | sort: 'date' | reverse %}
 {% if page.collection == 'study' %}
-  {% assign archive_items = site.projects | concat: site.algorithm | concat: site.weeklyreview | concat: site.etc | concat: site.study | sort: 'date' | reverse %}
+  {% assign archive_items = all_notes | where_exp: 'item', "item.tags contains 'study' or item.tags contains 'Study'" %}
+{% elsif page.collection == 'all' %}
+  {% assign archive_items = all_notes %}
 {% else %}
   {% assign archive_items = site[page.collection] | sort: 'date' | reverse %}
 {% endif %}

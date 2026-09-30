@@ -53,11 +53,11 @@
 3. `Project`, `Study`, `Algorithm`, `WeeklyReview`, `CV`, `ETC`를 전 화면에서 일관되게 탐색한다.
 4. 코드·표·수식·이미지가 많은 기술 글을 모바일과 데스크톱에서 편안하게 읽게 한다.
 5. 인터랙션을 추가하되 정적 사이트의 속도, SEO, 접근성을 유지한다.
-6. 채용담당자가 MCP 지원 LLM에서 프로젝트·협업·문제 해결의 근거를 원문 URL과 함께 조회할 수 있게 한다.
+6. MCP 지원 LLM이 공개된 프로젝트와 기술 블로그 글을 검색하고 원문 URL과 함께 읽을 수 있게 한다.
 
 ### 2.3 비목표
 
-- CMS, 데이터베이스, 로그인, 댓글 백엔드 개발(공개·읽기 전용 Recruiter MCP Worker는 예외)
+- CMS, 데이터베이스, 로그인, 댓글 백엔드 개발(공개·읽기 전용 Blog MCP Worker는 예외)
 - Three.js/R3F 또는 GLB 모델을 사용하는 전체 화면 3D 경험
 - 기존 글의 문장 교정·내용 재작성
 - 컬렉션 URL 변경 또는 Markdown을 다른 포맷으로 일괄 변환
@@ -146,14 +146,7 @@
 
 ### 4.3 Study 정의
 
-`/study/`는 Study 원본 30개와 다음 컬렉션을 최신순으로 합치는 **통합 학습 허브**로 구현한다.
-
-- `projects`
-- `algorithm`
-- `weeklyreview`
-- `etc`
-
-새 `_study/*.md`도 자동으로 같은 목록에 포함한다. 중복 페이지 `_pages/study.md`와 루트 `study.md` 중 실제 라우트 소유자를 하나로 통합해 빌드 충돌을 제거한다.
+`/study/`는 컬렉션 위치와 무관하게 `study` 또는 `Study` 태그가 지정된 글만 최신순으로 보여준다. 전체 컬렉션을 합친 목록은 `/archive/`에서 제공하며, 홈 `Latest Notes`의 `전체 기록` 링크로 진입한다. 중복 페이지 `_pages/study.md`와 루트 `study.md` 중 실제 라우트 소유자를 하나로 통합해 빌드 충돌을 제거한다.
 
 ## 5. 화면별 요구사항
 
@@ -246,17 +239,17 @@
 - “Archive로 돌아가기”, “최근 글 보기” CTA를 제공한다.
 - 장식은 정적인 작은 orbital motif만 사용한다.
 
-### 5.6 Recruiter Mode `/recruiter/`
+### 5.6 Blog MCP `/blog-mcp/`
 
-목적은 LLM이 지원자를 대신 평가하게 만드는 것이 아니라, 블로그에 실제로 작성된 근거를 빠르게 찾고 원문으로 검증하게 하는 것이다.
+목적은 LLM이 공개 블로그의 글을 스크래핑하지 않고 검색·열람하게 하는 것이다.
 
 - 홈 상단 시각화 다음에 짧은 설명과 단일 진입점만 있는 `MCP mode` 안내 카드를 둔다. 질문을 유도하거나 과장된 홍보 문구는 사용하지 않는다.
 - 페이지 상단에는 MCP endpoint 상태, 복사 버튼과 데이터 공개 원칙을 표시한다.
-- MCP 미연결 상태에서도 같은 데이터셋을 검색하는 `Evidence explorer`를 제공한다.
-- 추천 질문은 multi-agent 협업, MLOps 파이프라인, 모델 최적화, 팀 협업을 기본으로 제공하되 검색어는 자유 입력 가능하다.
+- MCP 미연결 상태에서도 같은 데이터셋을 검색하는 `Blog search`를 제공한다.
+- 추천 질문은 Airflow 구현, 멀티에이전트, 프로젝트 글, CLIP 이미지 전처리를 기본으로 제공하되 검색어는 자유 입력 가능하다.
 - `llms.txt`, 구조화 JSON, MCP 서버 소스 링크를 공개한다.
-- LLM 답변은 반환된 원문 URL을 근거로 사용하고, 사실과 추론을 구분하도록 서버 instruction과 prompt에 명시한다.
-- 숫자형 채용 점수, 합격/불합격 자동 판정, 비공개 개인정보 추론은 제공하지 않는다.
+- LLM은 반환된 원문 URL을 인용하며, 작성된 내용과 자체 추론을 구분하도록 서버 instruction에 명시한다.
+- 사람 평가, 채용 점수, 합격/불합격 판정, 비공개 개인정보 추론 기능은 제공하지 않는다.
 
 ## 6. 디자인 시스템
 
@@ -424,25 +417,23 @@ docs/
   - 별도 디자인 브랜치/문서로 이동 후 운영 브랜치에서 제거
 - 운영 페이지에서 demo의 하드코딩 글 수·제목·본문 데이터를 사용하지 않는다.
 
-### 9.5 Recruiter MCP와 공개 데이터 파이프라인
+### 9.5 Blog MCP와 공개 데이터 파이프라인
 
 GitHub Pages는 서버 실행이 불가능하므로 다음처럼 정적 사이트와 원격 MCP를 분리한다.
 
-1. `scripts/build-recruiter-data.mjs`가 CV와 다섯 컬렉션의 frontmatter/본문을 읽는다.
-2. 빌드마다 `assets/data/recruiter-portfolio.json`, `llms.txt`, `llms-full.txt`를 생성한다.
-3. GitHub Pages는 생성된 데이터와 `/recruiter/` UI를 정적으로 제공한다.
+1. `scripts/build-blog-data.mjs`가 CV와 다섯 컬렉션의 frontmatter/본문을 읽는다.
+2. 빌드마다 `assets/data/blog-content.json`, `llms.txt`, `llms-full.txt`를 생성한다.
+3. GitHub Pages는 생성된 데이터와 `/blog-mcp/` UI를 정적으로 제공한다.
 4. `mcp-server/`의 Cloudflare Worker는 공개 JSON을 읽어 Streamable HTTP `/mcp` endpoint로 제공한다.
-5. MCP는 stateless, public, read-only로 운영하며 recruiter query를 저장하지 않는다.
+5. MCP는 stateless, public, read-only로 운영하며 검색 질의를 저장하지 않는다.
 
 | 종류 | 이름 | 역할 |
 | --- | --- | --- |
-| Tool | `get_candidate_snapshot` | 공개 CV, 콘텐츠 수, 주요 태그, canonical link 반환 |
-| Tool | `search_portfolio` | 제목·태그·본문 근거 검색 및 원문 URL 반환 |
-| Tool | `get_project_case_study` | 가장 가까운 프로젝트 기록의 긴 authored excerpt 반환 |
-| Tool | `get_role_evidence` | 직무 요건과 관련된 작성 근거를 모으되 평가 점수는 만들지 않음 |
-| Resource | `portfolio://candidate/profile` | 지원자 공개 프로필 JSON |
-| Resource | `portfolio://evidence/index` | 전체 근거 인덱스 JSON |
-| Prompt | `evaluate_candidate_with_evidence` | 강점·근거·누락 정보·면접 질문 순서의 검증형 리뷰 |
+| Tool | `get_profile` | 공개 프로필, 콘텐츠 수, 주요 태그, canonical link 반환 |
+| Tool | `search` | 제목·태그·본문으로 공개 글을 검색하고 원문 URL 반환 |
+| Tool | `fetch` | 검색 결과의 id 또는 canonical URL로 전체 작성 글 반환 |
+| Resource | `blog://profile` | 공개 블로그 프로필 JSON |
+| Resource | `blog://posts/index` | 전체 공개 글 인덱스 JSON |
 
 - 원격 transport는 MCP 공식 권장인 Streamable HTTP를 사용한다.
 - Worker endpoint는 `/mcp`, 상태 확인은 `/health`로 제한한다.
@@ -555,10 +546,10 @@ bundle exec jekyll build
 
 완료 조건: 존재하지 않는 CV/다운로드 링크가 없고 Lighthouse 목표를 충족한다.
 
-### Phase 5 — Recruiter MCP
+### Phase 5 — Blog MCP
 
-- recruiter 공개 데이터 생성기와 Evidence explorer
-- Cloudflare Worker MCP tool/resource/prompt 구현 및 Inspector 검증
+- blog 공개 데이터 생성기와 Blog search
+- Cloudflare Worker MCP tool/resource 구현 및 Inspector 검증
 - 실제 Worker URL을 사이트에 연결
 
 완료 조건: 로컬 MCP typecheck와 Inspector tool 호출이 성공하고, 반환되는 모든 근거에 원문 URL이 포함된다.
@@ -576,10 +567,10 @@ bundle exec jekyll build
 
 ### 콘텐츠와 URL
 
-- [ ] 기존 Project 17, Study 30, Algorithm 9, WeeklyReview 10, ETC 5 글이 모두 빌드된다.
+- [ ] 기존 Project 17, Study 31, Algorithm 9, WeeklyReview 10, ETC 5 글이 모두 빌드된다.
 - [ ] 기존 collection permalink가 유지된다.
 - [ ] Markdown 본문과 이미지 원본이 의도치 않게 변경되지 않는다.
-- [ ] `/projects/`, `/study/`, `/algorithm/`, `/weeklyreview/`, `/cv/`, `/etc/`가 200을 반환한다.
+- [ ] `/projects/`, `/study/`, `/archive/`, `/algorithm/`, `/weeklyreview/`, `/cv/`, `/etc/`가 200을 반환한다.
 - [ ] 중복 `/study/` source를 하나로 정리한다.
 
 ### UI
@@ -613,14 +604,14 @@ bundle exec jekyll build
 - [ ] Jekyll production build와 GitHub Actions가 성공한다.
 - [ ] Lighthouse와 Core Web Vitals 목표를 만족한다.
 
-### Recruiter MCP
+### Blog MCP
 
 - [ ] 블로그 빌드 시 71개 문서와 CV가 구조화 데이터에 반영된다.
-- [ ] `/recruiter/`, `/llms.txt`, `/llms-full.txt`, 공개 JSON이 200을 반환한다.
-- [ ] Evidence explorer가 LLM/API key 없이도 관련 원문을 검색한다.
-- [ ] MCP가 snapshot/search/case-study/role-evidence 네 tool과 두 resource, 한 prompt를 노출한다.
+- [ ] `/blog-mcp/`, `/llms.txt`, `/llms-full.txt`, 공개 JSON이 200을 반환한다.
+- [ ] Blog search가 LLM/API key 없이도 관련 원문을 검색한다.
+- [ ] MCP가 get-profile/search/fetch 세 tool과 두 resource를 노출한다.
 - [ ] MCP 응답의 포트폴리오 근거에는 canonical 원문 URL이 포함된다.
-- [ ] 서버는 읽기 전용이며 채용담당자의 query와 판단 결과를 저장하지 않는다.
+- [ ] 서버는 읽기 전용이며 검색 질의와 판단 결과를 저장하지 않는다.
 - [ ] 미배포 endpoint를 LIVE로 표시하거나 동작하는 것처럼 오인시키지 않는다.
 
 ## 14. 구현 모델에 전달할 작업 지침
