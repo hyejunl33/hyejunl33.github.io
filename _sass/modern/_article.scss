@@ -45,6 +45,42 @@
 .modern-not-found > p:not(.modern-eyebrow) { color: var(--m-muted); }
 .modern-not-found .modern-actions { justify-content: center; }
 
+.modern-llm-index-hero { display: grid; grid-template-columns: minmax(0, .9fr) minmax(360px, 1.1fr); gap: clamp(42px, 8vw, 110px); align-items: end; padding-block: 80px; border-bottom: 1px solid var(--m-line); }
+.modern-llm-index-hero__copy h1 { max-width: 720px; margin: 14px 0 22px; font-size: clamp(44px, 6vw, 78px); line-height: 1.02; letter-spacing: -.065em; }
+.modern-llm-index-hero__copy > p:last-child { max-width: 610px; color: var(--m-muted); font-size: 15px; line-height: 1.75; }
+.modern-llm-index-card { width: min(100%, 760px); padding: 20px; border: 1px solid var(--m-line); border-radius: var(--m-radius); background: var(--m-surface); box-shadow: var(--m-shadow); }
+.modern-llm-index-card__head { display: flex; justify-content: space-between; margin-bottom: 24px; color: var(--m-muted); font-size: 11px; }
+.modern-llm-index-card__head span { display: flex; align-items: center; gap: 7px; }
+.modern-llm-index-card__head i { width: 7px; height: 7px; border-radius: 50%; background: var(--m-lime); box-shadow: 0 0 10px var(--m-lime); }
+.modern-llm-index-card__head strong { color: var(--m-ink); font-size: 9px; letter-spacing: .12em; }
+.modern-llm-index-card code { display: block; min-height: 72px; padding: 16px; overflow-wrap: anywhere; border-radius: 10px; background: var(--m-code-bg); color: #b9c3ba; font: 11px/1.6 "SFMono-Regular", Consolas, monospace; }
+.modern-llm-index-card button { width: 100%; margin-top: 12px; padding: 10px; border: 1px solid var(--m-line); border-radius: 10px; background: transparent; color: var(--m-ink); cursor: pointer; font-size: 12px; }
+.modern-llm-index-flow, .modern-llm-index-resources { padding-top: 110px; }
+.modern-llm-index-flow ol { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0; list-style: none; }
+.modern-llm-index-flow li { min-height: 230px; padding: 24px; border-top: 1px solid var(--m-line-strong); }
+.modern-llm-index-flow li span { color: var(--m-faint); font-size: 11px; }
+.modern-llm-index-flow li h3 { margin: 68px 0 8px; font-size: 24px; }
+.modern-llm-index-flow li p { color: var(--m-muted); font-size: 13px; }
+.modern-llm-index-example { display: grid; grid-template-columns: minmax(150px, .35fr) minmax(0, 1fr) auto; gap: 30px; align-items: center; margin-top: 12px; padding: 25px 30px; border-radius: var(--m-radius-sm); background: var(--m-ink); color: var(--m-bg); }
+.modern-llm-index-example span { color: color-mix(in srgb, var(--m-bg) 58%, transparent); font-size: 11px; }
+.modern-llm-index-example strong { display: block; margin-top: 6px; font-size: 12px; }
+.modern-llm-index-example p { margin: 0; font-size: 14px; line-height: 1.65; }
+.modern-llm-index-example button { padding: 10px 13px; border: 1px solid var(--m-line-strong); border-radius: 999px; background: var(--m-bg); color: var(--m-ink); cursor: pointer; font-size: 12px; font-weight: 650; white-space: nowrap; }
+.modern-llm-index-resources { display: grid; grid-template-columns: .8fr 1.2fr; gap: 80px; }
+.modern-llm-index-resources h2 { margin: 0 0 16px; font-size: clamp(34px, 4vw, 52px); line-height: 1.06; letter-spacing: -.055em; }
+.modern-llm-index-resources p { color: var(--m-muted); }
+.modern-llm-index-resources > div:last-child { display: grid; }
+.modern-llm-index-resources a { display: flex; justify-content: space-between; padding: 18px 4px; border-bottom: 1px solid var(--m-line); font-size: 13px; }
+.modern-llm-index-resources a span { color: var(--m-muted); }
+
+@media (max-width: 820px) {
+  .modern-llm-index-hero, .modern-llm-index-resources { grid-template-columns: 1fr; align-items: start; }
+  .modern-llm-index-example, .modern-llm-index-flow ol { grid-template-columns: 1fr; }
+  .modern-llm-index-example { gap: 12px; }
+  .modern-llm-index-flow li { min-height: 170px; }
+  .modern-llm-index-flow li h3 { margin-top: 38px; }
+}
+
 @media (max-width: 980px) {
   .modern-article-layout { grid-template-columns: minmax(0, var(--m-reading)); justify-content: center; }
   .modern-toc { display: none; }

@@ -1,0 +1,39 @@
+---
+layout: modern-base
+---
+<section class="modern-llm-index-hero modern-container">
+  <div class="modern-llm-index-hero__copy">
+    <p class="modern-eyebrow">Public reading index</p>
+    <h1>블로그 기록을<br>LLM과 함께 읽으세요.</h1>
+    <p>공개 글의 제목·태그·요약·원문 링크를 정적 인덱스로 제공합니다. 별도 연결이나 계정 없이 링크를 LLM 대화창에 붙여 넣으면 됩니다.</p>
+  </div>
+  <div class="modern-llm-index-card">
+    <div class="modern-llm-index-card__head"><span><i></i>LLM entrypoint</span><strong>PUBLIC</strong></div>
+    <code>{{ '/llms.txt' | absolute_url }}</code>
+    <button type="button" data-copy-text="{{ '/llms.txt' | absolute_url }}" data-copy-label="LLM index 주소 복사">LLM index 주소 복사</button>
+  </div>
+</section>
+
+<section class="modern-llm-index-flow modern-container" aria-labelledby="llm-index-flow-heading">
+  <div class="modern-section-heading"><div><p class="modern-eyebrow">One link, any capable LLM</p><h2 id="llm-index-flow-heading">복사하고, 붙여 넣고, 질문하세요.</h2></div></div>
+  <ol>
+    <li><span>01</span><h3>Copy</h3><p>위의 LLM index 주소를 복사합니다.</p></li>
+    <li><span>02</span><h3>Paste</h3><p>웹을 읽을 수 있는 LLM의 대화창에 붙여 넣습니다.</p></li>
+    <li><span>03</span><h3>Ask</h3><p>기술·주제·프로젝트를 질문하고 답변의 원문 링크를 확인합니다.</p></li>
+  </ol>
+  {% capture example_prompt %}{{ '/llms.txt' | absolute_url }}를 읽고, 이 블로그의 프로젝트 글 중 에이전트 구현과 관련된 글을 원문 링크와 함께 찾아줘.{% endcapture %}
+  <div class="modern-llm-index-example">
+    <div><span>바로 붙여 넣기</span><strong>등록 없이 사용</strong></div>
+    <p>{{ example_prompt }}</p>
+    <button type="button" data-copy-text="{{ example_prompt | strip }}" data-copy-label="요청문 복사">요청문 복사</button>
+  </div>
+</section>
+
+<section class="modern-llm-index-resources modern-container">
+  <div><p class="modern-eyebrow">Open content</p><h2>공개 원문을 위한 공식 경로</h2><p>인덱스에서 글을 찾은 뒤 canonical 원문 링크를 열어 전체 맥락을 확인할 수 있습니다. 질의나 사용 기록을 저장하지 않습니다.</p></div>
+  <div>
+    <a href="{{ '/llms.txt' | relative_url }}"><span>글 찾기용 인덱스</span><strong>llms.txt ↗</strong></a>
+    <a href="{{ '/llms-full.txt' | relative_url }}"><span>전체 원문 아카이브</span><strong>llms-full.txt ↗</strong></a>
+    <a href="{{ '/archive/' | relative_url }}"><span>사람이 읽는 전체 기록</span><strong>Archive ↗</strong></a>
+  </div>
+</section>

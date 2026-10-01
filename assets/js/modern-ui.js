@@ -606,6 +606,23 @@
     });
   }
 
+  function initCopyText() {
+    document.querySelectorAll('[data-copy-text]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var originalLabel = button.dataset.copyLabel || button.textContent;
+        var copy = navigator.clipboard && navigator.clipboard.writeText
+          ? navigator.clipboard.writeText(button.dataset.copyText)
+          : Promise.reject();
+        copy.then(function () {
+          button.textContent = '복사됨';
+          window.setTimeout(function () { button.textContent = originalLabel; }, 1600);
+        }).catch(function () {
+          window.prompt('이 내용을 복사하세요.', button.dataset.copyText);
+        });
+      });
+    });
+  }
+
   initTheme();
   initReveal();
   initOrbitalField();
@@ -615,4 +632,5 @@
   initArchiveSearch();
   initArticle();
   initCopyLink();
+  initCopyText();
 }());
