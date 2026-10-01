@@ -9,7 +9,7 @@
 - **Modern UI**: 홈, 아카이브, 글 상세, 목차, 읽기 진행도, 링크 복사, 추천 글을 포함한 반응형 인터페이스
 - **콘텐츠 컬렉션**: Project, Study, Algorithm, Weekly Review, ETC
 - **정적 배포**: GitHub Actions가 `master`의 변경을 Jekyll로 빌드해 GitHub Pages에 배포
-- **LLM 탐색**: 공개 글을 검색·열람할 수 있는 Blog MCP 안내 페이지 제공
+- **LLM 탐색**: `llms.txt`와 `llms-full.txt`로 공개 글의 인덱스와 전체 원문 제공
 
 주요 구현 위치는 다음과 같습니다.
 

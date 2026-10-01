@@ -606,113 +606,6 @@
     });
   }
 
-  function initBlogMcp() {
-    var status = document.querySelector('[data-mcp-endpoint]');
-    var endpointButton = document.querySelector('[data-mcp-copy]');
-    if (status && endpointButton && status.dataset.mcpEndpoint) {
-      endpointButton.addEventListener('click', function () {
-        navigator.clipboard.writeText(status.dataset.mcpEndpoint).then(function () {
-          endpointButton.textContent = '복사됨';
-          window.setTimeout(function () { endpointButton.textContent = 'Endpoint 복사'; }, 1600);
-        });
-      });
-    }
-
-    var lab = document.querySelector('[data-blog-source]');
-    var form = document.querySelector('[data-blog-form]');
-    var input = document.querySelector('[data-blog-input]');
-    var results = document.querySelector('[data-blog-results]');
-    if (!lab || !form || !input || !results) return;
-    var blogPromise;
-
-    function loadBlog() {
-      if (!blogPromise) {
-        blogPromise = fetch(lab.dataset.blogSource, { headers: { accept: 'application/json' } }).then(function (response) {
-          if (!response.ok) throw new Error('Blog data unavailable');
-          return response.json();
-        });
-      }
-      return blogPromise;
-    }
-
-    function searchDocuments(documents, query) {
-      var particles = /(으로|에서|에게|부터|까지|은|는|이|가|을|를|과|와|의|에|도|만|로)$/u;
-      var rawTerms = query.toLocaleLowerCase().match(/[\p{Script=Latin}\p{Number}+#.-]+|[\p{Script=Hangul}]+/gu) || [];
-      var terms = Array.from(new Set(rawTerms.reduce(function (all, term) {
-        return all.concat([term, term.replace(particles, '')]);
-      }, []).filter(function (term) { return term.length > 1; })));
-      return documents.map(function (document) {
-        var title = document.title.toLocaleLowerCase();
-        var tags = document.tags.join(' ').toLocaleLowerCase();
-        var body = (document.excerpt + ' ' + document.content).toLocaleLowerCase();
-        var score = terms.reduce(function (total, term) {
-          return total + (title.includes(term) ? 8 : 0) + (tags.includes(term) ? 5 : 0) + (body.includes(term) ? 2 : 0);
-        }, 0);
-        return { document: document, score: score };
-      }).filter(function (item) { return item.score > 0; }).sort(function (a, b) { return b.score - a.score; }).slice(0, 6);
-    }
-
-    function render(items, query) {
-      results.replaceChildren();
-      if (!items.length) {
-        var empty = document.createElement('p');
-        empty.textContent = '“' + query + '”와 일치하는 공개 글을 찾지 못했습니다.';
-        results.appendChild(empty);
-        return;
-      }
-      items.forEach(function (item) {
-        var document = item.document;
-        var link = documentNode('a', 'modern-blog-search-result');
-        link.href = document.url;
-        var meta = documentNode('span');
-        meta.textContent = document.collectionLabel + (document.date ? ' · ' + document.date : '');
-        var title = documentNode('h3');
-        title.textContent = document.title;
-        var excerpt = documentNode('p');
-        excerpt.textContent = document.excerpt;
-        link.append(meta, title, excerpt);
-        results.appendChild(link);
-      });
-    }
-
-    function documentNode(tag, className) {
-      var element = document.createElement(tag);
-      if (className) element.className = className;
-      return element;
-    }
-
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-      var query = input.value.trim();
-      if (query.length < 2) return;
-      results.replaceChildren();
-      var loading = documentNode('p');
-      loading.textContent = '공개 글을 찾는 중…';
-      results.appendChild(loading);
-      loadBlog().then(function (data) {
-        render(searchDocuments(data.documents || [], query), query);
-      }).catch(function () {
-        results.replaceChildren();
-        var error = documentNode('p');
-        error.textContent = '지금은 데이터를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.';
-        results.appendChild(error);
-      });
-    });
-
-    document.querySelectorAll('[data-blog-prompt]').forEach(function (button) {
-      button.addEventListener('click', function () {
-        input.value = button.dataset.blogPrompt;
-        form.requestSubmit();
-      });
-    });
-
-    var sharedQuery = new URLSearchParams(window.location.search).get('q');
-    if (sharedQuery && sharedQuery.trim().length >= 2) {
-      input.value = sharedQuery.trim();
-      form.requestSubmit();
-    }
-  }
-
   initTheme();
   initReveal();
   initOrbitalField();
@@ -722,5 +615,4 @@
   initArchiveSearch();
   initArticle();
   initCopyLink();
-  initBlogMcp();
 }());

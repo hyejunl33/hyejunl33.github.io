@@ -27,8 +27,8 @@ jobs:
         with:
           ruby-version: '3.1' # Ruby 버전 지정
           bundler-cache: true # 의존성 캐시 활성화
-      - name: Generate public blog data
-        run: node scripts/build-blog-data.mjs
+      - name: Generate LLM indexes
+        run: npm run build:llms
       - name: Build with Jekyll
         run: bundle exec jekyll build
       - name: Upload artifact

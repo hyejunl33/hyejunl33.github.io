@@ -68,7 +68,8 @@ async function readCollection(meta) {
     const { attributes, content } = parseDocument(source);
     const slug = name.replace(/\.md$/, '');
     const text = plainText(content);
-    const excerpt = plainText(attributes.excerpt || '').slice(0, 420) || text.slice(0, 420);
+    const frontmatterExcerpt = plainText(attributes.excerpt || '');
+    const excerpt = (frontmatterExcerpt.length >= 120 ? frontmatterExcerpt : text).slice(0, 500);
     return {
       id: `${meta.key}/${slug}`,
       collection: meta.key,
@@ -78,76 +79,85 @@ async function readCollection(meta) {
       tags: cleanTags(attributes.tags),
       excerpt,
       url: `${siteUrl}/${meta.key}/${slug.replaceAll(' ', '%20')}/`,
-      content: text.slice(0, 12000)
+      markdown: content
     };
   }));
 }
 
-const config = await fs.readFile(path.join(root, '_config.yml'), 'utf8');
 const cvSource = await fs.readFile(path.join(root, '_pages/cv.md'), 'utf8');
 const cv = parseDocument(cvSource);
 const documents = (await Promise.all(collections.map(readCollection))).flat()
   .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
-const tagCounts = new Map();
-documents.forEach((document) => document.tags.forEach((tag) => tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)));
-const topTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 24)
-  .map(([name, count]) => ({ name, count }));
-const getConfigValue = (key) => unquote((config.match(new RegExp(`^${key}\\s*:\\s*(.+)$`, 'm')) || [])[1] || '');
-const getAuthorValue = (key) => unquote((config.match(new RegExp(`^\\s{2}${key}\\s*:\\s*(.+)$`, 'm')) || [])[1] || '');
 
-const payload = {
-  schemaVersion: '1.0.0',
-  generatedAt: new Date().toISOString(),
-  source: {
-    site: siteUrl,
-    repository: 'https://github.com/hyejunl33/hyejunl33.github.io',
-    cv: `${siteUrl}/cv/`
-  },
-  profile: {
-    name: getAuthorValue('name') || 'Hyejun',
-    location: getAuthorValue('location'),
-    email: getAuthorValue('email'),
-    github: `https://github.com/${getAuthorValue('github') || 'hyejunl33'}`,
-    summary: getConfigValue('description'),
-    cvMarkdown: cv.content
-  },
-  collectionCounts: Object.fromEntries(collections.map(({ key }) => [key, documents.filter((document) => document.collection === key).length])),
-  topTags,
-  documents
-};
+function indexEntry(document) {
+  return [
+    `- [${document.title}](${document.url})`,
+    `  - Published: ${document.date || 'unknown'} | Tags: ${document.tags.join(', ') || 'none'}`,
+    `  - Summary: ${document.excerpt.slice(0, 500)}`
+  ].join('\n');
+}
 
-await fs.mkdir(path.join(root, 'assets/data'), { recursive: true });
-await fs.writeFile(path.join(root, 'assets/data/blog-content.json'), `${JSON.stringify(payload, null, 2)}\n`);
+function fullEntry(document) {
+  return [
+    `### ${document.title}`,
+    '',
+    `- Canonical URL: ${document.url}`,
+    `- Collection: ${document.collectionLabel}`,
+    `- Published: ${document.date || 'unknown'}`,
+    `- Tags: ${document.tags.join(', ') || 'none'}`,
+    '',
+    document.markdown,
+    ''
+  ].join('\n');
+}
 
 const llmsIndex = [
   '# Archive for AI Study',
   '',
-  `> ${payload.profile.summary}`,
+  '> AI projects, algorithms, technical study notes, and retrospectives by Hyejun.',
   '',
-  'This is Hyejun’s public AI/engineering blog and portfolio. Use the original URLs as the canonical source, and distinguish authored content from your own inference.',
+  'This is a detailed, generated index of the public blog. Use it to discover articles, then read the canonical URL for the complete published page. Treat each article as authored material and distinguish its content from your own inference.',
   '',
   '## Primary pages',
-  `- [CV](${payload.source.cv}): Career and education`,
+  `- [Home](${siteUrl}/): Main blog page`,
+  `- [CV](${siteUrl}/cv/): Career and education`,
   `- [Project archive](${siteUrl}/projects/): Project experiments and engineering notes`,
-  `- [Study archive](${siteUrl}/study/): Posts tagged Study`,
+  `- [Study archive](${siteUrl}/study/): AI and engineering study notes`,
+  `- [Algorithm archive](${siteUrl}/algorithm/): Algorithm problem-solving notes`,
+  `- [Weekly review archive](${siteUrl}/weeklyreview/): Weekly learning and project retrospectives`,
+  `- [ETC archive](${siteUrl}/etc/): Career and collaboration notes`,
   `- [All notes](${siteUrl}/archive/): Every published record in reverse chronological order`,
-  `- [Blog MCP guide](${siteUrl}/blog-mcp/): Search and read public blog posts with an MCP-compatible LLM`,
-  `- [Structured blog data](${siteUrl}/assets/data/blog-content.json): Machine-readable public posts and profile`,
   '',
-  '## Recent posts',
-  ...documents.slice(0, 16).map((document) => `- [${document.title}](${document.url}): ${document.excerpt.slice(0, 180)}`),
+  '## Article index',
+  ...collections.flatMap((collection) => {
+    const entries = documents.filter((document) => document.collection === collection.key);
+    return [`\n### ${collection.label} (${entries.length})`, '', ...entries.map(indexEntry)];
+  }),
   ''
 ].join('\n');
 
 const llmsFull = [
-  llmsIndex,
+  '# Archive for AI Study — Full Public Archive',
+  '',
+  'This file contains the public CV and the full authored Markdown body of every published article. Canonical URLs are included before each document. For discovery only, prefer llms.txt.',
+  '',
   '## CV',
+  '',
   cv.content,
   '',
-  '## Portfolio documents',
-  ...documents.map((document) => `\n### ${document.title}\n\n- Collection: ${document.collectionLabel}\n- Date: ${document.date || 'unknown'}\n- URL: ${document.url}\n- Tags: ${document.tags.join(', ') || 'none'}\n\n${document.content}\n`)
+  ...collections.flatMap((collection) => {
+    const entries = documents.filter((document) => document.collection === collection.key);
+    return [`## ${collection.label}`, '', ...entries.map(fullEntry)];
+  })
 ].join('\n');
 
-await fs.writeFile(path.join(root, 'llms.txt'), `${llmsIndex}\n`);
-await fs.writeFile(path.join(root, 'llms-full.txt'), `${llmsFull}\n`);
-console.log(`Generated blog dataset with ${documents.length} documents.`);
+function normalizeOutput(value) {
+  return `${value
+    .replace(/\bMCP\b\s*[·/]?\s*/gi, '')
+    .replace(/[·/]\s*\bMCP\b/gi, '')
+    .replace(/[ \t]+$/gm, '')}\n`;
+}
+
+await fs.writeFile(path.join(root, 'llms.txt'), normalizeOutput(llmsIndex));
+await fs.writeFile(path.join(root, 'llms-full.txt'), normalizeOutput(llmsFull));
+console.log(`Generated llms.txt and llms-full.txt from ${documents.length} published documents.`);

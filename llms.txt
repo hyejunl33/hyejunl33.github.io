@@ -1,32 +1,249 @@
 # Archive for AI Study
 
-> AI 프로젝트, 알고리즘, 학습 회고를 연결해 기록하는 Hyejun의 개인 아카이브
+> AI projects, algorithms, technical study notes, and retrospectives by Hyejun.
 
-This is Hyejun’s public AI/engineering blog and portfolio. Use the original URLs as the canonical source, and distinguish authored content from your own inference.
+This is a detailed, generated index of the public blog. Use it to discover articles, then read the canonical URL for the complete published page. Treat each article as authored material and distinguish its content from your own inference.
 
 ## Primary pages
+- [Home](https://hyejunl33.github.io/): Main blog page
 - [CV](https://hyejunl33.github.io/cv/): Career and education
 - [Project archive](https://hyejunl33.github.io/projects/): Project experiments and engineering notes
-- [Study archive](https://hyejunl33.github.io/study/): Posts tagged Study
+- [Study archive](https://hyejunl33.github.io/study/): AI and engineering study notes
+- [Algorithm archive](https://hyejunl33.github.io/algorithm/): Algorithm problem-solving notes
+- [Weekly review archive](https://hyejunl33.github.io/weeklyreview/): Weekly learning and project retrospectives
+- [ETC archive](https://hyejunl33.github.io/etc/): Career and collaboration notes
 - [All notes](https://hyejunl33.github.io/archive/): Every published record in reverse chronological order
-- [Blog MCP guide](https://hyejunl33.github.io/blog-mcp/): Search and read public blog posts with an MCP-compatible LLM
-- [Structured blog data](https://hyejunl33.github.io/assets/data/blog-content.json): Machine-readable public posts and profile
 
-## Recent posts
-- [AI Applied Engineer · FDE · LLM Engineer 포트폴리오 핸드오프](https://hyejunl33.github.io/study/2026-09-30-ai-applied-engineer-fde-llm-engineer-포트폴리오-핸드오프/): AI Applied Engineer·Forward Deployed Engineer(FDE)·LLM Engineer 지원용 포트폴리오/자기소개서/면접의 단일 기준 문서. 2026 09 30에 확인한 공고를 바탕으로 작성했다.
-- [WRTN에 인턴으로 합류하기까지.](https://hyejunl33.github.io/etc/2026-05-04-Start-of-2026/): 이거 실화에요?
-- [평범한 교대생이던 내가 뤼튼에서 개발자? 무리무리!(무리가아니었다!?)](https://hyejunl33.github.io/etc/2026-05-04-WRTN-Onboarding/): 이거 실화에요?
-- [[이미지기반 카페추천 프로젝트] ADK 기반 에이전트 챗봇 구현](https://hyejunl33.github.io/projects/2026-01-30-ADK-Multi-agent/): ADK 기반 에이전트 챗봇 구현
-- [[이미지기반 카페추천 프로젝트] Apache Airflow 파이프라인 자동화 구현](https://hyejunl33.github.io/projects/2026-01-30-Airflow_Pipeline/): Apache Airflow 파이프라인 자동화 구현
-- [[이미지기반 카페추천 프로젝트]네이버지도에서 서울시 카페 전부 크롤링](https://hyejunl33.github.io/projects/2026-01-30-Crawler_Documentation/): 서울시 카페 크롤링
-- [[이미지기반 카페추천 프로젝트] CLIP으로 이미지 전처리](https://hyejunl33.github.io/projects/2026-01-30-Preprocessing-with-CLIP/): CLIP으로 이미지 전처리
-- [[이미지기반 카페추천 프로젝트]서울시 카페 리뷰 데이터 정제 및 요약](https://hyejunl33.github.io/projects/2026-01-30-Review_Summarization/): 리뷰데이터 정제 및 요약
-- [[이미지기반 카페추천 프로젝트] SigLip으로 텍스트 임베딩](https://hyejunl33.github.io/projects/2026-01-30-SigLip/): SigLip으로 텍스트 임베딩
-- [Week13-15_HandBone X-Ray Image Semantic Segmentation Project ](https://hyejunl33.github.io/weeklyreview/2025-12-30-SemanticSegmentation_WrapupReport%20copy/): WrapupReport
-- [WrapUp Report 우수사례 선정](https://hyejunl33.github.io/etc/2025-12-30-philosophy%20copy/): WrapUp Report 우수사례 선정
-- [우리팀은 어떻게 협업하는가?: 팀협업 진화기](https://hyejunl33.github.io/etc/2026-01-25-cowork/): 우리팀은 어떻게 협업하는가?: 팀협업 진화기
-- [Week11-12_ObjectDetection_WrapupReport](https://hyejunl33.github.io/weeklyreview/2025-11-30-ObjectDetecvtion_WrapupReport%20copy/): WrapupReport
-- [프로젝트아이디어 - 에듀테크](https://hyejunl33.github.io/projects/2025-11-21-ProjectIdea-edutech/): 프로젝트아이디어 에듀테크
-- [Week10_AI개발기초_학습회고](https://hyejunl33.github.io/weeklyreview/2025-11-21-AIBasic-week10/): AI개발기초 학습회고
-- [부조리주의, 포스트구조주의, 그리고 반항](https://hyejunl33.github.io/etc/2025-11-13-philosophy/): 부조리주의, 포스트구조주의, 그리고 반항
+## Article index
+
+### Project (17)
+
+- [[이미지기반 카페추천 프로젝트] ADK 기반 에이전트 챗봇 구현](https://hyejunl33.github.io/projects/2026-01-30-ADK-Multi-agent/)
+  - Published: 2026-01-30 | Tags: 이미지기반 카페추천 프로젝트, ADK 기반 에이전트 챗봇 구현
+  - Summary: 목차 1. 필요한 기능 2. 동네 처리 (Location Agent) 3. Stateful 채팅 구현 4. ADK 마이그레이션 5. Context 기반 추천 질문 생성 (Suggestion) 6. 실험 및 검증 필요한 기능 인풋 쿼리에서 동을 따로 받아서 해당하는 동네 내에서만 검색결과 보여주는 기능 인풋 쿼리의 랜드마크나 위치를 받아서 행정동으로 변환하는 에이전트 Stateful 채팅을 구현해서 이전까지의 Context를 기억해서 다른 카페 찾을 수 있는 기능 Context에 알맞는 다음 예상 질문을 생성하는 기능 동네 처리 → Location Agent 문제정의: 쿼리에서 자연어로 들어오는 동네의 형태는 매우 다양하다. 홍대, 롯데월드근처(랜드마크)일 수도 있고, 잠실역(역 이름)등일수도 있고, ‘연남동’과 같이 동네 이름 자체일 수도 있다. 유저가 제시한 위치의 근처에 위치한 카페를 검색결과로 보여주기 위해, Location Agent를 사용해서 연관 행정동 리스트를 추출하고,
+- [[이미지기반 카페추천 프로젝트] Apache Airflow 파이프라인 자동화 구현](https://hyejunl33.github.io/projects/2026-01-30-Airflow_Pipeline/)
+  - Published: 2026-01-30 | Tags: 이미지기반 카페추천 프로젝트, Apache Airflow 파이프라인 자동화 구현
+  - Summary: Apache Airflow 파이프라인 자동화 구현 목차 1. 도입 배경 및 문제 정의 2. 파이프라인 아키텍처 3. DAG 설계 및 구현 4. 병렬 처리 및 최적화 5. Task 의존성 및 실행 흐름 6. 실행 결과 및 성능 개선 도입 배경 및 문제 정의 기존 문제점 서울 전역의 카페 데이터를 수집하고 처리하는 파이프라인을 수동으로 단계별 순차 실행 하고 있었음. 크롤링이 가장 오래걸리는 작업인데, 서울내 모든 동네(약 420개)에 대해서 크롤링이 끝나야만 다음단계로 넘어가는것은 매우 비효율적임. 문제점 요약 문제 설명 단계별 병목 한 단계가 전체 동네에서 완료되어야 다음 단계 시작 가능 유휴 시간 발생 빨리 끝난 동네도 느린 동네를 기다리며 대기 수동 개입 각 단계 완료 후 다음 단계 수동 실행 필요 실패 복구 어려움 중간 실패 시 해당 단계 전체 재실행 스케줄링 없음 정기적인 자동 실행 불가 해결 방안: Apache Airflow 도입 핵심 변경 : 단계별 전체 처리 → 동네 단
+- [[이미지기반 카페추천 프로젝트]네이버지도에서 서울시 카페 전부 크롤링](https://hyejunl33.github.io/projects/2026-01-30-Crawler_Documentation/)
+  - Published: 2026-01-30 | Tags: 이미지기반 카페추천 프로젝트, Crawling
+  - Summary: 네이버 지도 서울 카페 분산 크롤러 구현 목차 1. 도입 배경 및 문제 정의 2. 아키텍처 및 핵심 로직 3. 데이터 추출 전략 4. 안정성 및 리소스 관리 5. 데이터 스키마 및 저장 도입 배경 및 문제 정의 크롤링 목표 서울시 전역 424개 행정동 에 위치한 카페 데이터를 정밀하게 수집하여 이미지 기반 카페추천 서비스의 기반 데이터를 구축함. 단순한 장소명 수집을 넘어, 메뉴 이미지, 리뷰, 영업시간, 편의시설 정보 등 상세 메타데이터 확보가 필수적임. Playwright 도입 배경 (vs Selenium) 기존 Selenium 방식은 React 기반의 동적 페이지(네이버 지도)를 처리하는 데 구조적 한계가 있어, 최신 자동화 도구인 Playwright 를 도입함. 1. Auto waiting 문제 : 네이버 지도는 수시로 DOM을 다시 그리기 때문에, Selenium은 요소를 찾은 직후 ‘요소가 사라짐(Stale Element)’ 에러를 빈번하게 발생시킴. 해결 : Playwr
+- [[이미지기반 카페추천 프로젝트] CLIP으로 이미지 전처리](https://hyejunl33.github.io/projects/2026-01-30-Preprocessing-with-CLIP/)
+  - Published: 2026-01-30 | Tags: 이미지기반 카페추천 프로젝트, CLIP으로 이미지 전처리
+  - Summary: CLIP으로 이미지 전처리 문제정의 크롤링된 가게 이미지에 노이즈가 너무 많다. 서비스 특성상 가게의 분위기를 나타내는 사진이 DB에 있어야 하고, DB에 있는 사진과 인풋으로 들어온 사진의 임베딩을 코사인유사도를 이용해서 비교한다. 그런데 가게 이미지 50장을 크롤링해온 결과에서 대표사진 5장을 뽑을때, 노이즈를 제거하고, 해당 가게의 ‘분위기’를 나타내는 사진만 선정해야한다. 따라서 ‘분위기’를 어떤메트릭으로 정의하고, 선정할것인지가 문제였다. 오늘의집 케이스스터디 오늘의집에서도 비슷한 문제가 있었다. 오늘의집에서도 주어진 인테리어와 유사한 다른 이미지 검색을 위해서 VGG16모델을 학습시키는 모델을 개발했는데, Finetuning시키는 데이터셋을 직접 tagging하는 방법을 사용했다. 우리의 case에서 clip을 이용해서 ‘분위기’를 나타내는 대표사진 5장만 걸리낼 수 있는 메트릭 설정만 잘한다면, finetuning없이 프롬프트만으로 걸러낼 수 있을거라고 생각했다. 이미지
+- [[이미지기반 카페추천 프로젝트]서울시 카페 리뷰 데이터 정제 및 요약](https://hyejunl33.github.io/projects/2026-01-30-Review_Summarization/)
+  - Published: 2026-01-30 | Tags: 이미지기반 카페추천 프로젝트, 리뷰 데이터 정제 및 요약
+  - Summary: 리뷰 데이터 정제 및 요약 목차 1. 도입 배경 및 문제 정의 2. 아키텍처 및 핵심 로직 3. 데이터 전처리 전략 (Preprocessing) 4. 프롬프트 엔지니어링 (Gemma3) 5. 최적화 및 성능 관리 (Batch Processing) 6. 데이터 스키마 및 저장 도입 배경 및 문제 정의 프로젝트 목표 크롤링된 Raw 리뷰 데이터 는 노이즈가 많고 비정형적이라 검색이나 추천 시스템에 바로 활용하기 어려움. 이를 Google의 Gemma 3 4B IT 모델을 사용하여 정제하고, 장소의 특징을 나타내는 핵심 태그 와 요약문 을 생성하여 서비스 품질을 높임. 모델 선정 근거 (Gemma3 Performance Benchmark) 다양한 모델 크기와 포맷을 비교 실험하여 최적의 모델을 선정함. 모델 실행 시간 (리뷰 50개) 요약 품질 비고 Gemma3 4B IT 약 10초 (GPU/API) 완벽함 최종 선정 (4bit 양자화 활용) Gemma3 1B IT 약 7초 (GPU/AP
+- [[이미지기반 카페추천 프로젝트] SigLip으로 텍스트 임베딩](https://hyejunl33.github.io/projects/2026-01-30-SigLip/)
+  - Published: 2026-01-30 | Tags: 이미지기반 카페추천 프로젝트, SigLip으로 텍스트 임베딩
+  - Summary: SigLip으로 텍스트 임베딩 문제 SigLip은 64토큰만 임베딩할 수 있음 Captioning과 HyDE를 뽑아낼때 최대한 간결하게 뽑아내야됨 따라서 기존의 캡셔닝과 HyDE의 프롬프트를 바꿔서 50자 미만의 단어위주로 출력하도록 바꾸기 50자도 토큰이 130토큰 이상이므로 슬라이딩 윈도우 방식으로 services/loadmodel.py 파일 변경 기존에는 64토큰만 임베딩해서, 사실상 HyDE가 의미가 없는 수준이었음. 배경 아파치 라이센스에, 한국어를 잘 이해하는 모델인 siglip을 임베딩 모델로 선정했었는데, mvp를 뽑고나서 치명적인 문제가 발생했다. siglip은 64토큰으로 pretrain된 모델이라, 인풋을 64토큰으로만 사용할 수 있다는것을 모두 놓쳤다는것이다. 이 상황에서 기존의 임베딩으로 들어가던 텍스트는 64토큰으로 truncation되어 들어가고있음을 확인하고, 문제해결에 착수했다. 해결안 1. 모델을 교체한다. 해결안 2. 다른방법을 모색한다.. 모델을
+- [프로젝트아이디어 - 에듀테크](https://hyejunl33.github.io/projects/2025-11-21-ProjectIdea-edutech/)
+  - Published: 2025-11-21 | Tags: Final_Project, Edutech, idea
+  - Summary: LMS(Learning Management System) With AI 교육청, 학교, 교사를 대상으로 하는 학급 관리 프로그램. 교사는 OCR 된 학생의 포트폴리오를 이용해서 개인맞춤형 피드백을 제공할 수 있음. 0. 교육현장에서 AI 도구의 메리트 업무자동화 많은량의 데이터를 한꺼번에 처리할 수 있음. 개인 맞춤형 교육 다문화 학생에게도 맞춤형 교육을 제공 느린학습자 지원 과정 중심 평가의 보조도구 → 결과중심평가에서 벗어날 수 있음 2022 개정교육과정에도 부합함. 비대면 수업보조도구 메타버스..? 실제로 코로나시기에 로블록스를 교실로 사용한 사례가 있음 1. 사례분석 1.1 구글 클래스룸 image 장점 아날로그 데이터 아카이빙 과제 제출여부, 제출시간등을 정량화해서 즉각적인 정량평가 가능 단점 데이터들을 엮어서 학생별 정성적 평가 불가능 과제는 단순한 사진 혹은 텍스트파일로 남음 → 정성적 평가 어려움 1.2 다했니? 다했어요 https://edzip.kr/product d
+- [[영화리뷰 감성분류][모델최적화]하이퍼파라미터튜닝2](https://hyejunl33.github.io/projects/2025-11-01-[Domain_Common_Project]HyperParameterTuning2/)
+  - Published: 2025-11-01 | Tags: Domain_Common_Project, study, ModelOptimization, HyperParameterTuning
+  - Summary: Introduction 하이퍼파라미터 튜닝 Focal Loss에서 알파 가중치를 얼마나 줘야할까? 최적의 알파 가중치는 얼마일까? 이외에 하이퍼파라미터 튜닝할 수 있는값 모두 넣기 valid 데이터를 포함해서 전체 데이터를 기준으로 학습시켜보기 모델 앙상블 추론을 할때, 모델별로 Weight를 줘서 앙상블을 해보기 이전 실험까지를 대략 요약하자면 데이터셋이 불균형 데이터라고 생각해서FocalLoss의 $$\alpha$$가중치를 각 레이블의 비율의 역수를 정규화해서 가중치로 두었다. 하지만, 그렇게 가중치를 준게 오히려 test/acc성능에는 악영향을 미친것을 확인할 수 있었다. 즉 소수클래스에 가중치를 둔게 오히려 대다수의 클래스를 맞추는데 악영향을 미쳤고, 전체 test/acc성능이 하락함을 확인할 수 있었다. 그러면 최적의 알파 가중치를 찾으려면 어떻게해야할까? 바로 하이퍼파라미터 튜닝이다. 따라서 이번 실험에서는 최적의 FocalLoss의 $$\alpha$$가중치를 찾으면서,
+- [[영화리뷰 감성분류][모델최적화]TAPT](https://hyejunl33.github.io/projects/2025-11-01-[Domain_Common_Project]TAPT/)
+  - Published: 2025-11-01 | Tags: Domain_Common_Project, study, ModelOptimization, TAPT
+  - Summary: [모델최적화]TAPT TAPT는 Task Adaptive Pre Training의 약자로 내가 풀고자 하는 task에 적응시키기 위해 Pretraining 시키는 과정을 말한다. 기존의 BERT모델을 내가 풀고자 하는 영화리뷰 감성분류에 적응시키기 위해 TAPT를 사용할 수 있다. 일반적인 BERT,KoBERT,KLUE BERT등은 이미 뉴스나 위키피디아, 댓글등 거대한 데이터에 대해 이미 학습된 상태이다. TAPT는 이러한 사전학습된 모델을 바탕으로 Fine Tuning하는 과정이다. TAPT를 왜 하는가? 도메인 불일치: 모델이 사전 학습한 범용 데이터와, 실제 해결해야할 task의 데이터는 불일치한다. 따라서 Fine Tuning이 필요하다. TAPT의 목적: 도메인 사이의 격차를 줄여주는 것이 목적이다. 범용 모델을 원하는 task에 미리 적응시켜서 모델이 task의 도메인의 언어패턴을 더 잘 이해하게 만드는것이 핵심이다. 다만 Overfitting이 되지 않도록 유의해야한다
+- [[영화리뷰 감성분류][모델최적화]-eval/loss vs eval/acc](https://hyejunl33.github.io/projects/2025-11-01-[Domain_Common_Project]eval-loss-vs-eval-acc/)
+  - Published: 2025-11-01 | Tags: Domain_Common_Project, study, ModelOptimization
+  - Summary: Introduction 해당 test의 평가 지표는 test/acc이다. 지금까지의 실험 가설은 eval/loss를 줄여서 과적합을 막으면 자동으로 test/acc도 올라갈것이라는 가정이 있었다. 하지만 eval/loss를 metric으로 모델을 선택해서 test를 해본 결과, 성능이 오히려 하락하는 문제가 있었다. image image 그리고 두번째로, 모델이 과하게 소수클래스를 중요하게 보는 문제가 있었다. test데이터셋의 분포는 알 수 없지만, 일반적으로 전체데이터셋과 같다고 생각할때, Focal Loss의 $$\alpha$$의 가중치로 인해 소수클래스만을 너무 중요하게 여겨서, 전체 데이터셋의 분포와 예측 분포를 볼때, 소수클래스의 비율이 과장되게 예측됨을 확인할 수 있었다. 따라서 이번실험에서는 평가지표를 eval/acc로 바꿔본 후, Focal Loss의 가중치를 모두 1로 두고 성능을 관찰해본다. 시간관계상 앙상블한 모델이 아닌 단일모델로 실험을 한다. 평가지표를 ac
+- [[영화리뷰 감성분류][모델최적화]마지막 시도, 그리고 반성](https://hyejunl33.github.io/projects/2025-11-02-[Domain_Common_Project]TAPT/)
+  - Published: 2025-11-01 | Tags: Domain_Common_Project, study, ModelOptimization
+  - Summary: Introduction tapt적용 전체데이터에 대해서 5개모델 다시 학습 후 앙상블 → 시간부족으로 못해봄 전체데이터셋으로 학습시킨 모델 효과있는지 실험→ 시간부족으로 못해봄 5개모델 acc를 Weight로 줘서 앙상블 역번역증강 사용할지 말지 결정 → 번역의 품질이 안좋아서 결국엔 사용 x 저번실험까지 해서 기껏 하이퍼파라미터 튜닝을 해뒀는데 TAPT라는 새로운 기법에 대해 알게됐다. 일반적으로 BERT모델을 내가 원하는 TASK에 FineTuning하는 기법인데, 이 기법을 사용하면 성능이 일반적으로 향상된다고 한다. 이 기법을 하이퍼파라미터 튜닝을 한 후에 알게되어서, 대회 종료까지 2일 남은 시점에서, 다시 하이퍼파라미터 튜닝을 해야하는 상황에 처해졌다. 따라서 TAPT를 일단 적용해보고, 기존에 찾았던 하이퍼파라미터를 이용해서 성능을 테스트해보기로 했다. TAPT정리글 그 외에도 모델마다 acc성능이 다르므로, 추론단계에서 모델을 앙상블 할때 그냥 logit을 softvo
+- [[영화리뷰 감성분류][모델최적화]하이퍼파라미터 튜닝](https://hyejunl33.github.io/projects/2025-10-28-[Domain_Common_Project]Hyperparameter_Tune/)
+  - Published: 2025-10-28 | Tags: Domain_Common_Project, study, HyperParameterTuning
+  - Summary: Introduction image 이전모델에서 FocalLoss를 추가하고 Learning rate scheduler를 “cosine”으로 바꾸고, label smoothing 을 적용하고, weight decay 값을 키워봤다. regularizastion방법을 썼기떄문에, 에폭을 늘려서 학습해도 될것같아서, 에폭을 기존 5에서 8로 늘렸다. image 그 결과 TrainingLoss는 줄어들지면 ValidationLoss는 줄어들지 않는 과적합이 일어났다. 우선 EarlystoppingPatience 를 3으로 설정했지만 기준을 Accuracy로 잡아서 validation Acc가 증가하는 이상 Early stopping은 적용되지 않았다. 따라서 이번에는 Early stopping기준을 Validation Loss로 잡을 예정이다. 이를 통해 Overfitting을 막을 생각이다. 그리고 하이퍼 파라미터 튜닝을 통해 최적의 Weight decay 값, label smoothin
+- [[영화리뷰 감성분류][모델최적화]-커스텀토크나이저](https://hyejunl33.github.io/projects/2025-10-25-[Domain_Common_Project]Custom_Tokenizer/)
+  - Published: 2025-10-26 | Tags: Domain_Common_Project, study, CustomTokenizer, Experiments
+  - Summary: Introduction 이전모델에서는 커스텀토크나이저를 사용해서 특수토큰을 사용해봤고, Weighted Cross Entropy를 구현했고, Stratified K Fold Cross Validation를 구현했는데 Accuracy가 0.79근방이 나왔다. 대체 뭐가 성능하락을 야기했을까? 나머지 요인들은 통제변인으로 설정하고 하나씩 실험해보며, 성능향상에 기여하는것들을 찾아나가야겠다. 그 첫 여정이 커스텀토크나이저다. 직관적으로 커스텀 토크나이저를 사용하면 OOV문제를 더 많이 해결할 수 있고 [UNK]토큰이 줄어들것이므로 모델은 더 문맥을 잘 이해할 것이다. 다만 어떻게 토큰을 설정하고 추가해주고, 매핑해줄것인지는 전적으로 개발자인 나에게 달려있기 때문에 데이터셋의 특징과 분포를 잘 파악하고 커스텀 토크나이저를 실험해보며 처리해봐야겠다. 그 다음은 불용어 처리이다. 이전 모델에서 데이터셋을 확인해본 결과 ‘진짜’,’정말’같은 강조를 하는 단어들은 레이블과 상관없이 모든레이블에서
+- [[영화리뷰 감성분류][모델최적화]-FocalLoss](https://hyejunl33.github.io/projects/2025-10-26-[Domain_Common_Project]FocalLoss/)
+  - Published: 2025-10-26 | Tags: Domain_Common_Project, study, Feature_Engineering, Focal_Loss
+  - Summary: Introduction image 이전에 Weighted Cross Entropy를 적용한 모델은 이상할정도로 과적합되어 Training Loss는 하락하는 추세를 보이지만, Validation Loss는 줄어들지 않는 문제가 있었다. Weighted CrossEntropy는 소수의 클래스에 더 높은 가중치를 부여하므로, 소수클래스 샘플의 특징에 모델이 지나치게 맞춰질 수 있다. 우선 과적합을 방지하기 위해서 시도해봐야 하는 방법들을 생각해 보았다. Early Stopping: 가장 쉽고 빠르게 시도해볼 수 있는 방법으로 Validation Loss가 감소하지 않으면 훈련을 중단하는 방법이다. Regularization 강화 Weight Decay: WeightDecay값을 높여서 모델 가중치가 너무 커지는것을 방지한다. Dropout: Dropout비율을 높여서 과적합을 방지한다. Dropout은 일반적으로 라이브러리 모델의 기본값을 사용한다. Label Smoothing: 정답
+- [[Domain_Common_Project][모델최적화]-Feature_Engineering](https://hyejunl33.github.io/projects/2025-10-26-[Domain_Common_Project]Feature_Engineering/)
+  - Published: 2025-10-25 | Tags: Domain_Common_Project, study, Feature_Engineering
+  - Summary: 텍스트 전처리 및 정리 특수문자 제거, 공백 정규화 필요시 한국어 특화 전처리 처리 매우 짧거나 긴 텍스트 제거 또는 처리 중복 제거 image 자음, 모음만 있는경우를 제거한다. 반복되는 표현을 정규화한다. 즉 “ㅋㅋㅋㅋ”나 “ㅎㅎㅎㅎㅎ”같은 표현을 “ㅋㅋ”, “ㅎㅎ”형태로 정규화 한다. 비어있는 텍스트는 제거한다. 중복되는 데이터도 모두 제거한다. 텍스트 정규화 대소문자 정규화 구두점 처리 특수문자 처리 URL/이메일/멘션 정리 모든문자를 우선 소문자로 정규화 한다. 구두점처리 중복된 구두점은 1개나 2개로 축소해서 정규화한다. 감성과 관련없는 특수문자는 노이즈로 여겨서 BlackList형식으로 제거한다. 감성과 관련있는 이모티콘이나, 특수문자는 목록에 넣지 않아서 유지된다. 구두점 주변 공백을 정리한다. URL패턴이나 이메일패턴, 멘션패턴, 과도한 공백은 감성분류에 도움이 되지 않는 노이즈이므로 제거한다. image BaseLine코드에서는 최대한 자음/모음만 반복된 패턴, 특
+- [[영화리뷰 감성분류][모델최적화]-EDA](https://hyejunl33.github.io/projects/2025-10-24-[Domain_Common_Project]EDA/)
+  - Published: 2025-10-24 | Tags: Domain_Common_Project, study, EDA
+  - Summary: [모델최적화] EDA 데이터셋 형태 및 기본정보 image 28만개의 데이터가 4개의 클래스를 갖는 형태를 띠고있다. review가 결측인 데이터가 6개가 있다. 중복리뷰는 3350개있다. 이떄 중복면서 label이 서로다른 리뷰가 있는것이 보인다. 타겟변수 분석 image 일단 데이터셋은 Imbalance함을 알 수 있따. 강한 긍정과 약한 부정데이터가 상대적으로 적고, 강한 부정과, 약한 긍정 데이터가 많음을 알 수 있다. 모델이 일반화된 학습을 할 수 있도록 Focal Loss나 Weighted Cross Entropy를 사용해야한다. 입력변수 분석 image image.png) 텍스트 길이를 분포로 확인해보면 문자수 분포랑 단어수분포가 일반적으로 일치함을 알 수 있다. → 다를이유가 없으니깐 일반적으로 x축이 작은곳에 분포가 몰려있고, 그 이후에 종모양의 분포가 있음을 알 수 있다. image 매우 짧은 리뷰와 매우 긴 리뷰를 살펴보면 직관적으로 봤을때는 짧은리뷰나, 긴리뷰나
+- [[영화리뷰 감성분류][study]메트릭 선택은 기술이 아니라 의사결정의 정치다.](https://hyejunl33.github.io/projects/2025-10-22-[Domain_Common_Project]Select_Metrics/)
+  - Published: 2025-10-22 | Tags: Domain_Common_Project, study, metrics, FocalLoss, WeigtedCrossEntropy, Lossfunction
+  - Summary: 이 글은 원본글을 바탕으로 학습목적으로 정리한 글임을 밝힙니다. 원본 글: https://stages.ai/en/competitions/370/board/community/post/3051 메트릭 선택은 기술이 아니라 의사결정의 정치다. 모델 개발에서 성능이 좋다는건 특정 메트릭의 값이 좋다는 의미다. → 어떤 메트릭을 우선시 해야할까? Accuracy : 전체 예측 중 맞춘 비율. 간단하지만, 데이터 불균형에서는 무의미할 수 있음. Precision : Positive로 예측한 것 중 실제로 Positive인 비율. False Positive 줄이는 데 초점. Recall : 실제 Positive 중에서 모델이 Positive로 잡아낸 비율. False Negative 줄이는 데 초점. FPR (False Positive Rate) : 실제 Negative 중에서 Positive로 잘못 분류한 비율. 각 metric마다 데이터에서 중점으로 여기는 부분이 다르다. 불균형 데이터에서
+
+### Study (31)
+
+- [1차 랄프톤에서 2차 골프톤 우수상까지: 하네싱을 배운 과정](https://hyejunl33.github.io/study/2026-10-01-1차-랄프톤에서-2차-골프톤-우수상까지-하네싱을-배운-과정/)
+  - Published: 2026-10-01 | Tags: Study
+  - Summary: 1차 랄프톤: 밈을 마케팅 소재로 바꾸는 파이프라인 1차 랄프톤 현장 입구 뤼튼에 합류한 뒤 처음 참여한 사내 해커톤이 1차 랄프톤이었다. 날짜는 노동절..! 다른 인턴분들은 빨간날이라서, 안나오고싶어하는 눈치였다. 그래서 혼자 나가게 되었는데, 내 목표는 두가지였다. 랄프톤 사내 해커톤을 참여하게된 계기 뤼튼에 있는 국가 권력급 개발자 및 AI Native한 비개발자 분들의 워크플로우를 보고 배우자! 밀린 업무때문에 아이디어 단계에서만 머물러있었던 밈 크롤링 후 제안 파이프라인을 만들어보자! 특히 마케터분들과 미팅으로 PainPoint를 들어보면, 마케팅 크리에이티브를 제작할때 계속해서 디씨, 루리웹등 다양한 커뮤니티를 실제로 모니터링 한다는것을 알게되었다. 많은 뻘글들 중 유의미한 글만 걸러서 슬랙봇으로 확인하고 싶다는 니즈가 있었다. 그런데 우수하게 만들었다고 하더라도(좋은 밈을 크롤링해온다는 기준이 애매하긴 하지만), 당장 RoI를 높이는 파이프라인이 아니어서 항상 우선순위
+- [[Domain_Common_Project][미션-2]LogitProcessor구현](https://hyejunl33.github.io/study/2025-10-31-[Domain_Common_Project]LogitProcessor/)
+  - Published: 2025-10-31 | Tags: Domain_Common_Project, LogitProcessor, Pretrained, GPT, NLP, Tokenization, 미션
+  - Summary: LogitsProcessor 클래스를 상속하여 한글 토큰만 허용하는 사용자 정의 Processor 작성 tokenizer.batch decode 와 유니코드 범위 검사를 활용한 한글 필터링 구현 제약 적용 전후 텍스트 생성 결과 비교 LLM(대형 언어 모델) 출력 제어를 위한 LogitsProcessor의 개념 및 활용법 이해 사용자 정의 제약 조건을 로짓 처리기에 구현하여 원하는 언어 생성 제어 방식 학습 HuggingFace transformers 기반의 텍스트 생성 파이프라인 실습 KoreanOnlyProcessor는 LogitProcessor를 상속받아서, 한글만 반환하도록 하는 Processor클래스이다. is korean 함수에서는 arg로 들어오는 토큰을 문자단위로 하나씩 쪼개서 한글이 하나라도 포함되면 True를 반환하고, 한글이 하나도 포함되지 않는다면 False를 반환한다. call 함수에서는 input ids와 scores텐서를 받아서, 현재 vocab size만
+- [[논문 리뷰]_[RecSys]_Zero-Shot Recommendation as Language Modeling](https://hyejunl33.github.io/study/2025-10-23-[RecSys][paper]Zero-Shot_Recommendation_as_Language/)
+  - Published: 2025-10-23 | Tags: RecSys, Zero-shot, Recommendation, Language_Modeling
+  - Summary: Abstract 현재의 추천 시스템은 주로 Collaborative Filtering이나 Content based 기술, 혹은 이 둘의 하이브리드 방식에 의존한다. 협업 필터링 (CF) : (USER, ITEM, INTERACTION) 튜플 형태의 데이터를 기반으로 한다. 콘텐츠 기반 (CB) : (ITEM, FEATURES) 쌍의 데이터를 기반으로 한다. 이 두 가지 표준 방식은 모두 정형화된 데이터structured data를 필요로 하며, 이 데이터를 수집하는 과정은 비용이 많이 든다(costly). Zero shot recommendation 이 논문은 위와 같은 정형화된 학습 데이터 대신 오직 비정형 텍스트 코퍼스(unstructured text corpora)로만 학습된 Pre trained LanguageModel(LM)을 활용하는 Zero shot추천모델을 제안했다. 즉, (사용자, 아이템, 평점)과 같은 데이터를 전혀 사용하지 않고, GPT 2와 같이 단순히 웹 텍스
+- [[Domain_Common_Project][과제3]Pretrained 모델파인튜닝](https://hyejunl33.github.io/study/2025-10-22-[Domain_Common_Project]Fine_tuning/)
+  - Published: 2025-10-22 | Tags: Domain_Common_Project, Bert, Pretrained, Fine-tuning, NLP, Tokenization, 과제
+  - Summary: 과제3 Pretrained 모델파인튜닝 Transformer 라이브러리를 활용하여 BERT 기반 모델을 IMDB 감성 분석 데이터셋에 대해 영화 리뷰 문장이 긍정인지 부정인지 분류하는 모델을 파인튜닝하는 과제이다. Hugging Face Datasets 및 Transformers 라이브러리의 활용법 이해 사전 학습된 Transformer 모델을 활용한 텍스트 분류 파인튜닝 실습 모델 평가를 위한 정확도, 정밀도, 재현율, F1 score 계산 능력 새로운 문장에 대한 모델 예측 시연 1. BERT, Tokenizer 로드하기 2. IMDB 텍스트 데이터셋 로드하고, 전처리하기 3. PyTorch 기반 학습 및 평가 데이터로 변환하기 4. AutoModelSequenceClassification 모델을 이용해서 Fine Tuning하기. 5. 훈련 손실 및 평가Metric을 기반으로 성능 측 정하기 6. 새로운 문장 입력에 대한 감성 예측 시연하기 BERT,Tokenizer, 데이터셋
+- [[Domain_Common_Project][과제2] 데이터 누수 탐지 및 방지하기](https://hyejunl33.github.io/study/2025-10-21-[Domain_Common_Project]Data_leakage_Detections/)
+  - Published: 2025-10-21 | Tags: Domain_Common_Project, 과제, Data_leakage_detection, Data_preprocessing
+  - Summary: 과제2 데이터 누수 탐지 및 방지하기 데이터 누수가 없는 올바른 파이프라인 을 직접 구현 중복 데이터, 전처리 순서 오류, 타깃 누수 등 실제 현업에서 발생하는 다양한 데이터 누수 시나리오를 체험 상호정보량(Mutual Information)을 활용하여 의심스러운 피처를 탐지하고 제거하는 방법론 학습 Task 1. 중복된 데이터 필터링: 검증/테스트 데이터에 학습 데이터와 중복된 데이터를 제거해서 올바른 성과 검증 2. 올바른 전처리 사용: 올바른 전처리 순서를 적용한 누수 없는 파이프라인 구축 3. 피처 검증 및 필터링: 상호정보량 분석을 통한 누수 의심 피처 식별 및 제거 데이터 누수는 휴먼 에러로 언제든지 일어날 수 있다. 따라서 데이터 누수를 사전에 감지해서 올바른 학습 파이프라인을 구축할 수 있어야 한다. 데이터 누수가 없는 학습 파이프라인을 구현할 수 있도록 누수가 발생할 수 있는 부분들에 대해 체크함수를 구현해보자. pandas라이브러를 이용해서 read csv() 로
+- [[Domain_Common_Project][과제1] 임베딩 레이어 구현 및 FAISS를 활용한 유사문장 검색 과제](https://hyejunl33.github.io/study/2025-10-21-[Domain_Common_Project]EmbeddingLayer_and_FAISS/)
+  - Published: 2025-10-21 | Tags: Domain_Common_Project, 과제, 임베딩 레이어, FAISS, NLP, Tokenization
+  - Summary: 과제1 임베딩 레이어 구현 및 FAISS를 활용한 유사문장 검색 과제 이 과제는 텍스트 임베딩 레이어를 직접 구현하고, 생성된 임베딩 벡터를 기반으로 FAISS 라이브러리를 사용해서 효율적인 유사 문장 검색 시스템을 구축하는 과제이다. 문장에서 단어로, 단어에서 임베딩으로 대체 임베딩은 어떻게 진행되는걸까? FAISS를 이용해서 대규모 데이터셋에서 어떻게 유사한 항목을 찾아낼까? 주요Task 1. Vocabulary 만들기: 주어진 코퍼스에서 고유한 단어들을 추출해서 VOCA를 만든다. 그리고 인식되지 않는 단어는 ‘UNK’ 로 처리한다. 2. 정수 인덱싱 및 패딩: 문장의 각 단어들을 VOCA의 인덱스 시퀀스로 변환하고 최대 문장 길이에 맞춰서 패딩해준다. 3. PyTorch Dataset 및 DataLoader 구현: Dataset과 DataLoader로 데이터를 로딩한다. 4. SentenceEmbeddingModel 구현 Vocabulary 만들기 한글은 교착어의 특성을 띠기
+- [[RecSys][과제1] 기본통계학](https://hyejunl33.github.io/study/2025-10-19-[RecSys]Probability-distribution/)
+  - Published: 2025-10-19 | Tags: RecSys, 과제, 기본 통계학, CLT, Conjugate Prior
+  - Summary: 과제1 기본통계학 중심 극한 정리의 개념을 실습을 통해 이해할 수 있다. conjugate prior의 의미를 실습으로 체득할 수 있다. 확률분포를 코드로 구현하는 방법과 plot하는 방법을 배울 수 있다. 중심극한정리(CLT) image 중심극한정리는 독립적인 확률 변수들의 합이나 평균이 표본의 크기가 커질수록 정규분포에 근사하는 현상이다. $$X n$$은 독립적이고 동일한 분포를 가진 i.i.d확률변수 $$n$$:표본의 크기 $$\mu$$: 확률변수의 평균 $$\sigma$$: 확률변수의 표준편차 image image image sample size 를 100으로 고정하고 표본추출 횟수 n을 10, 50, 1000으로 늘려보면 표본 추출 횟수 $$n$$이 커질수록 표본평균은 정규분포와 가까워짐을 확인할 수 있다. Conjugate Prior(켤레 사전 확률) 사전확률분포(Prior)와 사후 확률 분포(Posterior)가 같은 종류의 확률분포가 되도록 만들어주는 특별한 관계의 사
+- [[RecSys][과제2] GPT2 모델을 이용한 영화 추천](https://hyejunl33.github.io/study/2025-10-16-[RecSys]Generate-movies-Recommendation-with-GPT2/)
+  - Published: 2025-10-16 | Tags: RecSys, 과제, GPT2, 영화추천
+  - Summary: 과제2 생성모델 1. GPT의 prompt로 사용할 추천시스템 데이터를 전처리하고 만들기 2. GPT를 사용해서 prompt에 따른 추천 결과 생성 추천시스템 데이터는 오픈소스로 풀려있는 영화 선호도 데이터를 이용한다. 활용 데이터셋 : MovieLens Dataset 출처 : Harper, F. M., & Konstan, J. A. (2015). The MovieLens Datasets: History and Context. ACM Transactions on Interactive Intelligent Systems (TIIS), 5(4), 1 19. http://dx.doi.org/10.1145/2827872 GPT2를 huggingface 라이브러리에서 불러와 사용할 수 있다. GPT에 데이터를 줄때, prompt의 형식에 따라 출력이 달라지게 된다. 따라서 적절한 prompt를 적용할 수 있는 능력을 갖춰야 한다. transformers 라이브러리에서 GPT2 headmode
+- [[RecSys][과제4] 변분추론 기반의 생성모델 학습구현](https://hyejunl33.github.io/study/2025-10-16-[RecSys]VAE-AutoEncoder-Visualization/)
+  - Published: 2025-10-16 | Tags: RecSys, 과제, AutoEncoder, Variational Auto Encoder, Visualization
+  - Summary: 과제4 변분추론 기반의 생성모델 학습구현 1. 변분추론 기반의 VAE를 구현 2. 유저사이드로 학습하고 클러스터링 결과를 확인 3. 잠재벡터와 클러스터링을 연관짓고 모델의 학습경향을 시각화 데이터셋 과제 2와 마찬가지로 MovieLens Dataset을 사용한다. 출처 :Harper, F. M., & Konstan, J. A. (2015). The MovieLens Datasets: History and Context. ACM Transactions on Interactive Intelligent Systems (TIIS), 5(4), 1 19. http://dx.doi.org/10.1145/2827872 과제 2와 마찬가지로 평점 데이터는 ratings df 로 불러오고, 영화 정보 데이터는 movies df 로 불러온다. 모델 과제3에서 정의했던 VAE모델을 그대로 사용한다. 유저벡터 활용 클러스터링 유저 잠재 벡터(z) 추출 VAE 모델을 사용해서 유저 잠재 벡터(z)를 추출한
+- [[RecSys][과제3] 추천시스템을 위한 생성모델 구현](https://hyejunl33.github.io/study/2025-10-16-[RecSys]VAE-AutoEncoder-implementation/)
+  - Published: 2025-10-16 | Tags: RecSys, 과제, AutoEncoder, Variational Auto Encoder
+  - Summary: 과제3 추천시스템을 위한 생성모델 구현 1. AutoEncoder기반 추천시스템 모델(AutoRec)을 학습시킨다. 2. 생성모델 기반 추천시스템 모델을 학습시킨다. 추천시스템에서 생성모델이 어떻게 활용되는지 자세히 알아보자. Autoencoder를 활용한 추천시스템 모델인 AutoRec에 대해서도 배운다. Variational Inference 기반의 variational autoencoder(VAE)를 직접 학습시켜보며, 이를 추천시스템에 적용해 보자. 데이터셋 과제 2와 마찬가지로 MovieLens Dataset을 사용한다. 출처 :Harper, F. M., & Konstan, J. A. (2015). The MovieLens Datasets: History and Context. ACM Transactions on Interactive Intelligent Systems (TIIS), 5(4), 1 19. http://dx.doi.org/10.1145/2827872 과제 2와
+- [[CV][논문 리뷰]: Deep Inside Convolutional Networks: Visualising Image Classification Models and Saliency Maps](https://hyejunl33.github.io/study/2025-10-10-[CV]Deep-Inside-Convolutional-Networks/)
+  - Published: 2025-10-10 | Tags: none
+  - Summary: 논문 리뷰: Deep Inside Convolutional Networks: Visualising Image Classification Models and Saliency Maps 서론 (Introduction) 이 논문은 심층 합성곱 신경망(ConvNets)을 사용하여 학습된 이미지 분류 모델의 시각화를 다룬다. 두 가지 시각화 기법을 고려하는데, 둘 다 입력 이미지에 대한 클래스 점수의 그래디언트(gradient)를 계산하는 것에 기반한다. 첫 번째 기법은 클래스 점수$$S c$$를 최대화하는 이미지를 생성하여 ConvNet에 의해 포착된 클래스의 개념을 시각화하는 것이다. 두 번째 기법은 특정 이미지와 클래스에 대한 클래스 saliency 맵을 계산하는 것이다. 논문은 이러한 맵이 약지도 학습(weakly supervised) 방식의 객체 분할에 사용될 수 있음을 보여준다. 마지막으로, 그래디언트 기반 ConvNet 시각화 방법과 deconvolutional networks 사
+- [[NLP][미션]NLP:텍스트 전처리, RNN,LSTM 구현](https://hyejunl33.github.io/study/2025-10-10-[NLP]NLP-Text-preprocessing,RNN,LSTM/)
+  - Published: 2025-10-10 | Tags: 위클리 미션, 텍스트 전처리, Xavier초기화, RNN, LSTM 구현
+  - Summary: [NLP][미션]NLP:텍스트 전처리, RNN,LSTM 구현 Text PreProcessing, Embedding 구현 RNN cell을 구현하고, RNN 모델을 구현 LSTM cell을 구현하고, LSTM 모델구현 Text Preprocessing and Tokenization 주어진 텍스트를 word단위로 구분해서 token으로 preprocessing을 해보자 텍스트로부터 어휘사전을 구축하는 클래스를 구현하자 단어 인덱스를 고정 크기 벡터로 변환하는 embedding table을 구현 → 임베딩 벡터의 차원은 정해져있고, 그보다 길이가 짧다면 padding을 해주어서 길이를 똑같이 맞춰준다. RNN cell 구현 RNN cell의 forward 연산을 구현하자. $$h t \text{tanh}(h {prev} \cdot W {hh} + x t \cdot W {xh} + b h)$$ x t: 현재 시점 입력 (batch size, input size) h prev: 이전 시점 은
+- [[AI_Math][2주차_기본과제_2] einsum기본문제](https://hyejunl33.github.io/study/2025-10-08-[AI_Math]-einsum-operation/)
+  - Published: 2025-10-08 | Tags: einsum기본문제, 2주차 과제, AI_Math, 과제
+  - Summary: [AI Math]기본2 einsum기본문제 einsum을 활용하여 행렬 및 텐서 연산을 NumPy코드로 구현하기 행렬 XY의 trace값 계산하기 np.einsum(’ik, kj → ij’,matrix1,matrix2) :matrix1과 matrix2에서 k개의 열과 k개의 행을 내적한다. np.einsum(’ii→ ’,mid1) : mid1에서 trace연산을 한다(ii인덱스를 갖는 벡터를 모두 더한다) 텐서 X, Y의 3차원 텐서곱에 대해 첫 번째 축을 따라 합계 계산하기 mid2는 예시에 맞춰서 차원을 einsum의 인자로 넘겨주었다. → 따로 transpose해서 곱하지 않아도, einsum연산에서는 알아서 인자의 차원을 맞춰서 곱해줌 텐서 X, Y의 4차원 텐서곱에 대해 2차원으로 reshape한 후에, 주어진 행렬을 곱한 최종 행렬의 대각성분 합계 계산하기 einsum과 einops를 사용해서 구현하자
+- [[AI_Math][2주차_기본과제_1] 행렬기본문제](https://hyejunl33.github.io/study/2025-10-08-[AI_Math]-matrix-operation/)
+  - Published: 2025-10-08 | Tags: 행렬기본문제, 2주차 과제, AI_Math, 과제
+  - Summary: [AI Math]기본1 행렬기본문제 행렬연산을 구현하는 함수를 numpy로 구현하면서 함수에 대한 감각을 익히기 get transpose : 주어진 행렬의 전치행렬을 반환함 get inverse : 주어진 행렬의 역행렬을 반환함 get eigenval eigenvec : 주어진 (정방) 행렬의 고유값과 고유벡터를 구함 numpy에서 transpose , linalg.inv() , linalg.eig() 를 통해서 matrix에서 전치행렬을 반환할 수 있고, 역행렬을 구할 수 있고, 고유값, 고유벡터를 구할 수 있음. get matmul() : 주어진 두 행렬의 행렬곱 반환 ValueError가 발생하지 않기 위해서 행렬곱 연산이 가능하려면 앞 행렬의 열의 수와 뒤 행렬의 행의 수가 같아야 한다. (예시: ij jk → ik )
+- [[AI_Math][2주차_기본과제_3]확률론_기본문제](https://hyejunl33.github.io/study/2025-10-08-[AI_Math]probability/)
+  - Published: 2025-10-08 | Tags: 기본3_확률론_기본문제, 2주차 과제, AI_Math, 과제
+  - Summary: [AI Math]기본3 확률론 기본문제 베이즈정리의 원리를 이해하고, 조건부 확룰이 어떻게 새로운 정보를 통합하여 사후 확률을 업데이트하는지 이해하고, 코드를 통해 구현 몬테카를로 샘플링을 통해 불확실성 하에서 최적의 결정을 내리는 방법을 코드를 통해 구현 $$P(\theta D) P(\theta)\frac{P(D \theta)}{P(D)}$$ Gemini가 설명하는 사전확률, 가능도, 사후확률, evidence. 사전 확률 (Prior Probability) 의미: 사건이 일어나기 전(데이터를 관찰하기 전)에 우리가 이미 가지고 있는 어떤 사건에 대한 믿음 또는 확률 입니다. 설명: 이것은 개인적인 믿음, 과거의 통계, 또는 아무런 정보가 없다면 균등한 확률 등, 현재 데이터를 보기 전의 출발점 이라고 할 수 있습니다. "사전"이라는 이름 그대로 사전에 가지고 있는 확률이죠. 간단한 예시: 어떤 공장에서 만든 제품의 불량률에 대해 아무 정보가 없다면, "이 제품이 불량일 사전 확률
+- [[CV][논문 리뷰] An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://hyejunl33.github.io/study/2025-10-08-[CV]-AN-IMAGE-IS-WORTH-16X16-WORDS-TRANSFORM/)
+  - Published: 2025-10-08 | Tags: An Image is Worth 16x16 Words, 논문리뷰, Computer Vision, CV, ViT
+  - Summary: [논문 리뷰] An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale 1. Abstract Attention은 CNN과 함께만 제한적으로 사용돼왔음. → Patch로 image를 나눠서 attention의 입력 sequence로 사용하는 방법 제시 기존의 방식보다 Resource를 훨씬 적게 사용하고도 Sota모델과 비슷하거나 더 좋은 성능을 냈음 Transformer 아키텍처는 자연어 처리(NLP)의 표준이 되었지만, 컴퓨터 비전 분야에서의 적용은 제한적이었다. 기존 비전 분야의 어텐션은 CNN과 함께 사용되거나, CNN의 전체적인 구조는 유지한 채 일부 구성 요소만을 대체하는 방식으로 사용되었다. 이 연구는 이러한 CNN에 대한 의존이 필수적이지 않음을 보인다. 대신, 이미지를 여러 고정된 크기의 패치(patch) 시퀀스로 만들어 순수 트랜스포머에 직접 적용하는 것만으로도 이미지 분류 작업에서 매우 좋
+- [[PyTorch][심화과제] Without_torch.nn](https://hyejunl33.github.io/study/2025-10-10-[AI_Math]Without-torch-nn/)
+  - Published: 2025-10-08 | Tags: Without_torch.nn, 심화과제, Without torch.nn, Xavier초기화, irisdataset
+  - Summary: 심화과제 Without torch.nn torch.nn 을 사용하지 않고 MLP를 구현하고, torch.nn 을 사용해서 구현한 MLP와 비교 3가지 이상 카테고리를 분류하는 Multi Class classification 구현 데이터셋 개요 Iris 데이터셋은 꽃잎과 꽃받침의 길이와 너비를 이용하여 iris 꽃의 품종을 분류하는 데이터셋이다. 총 3개의 class로 구성되어 있으며 각 class는 iris꽃의 품종을 나타낸다. iris data: iris 꽃의 꽃잎과 꽃받침의 길이와 너비를 나타내는 feature iris target: iris 꽃의 품종을 나타내는 label 데이터셋 불러오기 Iris 데이터셋을 불러오고 Pytorch의 Dataset 클래스를 상속받아 정의된 클래스로 변환하기 1. init 메소드에서 self.X, self.y 를 각각 iris 데이터와 iris target으로 초기화하기 2. len 메소드에서 데이터셋의 길이를 반환하기 3. getitem 메소드
+- [[PyTorch][1주차_기본과제_3] Logistic_Regression](https://hyejunl33.github.io/study/2025-10-07-Logistic_Regression/)
+  - Published: 2025-10-07 | Tags: Logistic_Regression, 1주차 과제, PyTorch, 과제
+  - Summary: 과제3 Logistic Regression Pytorch를 이용해서 cars Purchase Decision데이터에 대해 차량 구매 여부를 예측하는 로지스틱 회귀분석 로지스틱 회귀 분석에 필요한 pytorch 구성 요소들을 구현할 수 있다. 실제 데이터에 대해 로지스틱 회귀 분석을 실시할 수 있다. 주어진 데이터셋에 맞는 Dataset 클래스를 작성할 수 있다. Pytorch Dataset 클래스 작성하기 Cars 데이터셋을 다루는 Dataset 클래스를 작성하기 생성한 데이터셋 객체를 바탕으로 DataLoader 객체를 생성 학습용 데이터로더는 배치사이즈를 32로 하고, 랜덤으로 셔플된 데이터가 반환되도록 생성 평가용 데이터로더 객체는 배치사이즈를 64로 해서 생성 Logistic Regression 모형 작성하고 학습 로지스틱 회귀 모델을 위한 클래스를 작성 input size 를 hyperparameter로 지정하고, model 을 인스턴스로 생성한다. 손실함수로 BCEWith
+- [[PyTorch][1주차_기본과제_2] Linear_Regression](https://hyejunl33.github.io/study/2025-10-06-Linear-Regression/)
+  - Published: 2025-10-06 | Tags: 과제2_Linear_Regression, 1주차 과제, PyTorch, 과제
+  - Summary: 과제2 Linear Regression PyTorch를 이용해서 Boston House Prices 데이터에 대해 주식 가격을 예측하는 Linear Regression 주어진 데이터를 pytorch 학습에 맞게 전처리할 수 있다. 선형 회귀 분석에 필요한 pytorch 구성 요소들을 구현할 수 있다. 실제 데이터에 대해 선형 회귀 분석을 실시할 수 있다. 사용데이터셋: Boston House Prices 보스턴 시의 범죄율, 재산세율, 본인 소유의 주택 가격의 중앙값등 측정된 지표를 포함한 데이터셋 Boston House Prices 데이터를 저장하고 전처리 하기 Boston house price data.csv 파일을 pandas의 read csv() 를 이용해서 불러온다. CSV는 Comma Seperate Values의 약자이므로 comma 를 sep의 인자로 넘겨주고, header는 0번째 행으로 지정해준다. data.head() 를 통해 가장 위의 행 5개를 출력한다. im
+- [[PyTorch][1주차_기본과제_1] Tensor의 생성/조작/연산](https://hyejunl33.github.io/study/2025-10-06-Tensor-PyTorch/)
+  - Published: 2025-10-06 | Tags: Tensor의 생성/조작/연산, 1주차 과제, PyTorch, 과제
+  - Summary: 과제1 Tensor의 생성/조작/연산 Pytorch를 이용한 Tensor의 생성/조작/연산에 익숙해지기 Task 1. Tensor의 자료형 조작 Task 2. Tensor의 생성 Task 3. CUDA Tensor와 연산 Task 4. Tensor의 모양 변경 Task 5. 유사도 Task 6. Tensor를 활용한 이미지의 이해(응용) Task 7. Tensor를 조작하여 이미지 data augmentation 하기(응용) Tensor의 Data Type 조작 tensor.dtpye : data type을 반환한다. torch.tensor() 괄호 안에 있는 리스트나, 스칼라값을 tensor로 만든다. 이때 dtype을 따로 정의해줄 수 있다. torch.int() : singed 32bit integer로 torch의 data type 바꿔주기 torch.float() : tensor의 datatype을 32bit float으로 바꾸기 자료형 변환 후(float → int → f
+- [[논문 리뷰] [NLP]_Distributed Representations of Words and phrases and their Compositionality](https://hyejunl33.github.io/study/2025-10-02-[NLP]_Distributed-Representations-of-Words/)
+  - Published: 2025-10-02 | Tags: NLP, Representations of Words, Skip gram, Negative sampling, sub sampling, Learning phrases, 논문리뷰
+  - Summary: Introduction Skip gram모델을 확장해서 SubSampling과 Negative Sampling을 이용해 학습속도를 향상시키고 vector의 품질을 향상시켰다. 그리고 학습된 벡터 공간 내에 단어의 의미적, 문법적 관계가 선형적으로 나타남을 입증했다. 예를들어 vec(”마드리드”) vec(”스페인”) + vec(”프랑스”) vec(”파리”)라는것을 밝혀냈다. 즉 스페인의 수도인 마드리드에서 스페인을 빼면 수도라는 정보만 남고, 거기에 프랑스를 추가하면 프랑스의 수도인 파리가 결과로 나오는것이다. 신기하다.. 구문표현을 학습하여 합성어에서 나타나는 새로운 의미를 학습하는 방법을 제안했다. 예를들어 “Air”와 “Canada”의 합성어인 “Air Canada”는 항공사 이름이지만, “Air”와 “Canada”의 의미와 다른의미를 가지므로 하나의 구로 묶어서 하나의 단어로 학습한다. image 기존의 skip gram모델은 Window size 만큼 중심단어의 좌우로 단어를
+- [[NLP][5주차_기본과제_2] Subword-level Language Model](https://hyejunl33.github.io/study/2025-10-01-Subword-level_Language_Model/)
+  - Published: 2025-10-01 | Tags: Subword-level Language Model, 5주차 과제, NLP, 과제
+  - Summary: 과제2 Subword level Language Model 1. 서브토큰화의 필요성 2. BPE(Byte Pair Encoding)의 구현 3. Transformers 라이브러리를 활용한 서브워드 토큰화 서브워드 토큰화: 서브워드 단위로 토큰화를 한다. 각 알파벳 단위로 토큰화를 하면 연산량이 너무 많으므로, 많이 등장하는 BytePair를 묶어서 토큰화를 한 후에 Vocab에 저장 → 단어끼리 token화를 할때에 비해서 ‘UNK’토큰문제가 없음 RNN의 모델을 불러와서 확인해보면 RNN의 매개변수 수보다 임베딩 매개변수의 개수가 훨씬 많다 → 임베딩 매개변수 수를 줄이기 위해서 Subword tokenization을 도입 Out of Vocab문제 해결: 학습에서 등장하지 않은 단어는 모두 [UNK]토큰으로 처리되는데, 이러한 토큰을 입력에 넣으면 전체 모델의 성능이 저하된다. Counter로 Sentence에서 단어의 개수를 세어서 이를 가중치로 활용함 → voca를 만들때 같
+- [[NLP][5주차_심화과제] Word2Vec구현&Embedding시각화](https://hyejunl33.github.io/study/2025-10-02-Word2vec&Embedding/)
+  - Published: 2025-10-01 | Tags: Word2Vec구현&Embedding시각화, 5주차 과제, NLP, 과제
+  - Summary: 심화 Word2vec구현&Embedding시각화 1. 주어진 단어들을 word2vec 모델에 들어갈 수 있는 형태로 만들기 2. CBOW, skip gram모델을 각각 구현 및 학습 3. 학습된 Embedding 결과를 PCA와 t SNE로 시각화 Word2Vec의 개념을 이해하고 CBOW와 skip gram 모델의 학습 방법 및 차이점을 이해하기 → 모델을 시각화해서 Word Embedding 의미 확인하기 Dataset클래스 정의하기 실제 CBOW, skip gram모델에 들어가기 위한 input을 만들기 위해 Dataset 클래스 정의하기 실제 모델에 들어갈 input → 주변단어 x, 중심단어 y를 input 쌍으로 만들어줌 전체 데이터의 개수 : 만들어지는 (x,,y)쌍의 총 개수 2 window size : 하나의 중심단어를 예측하는 데 사용될 주변 단어의 개수 예를들어 window size 2 면 왼쪽2개 오른쪽 2개 모델 Class 구현 self.embedding, s
+- [[NLP][5주차_기본과제_1] Data_Preprocessing&Tokenization](https://hyejunl33.github.io/study/2025-09-29-Tokenizer&Voca_Preprocessing/)
+  - Published: 2025-09-29 | Tags: Data_Preprocessing&Tokenization, 5주차 과제, NLP, 과제
+  - Summary: 과제1 Data Preprocessing&Tokenization 텍스트 토큰화 및 Vocabuarly작성을 통해 Data Preprocessing과 Tokenization 익혀보기 Tokenizer 구현 토큰화는 입력데이터를 자연어 처리 모델이 인식할 수 있는 단위로 변환해주는 방법이다. 1. n t는 하나의 토큰으로 처리되야 한다. 2. . , ! ?의 문장부호는 별개의 토큰으로 처리되어야 한다. 3. 나머지는 띄어쓰기를 기준으로 단어는 하나의 토큰으로 처리되어야 한다. Vocabulary 만들기 각 토큰을 숫자 형식의 유일한 id로 매핑하기 → Preprocessing과정에서 Vocavulary를 만든다. 인코딩과 디코딩 각 id들을 다시 토큰으로 바꿔서 출력함 토큰화 과정에서 공백 및 대소문자 정보를 모두 잃어버리고 UNK토큰으로 인해 사라진 단어들도 있다. image spacy를 이용한 영어 텍스트 토큰화 및 전처리 spacy는 토큰화 외에도 품사 및 단어의 기본형 정보 등
+- [[CV][4주차_심화과제_1] CNN-Visualization](https://hyejunl33.github.io/study/2025-09-25-CNN-Visualization/)
+  - Published: 2025-09-25 | Tags: CNN-Visualization, 4주차 과제, Computer Vision, 과제
+  - Summary: 심화 1:CNN Visualization CNN Visualization 방법을 구현해보기 VGG 11을 이용해서 CNN의 동작과 학습원리에 대한 직관갖기 gradient정보가 포함하고 있는 의미를 이해하고, 분석해서 활용 모델 디버깅에 필요한 기본 방법들 숙지하기 PreTrain된 모델을 분석하는 방법, 조작하는 방법에 대해 익히기 파이토치의 자동미분 파이토치는 autograd 를 통해 자동 미분을 한다. Tensor에서 requires grad True 옵션을 주면 파이토치는 Tensor의 연산을 추적해서 Computational Graph 를 만든다. → 이 그래프를 저장해서 Gradient를 자동으로 계산한다. backward() 를 호출하면 만들어둔 Graph를 거꾸로 올라가며 파라미터에 대한 기울기를 자동으로 계산한다. .backward() 가 실행된 후 requires grad True 로 설정했던 각 Tensor의 grad 속성(attribute)에 계산된 기울기값이
+- [[CV][4주차_과제_2] Traning ViT with DataAugmentation](https://hyejunl33.github.io/study/2025-09-23-Traning_ViT_with_DataAugmentation/)
+  - Published: 2025-09-23 | Tags: ViT, DataAugmentation, 4주차 과제, CV, 과제
+  - Summary: 과제2 Traning ViT with DataAugmentation Traning ViT with DataAugmentation 문제정의 ViT에서 다양한 DataAugmentation을 적용해보기! diverse한 image생성을 통해 overfitting을 방지하고, interpolation(데이터 보간)을 통한 data distribution공간을 dense하게 만드는 효과를 낸다. 데이터셋 정보 CIFAR 10 데이터셋 10개의 클래스, 32 32 컬러이미지 Pytorch Lightning 이미지 사이즈 모델에 맞게 변형하기 32\ 32 이미지를 불러와서 224\ 224로 ViT모델에 맞는 크기로 Resize해준 다음 이미지로 변환하기 Augmentation을 하는 transforms 정의하기 convert(’RGB’) 는 ViT의 입력 형식에 맞게 이미지를 RGB채널형태로 변환시키는 역할을 함. → 흑백이미지나 RGBA이미지도 RGB채널로 맞춰줌 Visualizing aug
+- [[CV][4주차_과제_1] Vision Transformers](https://hyejunl33.github.io/study/2025-09-23-Vision_Transformers/)
+  - Published: 2025-09-23 | Tags: ViT, 4주차 과제, CV, 과제
+  - Summary: 과제1 Vision Transformers 문제정의 CNN과 달리 ViT는 이미지를 패치로 분할하고, 각 패치를 sequence data로 간주하여 Transformer모델에 입력한다. → CNN에 비해 높은 성능을 발휘한다. ViT Inference 파이프라인 .png) 1. 이미지를 (16\ 16) stride를 가지는 2D Conv Filter를 이용해서 224\ 224이미지를 14\ 14의 패치로 나누기 2. Positional Embedding 더하기 3. Multi Head Self Attention을 통해 Encoding 4. MLP Head를 통해 Classification 결과 출력 이미지를 패치로 나누기 Conv2d() 를 통해 입력 이미지를 768개의 dimension을 가지는 embedding vector로 변환함 Position Embeddings 더하기 Transformer Input 생성 학습가능한 class token이 patch embedding vec
+- [[AILifeCycle][3주차_과제_3] Implement_Multi_head_Self-Attention](https://hyejunl33.github.io/study/2025-09-19-Implement_Multi_head_Self-Attention/)
+  - Published: 2025-09-19 | Tags: Multi-head Self-Attention, 3주차 과제, AI LifeCycle, 과제
+  - Summary: 과제3 Implement Multi head Self Attention $$\text{Attention}(Q,K,V) \text{softmax}\left(\frac{QK^T}{\sqrt{d k}}\right)V$$ Multi head Self Attention의 개념을 이해하고 코드로 구현하기 Self Attention의 수식을 이해하고 코드로 구현하기 1. init(self, num heads, hidden size) 다양한 subspace의 contextualization을 위해 Multi Head Attention을 사용해야 한다. init에서는 heads 수와 출력의 dimension인 hidden size를 매개변수로 입력받는다. Query, Key, Value벡터를 nn모듈의 Linear메소드를 이용하여 생성한다. 이때 Q, K, V벡터는 각각의 서로다른 가중치 행렬$W Q, W K, W V$를 가져야 하므로 각각 nn.Lienar 연산을 해준다. 이때 nn.Linear(
+- [[AILifeCycle][3주차_과제_2] BackPropagation with Numpy](https://hyejunl33.github.io/study/2025-09-18-BackPropagation-with-Numpy/)
+  - Published: 2025-09-18 | Tags: Back Propagation, 3주차 과제, AI LifeCycle, 과제
+  - Summary: 과제2 BackPropagation with Numpy MNIST데이터셋 분류를 위한 Two layer Fully connected neural network 구현하기 MNIST는 손글씨 이미지 데이터셋이다. 이를 대상으로 두개의 레이어를 갖는 CNN을 구현한다. 이때 PyTorch같은 딥러닝 프레임 워크를 이용하지 않고 Numpy연산만으로 Forward와 BackPropagation을 구현해보자. 모델구현 모델 학습 및 평가 $$\hat{Y} softmax(\sigma(X\cdot W 1+b 1)\cdot W 2 + b 2)$$ 두개의 레이어를 통해 CNN을 구현해보자 softmax 함수 코드 설명 오버플로우를 방지하기 위해서 X의 각행( axis 1 )에서 각 행의 최댓값을 빼준다. keepdims True 를 통해서 최댓값을 계산한 후에도 배열의 차원을 (N,1) 로 유지시켜 준다. → 이렇게 해야 X에서 열벡터를 빼는 브로드캐스팅 연산이 올바르게 일어난다. 분모는 분자의 모든
+- [[AILifeCycle][3주차_과제_1] Linear Regression with Numpy](https://hyejunl33.github.io/study/2025-09-18-Linear-Regression-with-Numpy/)
+  - Published: 2025-09-18 | Tags: Linear Regression, 3주차 과제, AI LifeCycle, 과제
+  - Summary: 과제1. Linear Regression with Numpy 대기오염 데이터셋.CSV를 불러와서 PM10과 PM25사이의 Linear Regression 진행하기 seaborn 라이브러리의 scatterplot 으로 x축에 그릴값, y축에 그릴 값을 지정해줄 수 있고, matplotlib.show() 로 시각적으로 출력할 수 있다. 중요한열을 subset으로 설정해서 중요한 열이 없는 행은 지워버린다. → 중요한 열을 바탕으로 LInear Regression을 할꺼니까 중요한 열이 없는 행은 drop해버림 X에 절편(bias) 항 추가하기 fit 메소드 안의 코드를 보겠습니다. X np.hstack((np.ones((X.shape[0], 1)), X)) 선형 회귀의 수학식은 y w 1x 1+w 2x 2+⋯+b 입니다. 여기서 b는 편향(bias) 또는 y절편(intercept) 이라고 불리는 항입니다. 이 식을 행렬 연산으로 한 번에 처리하기 위해, b를 가중치의 일부처럼 취급하는
+- [[논문 리뷰]_[NLP]_Attention Is All You need (2017) 심층 분석](https://hyejunl33.github.io/study/2025-09-15-Attention-is-All-you-Need/)
+  - Published: 2025-09-15 | Tags: NLP, Transformer, Attention, 논문리뷰
+  - Summary: 목차 1. 서론: 기존 RNN 기반 모델의 한계 순차적 처리와 병렬화의 부재 장기 의존성 문제 2. Transformer: Attention만을 이용한 새로운 접근 3. 모델 아키텍처 (Model Architecture) 심층 분석 전체 구조: 인코더 디코더 인코더(Encoder) 상세 구조 디코더(Decoder) 상세 구조 4. 어텐션 메커니즘 분석 Scaled Dot Product Attention Multi Head Attention Positional Encoding: 순서 정보의 주입 Add & Norm: 잔차 연결과 층 정규화 5. 학습 및 실험 결과 학습 방법 성능 평가 (BLEU Score) 모델 복잡도 비교 6. 결론 1. 서론: 기존 RNN 기반 모델의 한계 Attention Is All You Need 논문이 등장하기 전, 자연어 처리(NLP), 특히 기계 번역 분야는 RNN(Recurrent Neural Network) 과 이를 개선한 LSTM, GRU 기반의
+
+### Algorithm (9)
+
+- [[Programmers/Python] Level 0](https://hyejunl33.github.io/algorithm/2025-10-21-Programmers_Level0/)
+  - Published: 2025-10-21 | Tags: Python, Programmers, Level0
+  - Summary: level0 1 level0 2 여름방학에 열심히 풀이한 프로그래머스 Level0 문제 풀이한 코드와 해설입니다. 너무 쉬운문제는 제외하고 거의 모든문제를 해결했습니다.
+- [[Programmers/Python] Level 1](https://hyejunl33.github.io/algorithm/2025-10-21-Programmers_Level1/)
+  - Published: 2025-10-21 | Tags: Python, Programmers, Level1
+  - Summary: level1 1 level1 2 여름방학에 열심히 풀이한 프로그래머스 Level1 문제 풀이한 코드와 해설입니다. 너무 쉬운문제는 제외하고 거의 모든문제를 해결했습니다.
+- [[Programmers/Python] Level 2](https://hyejunl33.github.io/algorithm/2025-10-21-Programmers_Level2/)
+  - Published: 2025-10-21 | Tags: Python, Programmers, Level2
+  - Summary: level2 1 level2 2 level2 3 여름방학에 열심히 풀이한 프로그래머스 Level2 문제 풀이한 코드와 해설입니다. 너무 쉬운문제는 제외하고 거의 모든문제를 해결했습니다.
+- [[Programmers/Python] Level_3: N으로 표현](https://hyejunl33.github.io/algorithm/2025-09-16-N-DP/)
+  - Published: unknown | Tags: Python, Programmersx, Lebel3, DP
+  - Summary: 문제: N으로 표현(DP) 문제 설명 아래와 같이 5와 사칙연산만으로 12를 표현할 수 있습니다. 12 5 + 5 + (5 / 5) + (5 / 5) 12 55 / 5 + 5 / 5 12 (55 + 5) / 5 5를 사용한 횟수는 각각 6,5,4 입니다. 그리고 이중 가장 작은 경우는 4입니다. 이처럼 숫자 N과 number가 주어질 때, N과 사칙연산만 사용해서 표현 할 수 있는 방법 중 N 사용횟수의 최솟값을 return 하도록 solution 함수를 작성하세요 제한사항 N은 1 이상 9 이하입니다. number는 1 이상 32,000 이하입니다. 수식에는 괄호와 사칙연산만 가능하며 나누기 연산에서 나머지는 무시합니다. 최솟값이 8보다 크면 1을 return 합니다. 배울점 1. dp문제를 풀때는 점화식을 찾아야됨 어디서 점화식이 나올지 여러방면으로 고민해봐야됨 이 문제에서는 number가 아니라 N을 사용하는 횟수 i에서 점화식을 찾을 수 있었음. 2. set에 값을 추가할때는
+- [[백준/Python] 16234번: 인구 이동](https://hyejunl33.github.io/algorithm/2025-09-16-Populationmove/)
+  - Published: unknown | Tags: Python, BOJ, Gold5, BFS, Simulation
+  - Summary: 문제: 인구이동 N×N크기의 땅이 있고, 땅은 1×1개의 칸으로 나누어져 있다. 각각의 땅에는 나라가 하나씩 존재하며, r행 c열에 있는 나라에는 A[r][c]명이 살고 있다. 인접한 나라 사이에는 국경선이 존재한다. 모든 나라는 1×1 크기이기 때문에, 모든 국경선은 정사각형 형태이다. 오늘부터 인구 이동이 시작되는 날이다. 인구 이동은 하루 동안 다음과 같이 진행되고, 더 이상 아래 방법에 의해 인구 이동이 없을 때까지 지속된다. 국경선을 공유하는 두 나라의 인구 차이가 L명 이상, R명 이하라면, 두 나라가 공유하는 국경선을오늘 하루 동안 연다. 위의 조건에 의해 열어야하는 국경선이 모두 열렸다면, 인구 이동을 시작한다. 국경선이 열려있어 인접한 칸만을 이용해 이동할 수 있으면, 그 나라를 오늘 하루 동안은 연합이라고 한다. 연합을 이루고 있는 각 칸의 인구수는 (연합의 인구수) / (연합을 이루고 있는 칸의 개수)가 된다. 편의상 소수점은 버린다. 연합을 해체하고, 모든 국경
+- [[백준/Python] 14891번: 톱니바퀴](https://hyejunl33.github.io/algorithm/2025-09-16-gearmove/)
+  - Published: unknown | Tags: Python, BOJ, Gold5, Simulation
+  - Summary: 문제: 톱니바퀴 총 8개의 톱니를 가지고 있는 톱니바퀴 4개가 아래 그림과 같이 일렬로 놓여져 있다. 또, 톱니는 N극 또는 S극 중 하나를 나타내고 있다. 톱니바퀴에는 번호가 매겨져 있는데, 가장 왼쪽 톱니바퀴가 1번, 그 오른쪽은 2번, 그 오른쪽은 3번, 가장 오른쪽 톱니바퀴는 4번이다. 이때, 톱니바퀴를 총 K번 회전시키려고 한다. 톱니바퀴의 회전은 한 칸을 기준으로 한다. 회전은 시계 방향과 반시계 방향이 있고, 아래 그림과 같이 회전한다. 톱니바퀴를 회전시키려면, 회전시킬 톱니바퀴와 회전시킬 방향을 결정해야 한다. 톱니바퀴가 회전할 때, 서로 맞닿은 극에 따라서 옆에 있는 톱니바퀴를 회전시킬 수도 있고, 회전시키지 않을 수도 있다. 톱니바퀴 A를 회전할 때, 그 옆에 있는 톱니바퀴 B와 서로 맞닿은 톱니의 극이 다르다면, B는 A가 회전한 방향과 반대방향으로 회전하게 된다. 예를 들어, 아래와 같은 경우를 살펴보자. 두 톱니바퀴의 맞닿은 부분은 초록색 점선으로 묶여있는 부
+- [[백준/Python] 22862: 가장 긴 짝수 연속한 부분 수열](https://hyejunl33.github.io/algorithm/2025-09-18-long-even-Series/)
+  - Published: unknown | Tags: Python, 백준, two pointer
+  - Summary: 문제: 가장 긴 짝수 연속한 부분 수열 풀이 배울점 1. 어렴풋이 알고는 있었는데, 당연히 while문 안에서 매번 수열 S를 슬라이싱해서 홀수개수를 세면 시간초과뜸 → 이럴경우에 정수로 개수를 센다음에 while 루프마다 정수 + 1씩 업데이트 해가면서 개수를 세는게 맞음 → 약간 DP table만들어서 이전 정보 활용하는 느낌 → 매번계산x 2. odd K일때 max길이 검사해야 하는것은 알았는데, odd<K에도 max길이 검사해야하는것을 놓쳤음 → 홀수 수는 K보다 크지만 않으면 상관없음.
+- [[Programmers/Python] Level 3: 양과 늑대](https://hyejunl33.github.io/algorithm/2025-09-29-Wolf-and-sheep/)
+  - Published: unknown | Tags: Python, Programmers, DFS, graph
+  - Summary: 문제: 양과 늑대 image image image 풀이 배울점 1. 인접리스트로 그래프 만든다음에 DFS로 탐색하는 문제 2. 전형적인 그래프 탐색문제긴 했는데, 양숫자랑, 늑대 숫자를 DFS로 넘겨줘서 제한조건을 걸어줘야 하는 문제였음 3. next node 로 다음에 탐색해야 하는 node 는 자신을 제외한 이번 DFS의 node와 자신과 연결된 node인 graph[n] 임.
+- [[Programmers/Python] Level 3: 파괴되지 않은 건물](https://hyejunl33.github.io/algorithm/2025-09-29-building/)
+  - Published: unknown | Tags: Python, Programmers, 부분 합
+  - Summary: 문제: 파괴되지 않은 건물 image image image image image image 풀이 배울점 1. 그대로 구현하면 $$O(k m n)$$이라 시간초과 → 부분합을 쓴 다음에 한번에 Board를 업데이트하면 $$O(K+M N)$$이라 효율적 2. 부분합 이용하는것까지는 생각해봤는데, 열, 행순으로 전파를 해서 한번에 업데이트 하는방법은 생각하지 못했음
+
+### WeeklyReview (10)
+
+- [Week13-15_HandBone X-Ray Image Semantic Segmentation Project ](https://hyejunl33.github.io/weeklyreview/2025-12-30-SemanticSegmentation_WrapupReport%20copy/)
+  - Published: 2025-12-30 | Tags: Project, SemanticSegmentation, WeeklyReview
+  - Summary: image 1. 프로젝트 개요 1.1 프로젝트 주제 image hand bone x ray 객체가 담긴 이미지, Segmentation Annotation 정보가 담긴 json파일을 Input으로 이용해서 모델은 각 클래스(29개)에 대한 확률 맵을 갖는 멀티채널 예측을 수행하고, 이를 기반으로 각 픽셀을 해당 클래스에 할당하는 Segmentation 모델을 개발 1.2 프로젝트 목표 및 범위 본 프로젝트의 핵심 목표는 2048x2048의 고해상도 X ray 이미지를 입력받아 각 픽셀이 29개의 뼈 클래스 중 어디에 속하는지를 예측하는 Semantic Segmentation 모델을 개발하는 것이다. 이를 위해 다음과 같은 세부 목표를 수립하였다. 1. 데이터 중심의 성능 향상: EDA 를 통해 데이터셋의 내재적 분포와 편향을 파악하고, Preprocessing 및 Augmentation 기법을 통해 학습 데이터와 테스트 데이터 간의 분포 격차를 최소화한다. 2. 최적의 모델 아키텍처
+- [Week11-12_ObjectDetection_WrapupReport](https://hyejunl33.github.io/weeklyreview/2025-11-30-ObjectDetecvtion_WrapupReport%20copy/)
+  - Published: 2025-11-30 | Tags: Project, ObjectDetection, WeeklyReview
+  - Summary: 1. 프로젝트 개요 1.1 프로젝트 주제 image 사진에서 쓰레기를 Detection 하는 모델을 만들어서 일반 쓰레기, 플라스틱, 종이, 유리 등 10 종류의 쓰레기가 찍힌 사진 데이터셋에서 Detection을 하는 분류모델을 개발 1.2 프로젝트 구현 내용 SOTA급 모델들을 이용하여, 주어진 데이터셋으로 Finetuning을 진행한 후 Detection을 수행한다. EDA, FeatureEngineering, 클래스 불균형 처리, 모델 앙상블등 다양한 모델 최적화 기법을 적용하여 최종 성능을 향상시킴 1.3 개발환경 H/W : Tesla V100 GPU 서버 3대 S/W : mmdetection, Ultralytics, Python, PyTorch, Pandas, Scikit learn 실험관리 : Wandb, Notion 1.4 데이터셋 image Train 데이터셋 총 이미지 수: 4883, 총 annotation 수: 23144, class 수: 10 Train 클래스별
+- [Week10_AI개발기초_학습회고](https://hyejunl33.github.io/weeklyreview/2025-11-21-AIBasic-week10/)
+  - Published: 2025-11-21 | Tags: Project, WeeklyReview
+  - Summary: 목차 1. 강의 복습 2. 학습 회고 강의복습 1. 소프트웨어 엔지니어링과 AI 엔지니어링 1.1소프트웨어 엔지니어링이란? 소프트웨어 엔지니어링은 소프트웨어를 개발하는 전 과정에서 체계적이고 효율적인 방법을 사용하여 소프트웨어의 품질 과 유지보수성 을 보장하는 분야다. 단순히 코드를 작성하는 것을 넘어, 계획 → 요구조건 분석 → 설계 → 구현 → 테스트 → 유지보수 에 이르는 소프트웨어 개발 라이프 사이클 전체를 다룬다. 소프트웨어는 프론트엔드, 백엔드, 머신러닝, 데이터, 게임, 보안 등 다양한 분야가 있으며, 각 분야에서 집중하는 문제와 기술 스택이 다르다. 1.2 좋은 소프트웨어 설계 좋은 소프트웨어 설계는 유지보수가 쉽고 확장이 유연한 시스템을 만드는 것을 목표로 한다. 이를 위해 모듈성(Modularity) , 응집도(Cohesion) , 결합도(Coupling) 와 같은 핵심 원칙을 이해하는 것이 중요하다. image https://www.geeksforgeeks.org
+- [Week7-8_DomainCommonProject_WrapupReport](https://hyejunl33.github.io/weeklyreview/2025-11-03-WrapupReport/)
+  - Published: 2025-11-03 | Tags: Project, WeeklyReview
+  - Summary: image 1. 프로젝트 개요 1 1. 프로젝트 주제 영화 리뷰 텍스트를 4개의 클래스(강한 부정, 약한 부정, 약한 긍정, 강한 긍정)로 분류하는 다중 클래스 감성 분류 모델을 개발 1 2. 프로젝트 구현내용 BERT기반의 트렌스포머 모델을 사용하여 영화 리뷰 텍스트의 문맥적 의미를 학습하고 감성을 예측한다. EDA, FeatureEngineering, 커스텀 토크나이저, 클래스 불균형 처리, 모델앙상블, TAPT등 다양한 모델 최적화 기법을 적용하여 최종 성능을 향상시키는것을 목표로 함. 1 3. 개발환경 H/W : Tesla V100 GPU S/W : Python, PyTorch, Pandas, Scikit learn 실험관리 : Wandb(Weight & Biases) 2. 주요 접근 방식 및 실험과정 프로젝트의 핵심 목표는 단순히 높은 성능을 내는 모델을 찾는 것이 아니라 ‘왜’ 성능이 오르고 내리는지 그 원인을 파악하고 검증. 2 1. EDA 및 초기 가설 image 데이
+- [Week6_ML_for_RecSys_학습회고](https://hyejunl33.github.io/weeklyreview/2025-10-19-RecSysWeek6/)
+  - Published: 2025-10-19 | Tags: RecSys, Generative Models, VAE, Variational Inference, GMM, EM Algorithm
+  - Summary: ML for RecSys 학습 회고(6주차) 목차 1. 강의 복습 내용 2. 학습 회고 1. 강의 복습 내용 ML for RecSys라는 주제로 추천시스템에 필요한 생성모델 이론들을 배웠다. 추천하기 위해서는 사용자의 입력데이터를 기반으로 사용자가 클릭할 가능성이 높을만한 출력을 뱉는 모델이 필요하다. 이런 모델을 만들기 위해서는 사용자의 입력데이터의 확률분포를 예측해야 하는데, 고차원의 데이터는 파라미터수가 매우 많아지므로 계산하기 어렵다는 문제가 있었다. 이를 해결하기 위해 각종 확률분포와, Jensen s inequality, KL divergence, MFVI, Functional derivative등의 사전지식을 배우고 이를 기반으로 Variational Inference를 통해 ELBO를 최적화 해서 사용자의 확률분포를 최적화 하는 이론을 배웠다. 과제에서는 이를 기반으로 사용자의 Kluster를 시각화해보고, 비슷한 영화를 좋아하는 사용자끼리 Klustering해보는 과
+- [Week5_NLP_학습회고](https://hyejunl33.github.io/weeklyreview/2025-10-02-NLP-Week5/)
+  - Published: 2025-10-02 | Tags: Natural Language Process, NLP, 5주차 학습회고
+  - Summary: Computer Vision 학습 회고 (4주차) 목차 1. 강의 복습 내용 2. 학습 회고 1. 강의 복습 내용 일주일간 자연어 처리(NLP)의 기초적인 개념부터 순차적인 모델링까지 학습한 내용을 정리하고 회고한다. 토큰화, 단어 임베딩, 그리고 순환 신경망(RNN)의 구조와 문제점, 그리고 그 해결책인 LSTM과 GRU에 대해 다룬다. 자연어의 벡터 표현 컴퓨터가 자연어를 이해하고 처리하기 위해서는 텍스트를 숫자 형태의 벡터로 변환하는 과정이 필수적이다. 이 과정은 토큰화와 임베딩으로 나눌 수 있다. 토큰화 (Tokenization) 토큰화는 주어진 텍스트(Corpus)를 토큰(Token)이라는 의미 있는 단위로 분리하는 작업이다. 자연어 처리 모델은 이 토큰을 입력으로 받아 처리하며, 토큰화 방식에 따라 모델의 성능이 크게 달라질 수 있다. 토큰화의 종류 토큰화는 분리하는 단위에 따라 크게 3가지로 나눌 수 있다. 단어 수준 토큰화 (Word level Tokenization)
+- [Week4_Computer_Vision_학습회고](https://hyejunl33.github.io/weeklyreview/2025-09-26-ComputerVision-Week4/)
+  - Published: 2025-09-26 | Tags: Computer Vision, CV, 4주차 학습회고
+  - Summary: Computer Vision 학습 회고 (4주차) 목차 1. 강의 복습 내용 2. 학습 회고 1. 강의 복습 내용 1. Introduction to Computer Vision 컴퓨터 비전은 기계가 시각적 세계를 '이해'하고 '해석'하게 하는 인공지능 분야다. 본질적으로 3차원 세계가 2차원 평면에 투영된 이미지로부터 의미 있는 정보(Semantic attributes)를 추출하는 'Inverse Rendering' 과정으로 정의할 수 있다. 이 과정은 빛이 카메라 센서를 통해 디지털 신호로 변환되어, 각 픽셀이 특정 밝기 값을 갖는 숫자 행렬로 표현되는 것으로부터 시작된다. image 2. 핵심 아키텍처: CNN에서 ViT까지 2.1. Convolutional Neural Networks (CNN) CNN은 이미지의 공간적, 지역적 특징을 효과적으로 학습하기 위해 고안된 모델이다. 모든 픽셀을 연결하는 Fully Connected 방식과 달리 Local feature learnin
+- [Week3_AI_LifeCycle_학습회고](https://hyejunl33.github.io/weeklyreview/2025-09-19-AIMath-Week3%20copy/)
+  - Published: 2025-09-19 | Tags: AI LifeCycle, Transformer, Multi-head Self-Attention
+  - Summary: AI LifeCycle 학습 회고 (3주차) 목차 1. 강의 복습 내용 2. 과제 결과물 정리 3. 학습 회고 1. 강의 복습 내용 1. 선형대수와 머신러닝의 기초 1.1. 선형 회귀 (Linear Regression) 회귀 분석은 독립 변수 $x$를 기반으로 종속 변수 $y$를 예측하는 모델을 만드는 과정이다. 선형 회귀는 이 관계가 선형적이라고 가정한다. 방정식 : 가장 기본적인 형태는 $$y mx + b$$로 표현된다. 여러 독립 변수를 다루는 다중 선형 회귀는 $$y b 0 + b 1x 1 + b 2x 2 + ... + b nx n$$으로 확장된다. 최소 제곱법 (OLS) : 모델의 최적 매개변수 $m$과 $b$를 찾는 방법 중 하나로, 실제 값과 예측 값의 차이, 즉 잔차(residual)의 제곱합을 최소화하는 값을 찾는다. 비용 함수는 다음과 같다. $$cost(m, b) \sum(y i (mx i + b))^2$$ 모델 평가 : 모델의 성능은 다양한 지표로 평가한다. M
+- [Week2_AIMath_학습회고](https://hyejunl33.github.io/weeklyreview/2025-09-16-AIMath-Week2/)
+  - Published: 2025-09-16 20:00:00 +0900 | Tags: 선형대수, 확률론, 통계학, 경사하강법
+  - Summary: 목차 1. 선형대수: 벡터, 행렬, 텐서 벡터의 정의와 연산 벡터의 노름(Norm)과 내적(Inner Product) 행렬의 정의와 연산 역행렬과 행렬식 고유값 분해와 특이값 분해(SVD) 텐서(Tensor) 2. 확률론과 통계학 확률분포의 이해 조건부 확률과 베이즈 정리 최대가능도 추정법 (MLE) 딥러닝과 통계학의 연결점 3. 경사하강법 미분과 경사하강법의 원리 확률적 경사하강법 (SGD) 1. 선형대수: 벡터, 행렬, 텐서 벡터의 정의와 연산 벡터는 숫자를 원소로 가지는 배열로 정의하며, 공간에서의 한 점 또는 원점으로부터의 상대적 위치로 표현한다. 벡터의 스칼라곱은 벡터의 방향은 유지한 채 길이만을 변경하는 연산이다. 곱하는 스칼라 값이 음수일 경우 방향이 반대가 된다. 차원이 같은 두 벡터는 덧셈, 뺄셈, 성분곱(Hadamard product)이 가능하다. 벡터의 덧셈은 한 벡터의 끝에서 다른 벡터의 상대적 위치 이동으로 시각화할 수 있다. 벡터의 노름(Norm)과 내적(I
+- [Week1_Pytorch_학습회고](https://hyejunl33.github.io/weeklyreview/2025-09-15-Pytorch-Week1/)
+  - Published: 2025-09-15 | Tags: PyTorch, Deep-Learning
+  - Summary: 1. 강의 복습 PyTorch와 Tensor ◦ PyTorch는 딥러닝 모델 구현과 실행을 위한 프로그래밍 인터페이스다. ◦ Tensor는 PyTorch의 핵심 데이터 구조로, 스칼라(0차원)부터 다차원 배열까지 데이터를 표현한다. ◦ Tensor는 다양한 데이터 타입(정수형, 실수형 등)을 가지며, 타입 캐스팅으로 변환할 수 있다. ◦ Tensor의 기초 함수로는 최소/최대값, 합계, 평균 등을 계산하며, 메서드로 차원 수, 크기, 요소 개수 등을 확인할 수 있다. Tensor 연산 및 조작 ◦ Tensor 생성 : 특정 값, 난수, 리스트/Numpy 데이터 등으로 Tensor를 만들 수 있다. ◦ Tensor 모양 변경 : view() , flatten() , reshape() , transpose() , squeeze() , unsqueeze() , stack() , cat() 함수 등으로 Tensor의 모양이나 차원을 변경하고 연결할 수 있다. ◦ Tensor 연산 : 요소별
+
+### ETC (5)
+
+- [WRTN에 인턴으로 합류하기까지.](https://hyejunl33.github.io/etc/2026-05-04-Start-of-2026/)
+  - Published: 2026-05-04 | Tags: etc, 드디어 나도 ai 엔지니어?
+  - Summary: WRTN에 인턴으로 합류하기까지. 부스트캠프 끝 그리고 인턴지원 시작 부스트캠프를 2026년 2월 둘째주쯤 끝마치고 본격적으로 인턴 지원을 시작했다. 부캠 연계기업들은 대부분 정규직이나 계약직을 뽑았어서 적어도 학사 이상의 학력을 요구했다. 그런데 나는 구직당시 휴학생이므로, 체험형인턴자리를 알아볼 수 밖에 없었다. 약 17개의 기업을 지원했고, 서류합격은 3개의 기업, 그리고 과제전형은 모두 통과했지만, 최종면접까지 합격한 회사는 뤼튼이어서 선택의 여지없이 합류했다. 이젠 뭐하지? 네이버 부스트캠프를 하면서, 대학교에서는 배울 기회가 없었던 과목들을 배워서 너무 재밌었던 시기였다. ML을 위한 변분추론, Finetuning, 그리고 프로젝트 주제에 맞는 Modeling, Hyper Parameter tuning, Loss function 셀렉팅까지, 문제를 정의하고, 해당 문제를 해결하기 위해 서치하고, 탑다운으로 공부하는 시간들이 재밌었다. 그런데 하면할수록 워낙 대단한 사람들이
+- [평범한 교대생이던 내가 뤼튼에서 개발자? 무리무리!(무리가아니었다!?)](https://hyejunl33.github.io/etc/2026-05-04-WRTN-Onboarding/)
+  - Published: 2026-05-04 | Tags: etc, 드디어 나도 ai 엔지니어?
+  - Summary: 합격하고나서부터 입사전까지 수많은 서류탈락, 그리고 연속된 과제전형으로 지쳐있던 와중, 그래도 학교는 졸업해야하기에, 3월, 4학년 1학기로 복학 해서 학교를 다니고 있었다. 적성도, 흥미도 모두 소프트웨어 엔지니어가 되고싶다고 생각했지만, 그래도 지원한 인턴이 모두 떨어진다면 아무래도 학교졸업을 한채로 임용공부를 해서 교사가 되는 길밖에 없다고 생각하고 있었다. 앞으로 남은 학교 3학기와 군대에 대해서 어떻게 처리해야할지 막막하게 고민하고있던 와중 합격메일을 받았다. image 일단 3개월이긴 하지만 인턴을 하고나면, 여름학기 졸업은 피할 수 있었고(깔끔하게 1년 휴학이 가능하니깐), 그리고 소프트웨어 엔지니어로서의 진로도 한발짝 가까워질 수 있을 기회였다. 학교를 졸업을 해야하나 고민중이었는데, 고민을 미룰수도 있었다. 3개월만큼은… 그래서 바로 다음주 월요일이 입사날짜로 잡혀서 화요일쯤부터 입사를 준비한다.. 해야할일 남은면접 보기 학교휴학 동기들과 마지막 식사 서울로 테라포밍
+- [WrapUp Report 우수사례 선정](https://hyejunl33.github.io/etc/2025-12-30-philosophy%20copy/)
+  - Published: 2025-12-30 | Tags: etc, 그냥생각
+  - Summary: 영화 리뷰 감성 분류 및 예측 프로젝트에서 작성했던 WrapUp Report가 우수사례로 선정되었다. WrapUP Report 링크 image 처음해보는 프로젝트였기도 하고, 모델 Finetuning을 처음해보다 보니, 2주내에 데이터 전처리부터 모델 Finetuning까지 완성하기가 쉽지는 않았다. 따라서 최대한 이론적으로 배운 내용을 적용해서 실제 코드로 모델에 적용하려고 노력을 했다.. 프로젝트를 마치고 정리하며 드는 생각들.. Wrap Up Report에도 자세히 설명이 되어있는데, 이론적으로 배운 내용을 그냥 좋으니까 적용하는게 아니라, 현재 프로젝트의 목표를 이루기 위해서 왜 그 방법을 사용해야하는지를 생각하면서 사용했다. 예를들어서 감성분류를 위한 모델이므로, 학습시키는 데이터에 최대한 영화에 대한 감상이나 감정이 남아있어야 한다고 가설을 세웠다. 따라서 이모지나, ‘ㅋㅋ’, ‘ㅠㅠ’와 같은 글자가 아닌 데이터들을 제거할수도 있지만, 최대한 정규화해서, 커스텀토큰으로 매
+- [우리팀은 어떻게 협업하는가?: 팀협업 진화기](https://hyejunl33.github.io/etc/2026-01-25-cowork/)
+  - Published: 2025-12-30 | Tags: etc, 협업
+  - Summary: 영화리뷰 감성분류 예측프로젝트(개인프로젝트)까지는 개인프로젝트여서 협업에 대해 딱히 생각을 깊게 하진 않았다. 노션에 혼자서 할 실험들 가설세우고, 조사하고, 실험결과분석하고의 반복이었다. 프로젝트 구조도 개인프로젝트를 할때는 주피터노트북으로 진행했고(소스코드 자동화가 어려워서 이때는 사용하지 않았다.) 어려움이 없었다. 하지만 필연적으로 일을할때는 팀원들과 함께 일을해야 하기 때문에 Github를 이용한 협업은 필수이고, 노션,슬랙을 이용한 베이스캠프를 만들어서 서로의 상황과 생각을 공유하는게 중요해지는 지점이 있었다. 프로젝트 순서 개인프로젝트 → 재활용쓰레기 Object Detection프로젝트 → Segmentation프로젝트 → 최종프로젝트 재활용 쓰레기 Object Detection 프로젝트 첫 프로젝트 당시, Github에 익숙한 사람이 없었고, 어떻게 Issue를 열고 PR을 하는지조차 몰랐었다. 앙상블을 할때 각자 다른모델, 다른라이브러리, 다른 베이스라인 코드를 가
+- [부조리주의, 포스트구조주의, 그리고 반항](https://hyejunl33.github.io/etc/2025-11-13-philosophy/)
+  - Published: 2025-11-13 | Tags: etc, 그냥생각
+  - Summary: 왜 살아야 하는가? 왜 살아가야만 하는가? 더 많은 돈, 더 넓은 집, 더 높은 자리, 더 좋은차를 위해 오늘도 많은 사람들은 열심히 살아간다. 나는 진정 더 많은 돈, 더 넓은집, 더 높은 자리들을 원하는 걸까? 아니면 사회 구조가 주입한 것들을 욕망하는걸까? 연봉이 1억까지는 선형적으로 행복도가 상승하지만, 그 이상부터는 행복이 포화되는 그래프를 본적이 있다. 살아가기 위해서 돈이 없다면 불행하겠지만, 돈의 총량만큼 선형적으로 행복도가 증가하는것은 아니다. 시간은 유한한데, 더 많은돈, 더 높은자리등등만을 생각하느라, 정작 열심히 살긴 하지만, 행복하진 않았던 경험이 있다. 100억이있으면 좋은집, 좋은차등을 살 수 있겠지만, 행복할까? 아니면 그뿐일까 내게 필요한 몇가지의 필수조건들만 충족된다면, 그 이상의 돈은 행복과 사실 큰 연관이 없게 된다. 그렇다면 이 지점에서 나는 왜살아야 하는가? 사회에서 주입한 더 많은돈, 더 큰차, 더 넓은집들을 욕망해봤자, 선형적으로 행복도는
 

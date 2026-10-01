@@ -53,11 +53,11 @@
 3. `Project`, `Study`, `Algorithm`, `WeeklyReview`, `CV`, `ETC`를 전 화면에서 일관되게 탐색한다.
 4. 코드·표·수식·이미지가 많은 기술 글을 모바일과 데스크톱에서 편안하게 읽게 한다.
 5. 인터랙션을 추가하되 정적 사이트의 속도, SEO, 접근성을 유지한다.
-6. MCP 지원 LLM이 공개된 프로젝트와 기술 블로그 글을 검색하고 원문 URL과 함께 읽을 수 있게 한다.
+6. LLM이 공개 글의 정적 인덱스를 통해 프로젝트와 기술 블로그 원문을 쉽게 찾고 읽을 수 있게 한다.
 
 ### 2.3 비목표
 
-- CMS, 데이터베이스, 로그인, 댓글 백엔드 개발(공개·읽기 전용 Blog MCP Worker는 예외)
+- CMS, 데이터베이스, 로그인, 댓글 백엔드 개발
 - Three.js/R3F 또는 GLB 모델을 사용하는 전체 화면 3D 경험
 - 기존 글의 문장 교정·내용 재작성
 - 컬렉션 URL 변경 또는 Markdown을 다른 포맷으로 일괄 변환
@@ -239,16 +239,14 @@
 - “Archive로 돌아가기”, “최근 글 보기” CTA를 제공한다.
 - 장식은 정적인 작은 orbital motif만 사용한다.
 
-### 5.6 Blog MCP `/blog-mcp/`
+### 5.6 LLM 정적 인덱스
 
-목적은 LLM이 공개 블로그의 글을 스크래핑하지 않고 검색·열람하게 하는 것이다.
+목적은 LLM이 공개 블로그를 탐색할 때 브라우저 자동화나 별도 서버 없이도, 원문 URL과 함께 필요한 글을 찾게 하는 것이다.
 
-- 홈 상단 시각화 다음에 짧은 설명과 단일 진입점만 있는 `MCP mode` 안내 카드를 둔다. 질문을 유도하거나 과장된 홍보 문구는 사용하지 않는다.
-- 페이지 상단에는 MCP endpoint 상태, 복사 버튼과 데이터 공개 원칙을 표시한다.
-- MCP 미연결 상태에서도 같은 데이터셋을 검색하는 `Blog search`를 제공한다.
-- 추천 질문은 Airflow 구현, 멀티에이전트, 프로젝트 글, CLIP 이미지 전처리를 기본으로 제공하되 검색어는 자유 입력 가능하다.
-- `llms.txt`, 구조화 JSON, MCP 서버 소스 링크를 공개한다.
-- LLM은 반환된 원문 URL을 인용하며, 작성된 내용과 자체 추론을 구분하도록 서버 instruction에 명시한다.
+- 홈 상단 시각화 다음에 `LLM으로 블로그 읽기` 카드와 `llms.txt` 단일 링크를 둔다.
+- `llms.txt`는 모든 공개 글의 제목, 날짜, 태그, 요약, canonical URL을 제공한다.
+- `llms-full.txt`는 CV와 모든 공개 글의 작성 Markdown 본문을 제공한다.
+- LLM은 인덱스에서 후보를 찾은 뒤 canonical URL을 원문 근거로 사용하며, 작성 내용과 자체 추론을 구분한다.
 - 사람 평가, 채용 점수, 합격/불합격 판정, 비공개 개인정보 추론 기능은 제공하지 않는다.
 
 ## 6. 디자인 시스템
@@ -417,29 +415,12 @@ docs/
   - 별도 디자인 브랜치/문서로 이동 후 운영 브랜치에서 제거
 - 운영 페이지에서 demo의 하드코딩 글 수·제목·본문 데이터를 사용하지 않는다.
 
-### 9.5 Blog MCP와 공개 데이터 파이프라인
+### 9.5 LLM 정적 인덱스 생성
 
-GitHub Pages는 서버 실행이 불가능하므로 다음처럼 정적 사이트와 원격 MCP를 분리한다.
-
-1. `scripts/build-blog-data.mjs`가 CV와 다섯 컬렉션의 frontmatter/본문을 읽는다.
-2. 빌드마다 `assets/data/blog-content.json`, `llms.txt`, `llms-full.txt`를 생성한다.
-3. GitHub Pages는 생성된 데이터와 `/blog-mcp/` UI를 정적으로 제공한다.
-4. `mcp-server/`의 Cloudflare Worker는 공개 JSON을 읽어 Streamable HTTP `/mcp` endpoint로 제공한다.
-5. MCP는 stateless, public, read-only로 운영하며 검색 질의를 저장하지 않는다.
-
-| 종류 | 이름 | 역할 |
-| --- | --- | --- |
-| Tool | `get_profile` | 공개 프로필, 콘텐츠 수, 주요 태그, canonical link 반환 |
-| Tool | `search` | 제목·태그·본문으로 공개 글을 검색하고 원문 URL 반환 |
-| Tool | `fetch` | 검색 결과의 id 또는 canonical URL로 전체 작성 글 반환 |
-| Resource | `blog://profile` | 공개 블로그 프로필 JSON |
-| Resource | `blog://posts/index` | 전체 공개 글 인덱스 JSON |
-
-- 원격 transport는 MCP 공식 권장인 Streamable HTTP를 사용한다.
-- Worker endpoint는 `/mcp`, 상태 확인은 `/health`로 제한한다.
-- Origin allowlist, 입력 길이 제한, 최대 반환 개수 제한, 5분 public-data cache를 적용한다.
-- Worker 배포 후 `_config.yml`의 `mcp_endpoint`에 실제 URL을 기록해야 사이트 복사 버튼이 활성화된다.
-- 공개 데이터만 다루므로 초기 버전은 인증 없이 제공한다. 향후 비공개 자료가 추가되면 OAuth 전환 전까지 MCP에 포함하지 않는다.
+1. `scripts/build-llms.mjs`가 CV와 다섯 컬렉션의 frontmatter·작성 Markdown을 읽는다.
+2. 빌드 전에 `llms.txt`와 `llms-full.txt`를 생성한다.
+3. GitHub Pages는 두 파일을 정적 파일로 제공한다. 서버, API, 사용자 질의 저장, 인증은 없다.
+4. 인덱스의 모든 글에는 canonical URL을 넣어 LLM과 사람이 원문을 바로 확인할 수 있게 한다.
 
 ## 10. SEO·접근성·성능
 
@@ -522,7 +503,7 @@ bundle exec jekyll build
 
 ### Phase 2 — Home & Archive
 
-- 운영 홈의 실시간 3D loss landscape 최적화 시각화, SEED 원칙 기반 MCP 안내, featured project, latest notes
+- 운영 홈의 실시간 3D loss landscape 최적화 시각화, LLM index 안내, featured project, latest notes
 - 프로젝트별 이미지형 갤러리와 URL 공유 가능한 글 필터
 - 컬렉션 공통 목록 및 Study 통합 허브
 - 모바일 전역 메뉴
@@ -546,13 +527,13 @@ bundle exec jekyll build
 
 완료 조건: 존재하지 않는 CV/다운로드 링크가 없고 Lighthouse 목표를 충족한다.
 
-### Phase 5 — Blog MCP
+### Phase 5 — LLM 정적 인덱스
 
-- blog 공개 데이터 생성기와 Blog search
-- Cloudflare Worker MCP tool/resource 구현 및 Inspector 검증
-- 실제 Worker URL을 사이트에 연결
+- 공개 글 인덱스와 전체 원문 아카이브 생성
+- 홈에서 `llms.txt` 진입점 제공
+- 모든 항목의 canonical URL과 메타데이터 검증
 
-완료 조건: 로컬 MCP typecheck와 Inspector tool 호출이 성공하고, 반환되는 모든 근거에 원문 URL이 포함된다.
+완료 조건: `llms.txt`와 `llms-full.txt`가 모든 공개 글·CV를 반영하고, 각 항목에 원문 URL이 포함된다.
 
 ### Phase 6 — Release
 
@@ -580,7 +561,7 @@ bundle exec jekyll build
 - [ ] 홈의 3D loss surface는 cell 경계가 드러나지 않는 연속 다중 색상 보간을 사용하고, SGD·Momentum·Adagrad·RMSprop·Adam·AdamW를 전체 또는 개별 궤적으로 비교한다.
 - [ ] 시각화 카드는 설명 문구 없이 최적화 과정 자체만 보여주며 마우스·터치 드래그로 자유롭게 회전한다.
 - [ ] surface geometry와 vertex color는 GPU에 한 번만 업로드하고 회전 중에는 shader uniform만 갱신해 프레임 랙을 방지한다.
-- [ ] 홈 정보 순서는 최적화 시각화 → MCP mode → Featured Project → Latest Notes이며 Collections를 노출하지 않는다.
+- [ ] 홈 정보 순서는 최적화 시각화 → LLM index → Featured Project → Latest Notes이며 Collections를 노출하지 않는다.
 - [ ] 목록의 글 카드는 제목 해시로 6종 이상의 유기적인 색면 gradient를 안정적으로 분배한다. 카드에는 광택·prism·glare 합성을 사용하지 않고 포인터를 따르는 가벼운 3D tilt만 적용한다. 글 상세 헤더에는 gradient art를 표시하지 않는다.
 - [ ] 홈과 Project 갤러리는 장식용 영문 eyebrow나 설명형 부제를 두지 않고 제목·콘텐츠·행동만 표시한다.
 - [ ] Project 갤러리는 카페 추천·감성 분류 두 프로젝트 단위로 글을 필터링하고 선택 상태를 URL에 보존한다. EduTech 글은 전체 목록에만 남긴다.
@@ -604,15 +585,12 @@ bundle exec jekyll build
 - [ ] Jekyll production build와 GitHub Actions가 성공한다.
 - [ ] Lighthouse와 Core Web Vitals 목표를 만족한다.
 
-### Blog MCP
+### LLM 정적 인덱스
 
-- [ ] 블로그 빌드 시 71개 문서와 CV가 구조화 데이터에 반영된다.
-- [ ] `/blog-mcp/`, `/llms.txt`, `/llms-full.txt`, 공개 JSON이 200을 반환한다.
-- [ ] Blog search가 LLM/API key 없이도 관련 원문을 검색한다.
-- [ ] MCP가 get-profile/search/fetch 세 tool과 두 resource를 노출한다.
-- [ ] MCP 응답의 포트폴리오 근거에는 canonical 원문 URL이 포함된다.
-- [ ] 서버는 읽기 전용이며 검색 질의와 판단 결과를 저장하지 않는다.
-- [ ] 미배포 endpoint를 LIVE로 표시하거나 동작하는 것처럼 오인시키지 않는다.
+- [ ] 블로그 빌드 시 모든 공개 문서와 CV가 `llms.txt`, `llms-full.txt`에 반영된다.
+- [ ] `/llms.txt`, `/llms-full.txt`가 200을 반환한다.
+- [ ] `llms.txt`의 모든 항목에 제목, 날짜, 태그, 요약, canonical 원문 URL이 있다.
+- [ ] `llms-full.txt`에 각 글의 전체 작성 Markdown 본문이 포함된다.
 
 ## 14. 구현 모델에 전달할 작업 지침
 
@@ -636,6 +614,4 @@ bundle exec jekyll build
 | frontmatter 형식 불균일 | 카드/태그 오류 | Liquid default와 normalize include로 방어 |
 | 기존 테마 CSS와 새 CSS 충돌 | 레이아웃 회귀 | modern namespace/cascade layer 후 구형 CSS 점진 제거 |
 | `demo/`가 Jekyll 결과에 포함될 수 있음 | 중복 공개 페이지 | 릴리스 전에 `_config.yml` exclude 또는 제거 |
-| GitHub Pages에서 MCP 프로세스를 실행할 수 없음 | endpoint 부재 | Cloudflare Worker로 분리하고 정적 JSON을 단일 공개 데이터 원천으로 사용 |
 | LLM이 작성하지 않은 역량을 과장할 수 있음 | 채용 신뢰도 저하 | 원문 URL 의무화, 사실/추론 분리 instruction, 숫자형 평가 금지 |
-| 공개 MCP 남용 또는 과도한 응답 | 비용·가용성 | 읽기 전용, 입력/limit 제한, 캐시, 필요 시 Cloudflare rate limit 추가 |
