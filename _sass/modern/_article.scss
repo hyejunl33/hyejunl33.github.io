@@ -1,5 +1,7 @@
 .modern-reading-progress { position: fixed; z-index: 120; inset: 0 0 auto; height: 2px; pointer-events: none; }
 .modern-reading-progress span { display: block; width: 0; height: 100%; background: linear-gradient(90deg, var(--m-lime), var(--m-teal), var(--m-violet)); }
+html[data-theme="light"] .modern-reading-progress { height: 4px; }
+html[data-theme="light"] .modern-reading-progress span { background: linear-gradient(90deg, #548719, #087f78, #7548cc); box-shadow: 0 1px 4px rgba(37, 56, 45, .2); }
 .modern-article { padding-top: 84px; }
 .modern-article-hero { max-width: 960px; margin-bottom: 80px; }
 .modern-breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 42px; color: var(--m-faint); font-size: 11px; }
