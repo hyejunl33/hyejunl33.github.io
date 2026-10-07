@@ -1,6 +1,6 @@
 ---
 layout: modern-single
-title: "텍스트에 워터마크를 어떻게 넣을까: KGW에서 SynthID-Text와 textGrain까지"
+title: "우리 아이가 달라졌어요: 텍스트에 워터마크를 어떻게 넣을까"
 date: 2026-10-07
 tags:
   - Study
