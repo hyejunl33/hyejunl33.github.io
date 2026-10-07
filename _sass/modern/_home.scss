@@ -1,11 +1,17 @@
 .modern-home-hero { min-height: min(760px, calc(100vh - 72px)); padding-block: 34px 0; }
-.modern-home-hero--study { min-height: 0; }
-.modern-study-hero { display: block; overflow: hidden; border: 1px solid var(--m-line); border-radius: var(--m-radius-lg); background: #000; }
-.modern-study-hero > img { display: block; width: 100%; height: min(65vh, 650px); object-fit: contain; }
-.modern-study-hero__caption { display: grid; grid-template-columns: 1fr auto; gap: 10px 24px; padding: clamp(20px, 3vw, 36px); background: var(--m-surface); }
-.modern-study-hero__caption > span:first-child { grid-column: 1 / -1; color: var(--m-muted); font-size: 12px; }
-.modern-study-hero__caption h1 { margin: 0; font-size: clamp(23px, 3.4vw, 42px); line-height: 1.3; letter-spacing: -.04em; }
-.modern-study-hero__caption > span:last-child { align-self: center; font-size: 24px; }
+.modern-home-hero--study { min-height: 0; padding-top: clamp(24px, 4vw, 48px); }
+.modern-study-hero { display: block; width: 100%; max-width: 1060px; margin-inline: auto; }
+.modern-study-hero__media { display: grid; place-items: center; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid var(--m-line); border-radius: var(--m-radius-lg); background: #000; box-shadow: var(--m-shadow); }
+.modern-study-hero__media img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; object-position: center; }
+.modern-study-hero__caption { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: clamp(24px, 3vw, 36px) 4px 12px; }
+.modern-study-hero__caption h1 { max-width: 820px; margin: 0; font-size: clamp(24px, 3vw, 36px); font-weight: 650; line-height: 1.4; letter-spacing: -.045em; word-break: keep-all; overflow-wrap: anywhere; }
+.modern-study-hero__action { display: inline-flex; align-items: center; gap: 12px; flex-shrink: 0; padding: 10px 17px; border: 1px solid var(--m-line); border-radius: 999px; color: var(--m-muted); font-size: 13px; transition: background .2s ease, color .2s ease; }
+.modern-study-hero:hover .modern-study-hero__action { background: var(--m-ink); color: var(--m-bg); }
+.modern-study-hero:focus-visible { outline: 2px solid var(--m-ink); outline-offset: 8px; border-radius: var(--m-radius); }
+@media (max-width: 640px) {
+  .modern-study-hero__media { border-radius: var(--m-radius); }
+  .modern-study-hero__caption { flex-direction: column; align-items: flex-start; gap: 16px; padding-top: 22px; }
+}
 .modern-llm-stage {
   position: relative; min-height: min(690px, calc(100vh - 106px)); overflow: hidden; isolation: isolate;
   border: 1px solid var(--m-line); border-radius: var(--m-radius-lg); background: #0b0e0d; box-shadow: 0 34px 100px rgba(13,17,14,.18); cursor: grab; touch-action: pan-y; user-select: none;

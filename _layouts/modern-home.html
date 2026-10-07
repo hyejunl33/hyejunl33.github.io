@@ -18,8 +18,8 @@ layout: modern-base
 {% if latest_study %}
 <section class="modern-home-hero modern-home-hero--study modern-container modern-reveal is-visible" aria-label="최근 Study 글">
   <a class="modern-study-hero" href="{{ latest_study.url | relative_url }}">
-    {% if study_gif != '' %}<img src="{{ study_gif | relative_url }}" alt="{{ latest_study.title | escape }} 시각화" fetchpriority="high" decoding="async">{% endif %}
-    <div class="modern-study-hero__caption"><span>최근에 공부한 내용</span><h1>{{ latest_study.title | escape }}</h1><span aria-hidden="true">↗</span></div>
+    {% if study_gif != '' %}<div class="modern-study-hero__media"><img src="{{ study_gif | relative_url }}" alt="{{ latest_study.title | escape }} 시각화" fetchpriority="high" decoding="async"></div>{% endif %}
+    <div class="modern-study-hero__caption"><h1>{{ latest_study.title | escape }}</h1><span class="modern-study-hero__action">글 읽기 <span aria-hidden="true">↗</span></span></div>
   </a>
 </section>
 {% endif %}
