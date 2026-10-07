@@ -50,8 +50,9 @@ html[data-theme="light"] .modern-reading-progress span { background: linear-grad
 .modern-not-found > p:not(.modern-eyebrow) { color: var(--m-muted); }
 .modern-not-found .modern-actions { justify-content: center; }
 
-.modern-llm-index-hero { display: grid; grid-template-columns: minmax(0, .9fr) minmax(360px, 1.1fr); gap: clamp(42px, 8vw, 110px); align-items: end; padding-block: 80px; border-bottom: 1px solid var(--m-line); }
-.modern-llm-index-hero__copy h1 { max-width: 720px; margin: 14px 0 22px; font-size: clamp(44px, 6vw, 78px); line-height: 1.02; letter-spacing: -.065em; }
+.modern-llm-index-hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: center; padding-block: 80px; border-bottom: 1px solid var(--m-line); }
+.modern-llm-index-hero__copy h1 { max-width: 720px; margin: 14px 0 22px; font-size: clamp(36px, 4.5vw, 62px); line-height: 1.2; letter-spacing: -.055em; word-break: keep-all; overflow-wrap: break-word; text-wrap: balance; }
+.modern-llm-index-hero p, .modern-llm-index-flow p, .modern-llm-index-flow h2, .modern-llm-index-resources p, .modern-llm-index-resources h2, .modern-ai-index-callout p { word-break: keep-all; overflow-wrap: break-word; }
 .modern-llm-index-hero__copy > p:last-child { max-width: 610px; color: var(--m-muted); font-size: 15px; line-height: 1.75; }
 .modern-llm-index-card { width: min(100%, 760px); padding: 20px; border: 1px solid var(--m-line); border-radius: var(--m-radius); background: var(--m-surface); box-shadow: var(--m-shadow); }
 .modern-llm-index-card__head { display: flex; justify-content: space-between; margin-bottom: 24px; color: var(--m-muted); font-size: 11px; }
