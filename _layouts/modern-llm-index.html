@@ -1,39 +1,22 @@
 ---
 layout: modern-base
 ---
-<section class="modern-llm-index-hero modern-container">
-  <div class="modern-llm-index-hero__copy">
-    <p class="modern-eyebrow">Public reading index</p>
-    <h1>블로그도<br>LLM으로 읽어요.</h1>
-    <p>글의 제목, 태그, 요약, 원문 링크를 한곳에 모아뒀어요. 웹을 읽을 수 있는 LLM의 대화창에 아래 주소를 질문과 함께 붙여 넣으면 돼요.</p>
-  </div>
-  <div class="modern-llm-index-card">
-    <div class="modern-llm-index-card__head"><span><i></i>LLM entrypoint</span><strong>PUBLIC</strong></div>
-    <code>{{ '/llms.txt' | absolute_url }}</code>
-    <button type="button" data-copy-text="{{ '/llms.txt' | absolute_url }}" data-copy-label="LLM index 주소 복사">LLM index 주소 복사</button>
-  </div>
-</section>
-
-<section class="modern-llm-index-flow modern-container" aria-labelledby="llm-index-flow-heading">
-  <div class="modern-section-heading"><div><p class="modern-eyebrow">One link, any capable LLM</p><h2 id="llm-index-flow-heading">주소를 붙여 넣고 질문하면 돼요.</h2></div></div>
-  <ol>
-    <li><span>01</span><h3>주소 복사</h3><p>위의 주소를 복사하면 돼요.</p></li>
-    <li><span>02</span><h3>붙여 넣기</h3><p>웹을 읽을 수 있는 LLM의 대화창에 붙여 넣으면 돼요.</p></li>
-    <li><span>03</span><h3>질문하기</h3><p>궁금한 기술이나 프로젝트를 질문하면 돼요. 답변의 원문 링크에서 자세한 내용을 확인할 수 있어요.</p></li>
-  </ol>
-  {% capture example_prompt %}{{ '/llms.txt' | absolute_url }}를 읽고, 이 블로그의 프로젝트 글 중 에이전트 구현과 관련된 글을 원문 링크와 함께 찾아줘.{% endcapture %}
-  <div class="modern-llm-index-example">
-    <div><span>바로 붙여 넣기</span><strong>등록 없이 사용</strong></div>
+<article class="modern-ai-guide modern-container">
+  <header class="modern-ai-guide__header">
+    <h1>LLM으로 블로그 읽기</h1>
+    <p>궁금한 내용을 AI에게 물어볼 수 있어요.<br>아래 질문을 복사해서 웹을 읽을 수 있는 AI의 대화창에 붙여 넣으면 돼요.</p>
+  </header>
+  {% capture example_prompt %}{{ '/llms.txt' | absolute_url }}를 읽고, 이 블로그의 주요 프로젝트와 작성자가 맡은 역할을 정리해줘. 각 내용의 근거가 되는 원문 링크도 함께 알려줘.{% endcapture %}
+  <section class="modern-ai-guide__prompt" aria-labelledby="ai-prompt-title">
+    <div class="modern-ai-guide__prompt-heading"><h2 id="ai-prompt-title">이렇게 물어보세요</h2><span>질문 예시</span></div>
     <p>{{ example_prompt }}</p>
-    <button type="button" data-copy-text="{{ example_prompt | strip }}" data-copy-label="요청문 복사">요청문 복사</button>
-  </div>
-</section>
-
-<section class="modern-llm-index-resources modern-container">
-  <div><p class="modern-eyebrow">Open content</p><h2>원문도 바로 읽을 수 있어요.</h2><p>llms.txt에서 필요한 글을 찾고 원문 링크를 열면 돼요. 전체 글을 한 번에 읽고 싶다면 llms-full.txt를 이용할 수 있어요. 이 사이트에서는 질문이나 사용 기록을 저장하지 않아요.</p></div>
-  <div>
-    <a href="{{ '/llms.txt' | relative_url }}"><span>글 찾기용 인덱스</span><strong>llms.txt ↗</strong></a>
-    <a href="{{ '/llms-full.txt' | relative_url }}"><span>전체 원문 아카이브</span><strong>llms-full.txt ↗</strong></a>
-    <a href="{{ '/archive/' | relative_url }}"><span>사람이 읽는 전체 기록</span><strong>Archive ↗</strong></a>
-  </div>
-</section>
+    <button class="modern-button modern-button--primary" type="button" data-copy-text="{{ example_prompt | strip | escape }}" data-copy-label="질문 복사">질문 복사</button>
+  </section>
+  <p class="modern-ai-guide__hint">붙여 넣은 뒤 관심 있는 기술이나 프로젝트에 대해 이어서 질문하면 돼요.</p>
+  <section class="modern-ai-guide__sources" aria-labelledby="ai-sources-title">
+    <h2 id="ai-sources-title">블로그 자료</h2>
+    <a href="{{ '/llms.txt' | relative_url }}"><div><strong>글 목록</strong><span>제목, 요약과 원문 링크를 모아뒀어요.</span></div><span class="modern-ai-guide__filename">llms.txt ↗</span></a>
+    <a href="{{ '/llms-full.txt' | relative_url }}"><div><strong>전체 글</strong><span>글 본문과 CV를 한 번에 읽을 수 있어요.</span></div><span class="modern-ai-guide__filename">llms-full.txt ↗</span></a>
+    <a href="{{ '/archive/' | relative_url }}"><div><strong>직접 읽기</strong><span>블로그에서 전체 기록을 살펴볼 수 있어요.</span></div><span class="modern-ai-guide__filename">전체 기록 →</span></a>
+  </section>
+</article>
