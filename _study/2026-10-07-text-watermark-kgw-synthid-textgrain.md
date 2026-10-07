@@ -67,9 +67,9 @@ z는 모델의 logit, T는 temperature다. pₜ는 시점 t에서의 다음 토�
 
 ## KGW: Green–Red List로 기본 원리 이해하기
 
-![KGW 생성 구조: 문맥과 모델 logits에서 Green 보너스, softmax, 샘플링으로 이어지는 흐름](/assets/images/notion/9dc20ab41d934721bd65/kgw-structure-flow.gif)
+![KGW 데이터 흐름: 토큰과 임베딩, logits 벡터의 Green 보너스 계산과 샘플링](/assets/images/notion/9dc20ab41d934721bd65/kgw-data-flow.gif)
 
-KGW가 개입하는 위치를 구조로 보면 이해하기 쉽다. 문맥은 Transformer의 다음 토큰 logits를 만드는 입력이면서, Green 분할을 재현하는 입력이기도 하다. Green에 보너스를 더한 logits를 softmax로 확률로 바꾸고, 뽑은 토큰을 문맥에 붙여 반복한다. [구조 애니메이션 크게 보기](/assets/images/notion/9dc20ab41d934721bd65/kgw-structure-flow.gif)
+입력 토큰이 임베딩과 Transformer를 통과하면 마지막 위치의 hidden state가 출력 projection을 거쳐 logits가 된다. 애니메이션에서는 이 데이터가 이동하고, 문맥으로 만든 Green 마스크가 logits 벡터의 B 성분에 δ를 더하는 모습을 보여준다. 바뀐 벡터를 softmax로 정규화한 뒤 토큰을 샘플링하고 문맥에 붙인다. 임베딩·hidden state는 형태만 표시했고, logits와 후보는 설명용 수치다. [데이터 흐름 애니메이션 크게 보기](/assets/images/notion/9dc20ab41d934721bd65/kgw-data-flow.gif)
 
 KGW는 Kirchenbauer et al.의 「A Watermark for Large Language Models」에서 제안한 방식이다. 다음 토큰을 고를 때 어휘 집합 V를 Green List Gₜ와 나머지 Red List Rₜ로 나눈다. 앞선 토큰 문맥으로 의사난수 생성기의 시드를 정하기 때문에, 검출기도 같은 설정으로 그 시점의 분할을 재현할 수 있다. 시드 구성이나 문맥 길이는 구현에 따라 달라질 수 있다.
 
@@ -125,9 +125,9 @@ KGW에서는 Green 토큰에 보너스를 더하고 확률을 다시 계산했�
 
 그림에는 mango, lychee, papaya, durian이 등장한다. 확률이 높은 토큰은 처음 후보를 뽑을 때 더 자주 나온다. 이후 각 대결에서는 해당 층의 점수가 승자를 정한다. 후보를 여러 개 만든다고 모델에게 문장을 여러 번 끝까지 작성하게 시키는 것은 아니다. 다음 토큰의 샘플링 단계에서 일어나는 과정이다.
 
-![SynthID-Text 생성 구조: 모델 분포의 후보 샘플링과 비밀키 점수의 합류, 토너먼트, 문맥 갱신](/assets/images/notion/9dc20ab41d934721bd65/synthid-structure-flow.gif)
+![SynthID-Text 데이터 흐름: 확률벡터에서 후보 토큰이 생성되고 키 점수를 받아 승자가 출력되는 과정](/assets/images/notion/9dc20ab41d934721bd65/synthid-data-flow.gif)
 
-모델의 확률분포에서 후보를 뽑는 경로와 비밀키·문맥·층으로 점수를 만드는 경로가 후보 선택 단계에서 만난다. 토너먼트의 최종 승자가 다음 토큰이 되고, 그 토큰이 문맥에 추가되어 다음 forward가 시작된다. 같은 문맥·층에서 같은 토큰은 같은 점수를 받는다. 후보는 설명용이며 실제 Claude 출력이 아니다. [구조 애니메이션 크게 보기](/assets/images/notion/9dc20ab41d934721bd65/synthid-structure-flow.gif)
+모델의 logits가 확률벡터로 바뀌면 그 분포에서 후보 A·B·A·C가 뽑힌다. 비밀키·문맥·층으로 만든 점수가 각 후보에 붙고, B와 C가 첫 대결을 통과한 뒤 다음 층의 점수로 C가 남는다. 마지막 토큰은 다시 문맥으로 돌아간다. 같은 문맥·층에서 같은 토큰은 같은 점수를 받는다. 임베딩·hidden state는 형태만 표시했고, 후보와 점수는 설명용이며 실제 Claude 출력이 아니다. [데이터 흐름 애니메이션 크게 보기](/assets/images/notion/9dc20ab41d934721bd65/synthid-data-flow.gif)
 
 ### 키 점수를 보고 고르면서 원래 분포를 유지할 수 있을까?
 
@@ -181,9 +181,9 @@ OpenAI는 2026년 10월 5일 textGrain 보고서를 공개했다. API는 당시 
 
 ### 어휘 블록을 만들되, Green 보너스를 주지는 않는다
 
-![textGrain 생성 구조: 토큰 분포에서 블록 확률, 키 기반 최적수송 결합, 블록 및 토큰 선택으로 이어지는 흐름](/assets/images/notion/9dc20ab41d934721bd65/textgrain-structure-flow.gif)
+![textGrain 데이터 흐름: 토큰 확률벡터의 블록 합산, 결합분포를 통한 블록 선택, 블록 내부 토큰 샘플링](/assets/images/notion/9dc20ab41d934721bd65/textgrain-data-flow.gif)
 
-textGrain에서는 모델의 토큰 확률을 블록별로 합산한 값이 결합분포 계산에 들어간다. 키·문맥으로 정한 블록 배정과 난수·비용, 엔트로피 예산이 함께 블록 선택을 정한다. 블록을 고른 뒤에는 내부 토큰의 원래 상대 확률로 다음 토큰을 뽑는다. 계산의 연결을 요약한 구조이며 실제 서비스의 내부 설정은 아니다. [구조 애니메이션 크게 보기](/assets/images/notion/9dc20ab41d934721bd65/textgrain-structure-flow.gif)
+확률벡터의 A=0.60과 C=0.10이 한 블록으로 모이며 0.70이 되고, B=0.30은 다른 블록이 된다. 블록 확률·키 기반 난수·엔트로피 제약은 결합분포 계산에 들어간다. 영상의 2×2 행렬은 주변확률이 0.70과 0.30인 설명용 결합이며, 최적수송을 실제로 풀어 얻은 해는 아니다. 난수 열과 결합분포에 따라 블록을 뽑고, 선택한 {A,C} 안에서 원래 비율 6:1로 토큰을 샘플링하는 데이터 이동을 보여준다. 실제 서비스 설정을 재현한 것은 아니다. [데이터 흐름 애니메이션 크게 보기](/assets/images/notion/9dc20ab41d934721bd65/textgrain-data-flow.gif)
 
 textGrain도 키와 문맥을 이용해 어휘를 나누지만, 여러 블록에 토큰을 배정한다. 각 블록의 원래 확률은 그 안에 있는 토큰 확률의 합이다. 블록을 선택한 다음에는 블록 내부의 원래 상대 확률로 토큰을 뽑는다. 이 부분을 KGW의 Green/Red 분할과 혼동하기 쉬웠다.
 
@@ -284,4 +284,4 @@ Anthropic도 자체 평가에서 내용·창의성·가독성에 영향을 관�
 
 - [임커밋 — 텍스트 워터마크..? 어떻게?, 2026.09.10](https://www.youtube.com/watch?v=8CV9GHclD0c)
 
-본문의 생성 구조 애니메이션 3개는 3Blue1Brown의 오픈소스 [Manim](https://github.com/3b1b/manim)에서 출발한 [Manim Community](https://www.manim.community/)로 만들었다.
+본문의 데이터 흐름 애니메이션 3개는 3Blue1Brown의 오픈소스 [Manim](https://github.com/3b1b/manim)에서 출발한 [Manim Community](https://www.manim.community/)로 만들었다.
