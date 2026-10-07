@@ -1,4 +1,11 @@
 .modern-home-hero { min-height: min(760px, calc(100vh - 72px)); padding-block: 34px 0; }
+.modern-home-hero--study { min-height: 0; }
+.modern-study-hero { display: block; overflow: hidden; border: 1px solid var(--m-line); border-radius: var(--m-radius-lg); background: #000; }
+.modern-study-hero > img { display: block; width: 100%; height: min(65vh, 650px); object-fit: contain; }
+.modern-study-hero__caption { display: grid; grid-template-columns: 1fr auto; gap: 10px 24px; padding: clamp(20px, 3vw, 36px); background: var(--m-surface); }
+.modern-study-hero__caption > span:first-child { grid-column: 1 / -1; color: var(--m-muted); font-size: 12px; }
+.modern-study-hero__caption h1 { margin: 0; font-size: clamp(23px, 3.4vw, 42px); line-height: 1.3; letter-spacing: -.04em; }
+.modern-study-hero__caption > span:last-child { align-self: center; font-size: 24px; }
 .modern-llm-stage {
   position: relative; min-height: min(690px, calc(100vh - 106px)); overflow: hidden; isolation: isolate;
   border: 1px solid var(--m-line); border-radius: var(--m-radius-lg); background: #0b0e0d; box-shadow: 0 34px 100px rgba(13,17,14,.18); cursor: grab; touch-action: pan-y; user-select: none;

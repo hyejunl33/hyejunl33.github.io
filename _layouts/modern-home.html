@@ -5,10 +5,24 @@ layout: modern-base
 {% assign featured_items = project_items | where: 'featured', true %}
 {% assign featured = featured_items.first | default: project_items.first %}
 {% assign all_notes = site.projects | concat: site.algorithm | concat: site.weeklyreview | concat: site.etc | concat: site.study | sort: 'date' | reverse %}
+{% assign study_notes = all_notes | where_exp: 'item', "item.tags contains 'Study' or item.tags contains 'study'" %}
+{% assign latest_study = study_notes.first %}
+{% assign study_gif = '' %}
+{% assign study_images = latest_study.content | markdownify | split: '<img ' %}
+{% for image in study_images offset: 1 %}
+  {% assign image_src = image | split: 'src="' | last | split: '"' | first %}
+  {% assign image_src_lower = image_src | downcase %}
+  {% if image_src_lower contains '.gif' %}{% assign study_gif = image_src %}{% break %}{% endif %}
+{% endfor %}
 
-<section class="modern-home-hero modern-container modern-reveal is-visible" aria-label="Optimizer별 3D 손실 함수 최적화 시각화">
-  {% include modern/llm-architecture.html %}
+{% if latest_study %}
+<section class="modern-home-hero modern-home-hero--study modern-container modern-reveal is-visible" aria-label="최근 Study 글">
+  <a class="modern-study-hero" href="{{ latest_study.url | relative_url }}">
+    {% if study_gif != '' %}<img src="{{ study_gif | relative_url }}" alt="{{ latest_study.title | escape }} 시각화" fetchpriority="high" decoding="async">{% endif %}
+    <div class="modern-study-hero__caption"><span>최근에 공부한 내용</span><h1>{{ latest_study.title | escape }}</h1><span aria-hidden="true">↗</span></div>
+  </a>
 </section>
+{% endif %}
 
 <section class="modern-section modern-section--ai-index modern-container modern-reveal" aria-labelledby="llms-index-heading">
   <a class="modern-ai-index-callout" href="{{ '/llm-index/' | relative_url }}">
@@ -45,7 +59,7 @@ layout: modern-base
 
 <section class="modern-section modern-container modern-reveal" aria-labelledby="latest-heading">
   <div class="modern-section-heading">
-    <h2 id="latest-heading">Latest Notes</h2>
+    <h2 id="latest-heading">최근에 이런글을 썼어요</h2>
     <a class="modern-text-link" href="{{ '/archive/' | relative_url }}">전체 기록</a>
   </div>
   <div class="modern-card-grid modern-card-grid--three">

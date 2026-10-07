@@ -3,5 +3,10 @@ layout: modern-base
 ---
 <section class="modern-page-hero modern-container">
   <h1>Hyejun</h1>
+  <nav class="modern-cv-contact" aria-label="연락처 및 프로필">
+    <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a>
+    {% if site.author.linkedin %}<a href="https://www.linkedin.com/in/{{ site.author.linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>{% endif %}
+    <a href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+  </nav>
 </section>
 <article class="modern-cv modern-container modern-prose modern-cv__content">{{ content }}</article>
