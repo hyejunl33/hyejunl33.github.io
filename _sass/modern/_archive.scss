@@ -41,3 +41,5 @@
   .modern-project-tile:first-child { grid-column: auto; min-height: 320px; }
   .modern-project-tile:first-child .modern-project-tile__art { height: 160px; }
 }
+
+.modern-project-tile--wrtn .modern-project-tile__art { background: radial-gradient(ellipse 145% 100% at 105% 110%, rgba(255,183,117,.9), transparent 65%), radial-gradient(ellipse 125% 95% at -10% -5%, rgba(220,151,246,.85), transparent 66%), linear-gradient(145deg, #302039, #94585f); }

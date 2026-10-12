@@ -18,6 +18,1432 @@ This file contains the public CV and the full authored Markdown body of every pu
 
 ## Project
 
+### 뤼튼에서 광고 소재 제작을 AX로 바꾸기
+
+- Canonical URL: https://hyejunl33.github.io/projects/2026-10-12-wrtn-01-marketing-ax/
+- Collection: Project
+- Published: 2026-10-12
+- Tags: Project
+
+뤼튼에서 그로스마케팅팀의 광고 소재 제작과 운영을 AX로 바꾸는 일을 맡았다. 스토리 데이터를 가져와서 광고에 쓸 소구점을 뽑고, 이미지 배너나 영상, 플레이어블로 만들어 e2e로 라이브까지할 수 있게 하는 작업이었다.
+
+Series C 투자를 대비해서(지금은 유니콘이 됐다!), 늘어난 광고 예산을 받아낼 수 있을 만큼 소재를 만들고, 실제로 내보낼 수 있는 흐름을 만드는 게 먼저였다. 생성 모델이 그림 한 장을 잘 만드는 것과, 매일 여러 스토리의 광고를 만들어 운영하는 것 사이에는 해야 할 일이 꽤 많았다.
+
+## 왜 소재를 많이 만들어야 했나
+
+기존에는 마케터가 광고 효율이 좋을 만한 스토리를 고르고, 어떤 형식으로 만들지 기획한 다음 디자이너와 소통해서 배너를 만들었다. 이 흐름에서 일주일에 제작하는 배너는 최대 7~10개 정도였다. 기획과 제작 자체도 시간이 들지만, 마케터와 디자이너 사이의 소통, 마케터들 사이의 조율도 제작량을 제한했다.
+
+시리즈 C 투자 이후 광고 예산이 늘어나면서 그 예산을 집행할 소재가 필요했다. 내가 투입된 이유도 이 제작 병목을 줄이기 위해서였다. 그렇다고 사람이 기획하던 광고를 모두 자동 생성 광고로 바꾸지는 않았다. 사람은 가설과 기획을 거친 소재를 만들고, AX 쪽은 더 많은 스토리를 빠르게 광고로 만들어보는 두 흐름을 함께 운영했다.
+
+초반에는 자동화 쪽에서도 광고 효율이 좋을 스토리를 골라야 한다고 생각했다. 그런데 CPO와 그로스 본부장님과 여러 미팅을 하면서, 좋아요 랭킹 순으로 후보를 넓게 가져오는 방향으로 정리됐다. 특정 스토리의 성과를 미리 맞히려고 하기보다, 상위권부터 많은 스토리를 내보내고 잘된 광고를 따로 모으자는 결정이었다.
+
+하루 1,000개의 광고 배너를 내보내고 그중 성과가 좋은 소재를 위닝 캠페인으로 모으는 것이 당시 구상이었다. 넓게 탐색하는 광고 집행은 위닝 소재를 찾기 위한 비용으로 보고, 따로 모은 위닝 캠페인은 사람이 기획한 광고만큼 또는 그 이상의 효율을 내는 것을 목표로 했다. 목표 제작량과 실제 달성량, 위닝 캠페인의 성과는 구분해서 봐야 한다. 여기서는 그 목표를 받아서 어떤 시스템을 만들었는지부터 정리하려고 한다.
+
+## 스토리 하나가 광고가 되기까지
+
+입력은 서비스의 스토리 데이터였다. 제목과 소개만 있는 게 아니라 세계관, 시작 상황, 이미지, 장르 태그, 유저 댓글 등이 함께 있었다. 이 정보를 광고 제작에 쓸 수 있는 형태로 바꾸고, 생성 결과가 실제 매체 규격에 맞도록 후처리해야 했다.
+
+![스토리 전처리부터 소재 제작까지의 전체 흐름](/assets/images/notion/ad8579faf15248023335/01-marketing-ax.png)
+
+<p class="caption">스토리 전처리부터 소재 제작까지의 전체 흐름</p>
+
+![스토리 전처리의 데이터 흐름](/assets/images/notion/ad8579faf15248023335/02-marketing-ax.png)
+
+<p class="caption">스토리 전처리의 데이터 흐름</p>
+
+큰 흐름은 다음과 같다.
+
+1. 운영 DB를 미러링한 BigQuery에서 광고 후보 스토리를 가져온다.
+
+2. 삭제·비공개·차단된 스토리와 광고 대상에서 제외할 콘텐츠를 걸러낸다.
+
+3. 스토리와 이미지 데이터를 정리하고 소구점 전략을 저장한다.
+
+4. 같은 전략을 입력으로 이미지, 모션, 롱폼, 플레이어블 등의 소재를 만든다.
+
+5. 규격별 결과물을 저장하고 검수·업로드 흐름으로 넘긴다.
+
+여기서 공통 입력을 잘 만드는 게 중요했다. 형식마다 세계관과 소구점을 다시 해석하게 하면 같은 스토리인데도 광고가 서로 다른 이야기를 할 수 있다. 그래서 훅, 타깃 감정, 소구점, CTA 방향 등을 `strategy_json`으로 저장해 후속 제작에서 재사용했다.
+
+기존에 다른 팀에서 만들어 둔 스토리 요약과 추천용 태그도 활용했다. 처음부터 모든 정보를 새로 만들 필요는 없었다. 이미 있는 데이터가 광고 제작에서는 어떤 역할을 할 수 있는지 찾고, 없는 정보는 어떻게 처리할지를 정하는 일이 전처리의 상당 부분이었다.
+
+## 생성 버튼 뒤에 있어야 하는 것들
+
+실제 운영 화면은 세 서비스의 소재를 통합해서 생성할 수 있게 구성했다. 목표 편집에서 형식별 비율과 소재 개수를 조정하고, 고급 설정에서는 장르 로테이션을 바꿀 수 있다. 운영자가 매번 내부 처리 순서를 이해해야 하는 방식보다는, 그날 필요한 제작량을 조정하고 결과를 확인할 수 있는 형태가 필요했다.
+
+![세 서비스의 통합 소재 생성 화면](/assets/images/notion/ad8579faf15248023335/03-marketing-ax.png)
+
+<p class="caption">세 서비스의 통합 소재 생성 화면</p>
+
+![형식별 생성 목표와 장르 로테이션 설정](/assets/images/notion/ad8579faf15248023335/04-marketing-ax.png)
+
+<p class="caption">형식별 생성 목표와 장르 로테이션 설정</p>
+
+![애니메이션 티저의 플랜 생성 화면](/assets/images/notion/ad8579faf15248023335/05-marketing-ax.png)
+
+<p class="caption">애니메이션 티저의 플랜 생성 화면</p>
+
+![스토리보드 플랜을 확인하는 과정](/assets/images/notion/ad8579faf15248023335/06-marketing-ax.png)
+
+<p class="caption">스토리보드 플랜을 확인하는 과정</p>
+
+모든 형식을 같은 방식으로 처리하지는 않았다. 애니메이션 티저는 스토리를 선택해 먼저 스토리보드 플랜을 만들고, 플랜을 확인한 뒤 영상 생성 모델을 호출한다. 완성된 영상은 검수 탭에 노출하고, Drive에 올려 글로벌 마케터분들이 확인할 수 있게 했다. 비싼 영상 생성 전에 수정할 수 있는 단계를 두는 편이 운영에도 맞았다.
+
+배너 한 장을 만드는 중에도 실패할 수 있는 지점이 여럿 있었다. 원본 이미지 URL이 죽어 있거나, 생성 모델이 정책상 차단하거나, 얼굴을 못 찾아 규격 변경 때 캐릭터가 잘릴 수 있다. 실제로 클릭했을 때 원본 스토리가 살아 있는지도 확인해야 한다. 제작 당시에는 공개 상태였는데 이후 제작자가 내리거나 차단되는 경우가 있었기 때문이다. 이런 문제들은 모델 호출 하나만 잘해서 해결되지는 않았다.
+
+## 제작량 이후의 일
+
+후반에는 만드는 형식을 늘리는 작업과 함께, 안전성·IP 탐지, 이미지 검색, 해외 서비스 디자인, 위닝 소재 기반 후보 발굴도 고도화했다. 처음에는 소재를 만들 수 있게 하는 일이 중심이었다면, 운영을 시작한 뒤에는 어떤 소재를 만들지, 만들면 안 되는 것은 무엇인지, 실패한 결과를 어떻게 다시 처리할지가 더 구체적인 문제가 됐다.
+
+마케터분들의 가설과 디자이너분들의 레퍼런스도 계속 입력으로 들어왔다. 나는 그 판단을 생성 규칙과 데이터 흐름으로 옮겼다. 장르별 디자인을 맞추거나 위닝 소재를 재활용할 때도, 어떤 정보를 시스템에 남겨야 다음 제작에서 반복해서 쓸 수 있을지 고민했다.
+
+이후 글에서는 이 흐름을 이루는 작업들을 나눠서 기록하려고 한다. 데이터가 광고 기획으로 바뀌는 과정부터 시작해서, 이미지 검색과 생성, 필터링, 해외 확장, 성과를 예측하려던 실험까지. 각각을 구현하면서 선택했던 방법과 실제로 잘 안 됐던 지점을 함께 남기려고 한다.
+
+### 스토리 데이터를 광고 소구점으로 바꾸는 파이프라인
+
+- Canonical URL: https://hyejunl33.github.io/projects/2026-10-12-wrtn-02-story-preprocessing/
+- Collection: Project
+- Published: 2026-10-12
+- Tags: Project
+
+캐릭터챗 스토리를 광고로 만들려면 제목과 이미지를 가져오는 것만으로는 부족했다. 같은 로맨스 장르라도 유저가 끌리는 이유는 다르다. 소꿉친구의 철벽을 무너뜨리는 스토리와 계약 관계에서 시작하는 스토리를 모두 '설레는 로맨스'라고 표현하면, 각각의 스토리를 광고하는 의미가 줄어든다.
+
+그래서 먼저 스토리마다 어떤 설정과 관계가 매력인지 정리하고, 그걸 광고 카피와 이미지 선택에 공통으로 쓸 수 있도록 전처리했다.
+
+## 이미 있던 데이터부터 활용했다
+
+스토리 데이터는 운영 DB를 미러링한 BigQuery에서 가져왔다. 광고 후보의 자격 조건과 장르별 랭킹을 적용한 다음 제목, 소개, 시작 상황, 프로필과 상황 이미지, 댓글 등을 읽었다.
+
+| 테이블 | 여기서 뽑는 것 | 소재에서 쓰이는 곳 |
+| --- | --- | --- |
+| stories | 제목 · 소개 · 장르 · 타겟성별 · 좋아요수 · 성인여부 · 오리지널 여부 · 프로필 이미지 | 모든 형식의 기본 메타 |
+| story_starting_sets | 시작 상황 프롬프트 · 상황 이미지 · 첫 메시지 · 키워드북 · 엔딩 · 플레이 가이드 | 배너 이미지 · 롱폼 대본 · Anime 레퍼런스 |
+| character_comments | 좋아요순 상위 50개 댓글 | 소구점 도출의 보조 신호 |
+| profiles · genres | 작가 닉네임 · 장르 매핑 | 제작자 차단 · 장르 슬롯 |
+
+입력 중에서 특히 활용하기 좋았던 것은 스토리 추천을 위해 미리 만들어 둔 세계관·줄거리와 11축 장르 태그였다. AI Engineer Kevin이 전처리해 둔 추천용 데이터였는데, 광고에서 스토리의 매력을 해석하는 데도 쓸 수 있었다. 관계 성향, 캐릭터 속성, 관계 동학, 분위기 등이 있으니 단순 장르보다 구체적으로 이야기를 읽을 수 있었다.
+
+세계관은 정제 후 길이를 제한해 넣었고, 비어 있으면 요약으로 대체했다. 모든 스토리에 같은 양과 품질의 정보가 있는 건 아니라서, 일부 필드가 비어 있어도 소구점을 만들 수 있는 입력 구조가 필요했다.
+
+| 항목 | 내용 |
+| --- | --- |
+| 스토리 정보 | title · genre_category (없으면 genre) · tags (공개 태그) · internal_tags (운영 태그) · target · chat_type |
+| 장르 태그 11축 | stories.tag_* 열한 개 — tag_relationship_orientation (관계성향) · tag_content_orientation (콘텐츠성향) · tag_world_setting (세계관) · tag_theme (테마) · tag_subject_matter (소재) · tag_conversation_type (대화유형) · tag_character_attribute (캐릭터속성) · tag_relationship_dynamic (관계동학) · tag_mood (무드) · tag_species (종족) · tag_power_dynamic (권력관계) |
+| 세계관·줄거리 | world_settings 를 정제해 1,500자로 컷해 쓰고, 비어 있으면 content_summary 로 대체 |
+| 댓글 | comments[].content — 좋아요순 상위. 보조 신호일 뿐이라 별도 블록으로 붙이고, 없으면 "(댓글 없음 — 세계관·태그 기반으로 소구점 도출)"이라고 명시해 넣는다 |
+
+## 댓글은 유용했지만, 그대로 믿을 수는 없었다
+
+댓글은 유저가 어디에 반응했는지 직접 볼 수 있는 정보였다. 반복되는 키워드나 특정 캐릭터의 집착, 질투, 몰입을 표현한 반응은 스토리의 매력을 잡는 데 도움이 됐다. 다만 댓글이 많다고 모두 광고 기획에 쓸 만한 건 아니었다. 제작자의 공지나 유저노트 안내도 댓글에 섞여 있었다.
+
+약 3만 개의 스토리를 전처리해야 했기 때문에 입력 비용도 고려했다. 이모티콘과 반복되는 자모, 여러 공백, 의미 없는 문자열을 정리했고 긴 댓글은 500자 이후를 잘랐다. 이모티콘에도 감정 정보가 있지만, 당시에는 토큰을 줄이는 쪽을 선택했다.
+
+댓글의 역할은 보조 신호로 제한했다. 댓글이 없거나 적은 스토리에서도 세계관과 캐릭터 설정만으로 소구점을 만들 수 있어야 했다. 공지성 댓글 하나에 기획이 끌려가면 오히려 입력을 더 넣은 것이 문제가 된다. 프롬프트에도 댓글을 참고하되 과의존하지 말라고 명시했다.
+
+```plaintext
+- 제목: 우주
+- 장르: BL
+- 공개 태그: 연애, 여성향, 로맨스, 철벽, 내가, 짝사랑, 하는, 소꿉친구, 꼬시기
+- 타겟: female
+- 챗타입: rolePlaying
+```
+
+```plaintext
+tag_relationship_orientation    BL
+tag_content_orientation         여성향
+tag_world_setting               현대/일상, 학교/아카데미
+tag_theme                       로맨스, 청춘
+tag_conversation_type           1:1 롤플레잉
+tag_character_attribute         다정, 능글, 집착형
+tag_relationship_dynamic        친분 기반, 짝사랑
+tag_mood                        청량, 설렘, 애잔
+tag_subject_matter
+tag_species
+tag_power_dynamic
+```
+
+```plaintext
+### 세계관
+2025년 현대 대한민국을 배경으로 하며, 주된 무대는 한국대학교 캠퍼스와 그 주변 일대이다.
+주인공들이 속한 대학에는 실용음악과 학생들로 구성된 '타임리스(Timeless)'라는 밴드부가
+활발히 활동하고 있다. ... 두 주인공이 어린 시절부터 함께 뛰어놀던 동네 놀이터는 지금도
+힘들거나 지칠 때 무의식적으로 찾아가는 둘만의 안식처이자, 향후 감정적 충돌과 화해가
+일어나는 특별한 상징적 공간으로 기능한다.
+
+### 숨겨진 설정
+...10%의 확률로 이성의 갑작스러운 고백이나 대학교 전체 MT 같은 새로운 서사적 분기점이
+무작위로 발생할 수 있다. 우 주는 유저가 거짓말할 때 시선을 피하는 사소한 버릇까지 알아차린다.
+```
+
+```plaintext
+- "💙등장 캐릭터 프로필"
+- "💙유저노트 TIP은 대댓확인 🆙!단축어 /커뮤니티 업데이트 …"
+- "헉 고백 받아내기 굿!! 전 매번 제가 고백합니다.. 😭😭"
+
+→ 앞 두 개는 제작자 공지·안내라 소구점과 무관한 '뻘글'이다. 프롬프트가 댓글을
+  보조 신호로만 쓰라고 못박아 둔 이유가 이것이다.
+```
+
+```plaintext
+hook_point: 절대 선을 넘지 않는 완벽한 소꿉친구가 다른 남자 옆에 선 나를 보고 무너져 내렸다.
+
+target_emotion: 애가 타는 짝사랑의 아슬아슬함과 견고한 철벽을 무너뜨릴 때의 짜릿한 정복감
+
+appeal_points:
+① 절대 연애 감정을 주지 않으려 발버둥 치는 소꿉친구의 필사적인 철벽
+② 거짓말할 때 시선을 피하는 내 사소한 버릇까지 모두 꿰뚫어 보는 은밀한 집착
+③ 다른 밴드부원을 꼬셔서 그의 숨겨진 질투와 독점욕을 폭발시키는 아슬아슬한 밀당
+
+hyde_visual_query: 1boy, handsome, blonde hair, yellow eyes, looking at viewer,
+                   intense expression, subtle jealousy, upper body, dramatic lighting,
+                   blurred background, masterpiece, best quality, anime illustration
+
+cta_direction: 다른 남자를 향한 질투심을 자극해 그의 철벽을 부수고 고백을 받아내세요
+tiktok_body: 평생 친구라며 선 긋던 소꿉친구가 다른 남자와 웃는 내 모습에 이성을 잃고 질투하기 시작했다.
+ideal_font_sample_text: 팽팽한 긴장감 속에서 터져 나오는 질투를 담아낸 날렵하고 세련된 서체
+```
+
+## 스토리의 매력을 광고 문장으로 옮기기
+
+프롬프트에는 세 단계로 분석하도록 순서를 정했다. 먼저 세계관·태그·댓글에서 매료 포인트를 찾고, 그 매력이 왜 지금 이 스토리를 플레이하고 싶은 이유가 되는지 해석한 뒤, 앞의 분석에 연결된 결과를 만들게 했다.
+
+'흥미진진하다', '매력적이다', '몰입감이 있다' 같은 말은 거의 모든 스토리에 붙일 수 있었다. 그런 표현을 막고, 캐릭터가 실제로 하는 행동이나 관계의 긴장이 드러나게 하려고 했다. 소구점 세 개도 같은 내용을 바꿔 말하기보다는 캐릭터성, 관계성, 상황·전개처럼 다른 측면을 담도록 했다.
+
+```plaintext
+너는 모바일 앱 퍼포먼스 마케팅 전략가야. 크랙 앱의 캐릭터챗 콘텐츠를 타겟(여성향/남성향, 장르별 서브컬처)에 맞춰 광고 소재화하는 전문가야. 소구점은 스토리의 세계관·줄거리·장르 태그(11축)·유저 댓글을 종합해서 도출해 — 어느 한 신호에도 과의존하지 마. 특히 댓글은 '있으면 참고'하는 보조 신호일 뿐이야: 댓글이 없거나, 수가 적거나, 뻘글(무의미한 반응)만 있는 스토리가 많기 때문에, 댓글이 빈약하면 세계관·장르 컨벤션·캐릭터 설정·태그만으로 충분히 소구점을 도출하고 뻘글에 휘둘리지 마. 추상어·일반론 금지. 구체적인 캐릭터성·관계성·장면이 드러나야 해. CTR과 전환율을 높이는 것이 최우선 목표야.
+
+[분석 지시 — 반드시 이 순서로 사고할 것]
+
+Step 1. 매료 포인트 분석 (세계관·태그·댓글 종합): ... 유저 댓글이 있으면 보조 근거로 참고하되(반복 키워드·집착/몰입 표현 등), 댓글이 없거나 빈약해도 세계관·장르 컨벤션·캐릭터 설정만으로 매료 포인트를 잡아. 댓글에 과의존하거나 뻘글에 휘둘리지 마.
+
+Step 2. 소구 코어 정의: Step 1에서 뽑은 매료 포인트를 "이 스토리를 지금 당장 플레이하고 싶게 만드는 이유"로 번역해. 장르 컨벤션(멘헤라남·집착공·악역영애·계약결혼 등)이 명확하면 그 컨벤션의 어떤 변주/강도가 유저를 끌어당기는지 구체적으로.
+
+Step 3. 위 분석을 근거로 Output을 산출해. 일반론/추상어("흥미진진", "매력적", "몰입감") 금지.
+
+appeal_points: 소구점 3가지 (각 1문장). "사용자가 이 스토리를 실제로 플레이하고 싶어지는 이유"여야 함. 각 소구점은 서로 다른 축(캐릭터성/관계성/상황·전개/장르적 쾌감 등)을 다뤄야 하고, 가능한 경우 세계관·캐릭터·전개에서(및 있으면 댓글에서) 드러난 구체적 요소(캐릭터의 특정 행동·말투·집착 포인트 등)를 직접 반영할 것. 예: 멘헤라 남성향이면 "집착형 여주가 유저를 향해 무너지는 장면", "도망칠수록 더 깊어지는 소유욕" 같이 구체적으로.
+```
+
+결과는 훅 포인트, 타깃 감정, 소구점, 시각 검색어, CTA 방향, 광고 본문 등을 가진 `strategy_json`으로 저장했다. 이 중 시각 검색어는 이미지 검색에서, 이상적인 폰트 샘플 문장은 폰트 선택에서 쓴다. 광고 기획을 사람이 읽는 문장으로만 끝내지 않고 다음 제작 단계가 사용할 수 있는 필드로 나눈 셈이다.
+
+| 항목 | 내용 |
+| --- | --- |
+| hook_point | 3초 안에 클릭하게 만들 후킹 한 문장 |
+| target_emotion | 자극하는 핵심 감정 — 설렘·질투·독점욕·구원욕구·서열역전쾌감처럼 구체적으로 |
+| appeal_points | 소구점 3개. 각 1문장이고 서로 다른 축이어야 한다 — 캐릭터성 / 관계성 / 상황·전개 / 장르적 쾌감. `strategy_json.appeal_points` 로 저장 |
+| hyde_visual_query | 그림 찾을 영어 시각 토큰 12~16개. 이게 이미지 선택의 검색어가 된다 |
+| cta_direction | 소구점 중 가장 강한 것을 행동으로 전환 |
+| ad_description | 매체별 광고 본문. |
+
+```plaintext
+검색용 소구점 텍스트 (AGENTS/APPEAL_EMBEDDER.PY · FORMAT_APPEAL_TEXT)
+[제목] {스토리 제목}
+[장르] {장르}
+[핵심감정] {target_emotion}
+[후킹] {hook_point}
+[소구점1] {appeal_points[0]}
+[소구점2] {appeal_points[1]}
+[소구점3] {appeal_points[2]}
+```
+
+한 번 저장한 소구점을 배너 카피, 모션 연출, 위닝 검색에서 함께 사용했다. 이후 형식이 늘어날 때도 각 생성 경로가 스토리의 매력을 새로 정의하는 대신, 공통 기획을 받아 자기 형식에 맞게 표현하도록 했다.
+
+## 이미지 URL도 그냥 한 필드에 있지 않았다
+
+이미지 수집도 별도 전처리가 필요했다. 상황 이미지뿐 아니라 본문 필드 안에 URL이 들어 있기도 했고, 양식과 변수 조합으로 이미지가 나타나는 경우도 있었다. 이런 경로를 읽어 이미지 자산으로 분리하고, 이미지 한 장을 한 행으로 저장했다.
+
+```yaml
+AGENTS/LLM_IMAGE_EXTRACTOR.PY · 배치 프롬프트(발췌)
+당신은 캐릭터 챗봇의 system_prompt_variables 필드에서 외부이미지 URL 을 추출
+
+각 raw 는 종종 다음 패턴을 포함합니다:
+- 자연어/JSON 으로 외부이미지 URL 양식이 서술됨
+  (예: "이미지는 https://example.com/{캐릭터}_{상황}.png 형식")
+- {캐릭터}, {상황}, {이미지코드} 같은 placeholder 변수의 실제 값들이 같은 raw 안에 함께 정의됨
+
+작업:
+1. 양식(템플릿 URL) 식별
+2. placeholder 의 실제 값 식별
+3. 양식 × 모든 가능한 값 조합으로 완성된 URL 들을 만들어 반환
+4. raw 안에 이미 완성된 https URL 이 있으면 그것도 그대로 포함
+
+규칙:
+- placeholder 가 채워지지 않은 ({...} 가 남아있는) URL 은 절대 포함하지 말 것
+- URL 이 완전히 없으면 빈 리스트 반환
+- 추측하지 말 것 — raw 에 명시된 양식과 명시된 값들로만 조합
+- 모든 입력 스토리에 대해 results 배열에 1개씩 응답 (story_id 정확히 매칭)
+- 코드펜스 / 설명 / 주석 없이 순수 JSON 만 반환
+```
+
+이미지 자산에는 출처와 URL뿐 아니라 내려받기 성공 여부, CLIP 점수, 임베딩, 후속 아웃페인팅 결과와 얼굴 좌표가 이어서 붙는다. URL 접근에 실패한 경우도 기록을 남겼다. 생성에서는 성공한 자산만 쓰더라도, 나중에 왜 특정 이미지가 빠졌는지 확인할 수 있어야 했다.
+
+<table>
+<tbody>
+<tr><td>stories</td><td>제목·세계관·줄거리·11축 태그·장르·타겟.</td></tr>
+<tr><td>image_assets</td><td>이미지 1장 = 1행. URL · 출처(situation/profile/external) · CLIP 점수 · fetch 성공여부 · 아웃페인트 결과 · 얼굴 좌표.</td></tr>
+<tr><td>story_embeddings</td><td>이미지 임베딩(512-dim). HyDE 쿼리와 내적해 &quot;이 소구점에 어울리는 그림&quot;을 고른다.</td></tr>
+<tr><td>strategy_json</td><td>소구점 전략 — 훅 포인트 · 소구점 N개 · HyDE 비주얼 쿼리 · 광고 설명문 · 틱톡 본문 · 이상적 폰트 샘플 문장.</td></tr>
+<tr><td>comments</td><td>좋아요순 상위 댓글. 소구점 도출</td></tr>
+</tbody>
+</table>
+
+## 광고세트를 위해 장르를 다시 나눴다
+
+원본 데이터에서 '기타' 장르가 24% 이상이었다. 광고세트에는 같은 타겟을 향한 소재를 묶어야 하는데, 너무 많은 스토리가 기타로 들어가면 그 구분을 활용하기 어렵다. 그래서 추천용 11축 태그로 장르를 다시 분류했다.
+
+관계 성향이 BL·GL이면 우선 분리하고, 무협 세계관이나 로맨스 판타지 조건, 스포츠 테마, 남성향·여성향 로맨스, 시뮬레이션 요소 등을 순서대로 확인했다. 아무 조건도 맞지 않을 때만 기타로 남겼다. 같은 스토리가 여러 조건에 걸릴 수 있어서 규칙의 우선순위도 필요했다.
+
+![원본 데이터의 장르 분포](/assets/images/notion/45e4a902dfd7bc997b49/01-story-preprocessing.png)
+
+<p class="caption">원본 데이터의 장르 분포</p>
+
+![11축 태그로 재분류한 장르 분포](/assets/images/notion/45e4a902dfd7bc997b49/02-story-preprocessing.png)
+
+<p class="caption">11축 태그로 재분류한 장르 분포</p>
+
+![장르 분류에 활용한 태그 축](/assets/images/notion/45e4a902dfd7bc997b49/03-story-preprocessing.png)
+
+<p class="caption">장르 분류에 활용한 태그 축</p>
+
+1. 관계성향(`relationship_orientation`)이 bl/gl이면 즉시 → bl / gl (최우선, 다른 축 무시).
+
+2. 세계관(`world_setting`)에 "무협" → wuxia, "로판" 또는 (판타지 세계관 + 로맨스 테마 + 콘텐츠성향=여성향) → rofan.
+
+3. 테마(`theme`)에 "스포츠" → sports.
+
+4. 로맨스 신호(테마=로맨스 or 관계성향=hl)면 → 콘텐츠성향(`content_orientation`)으로 남성향→romance-m, 여성향→romance-f 가름.
+
+5. 소재/대화유형(`subject_matter`, `conversation_type`)에 게임태그(시뮬·육성·키우기·타이쿤 등) → simul.
+
+6. 세계관(`world_setting`)이 SF/판타지군(아포칼립스·이세계·가상현실 등) → sf-fantasy.
+
+7. 테마(`theme`)가 추리/범죄/호러/스릴러 → mystery
+
+8. 테마(`theme`)가 일상/힐링/드라마·일상대화 → daily
+
+9. 그 외 → etc.
+
+장르를 12종으로 확장한 뒤 기타 비중은 2.4%로 줄었다. 이 수치는 광고 성과가 오른 결과가 아니라, 원래 한 덩어리였던 후보를 타겟에 맞춰 구분할 수 있게 된 결과다. 이후 생성과 광고세트 구성에서 쓸 수 있는 데이터가 됐다는 점이 이 작업의 목적이었다.
+
+전처리에서 만든 산출물은 눈에 보이는 광고보다 앞에 있지만, 뒤쪽 제작의 선택을 상당 부분 결정한다. 어느 댓글을 넣을지, 어떤 태그를 우선할지, 소구점을 어떤 필드로 남길지부터 정해 둬야 형식이 늘어나도 같은 스토리를 일관되게 광고할 수 있었다.
+
+### 소구점에 맞는 이미지를 찾고 배너로 렌더링하기
+
+- Canonical URL: https://hyejunl33.github.io/projects/2026-10-12-wrtn-03-image-retrieval-rendering/
+- Collection: Project
+- Published: 2026-10-12
+- Tags: Project
+
+광고에 쓸 소구점을 만들고 나면 그 문장에 맞는 그림을 골라야 했다. 캐릭터챗에는 같은 캐릭터의 이미지가 여러 장 들어 있는데, 표정이나 구도가 조금씩 다르다. 어느 이미지든 캐릭터는 같지만, 질투를 강조하는 카피와 다정함을 강조하는 카피에 어울리는 장면은 같지 않을 수 있다.
+
+그림을 고른 뒤에도 매체별 규격으로 바꾸고, 얼굴이 잘리지 않게 배치하고, 폰트와 카피를 얹는 과정이 남았다. 이 글에서는 이미지 후보를 정리하는 단계부터 실제 배너 파일로 렌더링하는 단계까지 이어서 정리한다.
+
+## 배너에 못 쓰는 이미지부터 걸러냈다
+
+수집한 이미지를 모두 검색 후보에 넣지는 않았다. 글자가 들어간 캡처, 실사, 풍경이나 도표, 캐릭터가 없는 이미지 등은 배너의 입력으로 적합하지 않았다. NSFW처럼 정해진 항목만 막는 필터로는 광고에서 쓸 만한 이미지를 충분히 구분하기 어려웠다.
+
+CLIP 계열 모델로 긍정·부정 프롬프트와의 유사도를 계산했다. 긍정 쪽에는 애니메이션 인물, 얼굴과 상반신, 감정적인 표정 등을 두고, 부정 쪽에는 자막·워터마크·말풍선, 노출, 풍경·UI, 실사·비인간 객체 등을 넣었다.
+
+![CLIP 기반 이미지 필터링 흐름](/assets/images/notion/cefa5d36983575afeaaf/01-image-retrieval-rendering.png)
+
+<p class="caption">CLIP 기반 이미지 필터링 흐름</p>
+
+![이미지 점수 분포와 속성별 비교](/assets/images/notion/cefa5d36983575afeaaf/02-image-retrieval-rendering.png)
+
+<p class="caption">이미지 점수 분포와 속성별 비교</p>
+
+![필터링 점수별 이미지 사례](/assets/images/notion/cefa5d36983575afeaaf/03-image-retrieval-rendering.png)
+
+<p class="caption">필터링 점수별 이미지 사례</p>
+
+![광고 후보에서 제외한 이미지 사례](/assets/images/notion/cefa5d36983575afeaaf/04-image-retrieval-rendering.png)
+
+<p class="caption">광고 후보에서 제외한 이미지 사례</p>
+
+```python
+POSITIVE_PROMPTS = {
+    'p_character': "anime human character, illustrated person, human figure",
+    'p_face': "anime character face, human upper body portrait, clear face",
+    'p_emotion': "dramatic emotional expression, intense human gaze, expressive face",
+}
+
+POS_WEIGHT = 5.0  # Positive 전체 가중치 (final score)
+
+# Negative 프롬프트 — 전체 x5 가중치
+NEGATIVE_PROMPTS = {
+    'n_text': (
+        "subtitled anime screenshot, image with Korean text, "
+        "dialogue text bar, caption overlay, watermark, speech bubble, "
+        "white text on black bar, colored subtitle"
+    ),
+    'n_nsfw': "nude, explicit, nsfw, undressed, sexually suggestive content",
+    'n_no_char': "landscape, scenery, map, diagram, screenshot, UI, no human character",
+    'n_panels': "manga panels, comic strip layout, multiple frames, panel borders",
+    'n_real': (
+        "real photograph, real person, real animal, photo portrait, "
+        "live action, 3D render, photorealistic"
+    ),
+    'n_object': (
+        "cute mascot, chibi animal, cartoon penguin, cartoon creature, "
+        "food illustration, small icon, item sprite, object illustration, "
+        "illustrated animal, non-human cartoon creature"
+    ),
+}
+
+NEG_WEIGHT = 5.0  # Negative 전체 가중치 (final score)
+```
+
+초기 실험의 점수는 `5 × positiveScoreMean - 5 × NegativeScoreMean` 형태였다. 두 항에 같은 가중치를 곱하면 순위 자체가 달라지는 것은 아니다. 점수의 크기와 임계값의 관계를 함께 봐야 한다. 뒤의 제작 흐름에는 단색 이미지와 흡연에 대한 별도 페널티도 들어갔다.
+
+이미지 필터링 실험에서는 0.5를 기준으로 보수적으로 후보를 남겼다. 한편 전체 전처리 기록에는 양수 점수만 통과시키는 0 기준도 있다. 이 두 설정을 같은 실험 결과로 섞지는 않으려고 한다. 아래는 이미지 필터링과 선정 단계에서 남긴 자료다.
+
+![이미지 필터링 점수 분포](/assets/images/notion/cefa5d36983575afeaaf/05-image-retrieval-rendering.png)
+
+<p class="caption">이미지 필터링 점수 분포</p>
+
+![이미지 필터링에서 확인한 후보와 제외 사례](/assets/images/notion/cefa5d36983575afeaaf/06-image-retrieval-rendering.png)
+
+<p class="caption">이미지 필터링에서 확인한 후보와 제외 사례</p>
+
+![이미지 필터링에서 확인한 후보와 제외 사례](/assets/images/notion/cefa5d36983575afeaaf/07-image-retrieval-rendering.png)
+
+<p class="caption">이미지 필터링에서 확인한 후보와 제외 사례</p>
+
+![이미지 필터링에서 확인한 후보와 제외 사례](/assets/images/notion/cefa5d36983575afeaaf/08-image-retrieval-rendering.png)
+
+<p class="caption">이미지 필터링에서 확인한 후보와 제외 사례</p>
+
+![이미지 필터링에서 확인한 후보와 제외 사례](/assets/images/notion/cefa5d36983575afeaaf/09-image-retrieval-rendering.png)
+
+<p class="caption">이미지 필터링에서 확인한 후보와 제외 사례</p>
+
+![이미지 필터링에서 확인한 후보와 제외 사례](/assets/images/notion/cefa5d36983575afeaaf/10-image-retrieval-rendering.png)
+
+<p class="caption">이미지 필터링에서 확인한 후보와 제외 사례</p>
+
+![이미지 필터링에서 확인한 후보와 제외 사례](/assets/images/notion/cefa5d36983575afeaaf/11-image-retrieval-rendering.png)
+
+<p class="caption">이미지 필터링에서 확인한 후보와 제외 사례</p>
+
+자동화에서는 잘못 남긴 이미지가 그대로 제작까지 갈 수 있어서, 쓸 수 있는 그림이 일부 빠지는 비용도 감수했다. 다만 모델 점수를 낮게 받았다는 사실만으로 그 이미지가 실제 광고에 부적합하다고 확정할 수는 없다. 필터가 무엇을 놓치고 무엇을 과하게 막는지 사례를 같이 확인해야 했다.
+
+임베딩에는 `xlm-roberta-base-ViT-B-32`를 사용했다. 처음에는 한국 서비스인 크랙에서 개발했지만, 북미 OOC와 일본 캬라푸로 확장할 계획이 있었다. 처음부터 다국어 텍스트 인코더를 고려한 이유다. 이미지를 내려받지 못한 경우는 `fetch_status='failed'`로 남기고 생성 조회에서는 성공한 자산만 사용했다.
+
+## 소구점을 그대로 검색하면 잘 맞지 않았다
+
+소구점은 사람의 감정이나 관계를 설명하는 문장이다. '은밀한 집착' 같은 표현을 이미지 검색에 바로 넣으면 눈에 보이는 장면으로 대응하기 어렵다. 이런 추상적인 쿼리를 썼을 때 이미지들과의 코사인 유사도가 낮고, 상위 후보들 사이의 점수 차이도 작았다.
+
+그래서 HyDE 시각 쿼리를 영어 단어 형태로 바꿨다. 머리색, 눈 색, 구도, 표정, 조명처럼 그림에서 확인할 수 있는 특징을 토큰으로 만들었다. 전처리의 소구점 JSON에 이 쿼리를 저장하고, 제작 단계에서는 이미지 벡터와 비교해 후보를 고른다.
+
+![시각 쿼리와 이미지 후보를 CLIP 공간에서 비교해 선택하는 흐름](/assets/images/notion/cefa5d36983575afeaaf/12-image-retrieval-rendering.gif)
+
+<p class="caption">시각 쿼리와 이미지 후보를 CLIP 공간에서 비교해 선택하는 흐름</p>
+
+![소구점 시각 쿼리로 검색한 이미지 후보](/assets/images/notion/cefa5d36983575afeaaf/13-image-retrieval-rendering.png)
+
+<p class="caption">소구점 시각 쿼리로 검색한 이미지 후보</p>
+
+![쿼리별 이미지 검색 결과 비교](/assets/images/notion/cefa5d36983575afeaaf/14-image-retrieval-rendering.png)
+
+<p class="caption">쿼리별 이미지 검색 결과 비교</p>
+
+![단어형 쿼리의 점수와 후보 간 gap 비교](/assets/images/notion/cefa5d36983575afeaaf/15-image-retrieval-rendering.png)
+
+<p class="caption">단어형 쿼리의 점수와 후보 간 gap 비교</p>
+
+![CLIP 논문의 프롬프트별 ImageNet 성능 비교 — Radford et al., CLIP](/assets/images/notion/cefa5d36983575afeaaf/16-image-retrieval-rendering.png)
+
+<p class="caption">CLIP 논문의 프롬프트별 ImageNet 성능 비교 — <a href="https://arxiv.org/abs/2103.00020">Radford et al., CLIP</a></p>
+
+![CLIP 논문의 프롬프트 템플릿에 대한 설명 — Radford et al., CLIP](/assets/images/notion/cefa5d36983575afeaaf/17-image-retrieval-rendering.png)
+
+<p class="caption">CLIP 논문의 프롬프트 템플릿에 대한 설명 — <a href="https://arxiv.org/abs/2103.00020">Radford et al., CLIP</a></p>
+
+단어형 쿼리에서 코사인 점수와 Top1-Top2 gap이 커지는 경향은 있었다. 그렇지만 기대했던 만큼 크게 개선되지는 않았다. 이미지 에셋이 서로 다른 사물 사진처럼 다양하지 않고, 대부분 같은 캐릭터의 구도 차이였기 때문이라고 추정했다.
+
+점수가 올랐다고 실제로 더 적절한 그림을 골랐다고 단정할 수는 없다. 검색 결과를 눈으로 같이 봐야 했다. 프롬프트를 바꾸는 것만으로 해결할 수 있는 범위가 어느 정도인지 확인한 실험이었다.
+
+소구점마다 CLIP top-1 이미지를 선택하되, 앞의 소구점에서 이미 쓴 그림은 누적해서 제외했다. 서로 다른 카피를 만들었는데 같은 그림만 반복해서 나오는 것도 줄여야 했다.
+
+## 선택한 그림을 실제 파일로 만들기
+
+이미지 배너 렌더링에는 여러 단계가 들어갔다. 원본에 박힌 글자를 제거하고, 필요한 효과를 넣고, 세로 이미지를 가로 캔버스로 확장한다. 그런 다음 얼굴을 찾고, 카피·폰트·색상·그림을 렌더 상태로 조립한다.
+
+![이미지 배너 제작 파이프라인](/assets/images/notion/cefa5d36983575afeaaf/18-image-retrieval-rendering.png)
+
+<p class="caption">이미지 배너 제작 파이프라인</p>
+
+| # | 단계 | 무엇을 하나 | 산출·캐시 |
+| --- | --- | --- | --- |
+| ① | 오버레이 텍스트 제거 | 원본 그림에 박힌 글자를 FLUX Kontext로 지운다 | overlay_clean_{hash}.png · 실패는 원본으로 조용히 진행 |
+| ② | 임팩트 이펙트 (캬라푸) | 일본향 배너용 효과 선처리 | kyarapu_fx_pre_{hash}.png |
+| ③ | 가로 아웃페인팅 | 세로 그림을 4000×2000 캔버스로 확장 — 가로 배너 규격을 위해 | outpaint_v2_…_{hash}.png · DB에 캐시 |
+| ④ | 얼굴 검출 | 확장된 이미지에서 얼굴 좌표 검출 | image_assets.face |
+| ⑤ | state 조립 | 카피·폰트·색·이미지를 렌더러가 먹는 하나의 상태 객체로 | render state |
+| ⑥ | 캡처 | Chromium 하나 + 영속 컨텍스트 N개로 HTML을 2× 슈퍼샘플 캡처 | 1080×1920 원본 + 프리셋별 PNG |
+| ⑦ | 후처리 | 정확한 해상도로 다운샘플 + 500KB 이하로 압축 | {prefix}_{preset}.jpg |
+
+HTML을 Chromium으로 캡처한 뒤 매체별 해상도로 줄이고 파일 용량도 맞췄다. 같은 원본에 같은 처리를 반복하지 않도록 오버레이 제거와 아웃페인팅 결과는 캐시했다. 텍스트 제거에 실패하면 원본으로 진행하는 단계가 있는 반면, 아예 결과를 버려야 하는 생성 경로도 있다. 모든 실패에 똑같은 재시도 규칙을 쓰지는 않았다.
+
+## 얼굴 검출 모델도 도메인을 맞춰야 했다
+
+사이즈 베리에이션 로직은 얼굴 좌표를 기준으로 배치했다. 그래서 얼굴을 못 찾거나 엉뚱한 위치를 찾으면 가로·정사각 배너에서 캐릭터가 잘렸다. 실사 얼굴에 맞춰진 BlazeFace를 쓰다가, 애니메이션 도메인으로 학습한 YOLOv8 nano 기반 모델로 바꿨다.
+
+| 모델명 | BlazeFace | face_detect_v0_n(YOLOv8 nano) |
+| --- | --- | --- |
+| 학습 도메인 | 실사 인물 사진 (Google open dataset) | Anime 일러스트 |
+| 파라미터수 | 110k | 3.01M |
+| 모델 사이즈 | ~250KB | 12.1MB |
+
+![얼굴 좌표를 활용한 세로 배너](/assets/images/notion/cefa5d36983575afeaaf/19-image-retrieval-rendering.png)
+
+<p class="caption">얼굴 좌표를 활용한 세로 배너</p>
+
+![얼굴 기준의 규격별 배너 베리에이션](/assets/images/notion/cefa5d36983575afeaaf/20-image-retrieval-rendering.png)
+
+<p class="caption">얼굴 기준의 규격별 배너 베리에이션</p>
+
+![다른 이미지에 적용한 얼굴 기준 배치](/assets/images/notion/cefa5d36983575afeaaf/21-image-retrieval-rendering.png)
+
+<p class="caption">다른 이미지에 적용한 얼굴 기준 배치</p>
+
+![규격 변경 후 캐릭터 배치 사례](/assets/images/notion/cefa5d36983575afeaaf/22-image-retrieval-rendering.png)
+
+<p class="caption">규격 변경 후 캐릭터 배치 사례</p>
+
+교체 후 얼굴 인식과 배너 오류 사례가 개선됐다. 모델의 크기는 더 커졌지만, 우리가 입력으로 넣는 그림은 실사 얼굴이 아니라 애니메이션 캐릭터였다. 이 작업에서는 그 도메인에 맞는 검출 결과가 후속 배치의 기준이 된다. 모델이 가볍다는 장점만 보고 선택할 수는 없었다.
+
+## 폰트도 검색 대상으로 만들었다
+
+디자이너분이 전달해 주신 폰트들을 임베딩하고, 작품의 장르와 소구점에 맞는 폰트를 벡터 검색으로 고르는 흐름을 만들었다. 같은 카피라도 어떤 폰트를 쓰느냐에 따라 분위기가 다르기 때문이다. 생성 단계에서 저장한 이상적인 폰트 샘플 문장도 이 선택에 연결했다.
+
+![폰트 선택 파이프라인](/assets/images/notion/cefa5d36983575afeaaf/23-image-retrieval-rendering.png)
+
+<p class="caption">폰트 선택 파이프라인</p>
+
+![폰트 임베딩의 장르별 분포](/assets/images/notion/cefa5d36983575afeaaf/24-image-retrieval-rendering.png)
+
+<p class="caption">폰트 임베딩의 장르별 분포</p>
+
+임베딩을 보면 장르별로 폰트가 어느 정도 군집을 이뤘다. 같은 장르 안에서는 비슷한 폰트를 고를 수도 있겠다는 생각이 들었지만, 군집이 나뉘는 것과 실제 배너에서 잘 읽히는 것은 따로 봐야 했다. 플레이그라운드에서 기존 광고와 비교하고 정성적인 피드백을 반영하는 방향으로 고도화했다.
+
+이미지 검색, 얼굴 검출, 폰트 선택은 각각 다른 모델의 결과지만 마지막에는 배너 한 장에서 만난다. 중간 점수가 좋아도 얼굴이 잘리거나 카피가 읽히지 않으면 쓸 수 없다. 그래서 개별 단계의 점수와 완성된 배너의 오류 사례를 함께 보면서 바꿔 나갔다.
+
+본문의 데이터 흐름 애니메이션은 3Blue1Brown의 오픈소스 [Manim](https://github.com/3b1b/manim)에서 출발한 [Manim Community](https://www.manim.community/)로 만들었다.
+
+### 하나의 스토리에서 이미지·영상·플레이어블 광고 만들기
+
+- Canonical URL: https://hyejunl33.github.io/projects/2026-10-12-wrtn-04-creative-generation/
+- Collection: Project
+- Published: 2026-10-12
+- Tags: Project
+
+스토리의 소구점과 이미지 자산을 정리한 뒤에는 표현할 수 있는 형식을 늘렸다. 정적 배너에 카피를 얹는 것부터 시작했지만, 같은 스토리를 짧은 모션 영상으로 보여줄 수도 있고, 읽히는 롱폼이나 직접 선택하는 플레이어블로 만들 수도 있었다.
+
+형식이 늘어날수록 모든 것을 생성 모델에 한 번에 맡기기는 어려웠다. 어떤 단계는 모델이 기획하고, 어떤 단계는 코드가 결정적으로 조립하며, 비용이 큰 생성 앞에는 사람이 확인하는 지점을 두는 식으로 경로를 나눴다.
+
+## 공통 기획과 형식별 제작
+
+공통 입력은 스토리 정보, `strategy_json`, 이미지 자산이었다. 이 중 훅 포인트와 타깃 감정, 소구점, CTA 방향은 형식이 달라져도 유지한다. 정적 배너의 입력은 아래처럼 구성했다.
+
+<table>
+<tbody>
+<tr><td>strategy_json</td><td>소구점 N개 · 훅 포인트 · HyDE 비주얼 쿼리 · 이상적 폰트 샘플 문장.</td></tr>
+<tr><td>image_assets</td><td>CLIP 통과 이미지 + 임베딩. 이미지 선택에 LLM은 쓰지 않는다 — Stage 2가 만든 HyDE 쿼리를 CLIP으로 임베딩해 이미지 벡터와 비교하고 가장 유사한 이미지를 고른다 (= CLIP top-1). 소구점마다 다른 그림이 뽑히도록 이미 쓴 이미지를 누적 제외한다.</td></tr>
+<tr><td>폰트 카탈로그</td><td>장르·소구점 임베딩으로 고른다. </td></tr>
+<tr><td>카피 폼</td><td>대사형 · 액션형 · 상황형 3폼. 언어별로 프롬프트 원본 파일이 따로 있고, 그 파일 하나가 유일한 기준이다.</td></tr>
+</tbody>
+</table>
+
+```yaml
+AGENTS/APPEAL_EMBEDDER.PY · STRATEGY_SYSTEM_INSTRUCTION (크랙 원문)
+너는 모바일 앱 퍼포먼스 마케팅 전략가야. 크랙 앱의 캐릭터챗 콘텐츠를 타겟(여성향/남성향, 장르별 서브컬처)에 맞춰 광고 소재화하는 전문가야.
+
+소구점은 스토리의 세계관·줄거리·장르 태그(11축)·유저 댓글을 종합해서 도출해 — 어느 한 신호에도 과의존하지 마. 특히 댓글은 '있으면 참고'하는 보조 신호일 뿐이야:
+댓글이 없거나, 수가 적거나, 뻘글(무의미한 반응)만 있는 스토리가 많기 때문에, 댓글이 빈약하면 세계관·장르 컨벤션·캐릭터 설정·태그만으로 충분히 소구점을 도출하고 뻘글에 휘둘리지 마.
+
+추상어·일반론 금지. 구체적인 캐릭터성·관계성·장면이 드러나야 해. CTR과 전환율을 높이는 것이 최우선 목표야.
+```
+
+```yaml
+🚨주의: 철벽남 소꿉친구의 무서운 집착!🚨 평생 친구라며 선 긋던 그가 내가 다른 남자와 웃자 눈빛이 달라집니다. 밀당으로 그의 독점욕을 폭발시키세요.
+
+#BL #소꿉친구 #크랙
+```
+
+이미지 배너에서는 검색으로 그림을 선택하고 카피와 폰트를 얹는다. 배너 렌더러가 규격별 결과물을 만드는 과정은 앞 글에서 정리했다. 모션이나 롱폼으로 확장할 때는 이 입력을 그대로 복사하는 게 아니라, 해당 형식에서 무엇을 보여줘야 할지 다시 계획하게 했다.
+
+## 7초 모션: 먼저 그림에 무엇이 있는지 읽기
+
+모션화는 배너 그림 한 장을 스토리 정보에 맞춰 움직이는 방식이었다. 처음부터 인물 동작을 지어내게 하기 전에, 비전 LLM이 `scene_read`로 이미지에 실제로 보이는 것을 적게 했다. 그 내용을 바탕으로 0~1.5초, 1.5~3.5초, 3.5~5초, 5~7초의 구간별 스토리보드를 만든다.
+
+![7초 모션 영상 제작 흐름](/assets/images/notion/1bcbb67d0be297ea92ee/01-creative-generation.png)
+
+<p class="caption">7초 모션 영상 제작 흐름</p>
+
+구간에는 인물 동작뿐 아니라 신체 역학, 지속되는 움직임, 표정, 카메라 워크, 효과음이 들어갔다. 이 구조화된 결과를 i2v 프롬프트로 펼치는 단계는 LLM을 다시 호출하지 않고 코드로 처리했다. 기획에서 이미 정해진 구간을 재해석할 필요가 없어서였다.
+
+```yaml
+정규화 장르 (13슬러그): {슬러그}
+캐릭터 속성: {tag_character_attribute}
+대표 대사: {simple_description}
+줄거리: {content_summary}
+[소구점] 훅포인트 / 타깃 감정 / 어필 포인트 / CTA 방향
+세계관(발췌, 1500字)
+```
+
+```yaml
+scene_read: "Akari stands angled in a low-angle perspective against a blood moon in a red sky, wearing black lacquered armor plates over a dark outfit."
+scene_concept: "Under the blood moon, Akari shifts her grip on her katana with a cautious, resolute gaze down toward the viewer."
+audio_plan: "Howling high-altitude wind, distant rhythmic taiko drums, and the slide of a katana habaki locking inside its wooden scabbard."
+physics_notes: "The long black hair strands and thin crimson ribbon whip in the crosswinds while the rigid black armor plates stay firmly anchored."
+segments:
+  - time_range: "0-1.5s"
+    character_action: "Akari pivots her shoulders slightly toward the camera, thumb clicking the katana guard forward out of its scabbard by an inch."
+    body_mechanics: "Starting in a three-quarters back stance, her core rotates 45 degrees toward the viewer while her right thumb levers the gold tsuba forward and her other hand steadies the scabbard."
+```
+
+```plaintext
+[0-1.5s] {동작}; body mechanics: {신체 역학}; moving continuously through the entire segment; expression: {표정}; camera: {카메라}; sfx: {효과음}.
+[1.5-3.5s] ...
+[3.5-5s] ...
+[5-7s] ...
+
+Global camera direction: {전역 카메라 지시}
+One continuous take. Keep the character moving throughout the shot. No on-screen text, captions, subtitles, or watermarks.
+```
+
+영상 입력에는 오버레이 제거본을 썼다. 예전에는 21:9로 확장한 이미지를 넣었는데, 세로 영상으로 cover-crop되면서 캐릭터가 잘려서 그 경로를 폐기했다. 9:16 영상은 한 번만 만들고 가로·정사각은 좌우를 채워 파생했다.
+
+정책 차단이 발생하면 같은 프롬프트를 계속 고치기보다 다른 후보 이미지로 최대 네 장까지 시도했다. 오디오를 켰을 때 의도하지 않은 사람 음성이 나오면 발화 가드로 처리했다. 생성 모델의 결과가 요청한 조건과 완전히 같다고 가정할 수 없어서 후처리가 필요했다.
+
+## 롱폼: 대본을 HTML로 조판하고 녹화하기
+
+롱폼은 스토리를 읽히는 형식으로 재구성해 HTML 페이지를 만들고, 스크롤되는 화면을 녹화했다. 대본 모델에 세계관과 인물 정보를 주고 참고 이미지 여러 장도 함께 넣었다. 이미지는 중립적인 파일명으로 표시하고, 어떤 장면에 어떤 그림을 쓸지는 대본 안의 마커로 선택하게 했다.
+
+![롱폼 대본 생성과 조판·녹화 흐름](/assets/images/notion/1bcbb67d0be297ea92ee/02-creative-generation.png)
+
+<p class="caption">롱폼 대본 생성과 조판·녹화 흐름</p>
+
+```yaml
+[S] 장면 블록 - 상황 서술
+[U] 유저(시청자) 발화 블록
+N  나레이션    D  대사    H  하이라이트    P  사진 배치
+
+예: P img_3.jpg  ← 참고 이미지를 그 장면에 배치
+
+· 첫 [S] 블록 = 후킹 정점 장면이고, 여기엔 P 이미지를 반드시 1장 넣는다
+· 참고 이미지가 0장이면 P 마커를 절대 쓰지 않는다
+· 라이브 채팅용 출력 포맷(**이름**|내용, 상태창)은 쓰지 않는다
+```
+
+첫 블록에는 후킹할 정점 장면과 이미지 한 장, 짧은 문장을 두었다. 릴스에서 시작하자마자 스크롤이 올라가는데 글이 길면 읽히지 않았다. 첫 블록 위치도 0.8에서 시작했을 때는 초반이 비었고, 0.0에서는 이미지와 글이 바로 잘려서 0.5로 정착했다.
+
+대본에 '유저'라는 호칭이 남는 것도 어색했다. 첫 줄에 이름 메타 정보를 선언하게 하고, 남은 호칭은 후처리로 치환했다. 금칙어는 해당 줄만 다시 수선하고, 출력 언어가 다른 언어로 흐르면 실패로 처리했다.
+
+조판과 녹화는 1080×1920에서 한 번 하고 다른 규격은 scale과 pad로 만들었다. 규격 하나가 실패했다고 모두 버리지 않고, 저장 가능한 결과는 남겼다. 긴 영상은 상한을 넘으면 트림하도록 했다.
+
+## 플레이어블: 시나리오를 실행 가능한 조합으로
+
+플레이어블은 클릭할 수 있는 미니게임 형태의 광고다. 스토리를 자체완결 HTML 하나로 만들기 위해, 스토리보드와 실제 시나리오 조합을 분리했다.
+
+![플레이어블의 기획·검증·HTML 조립 흐름](/assets/images/notion/1bcbb67d0be297ea92ee/03-creative-generation.png)
+
+<p class="caption">플레이어블의 기획·검증·HTML 조립 흐름</p>
+
+대표 이미지는 CLIP 상위 후보 다섯 장을 비전 LLM에 보여주고 하나를 고르게 했다. 캐릭터가 선명한지, 장르와 무드가 맞는지 보게 했고, 파싱 실패나 범위를 벗어난 선택에는 CLIP 1위로 돌아가는 대체 경로를 뒀다.
+
+Stage A에서 장면 흐름과 연출 방향을 만든 뒤 Stage B에서 조합 DSL로 바꾼다. 검증에 걸리면 같은 세션에서 멀티턴으로 수정했다. 채팅·선택·게이지·공개·CTA 등 준비된 요소를 조합하는 방식이라, 결과를 검증하고 렌더러에 넘길 수 있었다.
+
+```yaml
+{ theme, gauges[], steps[], branches{} }
+
+steps 프리미티브: chat · choice · burst · cta                    (v1)
+card_pick · gauge · stat_panel · reveal                    (확장)
+scratch · qte_tap · swipepick
+
+게이지 스타일: danger · heart · qi · bar · suspicion
+화면 형태(layout): chat · battle · raise · harem · investigate
+immersion · scratch · swipe
+```
+
+최종 HTML에는 레이아웃과 게이지, 이펙트, 서비스 스킨을 함께 넣었다. 외부 자산 요청이 없어도 실행되게 만드는 것은 매체에 전달할 때의 조건이었다.
+
+## UGC 리메이크: 훅을 만드는 방법이 네 번 바뀌었다
+
+OOC에서는 이미 잘된 UGC의 대본과 화면 구성을 유지하면서, 화면 속 인물을 AI로 바꾸는 경로도 만들었다. 원본 영상의 단어별 타임스탬프를 뽑고 컷을 나눈 다음, 훅과 발화 컷을 별도로 생성했다.
+
+![UGC 리메이크의 생성과 합성 흐름](/assets/images/notion/1bcbb67d0be297ea92ee/04-creative-generation.png)
+
+<p class="caption">UGC 리메이크의 생성과 합성 흐름</p>
+
+컷 경계는 문장 경계로 맞췄다. 훅이 첫 문장의 앞토막만 말하면 이후 편집이 잘돼도 어색하기 때문이다. 훅은 원본 클립을 움직임과 구도의 레퍼런스로, 승인된 얼굴 이미지를 인물 레퍼런스로 넣는 r2v 방식으로 만들었다. 이 구간의 소리는 원본을 다시 합성했다. 발화 컷은 앵커와 대사를 넣어 음성이 포함된 영상으로 만들고, 전사 결과를 맞춰 앞뒤를 잘랐다.
+
+인물 매팅 이후에는 얼굴 기준 크롭, 우하단 PIP, 자막, 엔딩 로고를 합성했다. 얼굴 갤러리는 인종·성별별 앵커를 미리 만들어 사람이 승인한 것만 사용했다. 공식 틱톡 계정의 리포스트는 리메이크 대기 큐로 활용했다.
+
+훅 생성 방식은 완전 재현, 프레임 스왑+i2v, 스토리보드 기반 생성, r2v 단일 호출까지 바뀌었다. 실배치에서는 발화가 사라지거나, DB 락이 생기거나, 매팅 결과가 전부 실패하는 문제가 드러났다. 단위테스트가 통과해도 이 형식을 쓸 수 있다고 말하기 어려웠던 이유다. 실제 실패 사례를 확인한 뒤 그 조건이 다음 가드가 됐다.
+
+## Anime teaser: 비싼 생성 전에 플랜을 확인했다
+
+오리지널 스토리에서는 30초 애니메이션 티저를 만드는 흐름도 구현했다. 감독 단계에서 세계관과 소구점, 레퍼런스 이미지를 받아 컷과 샷, 캐스트, 대사를 계획한다. 후보 이미지 풀에서 선택한 이미지를 캐릭터·배경·소품으로 나눠 컷에 연결했다.
+
+![애니메이션 티저의 플랜·생성·합성 흐름](/assets/images/notion/1bcbb67d0be297ea92ee/05-creative-generation.png)
+
+<p class="caption">애니메이션 티저의 플랜·생성·합성 흐름</p>
+
+![애니메이션 티저 생성 화면과 컷 계획](/assets/images/notion/1bcbb67d0be297ea92ee/06-creative-generation.png)
+
+<p class="caption">애니메이션 티저 생성 화면과 컷 계획</p>
+
+사람이 플랜을 확인한 다음 본편 영상 모델을 호출한다. 컷별 영상을 이어 붙이는 대신 컷 플랜과 캐스트를 넣어 본편을 한 번에 생성하는 경로였다. 실제 발화를 다시 전사해 자막 타이밍을 맞추고 서비스별 엔딩과 BGM을 합성했다.
+
+```yaml
+shot_size: "medium"
+beat: "Chloe scrambles on the floor after spilling game pieces."
+motion: "Chloe hurriedly gathers scattered colorful plastic tokens off the floor, rushing back up toward the desk."
+action: "Chloe crouches low to scoop up dice from the linoleum floor, then moves back behind the wooden desk."
+scene: "Chloe crouches beside the cluster of desks in the sunset-lit classroom."
+line:
+  speaker: "Chloe"
+  from_source: true
+  voice: "flustered and breathless, catching her voice in a panicked stammer"
+  line: "Aah! S-sorry! My hand slipped! B-but... I will have everything picked up right away!"
+advances: "The spilled pieces are collected and placed back onto the playing surface on the desk."
+```
+
+|  | 크랙 | OOC |
+| --- | --- | --- |
+| 대상 | IP 등록 오리지널만 | 공식계정 제작 레인 |
+| 프롬프트 | 한국어 별도 벌(번역 아님) | 영어 벌 |
+| 인트로 | 빨강 워드마크 + ORIGINAL 배지 | 로고 2.0초 |
+| 엔드카드 | 없음 | 섬네일 고정 2.5초 |
+| 아웃트로 | 세로 로고 애니 4.0초 | 로고 3.5초 |
+| 매체 | 메타 · 틱톡 · X | 틱톡 · X |
+
+한국어와 영어는 발화량 기준도 달랐다. 영어 플랜을 한국어 기준으로 검사하면 발화 과다로 잘못 판단하는 경우가 생겼다. 원작에서 인용할 수 있는 대사가 있는 경우와 없는 경우도 나눴다. 소구점이 없으면 티저 생성은 실패로 처리했다. 무엇을 광고하는지 정해지지 않은 상태에서 영상부터 만드는 건 피하고 싶었다.
+
+자막이나 BGM, 꼬리 부분만 잘못되면 저장된 중간 영상부터 합성 단계를 다시 실행했다. 본편 생성까지 다시 호출할 필요가 없게 만드는 것이 비용 면에서도 중요했다.
+
+형식마다 모델과 검수 방식은 달랐지만, 입력과 산출물의 계약을 정하고 수정 가능한 중간본을 남기는 방향은 같았다. 생성 결과가 한 번에 잘 나오기를 기다리는 것보다, 어느 단계가 잘못됐는지 확인하고 그 부분만 다시 처리할 수 있어야 운영할 수 있었다.
+
+### 광고 안전성 필터에서 과차단을 줄인 과정
+
+- Canonical URL: https://hyejunl33.github.io/projects/2026-10-12-wrtn-05-safety-filtering/
+- Collection: Project
+- Published: 2026-10-12
+- Tags: Project
+
+캐릭터챗은 유저가 자유롭게 스토리를 만드는 서비스다. 광고 제작을 자동화하려면 이미지를 잘 만드는 것만큼, 만들면 안 되는 광고를 먼저 거르는 것도 필요했다. 서비스에 있는 스토리라고 모두 광고로 내보낼 수 있는 건 아니었다.
+
+문제가 있는 소재를 놓치는 것은 피해야 했지만, 민감한 단어가 한 번 등장했다는 이유로 모두 차단하면 정상적인 판타지까지 빠졌다. 처음에는 보수적으로 잡고, 실제 판정 사례를 보면서 범위를 좁혀 갔다.
+
+## 살아 있는 스토리인지 먼저 확인했다
+
+BigQuery에 적재된 데이터에는 삭제됐거나 비공개로 바뀐 스토리도 있었다. 광고를 클릭하면 딥링크로 해당 스토리에 들어가야 하는데, 서비스에 없는 작품을 광고하면 유입이 끊긴다. 그래서 공개·활성 상태, 삭제·차단 여부, 국가코드 등은 쿼리 단계에서 먼저 확인했다.
+
+제작할 때는 살아 있었지만 집행 중에 제작자가 내리거나 차단되는 경우도 있었다. 전처리 한 번으로 끝낼 수 없는 문제여서 주간 크론으로 라이브 상태를 다시 조회하는 흐름을 뒀다.
+
+성인물과 2차창작 여부도 데이터에 필드가 있으면 먼저 제외했다. 매체 가이드라인을 참고한 생성 가드레일과 별개로, 구조화된 데이터로 바로 판별할 수 있는 조건은 앞단에서 처리했다.
+
+## 어느 단계에서 무엇을 거를 것인가
+
+필터는 한 곳에만 두지 않았다. 데이터 적재에서는 스토리 자체의 광고 적합성을 보고, 이미지 후보에서는 광고에 쓸 수 없는 그림을 걸렀다. 카피 생성 프롬프트에도 안전 가이드를 넣었다. 원문 스토리가 통과해도 생성 과정에서 표현이 달라질 수 있기 때문이다.
+
+LLM 분류의 결과는 safe와 blocked로 받았다. 초기에는 애매하면 blocked로 분류하고, 한 축이라도 문제에 해당하면 차단하는 방향이었다. 오리지널 스토리는 서비스에서 별도 검수한 공식 작품이라 이 검사에서 면제했다. 자동 판정이 오리지널이면 안전하다고 알아낸 것이 아니라, 이미 검수한 콘텐츠를 별도 경로로 처리한 정책이었다.
+
+| 판정축 | 무엇 | 크랙 | OOC | 카라푸 |
+| --- | --- | --- | --- | --- |
+| minor_sexual | 미성년 성적 묘사 | ● | ● | ● |
+| discrimination | 차별 + 노예·인신매매의 노골적 성적 묘사 | ● | ● | ● |
+| self_harm | 자해 | ● | ● | ● |
+| gambling | 도박이 스토리의 중심 주제일 때만 | ● | ● | ● |
+| politically_sensitive | 선거·진영 갈등 | ● | — | — |
+| religion_political | 2026-08-05 전 스코프 은퇴 | — | — | — |
+
+분류축과 적용 서비스는 운영 중에 바뀌었다. 정치 관련 기준은 한국 서비스와 해외 서비스에서 같지 않았고, 종교축은 이후 제거했다. 아래 실험도 당시 사용했던 기준 안에서 읽어야 한다.
+
+## 처음 실험은 문제 사례 세 개를 놓치지 않는 것부터
+
+초기 테스트셋은 문제가 있었던 스토리 세 개와 랜덤으로 뽑은 정상 스토리 97개였다. 당시에는 소재 수가 줄어드는 것보다 문제가 있는 광고가 나가는 것이 더 치명적이라고 봤다. 그래서 blocked recall을 우선했다.
+
+Claude Opus 4.6으로 분류했을 때 문제 사례는 3/3건을 잡았다. 반면 정상으로 라벨링한 97건 중 일곱 건을 blocked로 분류했다. blocked 예측 열 건 중 실제 문제 사례가 세 건이라 precision은 0.30이었다.
+
+| 지표 | 값 | 의미 |
+| --- | --- | --- |
+| blocked recall = 1.00 | 3/3 | 🎯 핵심 성과 – GT 누수 0건 |
+| safe recall = 0.928 | 90/97 | 7건 false positive (오차단) |
+| blocked precision = 0.30 | 3/10 | 모델 blocked라 한 10건 중 3건만 진짜 |
+| F1 = 0.46 | – | precision이 낮아 F1 저하 |
+| MCC = 0.528 | – | 불균형 데이터 고려 시 양호 |
+| Accuracy = 0.93 | – | 전체적으로 잘 분류 |
+
+평가에서 차단 대상으로 지정한 세 사례는 장애를 대상화하는 맥락, 실존 정치인과 정치적 갈등을 중심으로 한 스토리, 영토 분쟁을 소재로 한 스토리였다. 정상 라벨과 판정이 달랐던 일곱 건의 이유도 따로 읽었다. 판타지 종교 설정, 역사적 배경, 본문 안의 자해나 미성년 관련 표현 등이 있었다.
+
+처음 붙인 정상 라벨과 모델의 판단이 다르면, 모두 모델의 잘못이라고 바로 결론 내릴 수는 없다. 판정 기준과 라벨이 일치하는지도 다시 봐야 했다. 중요한 것은 모델이 어떤 근거로 차단했는지 남겨 다음 기준 조정에 쓸 수 있다는 점이었다.
+
+```plaintext
+[오체불만족] (gt_category=discrimination)
+    pred_status    : blocked
+    pred_category  : discrimination
+    reason         : 장애(사지결손)를 핵심 소재로 다루며, 태그·시스템 프롬프트에서 장애를 대상화하는 맥락이 드러나 discrimination으로 판단함.
+    latency        : 59.4s
+    → status ✓ | category ✓
+
+[리버스 1979] (gt_category=politically_sensitive)
+    pred_status    : blocked
+    pred_category  : politically_sensitive
+    reason         : 박정희·김대중·전두환·김재규 등 실존 한국 정치인 실명이 다수 등장하고 정치적 사건·갈등을 스토리의 핵심 소재로 삼아 politically_sensitive로 판단함.
+    latency        : 59.4s
+    → status ✓ | category ✓
+
+[독도는 일본땅] (gt_category=politically_sensitive)
+    pred_status    : blocked
+    pred_category  : politically_sensitive
+    reason         : 제목·시스템 프롬프트·대사에서 독도/다케시마 영토 분쟁을 핵심 소재로 삼고 있어 politically_sensitive로 판단함.
+    latency        : 59.4s
+    → status ✓ | category ✓
+```
+
+```plaintext
+False Positive: 7 건
+
+- [사랑하는 나의 증오에게] → self_harm
+  reason: content_summary에서 '시체를 끌어안은 채 제 심장을 찌를 겁니다'라며 직접적인 자해 표현을 사용해 self_harm으로 분류함.
+
+- [1933년 독일에서 살아남기s] → politically_sensitive
+  reason: title·system_prompt·initial_messages에서 '1933년 독일'이라는 시대·정치적 배경이 명시되어 정치적으로 민감한 설정으로 판단함.
+
+- [지옥과 천국에서의 삶] → religion_political
+  reason: userPrompt 및 세계관 설정에서 기독교의 실존 천사(미카엘, 가브리엘 등)와 종교 세계관이 등장해 religion_political로 분류함.
+
+- [조정혀] → minor_sexual
+  reason: userPrompt 필드에서 중학교(꿈결중학교) 재학생 캐릭터가 '야한 드립을 한다'는 성적 대화 설정을 갖고 있어 미성년자와 성적 맥락의 결합으로 판단함.
+
+- [미래를 아는 자 과거를 바꾸다] → politically_sensitive
+  reason: content_summary 및 initial_messages에서 '박정희 대통령 시해' 등 실존 정치인과 정치적 사건을 핵심 소재로 제시하여 politically_sensitive로 판단함.
+
+- [원효] → religion_political
+  reason: title, tags, content_summary 등에서 실존 불교 승려 '원효대사'를 중심인물로 제시해 religion_political로 분류함.
+
+- [천국 시뮬레이션] → religion_political
+  reason: customPrompt의 테마 필드에 '종교'가 명시되어 있고, 스토리 전체가 천국이라는 종교적 세계관을 중심으로 구성되어 religion_political로 분류함.
+```
+
+이 실험의 총 비용은 5.07달러, 스토리당 평균은 0.0507달러였다. 이후 Gemini 3.1 Flash Lite로 바꿔 비교했고, 당시 기록에서는 비용이 약 52배 저렴하면서 문제 세 건의 recall을 유지했다.
+
+![안전성 분류 모델의 비용·판정 결과 비교](/assets/images/notion/9a0cbebab1b54d20e926/01-safety-filtering.png)
+
+<p class="caption">안전성 분류 모델의 비용·판정 결과 비교</p>
+
+![비교 실험의 blocked precision·recall·F1](/assets/images/notion/9a0cbebab1b54d20e926/02-safety-filtering.png)
+
+<p class="caption">비교 실험의 blocked precision·recall·F1</p>
+
+비교 이미지에는 blocked precision 0.375, recall 1.000, F1 0.545가 남아 있다. 다만 문제 사례가 세 개뿐인 실험의 recall 1을 일반적인 운영 성능으로 볼 수는 없다. 더 다양한 문제가 들어오면 놓치는 사례가 생길 수 있고, 모델을 바꾸는 것과 기준을 바꾸는 효과도 따로 봐야 한다.
+
+## 단어의 등장만으로 막자 판타지가 빠졌다
+
+운영 기준을 조정하면서 과차단 문제가 더 분명해졌다. 크랙 200건의 dry-run에서 노예·도박을 등장만으로 판정하자 차단률이 11%에서 31.5%로 올랐다. 많은 사례가 신분제 세계관에 '노예'라는 단어가 한 번 들어 있는 정도였다. 이 비율은 전체 차단률이고, 그 자체가 오탐률은 아니다. 다만 차단 근거를 읽어 보니 기준이 넓다는 문제가 드러났다.
+
+그래서 차별이나 노예·인신매매의 노골적인 성적 맥락을 보도록 좁히고, 도박도 스토리의 중심 주제일 때 판정하는 식으로 조정했다. 민감한 단어가 등장한 사실보다 광고에 쓰기 어려운 맥락이 실제로 있는지를 보게 했다.
+
+OOC에서도 종교·정치축이 판타지 설정을 많이 잡았다. 3,762건 중 blocked는 196건이었고, 그중 33건의 근거가 Lucifer, 십자가 소품, 소림사, 윤회 같은 요소였다. 종교적 갈등을 광고하는 것과 종교에서 가져온 판타지 설정을 구분하지 못한 것이다. 이 사례를 확인하고 종교축을 제거했다.
+
+## 기준은 운영 사례와 함께 바뀌어야 했다
+
+처음 실험은 알려진 문제를 놓치지 않는지 확인하는 용도였다. 정상 사례 97건도 서비스 전체의 장르와 국가별 분포를 대표하도록 구성한 것은 아니었다. 따라서 낮은 비용의 모델이 비슷한 결과를 냈다는 관찰은 유용했지만, 그 테스트셋만으로 안전성 필터를 완성했다고 할 수는 없었다.
+
+안전하게 자동화하려고 넓게 막았는데, 그 기준이 너무 넓으면 제작할 수 있는 정상 콘텐츠가 줄어든다. 판정축을 추가한 뒤에는 실제 차단 이유를 읽고, 맥락이 다른 사례를 모으고, 기준을 다시 조정해야 했다. 이후에도 신규 문제 사례를 평가셋에 추가하면서 확인하는 일이 남았다.
+
+### 이미지 역검색만으로는 IP를 판정할 수 없었다
+
+- Canonical URL: https://hyejunl33.github.io/projects/2026-10-12-wrtn-06-ip-detection/
+- Collection: Project
+- Published: 2026-10-12
+- Tags: Project
+
+스토리의 2차창작 여부는 서비스 데이터에 필드로 있었다. 처음에는 그 값이 false인 스토리만 광고로 만들었다. 그런데 운영하면서 해당 필드가 false인 작품에 알려진 버튜버 IP가 들어 있는 사례가 생겼다. 신고가 들어온 콘텐츠를 사람이 처리하는 흐름만으로는, 광고 생성 앞에서 모든 후보를 확인하기 어려웠다.
+
+이미지의 IP를 찾는 모듈을 따로 만들었고, 그 과정에서 '웹에 같은 그림이 있다'는 것과 '알려진 IP를 사용했다'는 것이 다르다는 문제를 만나게 됐다.
+
+## 역검색과 이미지 거리로 시작했다
+
+처음에는 이미지 역검색 결과와 원본 이미지의 유사도를 사용했다. 실제 문제가 있었던 다섯 스토리의 이미지 쌍을 잘 찾는 임베딩 모델을 비교했고, CCIP가 해당 사례에서 높은 유사도를 보여 채택했다.
+
+거리 지표는 `(1 - cosine similarity) / 2`였다. 값이 작을수록 비슷한 이미지다. 랜덤으로 뽑은 1,000개 스토리의 프로필 이미지에서 점수 분포를 보고, 이미지 쌍을 직접 확인해 0.055를 초기 후보 기준으로 정했다.
+
+![IP 이미지 쌍의 임베딩 모델 비교](/assets/images/notion/9c9e5ee4759f74ffb566/01-ip-detection.png)
+
+<p class="caption">IP 이미지 쌍의 임베딩 모델 비교</p>
+
+![거리 기준을 정하기 위해 확인한 이미지 쌍](/assets/images/notion/9c9e5ee4759f74ffb566/02-ip-detection.png)
+
+<p class="caption">거리 기준을 정하기 위해 확인한 이미지 쌍</p>
+
+![이미지 쌍의 유사도와 오류 사례](/assets/images/notion/9c9e5ee4759f74ffb566/03-ip-detection.png)
+
+<p class="caption">이미지 쌍의 유사도와 오류 사례</p>
+
+![이미지 거리 분포와 후보 임계값](/assets/images/notion/9c9e5ee4759f74ffb566/04-ip-detection.png)
+
+<p class="caption">이미지 거리 분포와 후보 임계값</p>
+
+이 방식은 같은 이미지를 찾는 데는 쓸 수 있었지만, 다른 사이트에 그 이미지가 있다는 이유만으로 차단하면 문제가 있었다. 같은 제작자가 여러 캐릭터챗 서비스에 올릴 수도 있고, 누군가 핀터레스트에 재게시했을 수도 있다. 검색 결과만으로 어느 쪽이 원본인지 알 수 없는 경우도 있었다.
+
+광고 제작에서는 애매한 경우까지 보수적으로 막는 선택을 할 수 있었지만, Ops 검수에도 이 기준을 그대로 적용하면 너무 많이 차단됐다. 랜덤 1,000건에서 약 20%가 검열되는 문제가 있어서 기준을 바꿀 필요가 있었다.
+
+## 검색 결과가 가리키는 엔티티를 보게 했다
+
+사례를 알려진 버튜버·게임·애니 캐릭터·실존인물이 있는 경우, 다른 서비스나 이미지 모음 사이트에 등장하지만 권리 관계가 불명확한 경우, 검수된 오리지널이나 제작자 자체 이미지인 경우로 나눠 봤다.
+
+![다른 사이트에 등장한 이미지 사례](/assets/images/notion/9c9e5ee4759f74ffb566/05-ip-detection.png)
+
+<p class="caption">다른 사이트에 등장한 이미지 사례</p>
+
+![재게시와 IP 식별을 구분해야 하는 사례](/assets/images/notion/9c9e5ee4759f74ffb566/06-ip-detection.png)
+
+<p class="caption">재게시와 IP 식별을 구분해야 하는 사례</p>
+
+![동일 이미지가 검색되는 또 다른 사례](/assets/images/notion/9c9e5ee4759f74ffb566/07-ip-detection.png)
+
+<p class="caption">동일 이미지가 검색되는 또 다른 사례</p>
+
+검색 결과를 그대로 차단 판정으로 쓰는 대신, 검색이 제공한 맥락을 LLM이 읽는 단계를 추가했다. 원본과 매치 이미지 쌍, 도메인, 페이지 제목과 URL, 역검색 태그를 함께 넣었다. 스토리 제목과 요약, 프롬프트, 태그도 판정 맥락으로 활용했다.
+
+![이미지와 검색 결과 맥락을 함께 넣은 판정 입력](/assets/images/notion/9c9e5ee4759f74ffb566/08-ip-detection.png)
+
+<p class="caption">이미지와 검색 결과 맥락을 함께 넣은 판정 입력</p>
+
+LLM에는 알려진 실체인지, 엔티티 이름과 소속 작품은 무엇인지, 어떤 유형인지, 어느 도메인의 증거가 결정적이었는지를 구조화해서 받았다. 이름을 이미지에서만 맞히게 했을 때 놓쳤던 한국 버튜버나 게임 캐릭터도, 관련 페이지 제목과 태그가 함께 있으면 식별할 수 있었다.
+
+```python
+class Verdict(BaseModel):
+    is_known: bool = False             # 핵심 판정 — 증거가 실존 실체를 지목하는지 여부
+    entity_name: Optional[str] = None  # 지목한 실체명 (예: "흥선대원군 (이하응)")
+    franchise: Optional[str] = None    # 소속 작품/그룹/회사 (예: "블루 아카이브")
+    entity_type: str = "unknown"       # 실체 유형 (실존인물/게임캐릭터/버튜버 등)
+    confidence: float = 0.0            # 모델 자체 확신도 0~1
+    key_evidence_domain: Optional[str] = None  # 결정적 근거가 된 매치 도메인
+```
+
+![WD tagger와 역검색 증거 기반 LLM 판정의 데이터 흐름](/assets/images/notion/9c9e5ee4759f74ffb566/09-ip-detection.gif)
+
+<p class="caption">WD tagger와 역검색 증거 기반 LLM 판정의 데이터 흐름</p>
+
+![태거와 역검색을 결합한 IP 탐지 흐름](/assets/images/notion/9c9e5ee4759f74ffb566/10-ip-detection.png)
+
+<p class="caption">태거와 역검색을 결합한 IP 탐지 흐름</p>
+
+![역검색 증거를 LLM 판정으로 연결하는 흐름](/assets/images/notion/9c9e5ee4759f74ffb566/11-ip-detection.png)
+
+<p class="caption">역검색 증거를 LLM 판정으로 연결하는 흐름</p>
+
+핵심은 웹상 존재 여부보다 검색 증거가 특정 IP나 인물을 가리키는지를 보는 것이었다. 다만 이 출력만으로 실제 권리 관계를 확정할 수 있는 것은 아니다. 우리가 만든 것은 광고·검수 흐름에서 확인할 후보를 가르는 판정 시스템이었다.
+
+## 수동 라벨링으로 바뀐 결과를 확인했다
+
+100건을 수동으로 라벨링해 진짜 문제 사례와 오탐을 구분했다. LLM 레이어를 추가한 평가에서는 문제 사례를 놓치지 않으면서 오탐이 줄었다.
+
+![IP 판정 평가의 최종 지표](/assets/images/notion/9c9e5ee4759f74ffb566/12-ip-detection.png)
+
+<p class="caption">IP 판정 평가의 최종 지표</p>
+
+![판정 전후의 검수 후보 비교](/assets/images/notion/9c9e5ee4759f74ffb566/13-ip-detection.png)
+
+<p class="caption">판정 전후의 검수 후보 비교</p>
+
+실험 대시보드에는 recall 100%, FP 감소율 87.8%, precision 20% → 74%가 기록돼 있다. 표의 최종 수치는 불일치 사례를 재검토한 뒤 반영한 결과다. 알려진 문제 26건을 모두 남겼고, 비IP 74건 중 65건을 후순위로 돌려 검수 큐 잔존율은 35%가 됐다. precision은 전체 정확도가 아니라, 검수 큐에 남긴 후보 중 실제 문제 사례가 차지하는 비율이다.
+
+여기서 recall 100%는 해당 평가 표본에서 FN이 없었다는 뜻이다. 이미지에도 26/26의 신뢰구간이 함께 표시돼 있다. 서비스의 모든 IP를 놓치지 않는다는 의미로 확대할 수는 없다. 초기 1,000건 EDA와 이후 라벨링 평가도 서로 다른 목적의 표본이었다.
+
+단일 호출과 세 번 호출하는 앙상블도 비교했다. 120건에서 개선된 것은 한 건이어서, 그 실험에서는 호출을 세 배로 늘릴 만큼 큰 차이가 아니었다. JSON 파싱 오류가 나면 재시도하는 대체 경로는 남기고, 앙상블까지 사용할 필요는 없다고 판단했다.
+
+![증거 기반 IP 판정 모델 비교](/assets/images/notion/9c9e5ee4759f74ffb566/14-ip-detection.png)
+
+<p class="caption">증거 기반 IP 판정 모델 비교</p>
+
+![단일 호출과 세 번 호출한 앙상블 비교](/assets/images/notion/9c9e5ee4759f74ffb566/15-ip-detection.png)
+
+<p class="caption">단일 호출과 세 번 호출한 앙상블 비교</p>
+
+## 웹에 없는 변형 이미지는 또 다른 문제였다
+
+반대로 역검색 결과가 없는데도 유명 IP인 그림이 있었다. 생성 모델로 변형한 이미지는 웹에 똑같은 원본이 없어서 검색에 걸리지 않을 수 있다. 블루아카이브와 귀멸의 칼날 캐릭터 사례에서 이 문제가 드러났다.
+
+![변형 이미지에서 확인한 블루아카이브 사례](/assets/images/notion/9c9e5ee4759f74ffb566/16-ip-detection.png)
+
+<p class="caption">변형 이미지에서 확인한 블루아카이브 사례</p>
+
+![변형 이미지에서 확인한 귀멸의 칼날 사례](/assets/images/notion/9c9e5ee4759f74ffb566/17-ip-detection.png)
+
+<p class="caption">변형 이미지에서 확인한 귀멸의 칼날 사례</p>
+
+![웹 역검색에서 확인한 후보 이미지](/assets/images/notion/9c9e5ee4759f74ffb566/18-ip-detection.png)
+
+<p class="caption">웹 역검색에서 확인한 후보 이미지</p>
+
+![변형 이미지의 유사 후보 검색 결과](/assets/images/notion/9c9e5ee4759f74ffb566/19-ip-detection.png)
+
+<p class="caption">변형 이미지의 유사 후보 검색 결과</p>
+
+기존의 0.055 거리 기준은 완전히 같지 않은 이미지를 후보에서 빼는 데도 영향을 줬다. 그래서 후보 기준을 0.1로 넓혔다. 더 많은 후보가 들어와도 뒤의 LLM이 검색 태그와 맥락을 확인하도록 했다.
+
+앞단에는 WD tagger를 추가했다. Danbooru 어휘를 기반으로 유명 애니·게임 캐릭터를 식별하는 경로다. 역검색이 0건이었던 원피스 합성 포스터에서 태거는 `roronoa_zoro`를 높은 점수로 잡았다. 문제가 있었던 두 스토리도 유명 IP여서 태거로 걸러낼 수 있었다.
+
+![WD tagger를 추가한 IP 탐지 흐름](/assets/images/notion/9c9e5ee4759f74ffb566/20-ip-detection.png)
+
+<p class="caption">WD tagger를 추가한 IP 탐지 흐름</p>
+
+태거만으로 끝낼 수도 없었다. 일본 애니·게임에 강한 반면 한국 버튜버는 어휘 커버리지에 없어서 못 잡는 사례가 있었다. 태거와 역검색+LLM은 서로 다른 실패를 보완했다. 이미 서비스에서 검수한 오리지널 스토리는 이 검사에서 별도로 제외했다.
+
+처음에는 이미지가 같은지를 잘 찾으면 문제가 해결될 거라고 봤다. 실제로는 같은 이미지가 있어도 판정을 보류해야 하는 경우와, 같은 이미지가 없어도 알려진 캐릭터인 경우가 함께 있었다. 운영 사례가 생길 때마다 그 차이를 분리하고, 어느 단계가 그 증거를 다룰 수 있는지 다시 설계했다.
+
+본문의 데이터 흐름 애니메이션은 3Blue1Brown의 오픈소스 [Manim](https://github.com/3b1b/manim)에서 출발한 [Manim Community](https://www.manim.community/)로 만들었다.
+
+### 한국에서 만든 광고 파이프라인을 북미·일본으로 확장하기
+
+- Canonical URL: https://hyejunl33.github.io/projects/2026-10-12-wrtn-07-global-expansion/
+- Collection: Project
+- Published: 2026-10-12
+- Tags: Project
+
+광고 소재 제작 파이프라인은 크랙에서 먼저 만들었다. 이후 북미 OOC와 일본 캬라푸로 확장했다. 이미 돌아가는 생성 흐름이 있으니 언어만 바꾸면 될 것 같지만, 실제로는 입력 데이터와 UI, 폰트, 디자인 레퍼런스가 달랐다.
+
+공통으로 쓸 수 있는 제작 단계는 유지하고, 서비스마다 다른 조건을 어디에서 분기할지 정하는 작업이었다.
+
+## 입력 스키마부터 달랐다
+
+크랙에서 쓰던 `ending`, `play_guide`, `taste_score`, 추천용 11축 태그가 OOC·캬라푸 테이블에는 없었다. 같은 필드를 당연히 읽는 코드로는 확장할 수 없었다. 없는 값은 입력에서 빼고, 각 서비스가 제공하는 세계관과 시작 상황을 중심으로 기획하도록 구성했다.
+
+소구점과 카피 프롬프트도 언어별로 분기했다. 한국어의 장르 표현을 그대로 번역하기보다는, 해당 언어에서 실제 광고로 쓸 수 있는 문장이 필요했다. 생성 결과의 폴더와 파일명에도 서비스가 드러나게 해서, 마케터분들이 결과를 구분할 수 있도록 했다.
+
+![크랙·OOC·캬라푸 서비스별 제작 분기](/assets/images/notion/a64cb1cb140d8e54856c/01-global-expansion.png)
+
+<p class="caption">크랙·OOC·캬라푸 서비스별 제작 분기</p>
+
+같은 스토리→소구점→소재 흐름을 유지하되, 플레이어블 UI는 각 서비스에 맞춰 바꿨다. 이미지 배너와 플레이어블, 모션 등 기본 제작 경로를 먼저 확장하고, 현지 레퍼런스에 맞추는 작업을 이어서 했다.
+
+## 폰트와 디자인도 서비스의 일부였다
+
+기존 폰트가 일본어를 지원하지 않아 폰트 라이브러리를 새로 구성했다. 카피를 일본어로 잘 만들더라도 글자가 표시되지 않으면 배너로 쓸 수 없었다. 언어 지원은 스타일 이전에 확인해야 하는 조건이었다.
+
+![일본어를 지원하는 폰트 라이브러리](/assets/images/notion/a64cb1cb140d8e54856c/02-global-expansion.png)
+
+<p class="caption">일본어를 지원하는 폰트 라이브러리</p>
+
+OOC에서는 기존 배너에 폰트 색상과 이펙트를 추가하는 식으로 시작할 수 있었다. 캬라푸의 레퍼런스는 더 다양했다. 일본 마케터분들과 싱크를 맞추고, 어떤 표현을 생성 규칙으로 옮길지 정리했다.
+
+![캬라푸에서 생성한 이미지 배너](/assets/images/notion/a64cb1cb140d8e54856c/03-global-expansion.png)
+
+<p class="caption">캬라푸에서 생성한 이미지 배너</p>
+
+![OOC에서 생성한 소재 예시](/assets/images/notion/a64cb1cb140d8e54856c/04-global-expansion.png)
+
+<p class="caption">OOC에서 생성한 소재 예시</p>
+
+현지인이 아닌 내가 어울리는 효과를 혼자 정하기 어려워서, 레퍼런스를 기반으로 역설계하는 방식을 택했다. Figma에 정리된 일본향 배너 약 300장을 장르별로 보고, 자주 쓰이는 효과와 분위기를 텍스트 템플릿으로 만들었다.
+
+## 장르 템플릿만으로는 모든 그림이 비슷해졌다
+
+장르별 `mood_template`에는 색상, 조명, 꽃잎·입자·후광 같은 효과 방향을 넣었다. 로맨스와 판타지, 코미디, 미스터리는 레퍼런스에서 사용하는 표현이 달랐다.
+
+![효과 설계에 활용한 일본향 배너 레퍼런스](/assets/images/notion/a64cb1cb140d8e54856c/05-global-expansion.png)
+
+<p class="caption">효과 설계에 활용한 일본향 배너 레퍼런스</p>
+
+![레퍼런스에서 정리한 효과 구성 요소](/assets/images/notion/a64cb1cb140d8e54856c/06-global-expansion.png)
+
+<p class="caption">레퍼런스에서 정리한 효과 구성 요소</p>
+
+<table>
+<tbody>
+<tr><td><strong>romance-f</strong></td><td>sweet otome romance — warm pink/crimson/gold, soft dreamy soft-focus, layered 玉ボケbokeh, rose &amp; sakura 花吹雪 petals, キラキラ sparkle, a tender glowing aura, floating hearts</td></tr>
+<tr><td><strong>romance-m</strong></td><td>warm school romance (male lead) — pink &amp; warm tones, bright rim light, soft bokeh, sakura petals, hearts and キラキラ, cheerful bright grade</td></tr>
+<tr><td><strong>bl</strong></td><td>dramatic romance — cool blue/violet or moody warm gold, strong rim light &amp; dramatic glow, rose petals, halftone, refined bokeh, tasteful sparkle</td></tr>
+<tr><td><strong>fantasy</strong></td><td>epic &amp; magical — luminous god-rays/light-pillars, arcane 魔法陣 magic circle &amp; glyphs, glowing aura, prism dispersion, aurora, floating orbs &amp; light particles</td></tr>
+<tr><td><strong>humor</strong></td><td>bright poppy comedy (少女漫画 pop) — vivid CMYK pop colours, comic halftone burst, exclamation sparkles, hearts &amp; confetti, high-key cheerful</td></tr>
+<tr><td><strong>mystery</strong></td><td>cool suspense / neon-noir — moody cyan/magenta, dramatic spotlight &amp; deep shadow, faint glitch &amp; chromatic aberration, cold sparkle, tense contrast</td></tr>
+<tr><td><strong>underworld</strong></td><td>dark &amp; dangerous — grunge ink splatter, red/black high contrast, diagonal caution stripes, drifting embers &amp; smoke, gold glints, broken-heart accents, deep shadow</td></tr>
+<tr><td><strong>daily</strong></td><td>soft wholesome slice-of-life — warm sunlight 玉ボケ, gentle pastel bokeh, sakura petals, small hearts and sparkles, dreamy soft-focus</td></tr>
+<tr><td><strong>sf</strong></td><td>neon cyber — electric cyan/magenta, digital particles &amp; data motes, non-text HUD glints, 稲妻 lightning, lens flare, glowing grid lines</td></tr>
+<tr><td><strong>period</strong></td><td>elegant traditional — gold accents, 桜 sakura &amp; 花吹雪, ink-wash (水墨) haze, seigaiha wave motifs, refined warm glow, stained-glass light</td></tr>
+<tr><td><strong>sports</strong></td><td>dynamic &amp; energetic — bold speed lines &amp; 集中線, impact bursts, motion streaks, vivid punchy complementary contrast, sweat-drop energy</td></tr>
+<tr><td>etc · (기본)</td><td>vivid &amp; eye-catching — bold mood grade, layered bokeh, sparkle-dust, confetti, dramatic rim light</td></tr>
+</tbody>
+</table>
+
+그런데 같은 장르에 같은 템플릿만 넣으면 서로 다른 캐릭터에도 비슷한 효과가 붙었다. 그래서 이미지마다 따로 읽은 palette를 추가했다. 장르의 기본 분위기와 해당 캐릭터 그림의 색·표정·구도를 함께 쓰는 방식이다.
+
+효과는 인물 주변과 뒤쪽에 배치하고 얼굴이나 몸을 가리지 않게 했다. 템플릿, 이미지별 효과 방향, 원본 이미지를 i2i 모델에 넣었다. 효과가 많아지는 것 자체보다 원본의 인물과 카피가 살아 있는지를 봐야 했다.
+
+![코미디 장르의 이미지 효과 적용 예시](/assets/images/notion/a64cb1cb140d8e54856c/07-global-expansion.png)
+
+<p class="caption">코미디 장르의 이미지 효과 적용 예시</p>
+
+![판타지 장르의 이미지 효과 적용 예시](/assets/images/notion/a64cb1cb140d8e54856c/08-global-expansion.png)
+
+<p class="caption">판타지 장르의 이미지 효과 적용 예시</p>
+
+예시는 장르별 분위기를 반영한 산출물이다. 배너가 레퍼런스와 비슷한 형태가 됐다는 것과 실제 광고 성과가 좋다는 것은 별개라, 디자인 변화만으로 성과 개선을 주장하지는 않으려고 한다.
+
+## 원본 썸네일을 규격에 맞추는 별도 경로
+
+캬라푸에서는 앱 썸네일 원본 자체를 네 가지 광고 사이즈로 변형하는 경로도 만들었다. 여기는 카피를 새로 얹는 배너와 조건이 달랐다. 원본에 들어 있는 타이포를 유지하면서 크레딧과 로고만 붙여야 했다.
+
+![앱 썸네일을 광고 규격으로 바꾸는 흐름](/assets/images/notion/a64cb1cb140d8e54856c/09-global-expansion.png)
+
+<p class="caption">앱 썸네일을 광고 규격으로 바꾸는 흐름</p>
+
+모델을 부르기 전에 생성 크기부터 계산했다. 두 변은 16의 배수, 최종 결과와 같은 비율, 면적 하한과 최종 크기 이상이라는 조건을 맞췄다. 원본과 목표 비율의 상대오차가 2% 이내면 생성 모델을 호출하지 않고 리사이즈만 했다. 불필요하게 다시 그리게 하면 모델이 원본 문구를 바꾸는 문제가 있었기 때문이다.
+
+원본의 글자는 하나의 고정된 이미지 자산으로 취급했다. 글자 블록을 통째로 옮기거나 줄일 수는 있어도, 새로운 문구를 쓰거나 글자 자체를 바꾸지 않게 했다. 원본에 글자가 없으면 결과에도 없어야 한다는 조건도 넣었다.
+
+안전 영역을 알려주는 것만으로는 잘림 문제가 충분히 줄지 않았다. 글자 블록이 차지할 수 있는 높이를 숫자로 명시한 뒤에야 축소하는 결과가 나왔다. 상단에는 규격별로 로고·크레딧 공간을 예약했다.
+
+```yaml
+AGENTS/KYARAPU_FX/MINIMAL_META.PY · REFRAME_PROMPT_TMPL (구조)
+
+① 글자 불가침 선언 — 맨 앞에.
+원본에 박힌 타이포는 "고정 자산"이며 새로 만들거나 바꾸지 않는다.
+
+② ANATOMY 절.
+가려진 신체를 예측해서 그리지 말 것. (손가락 4개/6개의 근원)
+
+③ 상단 예약대 (reserved_top_frac).
+9:16 = 11% · 1:1 = 18% · 4:5 = 14% — 크레딧·로고가 들어갈 자리.
+
+④ 가로 SAFE AREA
+가로 규격은 잘림 위험이 커서 안전 영역을 따로 선언한다.
+
+⑤ 무자막 역방향 조항.
+원본에 글자가 없으면 없는 채로 둔다 — 창작 금지.
+```
+
+전송 장애 재시도와 해부학 오류 재생성은 따로 처리했다. 손가락이나 팔다리 형태가 계속 잘못 나오면 해당 베리에이션을 버렸다. 이 경로에서는 앱 썸네일을 광고하는 것이므로, 실패했다고 전혀 다른 그림으로 교체할 수는 없었다.
+
+## 현지화는 계속 피드백을 받는 작업이었다
+
+데이터 분기와 기본 제작 기능을 구현한 뒤에도 현지 고도화는 남았다. 언어가 맞고 파일이 생성된다는 사실만으로 현지 광고의 톤이 맞는 것은 아니었다. 마케터분들이 보는 카피 방향과 디자이너분들의 레퍼런스를 받아서, 반복해서 적용할 수 있는 조건으로 바꿔야 했다.
+
+공통 파이프라인을 유지하면 새 형식과 수정사항을 여러 서비스에 전달하기 쉽다. 반면 서비스의 차이를 공통화하려고 억지로 없애면 입력도 디자인도 어색해질 수 있다. 같은 흐름을 쓰되, 없는 필드와 언어별 문장, 폰트와 규격 제약은 분명하게 나누는 쪽으로 확장했다.
+
+### 성과가 난 광고에서 다음 스토리를 찾는 위닝앵글 검색
+
+- Canonical URL: https://hyejunl33.github.io/projects/2026-10-12-wrtn-08-winning-angle-search/
+- Collection: Project
+- Published: 2026-10-12
+- Tags: Project
+
+초기 AX 제작은 좋아요 랭킹 순으로 스토리를 넓게 탐색하는 방식이었다. 이후에는 이미 성과가 난 광고에서 다음 후보를 찾는 경로를 만들었다. 운영팀이 위닝 소재를 분석한 정보를 받아, 비슷한 소구점이나 이미지를 가진 새로운 스토리를 발굴하는 작업이다.
+
+발굴 이후의 제작은 기존 서브카피·롱폼·모션 파이프라인을 그대로 사용했다. 새로 만든 것은 그 앞에서 어떤 스토리를 가져올지 정하는 검색 경로였다.
+
+## 앵글과 실제 소재를 따로 저장했다
+
+입력은 광고 운영팀의 분석 파일이었다. 한 행에는 앵글 제목과 요약, 추천 크리에이티브 브리프, AI 분석 근거와 확신도, 뒷받침 소재 수, 위닝 형식과 매체가 들어 있었다. 앵글을 뒷받침하는 배너와 원본 스토리는 별도 목록으로 남겼다.
+
+```plaintext
+selection_id    앵글 고유 id
+title           위닝 앵글 제목
+summary         요약
+recommended_brief   추천 크리에이티브 브리프 (가설 시드)
+ai_rationale    왜 이겼는지에 대한 분석 근거
+category        genre_theme | copy_angle
+confidence      확신도
+support_count   이 앵글을 뒷받침한 소재 수
+media_type      image | video    ← 위닝 형식
+platform        meta | tiktok   ← 위닝 매체
+```
+
+```plaintext
+folder_name     Drive 폴더명
+creative_name   소재 이름
+material_type   img | vid
+genre           파싱된 장르
+form            sub | tag | longform | motion
+story_id        딥링크에서 뽑은 원본 스토리 (없으면 데이터 오류)
+```
+
+'어떤 관계나 장면이 잘됐다'는 분석 문장과 실제 광고 파일이 연결돼 있어야 했다. 원본 스토리는 소재의 딥링크에서 식별했다. 이후 새 후보를 만들 때도 어떤 앵글과 검색축에서 왔는지 남겨서, 결과를 다시 확인할 수 있게 했다.
+
+![텍스트축·이미지축의 후보를 순환 선택하는 흐름](/assets/images/notion/4f420410ac4af40875b1/01-winning-angle-search.gif)
+
+<p class="caption">텍스트축·이미지축의 후보를 순환 선택하는 흐름</p>
+
+![위닝 앵글에서 스토리를 발굴하고 제작하는 흐름](/assets/images/notion/4f420410ac4af40875b1/02-winning-angle-search.png)
+
+<p class="caption">위닝 앵글에서 스토리를 발굴하고 제작하는 흐름</p>
+
+## 텍스트축은 실제 위닝 스토리의 소구점으로
+
+처음처럼 LLM에게 가상의 소구점을 새로 만들게 하기보다, 위닝 앵글을 뒷받침한 실제 스토리의 감정·훅·소구점 원문을 검색어로 썼다. 그 문장은 검색 코퍼스가 임베딩한 원문이기도 했다. 검색을 위해 번역하거나 다시 해석하면서 뜻이 흔들리는 것을 줄일 수 있었다.
+
+어휘 검색인 BM25와 의미 기반 벡터 검색을 순위 융합으로 합쳤다. 같은 키워드를 공유하는 후보와 표현은 달라도 의미가 비슷한 후보를 함께 찾으려는 방식이었다. 한쪽 검색이 실패해도 다른 쪽 결과를 반환하도록 했다.
+
+위닝 스토리가 연결돼 있지 않을 때만 LLM이 가상 소구점을 만드는 기존 경로로 돌아갔다. 실제 원문이 있는데도 다시 만들어 쓰는 것과, 입력이 없어서 대체하는 경우를 나눴다.
+
+## 이미지축에서는 배너마다 따로 검색했다
+
+이미지축은 위닝 배너 그림 자체를 CLIP으로 인코딩하고, 스토리의 프로필 이미지에서 이웃을 찾았다. 여기서 여러 배너의 결과를 어떻게 합칠지가 문제였다.
+
+실측 사례에서 배너 일곱 장이 있는 앵글의 상위 열 후보 중 일곱 개가 한 배너에서 나왔다. 인물 크롭이 큰 배너가 순위를 독식하는 현상이 있었다. 광고 배너와 캐릭터 일러스트는 종류가 달라 절대 코사인 점수도 낮게 나왔기 때문에, 다른 배너의 점수를 같은 기준으로 비교하기 어려웠다.
+
+그래서 배너마다 후보를 따로 찾고 돌아가며 채웠다. 각 배너 내부의 순위를 사용하고, 하나의 배너가 전체 후보를 가져가지 않도록 했다. 여러 이미지의 평균 벡터도 쓰지 않았다. 서로 다른 그림체와 구도를 평균내면 어느 쪽도 제대로 나타내지 않는 중간점이 될 수 있어서였다.
+
+이 선택은 다양성을 확보하기 위한 운영 규칙이었다. 서로 다른 배너의 점수를 섞어서 하나의 높은 숫자를 고르는 것이 이 작업의 목적과 맞는지부터 다시 봐야 했다.
+
+## 검색 결과를 그날의 생성 목록으로
+
+앵글들을 돌아가며 목표 개수만큼 새로운 스토리를 발굴했다. 개별 앵글 검색이 실패하면 그 앵글만 건너뛰고 전체 작업은 계속했다. 후보가 모자라면 목표 미만인 채로 끝냈다. 개수를 맞추려고 관련성이 낮은 후보를 억지로 넣지는 않았다.
+
+발굴은 크론으로 미리 돌리고, 아침에 통합 생성 화면을 열면 사용할 세트가 준비돼 있게 했다. 운영자는 일괄 생성을 실행하고 결과를 확인할 수 있다.
+
+선택된 스토리는 기존 제작 흐름에 들어간다. 다만 디자이너 프롬프트에는 위닝 카피의 헤드라인·서브·CTA와 그 톤을 예시로 넣었다. 결과물은 위닝 경로의 폴더로 올리고 소재 메타데이터에 어느 검색축에서 발굴했는지 기록했다.
+
+## 비슷한 스토리를 찾은 다음에도 검증은 남는다
+
+위닝 앵글에는 '왜 성과가 났는가'에 대한 해석이 들어 있다. 실제 소재를 근거로 한 분석이지만, 그것을 새로운 스토리에 적용했을 때 같은 성과가 난다고 확정할 수는 없다. 검색은 그 가설과 비슷한 후보를 찾아주는 단계다.
+
+이 작업에서는 모델이 새 기획을 계속 만드는 것보다, 운영팀이 이미 확인한 광고와 원본 스토리를 다음 제작에 연결하는 데 집중했다. 텍스트축과 이미지축을 분리하고, 후보가 어디서 왔는지 남긴 이유도 이후 집행 결과를 다시 읽기 위해서였다. 어떤 앵글과 어떤 검색축이 실제로 유효했는지는 새 광고의 성과와 함께 확인해야 한다.
+
+본문의 데이터 흐름 애니메이션은 3Blue1Brown의 오픈소스 [Manim](https://github.com/3b1b/manim)에서 출발한 [Manim Community](https://www.manim.community/)로 만들었다.
+
+### 광고를 집행하기 전에 성과를 예측할 수 있을까?
+
+- Canonical URL: https://hyejunl33.github.io/projects/2026-10-12-wrtn-09-ad-performance-experiments/
+- Collection: Project
+- Published: 2026-10-12
+- Tags: Project
+
+어떤 광고가 잘될지는 결국 집행 비용을 써봐야 알 수 있었다. 소재를 많이 만들 수 있게 된 다음에는, 같은 스토리에서 어떤 카피를 내보낼지와 집행 전에 후보를 걸러낼 수 있을지가 궁금해졌다.
+
+카피의 톤을 바꿔 비교할 수 있는 생성 경로를 만들고, 합성 페르소나로 배너의 선호도를 예측하는 실험도 했다. 구현한 것과 성능을 확인한 것은 구분해서 기록하려고 한다. 특히 페르소나 실험은 아직 광고 성과 예측을 입증했다고 말할 수 없는 결과였다.
+
+## 현지 마케터의 의견을 테스트할 수 있는 형태로
+
+OOC에서는 구어체 카피, 캬라푸에서는 행동유도형 카피가 좋을 것이라는 마케터분들의 의견이 있었다. 특정 방향으로 고정하기보다 여러 톤을 만들어 테스트해 보자는 방향으로 정리됐다.
+
+같은 스토리 소구점에서 세 가지 형식을 만들었다.
+
+- 행동유도형: 헤드라인이 유저에게 행동을 요구하거나 권한다.
+
+- 캐릭터 대사형: 그림 속 캐릭터가 그 장면에서 할 법한 구어체 한마디다.
+
+- 상황형: 소구점의 상황을 경악·깨달음·곤경으로 표현한다.
+
+![슬라임 스토리의 캐릭터 대사형 카피](/assets/images/notion/965ecbf938973af9b474/01-ad-performance-experiments.png)
+
+<p class="caption">슬라임 스토리의 캐릭터 대사형 카피</p>
+
+![슬라임 스토리의 행동유도형 카피](/assets/images/notion/965ecbf938973af9b474/02-ad-performance-experiments.png)
+
+<p class="caption">슬라임 스토리의 행동유도형 카피</p>
+
+![슬라임 스토리의 상황형 카피](/assets/images/notion/965ecbf938973af9b474/03-ad-performance-experiments.png)
+
+<p class="caption">슬라임 스토리의 상황형 카피</p>
+
+![좀비 스토리의 캐릭터 대사형 카피](/assets/images/notion/965ecbf938973af9b474/04-ad-performance-experiments.png)
+
+<p class="caption">좀비 스토리의 캐릭터 대사형 카피</p>
+
+![좀비 스토리의 행동유도형 카피](/assets/images/notion/965ecbf938973af9b474/05-ad-performance-experiments.png)
+
+<p class="caption">좀비 스토리의 행동유도형 카피</p>
+
+![좀비 스토리의 상황형 카피](/assets/images/notion/965ecbf938973af9b474/06-ad-performance-experiments.png)
+
+<p class="caption">좀비 스토리의 상황형 카피</p>
+
+같은 소재에서도 헤드라인과 CTA가 어떻게 달라지는지 볼 수 있었다. 생성 경로는 공통 입력에서 유형별 카피를 만들고 렌더링하는 형태로 구성했다.
+
+![카피 유형별 생성과 렌더링 흐름](/assets/images/notion/965ecbf938973af9b474/07-ad-performance-experiments.png)
+
+<p class="caption">카피 유형별 생성과 렌더링 흐름</p>
+
+작업 기록에는 7월 15일부터 라이브하고 성과를 모니터링할 예정이라고 남아 있다. 세 유형의 산출물은 있지만, 어느 유형의 CTR이나 ROAS가 더 좋았는지 확인한 결과는 이 기록에 없다. 지금 말할 수 있는 것은 톤을 고정하지 않고 비교할 수 있게 만든 설계와 구현까지다.
+
+## 밈도 가설로 넣어봤다
+
+D0 ROAS를 개선할 가설 중 하나로 최신 밈을 카피에 넣어보는 작업을 했다. 클릭을 유도할 만한 표현이어도 스토리와 맞지 않으면 억지스럽고, 위험한 맥락이 있으면 광고에 쓸 수 없었다.
+
+밈 카탈로그에는 의미, 사용 맥락, 톤, 어울리는 캐릭터 유형, 사용 패턴과 템플릿 슬롯, 안전성, 신선도 등을 정리했다. 같은 유행어를 모든 캐릭터에 붙이기보다 어떤 관계와 상황에서 자연스러운지 구분하려는 정보다. 안전 가이드와 사람 검수를 거치고, 재미없거나 맥락에 맞지 않는 결과는 걸러야 했다.
+
+```yaml
+- id: ssyagal
+  phrase: 쌰갈
+  meaning: 한중 국제커플 유튜버 '여단오'의 멤버 여루가 기분 나쁠 때 '씨발'을 돌려 말하는 표현으로, 짜증이나 황당함이 날 때 널리 쓰입니다.
+  usage_context:
+  - 짜증
+  - 황당함
+  - 분노
+  - 코믹한 분노
+  - 스트레스
+  - 일상
+  tone:
+  - 코믹한
+  - 짜증난
+  - 유쾌한
+  - 캐주얼한
+  archetype:
+  - 다혈질 소꿉친구
+  - 스트레스 받는 직장인
+  - 개그 캐릭터
+  - 허당 악당
+  - 츤데레
+  usage_pattern: append
+  template_slots: '{짜증나는 상황}... 아 쌰갈!'
+  source_type: person
+  applicability: 3
+  safety: yellow
+  safety_note: 욕설(씨발)을 돌려 말하는 유행어
+  freshness: 5
+  era: 2023년경부터 입소문을 타기 시작해 숏폼 및 AI 음성 밈으로 널리 쓰이는 현역 밈
+  origin_country: 한국
+
+- id: byeongi_e_naeryeo
+  phrase: ○○를 변기에 넣고서 내려
+  meaning: 상대를 변기에 넣고 물 내리듯 압도적으로 짓밟겠다는 강한 디스·도발 펀치라인
+  usage_context:
+  - 디스
+  - 도발
+  - 라이벌
+  - 압도
+  - 기싸움
+  - 선전포고
+  tone:
+  - 도발
+  - 공격적
+  - 힙합
+  - 자신감
+  - 살벌
+  archetype:
+  - 라이벌 캐릭터
+  - 디스전/래퍼
+  - 도발적 빌런
+  - 기싸움 연애물
+  - 먼치킨
+  template_slots: '{상대}를 변기에 넣고서 내려'
+  source_type: song
+  applicability: 3
+  safety: yellow
+  safety_note: 실명 비방 원문(빅나티/BIG Naughty) 제거하고 ○○ 슬롯으로 일반화
+  freshness: 5
+  era: 2025~ 현역(스윙스 디스전 밈)
+  origin_country: 한국
+- id: bamti-ugly-fashion
+  phrase: 밤티
+  meaning: 라인플레이의 '밤티'라는 유저의 기괴한 코스튬에 다른 유저가 심한 돌직구를 날린 장면에서 유래한 표현으로, 기괴하거나 촌스러운 외모·코디를
+    뜻하는 대명사로 쓰입니다.
+  usage_context:
+  - 패션테러리스트
+  - 팩트폭력
+  - 촌스러움
+  - 기상천외한코디
+  - 무덤덤한반응
+  tone:
+  - 돌직구
+  - 황당함
+  - 시니컬
+  - 유쾌함
+  archetype:
+  - 패션테러리스트
+  - 마이웨이캐릭터
+  - 팩폭러
+  - 눈치없는캐릭터
+  usage_pattern: append
+  template_slots: 밤티님 죄송한데 진짜 개 좆같이 생기 셨네요... 소리가 절로 나오는 상황
+  source_type: meme-native
+  applicability: 3
+  safety: yellow
+  safety_note: 실존 유저의 닉네임에서 유래한 외모 비하/촌스러움의 대명사로 쓰여 실제 인물에 대한 외모 비하로 사용하지 않도록 주의해야 함
+  freshness: 4
+  era: 2020~2021년 라인플레이 커뮤니티에서 시작되어 2024~2025년 X(트위터) 등 SNS에서 다시 확산된 밈
+  origin_country: 한국
+```
+
+![밈 카탈로그를 활용하는 생성 흐름](/assets/images/notion/965ecbf938973af9b474/08-ad-performance-experiments.png)
+
+<p class="caption">밈 카탈로그를 활용하는 생성 흐름</p>
+
+![밈을 활용한 광고 소재 예시](/assets/images/notion/965ecbf938973af9b474/09-ad-performance-experiments.png)
+
+<p class="caption">밈을 활용한 광고 소재 예시</p>
+
+![스토리에 밈을 적용한 카피 예시](/assets/images/notion/965ecbf938973af9b474/10-ad-performance-experiments.png)
+
+<p class="caption">스토리에 밈을 적용한 카피 예시</p>
+
+![같은 스토리의 다른 밈 카피](/assets/images/notion/965ecbf938973af9b474/11-ad-performance-experiments.png)
+
+<p class="caption">같은 스토리의 다른 밈 카피</p>
+
+예시는 밈을 반영한 카피와 제작 흐름이다. 밈이 들어가면 CTR이 올라갈 것이라는 기대는 가설이다. 유행어를 적용한 산출물만으로 성과가 개선됐다고 말할 수는 없었다.
+
+## 페르소나가 배너에 반응하게 만들면 어떨까
+
+다음 실험은 NVIDIA Nemotron Persona-Korea 데이터셋을 활용했다. 페르소나에 배너와 카피를 보여주고 선호도를 물으면, 집행 전에 좋은 후보를 찾을 수 있지 않을까 하는 생각이었다. 충분히 검증된다면 일정 점수 이상의 배너만 집행하는 방식으로 연결할 수 있었다.
+
+![페르소나 데이터의 인구통계 분포](/assets/images/notion/965ecbf938973af9b474/12-ad-performance-experiments.png)
+
+<p class="caption">페르소나 데이터의 인구통계 분포</p>
+
+처음에는 연령, 성별, 교육, 직업, 지역을 층화해서 표본을 만들었다. 다음에는 타깃을 20~39세로 좁히고 남성향·여성향에 성별을 맞췄다. 더 나아가 서비스에 관심을 가질 만한 비슷한 프로필 집단을 임베딩과 벡터 검색으로 고르는 방식도 살펴봤다.
+
+![배너와 카피에 대한 선호도 질문](/assets/images/notion/965ecbf938973af9b474/13-ad-performance-experiments.png)
+
+<p class="caption">배너와 카피에 대한 선호도 질문</p>
+
+![페르소나별 선호도 평가 결과](/assets/images/notion/965ecbf938973af9b474/14-ad-performance-experiments.png)
+
+<p class="caption">페르소나별 선호도 평가 결과</p>
+
+![페르소나 임베딩의 군집 분포](/assets/images/notion/965ecbf938973af9b474/15-ad-performance-experiments.png)
+
+<p class="caption">페르소나 임베딩의 군집 분포</p>
+
+![서비스 타겟과 유사한 페르소나 검색 결과](/assets/images/notion/965ecbf938973af9b474/16-ad-performance-experiments.png)
+
+<p class="caption">서비스 타겟과 유사한 페르소나 검색 결과</p>
+
+어떤 사람을 대표하게 만들 것인지가 실험 입력의 큰 부분이었다. 전연령을 균등하게 나누는 것과, 실제 서비스 타겟에 가까운 집단을 고르는 것은 다른 평가다. 같은 질문을 넣어도 페르소나 구성에 따라 점수 분포가 달라질 수 있었다.
+
+## 높은 점수와 실제 CTR이 같은 방향으로 움직였나
+
+검증에서 보고 싶었던 것은 실제 CTR과 시뮬레이션 점수의 상관관계였다. 당시에는 correlation 0.5 이상이면 활용을 검토할 수 있겠다는 기준을 뒀다. 이 값은 실험에서 정한 판단 기준이지 모든 광고 예측에 적용되는 공통 기준은 아니다.
+
+![전연령 층화 표본의 시뮬레이션 점수와 실제 CTR](/assets/images/notion/965ecbf938973af9b474/17-ad-performance-experiments.png)
+
+<p class="caption">전연령 층화 표본의 시뮬레이션 점수와 실제 CTR</p>
+
+![20~39세 표본의 시뮬레이션 점수와 실제 CTR](/assets/images/notion/965ecbf938973af9b474/18-ad-performance-experiments.png)
+
+<p class="caption">20~39세 표본의 시뮬레이션 점수와 실제 CTR</p>
+
+![페르소나 표본 조건별 예측 점수 비교](/assets/images/notion/965ecbf938973af9b474/19-ad-performance-experiments.png)
+
+<p class="caption">페르소나 표본 조건별 예측 점수 비교</p>
+
+|  | 실험1 | 실험2 | 실험3 |
+| --- | --- | --- | --- |
+| 타겟연령 | 전연령 Stratified | 20-39 | 20-39 |
+| 성별 | 성별 Stratified | 남성향은 남성 여성향은 여성 | 남성향은 남성 여성향은 여성 |
+| 특징 | 교육, 직업, 지역등 Stratified하게 나눔 | 20~30대 남성, 여성 전부 | 20~30대 남성, 여성중 크랙서비스를 좋아할만한 Cluster선정 |
+| Corr | -0.219 | -0.048 |  |
+
+정리표에는 실험 1의 corr가 -0.219, 실험 2가 -0.048로 남아 있다. 이미지 중 두 번째 산점도에는 약 -0.079가 표시돼 있어 기록된 결과를 한 숫자로 통일하기 어렵다. 두 번째 산점도도 양의 상관을 보인 결과는 아니다. 서비스 친화 클러스터를 고르는 세 번째 실험은 표에 corr가 비어 있다.
+
+20~30대로 좁힌 평가에서는 전반적으로 긍정적인 점수를 주는 편향도 있었다. 높은 점수를 받는다는 사실만으로 배너 사이의 실제 성과 차이를 잘 구분하는 것은 아니었다. 점수가 모두 비슷하게 높으면 집행 후보를 가르는 데 쓸 수 없다.
+
+시간상 충분한 표본을 확보하지 못했고, 작은 표본의 결과만으로 예측력을 판단하기 어려웠다. 표본을 늘리면 양의 상관이 생길 가능성을 생각했지만, 현재 기록의 결과가 그것을 뒷받침하지는 않는다. 표본 확대는 검증을 이어갈 방법이지 좋은 결과를 보장하는 방법은 아니다.
+
+## 생성한 카피와 예측한 점수를 다루는 방식
+
+카피 유형과 밈은 실제로 내보내 비교할 수 있는 소재를 만들었다. 페르소나는 그 비교를 집행 전에 일부 대신해보려는 실험이었다. 두 작업 모두 제작 파이프라인에 연결할 수 있었지만, 연결 가능하다는 이유만으로 자동 필터로 사용하기에는 근거가 부족했다.
+
+계속한다면 실제 집행 소재와 페르소나 평가가 정확히 대응하는지부터 맞추고, 어느 기간의 CTR을 비교할지와 표본 구성을 함께 정해야 한다. 그 후에 같은 조건에서 후보 순위를 얼마나 잘 맞히는지 확인할 수 있을 것이다.
+
+당시 실험에서 남긴 것은 선호도 질문, 페르소나 그룹 구성, 점수와 실제 CTR을 비교하는 흐름이었다. 아직 돈을 쓰지 않고 광고 성과를 알 수 있게 된 것은 아니었다. 잘된 사례뿐 아니라, 기대했던 예측 신호가 나오지 않았던 기록도 남겨두려고 한다.
+
 ### [이미지기반 카페추천 프로젝트] ADK 기반 에이전트 챗봇 구현
 
 - Canonical URL: https://hyejunl33.github.io/projects/2026-01-30-ADK-Multi-agent/
@@ -16009,4 +17435,3 @@ Wrap Up Report에도 자세히 설명이 되어있는데, 이론적으로 배운
  세번째로 나를 재구성해야한다. 권력이 나를 A라고 규정한다면 나를 B, C, D로 살아보는 실험을 하는것이다. 푸코는 **Care of the self**라는 개념을 제시했다. 권력이 나를 멋대로 주체로 만들려 할때, 오히려 내가 나를 돌보고 나를 하나의 예술작품처럼 스스로 만들어가는 것이다. 즉 이전에 주체적인 태도로 질문을 해나간것들을 바탕으로, 나 자신을 사회의 틀에서 벗어나서 재구성해보는 것이다.
 
  이들을 통해 나는 세상이 부조리하다는것을 인식하고, 나의 반항은 사회의 부조리를 의식한체, 저들이 정해준 열정이 아닌 나만의 열정을 찾고, 저들이 허락한 자유가 아닌 나만의 틈새를 만들어 부조리한 삶을 나의 작품으로 살아낼 수 있다.
-
