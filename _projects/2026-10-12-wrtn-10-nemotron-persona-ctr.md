@@ -1,6 +1,6 @@
 ---
 layout: modern-single
-title: "Nemotron Persona로 광고 배너의 CTR을 예측해본 실험"
+title: "CTR을 예측할 수 있을리가 없잖아 무리무리!(무리가아니었다!?): nemotron persona"
 date: 2026-10-12
 tags:
   - Project
