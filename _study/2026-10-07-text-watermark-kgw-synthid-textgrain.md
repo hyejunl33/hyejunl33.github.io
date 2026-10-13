@@ -46,6 +46,10 @@ LLM은 문장을 한 번에 완성하지 않는다. 지금까지 쓴 내용을 �
 
 이 비밀 규칙을 만드는 데 쓰는 값이 ‘키’다. 생성기는 앞선 문맥과 키로 이번 위치에서 어떤 후보를 선호할지 정한다. 검출기는 완성된 글을 읽으며 같은 문맥과 키로 그 규칙을 다시 만든다. 그래서 글에 별도 표시를 붙이지 않아도, 선택된 토큰들을 통해 흔적을 확인할 수 있다.
 
+![SynthID-Text 논문 Fig. 1](/assets/images/notion/9dc20ab41d934721bd65/01-synthid-overview.png)
+
+그림 1. SynthID-Text 논문의 Fig. 1을 캡처했다. 생성할 때 샘플링에 키가 개입하고, 검출할 때 텍스트와 키를 사용한다. 출처: [Dathathri et al., 2024](https://www.nature.com/articles/s41586-024-08025-4).
+
 ## KGW: 특정 후보가 조금 더 자주 나오게 만들기
 
 동료가 알려준 Red–Green 방식부터 보면 원리가 가장 직관적이다. KGW는 다음 토큰을 고를 때 후보들을 Green과 Red라는 두 그룹으로 나누고, Green에 속한 후보가 뽑힐 확률을 조금 높인다. [KGW 논문](https://arxiv.org/abs/2301.10226)
@@ -72,6 +76,10 @@ KGW가 후보의 확률에 직접 보너스를 준다면, SynthID-Text는 먼저
 
 예를 들어 후보 네 개를 뽑았다고 해보자. 두 개씩 겨뤄 둘을 남기고, 남은 둘이 다시 겨뤄 최종 토큰 하나를 고른다. 모델이 원래 선호하던 토큰은 처음 후보를 뽑을 때 더 자주 등장하고, 대결에서는 키로 정한 점수가 선택에 개입한다.
 
+![SynthID-Text 논문 Fig. 2](/assets/images/notion/9dc20ab41d934721bd65/03-synthid-tournament.png)
+
+그림 2. SynthID-Text 논문의 Fig. 2. 위는 문맥·키로 만드는 점수, 아래는 후보 토큰의 토너먼트다. 출처: [Dathathri et al., 2024](https://www.nature.com/articles/s41586-024-08025-4).
+
 ![SynthID-Text에서 후보들이 토너먼트를 거치는 과정](/assets/images/notion/9dc20ab41d934721bd65/synthid-paper-flow-clean.gif)
 
 이 점수는 문장을 얼마나 잘 쓰는지 평가한 점수가 아니다. 워터마크를 남기기 위해 키로 정한 점수다. 점수가 높은 후보가 대결에서 더 자주 살아남으면, 완성된 글에도 그 점수의 흔적이 쌓인다. 검출기는 같은 규칙으로 선택된 토큰의 점수를 다시 계산해 그 경향을 확인한다.
@@ -82,11 +90,19 @@ KGW와의 차이는 선택에 개입하는 위치다. KGW는 뽑기 전에 후�
 
 textGrain은 후보 토큰들을 여러 묶음으로 나눈다. 그리고 문맥과 키를 이용해 어떤 묶음에서 고를지를 조절한다. 묶음을 고른 뒤에는 그 안에서 토큰 하나를 뽑는다. [textGrain 기술보고서](https://cdn.openai.com/pdf/e9508624-d767-41b6-a26d-e34ca798ada6/textgrain-entropy-calibrated-watermarking-for-language-model-text.pdf)
 
+![textGrain 보고서 Fig. 1](/assets/images/notion/9dc20ab41d934721bd65/05-textgrain-embedding.png)
+
+그림 3. textGrain 보고서의 Fig. 1. 토큰을 키 기반 블록으로 묶고, 엔트로피 예산 아래에서 블록의 조건부 분포를 구성한 뒤 토큰을 뽑는다. 출처: [OpenAI 기술보고서, 2026](https://cdn.openai.com/pdf/e9508624-d767-41b6-a26d-e34ca798ada6/textgrain-entropy-calibrated-watermarking-for-language-model-text.pdf).
+
 예를 들어 ‘보관한다’와 ‘기록한다’가 한 묶음에 들어갔다면, 그 묶음 안에서는 모델이 원래 선호하던 비율을 유지한다. 앞의 예시에서는 둘의 확률이 60%와 10%였으니, 묶음 안에서도 ‘보관한다’가 여섯 배 자주 뽑히는 식이다. 키는 어떤 묶음을 고를지에 개입하고, 묶음 안의 선택에는 원래의 상대적인 선호를 사용하는 것이다.
 
 여기에 워터마크가 선택을 지나치게 좌우하지 않도록 제한을 둔다. 쉽게 말하면, **흔적은 남기되 다음 표현을 고를 자유가 얼마나 줄어드는지도 관리하는 방식이다.** 후보가 다양하게 뽑힐 수 있던 상황에서 키 때문에 선택이 한쪽으로 너무 몰리지 않도록 조절한다.
 
 검출기는 출력된 토큰이 어느 묶음에 속했는지와 키로 만든 점수를 다시 확인한다. 키와 연결된 선택이 글 전체에서 얼마나 자주 나타났는지를 보는 것이다.
+
+![textGrain 보고서 Fig. 2](/assets/images/notion/9dc20ab41d934721bd65/07-textgrain-detection.png)
+
+그림 4. textGrain 보고서의 Fig. 2. 관측한 토큰의 블록과 키 기반 점수를 복원해 검정 통계량을 만든다. 출처: [OpenAI 기술보고서, 2026](https://cdn.openai.com/pdf/e9508624-d767-41b6-a26d-e34ca798ada6/textgrain-entropy-calibrated-watermarking-for-language-model-text.pdf).
 
 ## 세 방식의 핵심은 같은 곳에 있다
 
@@ -99,6 +115,10 @@ textGrain은 후보 토큰들을 여러 묶음으로 나눈다. 그리고 문맥
 세 방식 모두 다음 토큰을 고르는 과정에 키를 끼워 넣는다. 같은 문맥과 키에서 특정 후보를 선호하도록 선택을 조절하고, 그 흔적을 완성된 글에서 찾는다. SynthID-Text와 textGrain은 여러 키의 경우를 평균냈을 때 원래의 토큰 확률을 유지하도록 설계하면서도, 개별 선택에는 키의 흔적을 남긴다.
 
 내가 처음 궁금했던 ‘텍스트에 워터마크를 어떻게 넣지?’의 답은 여기에 있었다. **토큰을 고르는 확률에 개입해서 글 전체에 통계적인 흔적을 남긴다.** KGW처럼 확률분포를 직접 비틀 수도 있고, 후보끼리 겨루게 하거나 묶음을 고르는 과정에서 선택을 바꿀 수도 있다.
+
+![SynthID-Text 논문 Fig. 3](/assets/images/notion/9dc20ab41d934721bd65/08-synthid-evaluation.png)
+
+그림 5. SynthID-Text 논문의 Fig. 3. 왼쪽은 길이에 따른 검출률, 가운데는 선택적 검출의 보류 비율, 오른쪽은 분포를 바꾸는 설정의 검출률·log perplexity 관계다. 출처: [Dathathri et al., 2024](https://www.nature.com/articles/s41586-024-08025-4).
 
 ## 다시 PRD Generator Agent로
 
