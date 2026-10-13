@@ -8,6 +8,8 @@ excerpt: "뤼튼에서 인턴으로 일하던 올해 여름, 같은 IAB중 PM들
 notion_source_id: "sha256:9dc20ab41d934721bd65"
 ---
 
+이 글은 DEVOCEAN에도 게재되었습니다. [DEVOCEAN에서 읽기](https://devocean.sk.com/blog/techBoardDetail.do?id=168550&isShared=Y)
+
 ## 우리 아이가 달라졌어요: PRD 에이전트가 이상한말을 해요.
 
 뤼튼에서 인턴으로 일하던 올해 여름, 같은 IAB중 PM들이 사용할 PRD Generator Agent를 만드는 동료 인턴이 있었다. 8월쯤 PM분들이 에이전트 성능이 이상하다는 이야기를 들었다. 심지어 클로드가 이상한말을 해서 직접 타자를 쳐서 PRD를 작성까지한다고 들었다..!(AI없이, 26년 8월에..?) Claude Fable API 출력에 텍스트 워터마크가 들어가기 시작한 뒤 단어 선택이 눈에 띄게 어색해졌고, PM들이 결국 Agent에서 Fable 대신 gemini나, GPT계열 모델들을 쓰게 됐다는 내용이었다.
