@@ -10,6 +10,12 @@
   description: 크롤링부터 멀티모달 검색, 리뷰 요약, 에이전트 경험까지 연결한 추천 시스템
   accent: cafe
 
+- key: hand-bone-segmentation
+  title: 손 뼈 Semantic Segmentation
+  label: Computer vision · ML experiments
+  description: 회전 분포 분석과 데이터 증강, 고해상도 학습, 경계 예측을 실험한 손 뼈 분할 프로젝트
+  accent: segmentation
+
 - key: sentiment-classification
   title: 영화 리뷰 감성 분류
   label: NLP experiment system

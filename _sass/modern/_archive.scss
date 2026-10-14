@@ -22,6 +22,7 @@
 .modern-project-tile__art { position: relative; display: block; height: 150px; overflow: hidden; border-radius: 14px; background: radial-gradient(ellipse 155% 92% at -12% 110%, rgba(118,221,187,.92), transparent 65%), radial-gradient(ellipse 130% 105% at 110% -8%, rgba(183,155,255,.9), transparent 68%), linear-gradient(135deg, #17221e, #527e70); }
 .modern-project-tile:first-child .modern-project-tile__art { height: 190px; }
 .modern-project-tile--sentiment .modern-project-tile__art { background: radial-gradient(ellipse 150% 110% at 108% 114%, rgba(135,235,207,.9), transparent 67%), radial-gradient(ellipse 130% 95% at -10% -5%, rgba(142,117,231,.9), transparent 66%), linear-gradient(155deg, #172028, #46658a); }
+.modern-project-tile--segmentation .modern-project-tile__art { background: radial-gradient(ellipse 140% 100% at 105% 110%, rgba(126,184,241,.9), transparent 65%), radial-gradient(ellipse 120% 95% at -10% -5%, rgba(173,218,230,.85), transparent 66%), linear-gradient(145deg, #182434, #476780); }
 .modern-project-tile__art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.22), transparent 64%); transform: translateX(-100%); transition: transform .8s var(--m-ease); }
 .modern-project-tile:hover .modern-project-tile__art::after { transform: translateX(100%); }
 .modern-project-tile__meta { margin: 14px 12px 0; color: var(--m-faint); font-size: 9px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
