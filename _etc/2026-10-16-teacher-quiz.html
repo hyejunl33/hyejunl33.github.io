@@ -1,5 +1,5 @@
 ---
-layout: null
+layout: presentation
 title: "반가워요! 이혜준 선생님을 소개합니다"
 date: 2026-10-16 00:00:00 +0900
 permalink: /etc/teacher-quiz/
@@ -62,6 +62,9 @@ html,body{width:100%;height:100%;overflow:hidden}body{display:block;background:#
 .find-photo-frame:before{display:none}.find-teacher:not(.revealed) .find-heading{max-width:none;background:#10141b66;padding:14px 20px}.find-teacher:not(.revealed) .find-heading h2{font-size:clamp(24px,2.7vw,48px)}
 
 .closing{text-align:center;inset:50px 20px 50px;background:radial-gradient(ellipse at center,#fff3bd99,transparent 70%)}.closing.active{display:flex;flex-direction:column;align-items:center;justify-content:center}.closing-copy{z-index:1}.closing .eyebrow{font-size:clamp(14px,1.3vw,24px);margin-bottom:18px}.closing h2{font-size:clamp(42px,5.6vw,100px);line-height:1.25;letter-spacing:-.05em;margin:0 0 20px}.closing h2 em{font-style:normal;color:#ef574e}.closing p{font-size:clamp(18px,1.8vw,32px);line-height:1.6;margin:0 0 14px;color:#726954}.closing-sign{font-size:clamp(14px,1.2vw,23px);color:#8c7c5c}.closing-cast{display:flex;justify-content:center;align-items:flex-end;width:min(90%,1000px);height:25vh;margin-top:24px;gap:1vw}.closing-cast img{object-fit:contain;width:14%;height:100%;animation:closing-wave 2.4s ease-in-out infinite;animation-delay:calc(var(--i)*-.25s)}.closing-cast img:nth-child(2){height:65%}.closing-restart{position:absolute;bottom:8px;right:12px;padding:9px 14px;font-size:13px}@keyframes closing-wave{50%{transform:translateY(-10px) rotate(3deg)}}@media(max-height:700px){.closing h2{font-size:clamp(35px,4.5vw,65px);margin-bottom:10px}.closing p{font-size:20px;margin-bottom:6px}.closing .eyebrow{margin-bottom:10px}.closing-cast{margin-top:12px;height:23vh}}@media(prefers-reduced-motion:reduce){.closing-cast img{animation:none}}
+
+/* Standalone viewport: no blog article constraints or horizontal overflow. */
+html,body{margin:0!important;padding:0!important;width:100%;min-width:0;max-width:100%;height:100%;overflow:hidden}#stage{position:fixed;inset:0;width:100%;max-width:100%;height:100dvh;min-width:0;margin:0;border:0}#stage header{left:0;right:0;width:auto;max-width:none}#stage .slide{min-width:0;max-width:100%}#fullscreen-notice{position:fixed;bottom:58px;left:50%;transform:translateX(-50%);z-index:100;background:#30332df2;color:white;padding:16px 22px;border-radius:14px;width:max-content;max-width:90vw;text-align:center;font-size:16px;line-height:1.5}
 </style></head><body>
 <main id="stage">
 <header><a class="brand" href="#" aria-label="처음으로">떡잎마을에서 온 초대장</a><div class="top-actions"><button id="settings" aria-label="이름 설정">이름 설정</button><button id="fullscreen" aria-label="전체 화면">⛶ 전체 화면</button></div></header>
@@ -156,7 +159,16 @@ $('#experience-reveal').onclick=()=>{
  $('#answer-dialog').showModal();document.querySelectorAll('[data-proof]').forEach(b=>b.onclick=()=>proof(b.dataset.proof));proof('tv');celebrate();
 };
 $('.close').onclick=()=>$('#answer-dialog').close();$('#answer-dialog').onclick=e=>{if(e.target===$('#answer-dialog'))$('#answer-dialog').close()};
-$('#fullscreen').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen?.()};
+function syncFullscreen(){const active=!!(document.fullscreenElement||document.webkitFullscreenElement);$('#fullscreen').textContent=active?'⛶ 전체 화면 해제':'⛶ 전체 화면';$('#fullscreen').setAttribute('aria-label',active?'전체 화면 해제':'전체 화면');$('#fullscreen').setAttribute('aria-pressed',String(active));layoutFindPhoto()}
+$('#fullscreen').onclick=async()=>{
+ const root=document.documentElement;
+ try{
+  if(document.fullscreenElement||document.webkitFullscreenElement){const leave=document.exitFullscreen||document.webkitExitFullscreen;if(leave)await leave.call(document)}
+  else {const enter=root.requestFullscreen||root.webkitRequestFullscreen;if(!enter)throw new Error('unsupported');await enter.call(root)}
+  syncFullscreen();
+ }catch{let notice=$('#fullscreen-notice');if(!notice){notice=document.createElement('div');notice.id='fullscreen-notice';notice.setAttribute('role','status');document.body.append(notice)}notice.textContent='전체 화면이 제한된 브라우저예요. Chrome 또는 Edge에서 이 주소를 열고 전체 화면 버튼을 눌러 주세요.';setTimeout(()=>notice.remove(),8000)}
+};
+document.addEventListener('fullscreenchange',syncFullscreen);document.addEventListener('webkitfullscreenchange',syncFullscreen);
 function updateName(name){$('#teacher-name').textContent=name||'이혜준'}try{updateName(localStorage.getItem('teacher-name-v2'))}catch{}$('#settings').onclick=()=>{$('#name-input').value=$('#teacher-name').textContent==='이혜준'?'':$('#teacher-name').textContent;$('#settings-dialog').showModal()};$('#cancel-settings').onclick=()=>$('#settings-dialog').close();$('#name-form').onsubmit=e=>{e.preventDefault();const name=$('#name-input').value.trim();updateName(name);try{localStorage.setItem('teacher-name-v2',name)}catch{}$('#settings-dialog').close()};
 $('#reset').onclick=()=>{setTeacherFound(false);for(const [id,q] of Object.entries(simpleQuizzes))$(`#${id}-status`).textContent=q.status;$('#answer-dialog').close();selectedFood=selectedExperience=selectedCharacter=null;document.querySelectorAll('.selected,.correct,.dim').forEach(c=>c.classList.remove('selected','correct','dim'));document.querySelectorAll('[aria-pressed]').forEach(c=>c.setAttribute('aria-pressed','false'));$('#character-status').textContent='선생님의 최애는 누구일까요?';$('#food-status').textContent='어떤 음식일까요?';$('#experience-status').textContent='상어에게 물린 적도 있다고요…?';go(0)};
 document.addEventListener('keydown',e=>{if($('dialog[open]')||e.target.tagName==='INPUT')return;if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(page+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(page-1)}if(e.key.toLowerCase()==='f')$('#fullscreen').click()});$('#back').disabled=true;
