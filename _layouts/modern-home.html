@@ -63,6 +63,14 @@ layout: modern-base
     <a class="modern-text-link" href="{{ '/archive/' | relative_url }}">전체 기록</a>
   </div>
   <div class="modern-card-grid modern-card-grid--three">
-    {% for item in all_notes limit: 3 %}{% include modern/post-card.html post=item %}{% endfor %}
+    {% assign recent_count = 0 %}
+    {% for item in all_notes %}
+      {% if item.hide_from_latest or item.tags contains '수업자료' or item.tags contains '교생실습' %}
+        {% continue %}
+      {% endif %}
+      {% include modern/post-card.html post=item %}
+      {% assign recent_count = recent_count | plus: 1 %}
+      {% if recent_count == 3 %}{% break %}{% endif %}
+    {% endfor %}
   </div>
 </section>

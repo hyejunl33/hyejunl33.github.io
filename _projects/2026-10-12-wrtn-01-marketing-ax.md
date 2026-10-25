@@ -2,6 +2,7 @@
 layout: modern-single
 title: 뤼튼에서 광고 소재 제작을 AX로 바꾸기
 date: '2026-10-12'
+featured: true
 tags:
   - Internal Agent Builder at wrtn
 excerpt: 뤼튼에서 그로스마케팅팀의 광고 소재 제작과 운영을 AX로 바꾸는 일을 맡았다. 스토리 데이터를 가져와서 광고에 쓸 소구점을 뽑고, 이미지 배너나 영상, 플레이어블로 만들어 e2e로 라이브까지할 수 있게 하는 작업이었다.

@@ -29,11 +29,12 @@ layout: modern-base
     <div class="modern-card-grid modern-card-grid--three">
       {% assign recent_count = 0 %}
       {% for item in recent_notes %}
-        {% unless item.url == page.url %}
-          {% include modern/post-card.html post=item %}
-          {% assign recent_count = recent_count | plus: 1 %}
-          {% if recent_count == 3 %}{% break %}{% endif %}
-        {% endunless %}
+        {% if item.url == page.url or item.hide_from_latest or item.tags contains '수업자료' or item.tags contains '교생실습' %}
+          {% continue %}
+        {% endif %}
+        {% include modern/post-card.html post=item %}
+        {% assign recent_count = recent_count | plus: 1 %}
+        {% if recent_count == 3 %}{% break %}{% endif %}
       {% endfor %}
     </div>
   </section>

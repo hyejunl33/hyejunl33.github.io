@@ -16,10 +16,13 @@ This is a detailed, generated index of the public blog. Use it to discover artic
 
 ## Article index
 
-### Project (26)
+### Project (28)
 
+- [손 뼈 Semantic Segmentation: 분포 분석부터 고해상도 학습까지](https://hyejunl33.github.io/projects/2026-10-14-hand-bone-semantic-segmentation/)
+  - Published: 2026-10-14 | Tags: Project, SemanticSegmentation
+  - Summary: 손 X ray의 29개 뼈 클래스를 분할하면서 회전 분포, 작은 뼈의 경계, 제한된 GPU 메모리를 문제로 정의했다. 데이터 전처리와 증강, 고해상도 학습, EMA·PointRend를 비교하고 효과가 있었던 방법을 다음 실험에 반영했다.
 - [뤼튼에서 광고 소재 제작을 AX로 바꾸기](https://hyejunl33.github.io/projects/2026-10-12-wrtn-01-marketing-ax/)
-  - Published: 2026-10-12 | Tags: Project
+  - Published: 2026-10-12 | Tags: Internal Agent Builder at wrtn
   - Summary: 뤼튼에서 그로스마케팅팀의 광고 소재 제작과 운영을 AX로 바꾸는 일을 맡았다. 스토리 데이터를 가져와서 광고에 쓸 소구점을 뽑고, 이미지 배너나 영상, 플레이어블로 만들어 e2e로 라이브까지할 수 있게 하는 작업이었다.
 - [스토리 데이터를 광고 소구점으로 바꾸는 파이프라인](https://hyejunl33.github.io/projects/2026-10-12-wrtn-02-story-preprocessing/)
   - Published: 2026-10-12 | Tags: Project
@@ -33,18 +36,21 @@ This is a detailed, generated index of the public blog. Use it to discover artic
 - [광고 안전성 필터에서 과차단을 줄인 과정](https://hyejunl33.github.io/projects/2026-10-12-wrtn-05-safety-filtering/)
   - Published: 2026-10-12 | Tags: Project
   - Summary: 캐릭터챗은 유저가 자유롭게 스토리를 만드는 서비스다. 광고 제작을 자동화하려면 이미지를 잘 만드는 것만큼, 만들면 안 되는 광고를 먼저 거르는 것도 필요했다. 서비스에 있는 스토리라고 모두 광고로 내보낼 수 있는 건 아니었다.
-- [이미지 역검색만으로는 IP를 판정할 수 없었다](https://hyejunl33.github.io/projects/2026-10-12-wrtn-06-ip-detection/)
-  - Published: 2026-10-12 | Tags: Project
-  - Summary: 스토리의 2차창작 여부는 서비스 데이터에 필드로 있었다. 처음에는 그 값이 false인 스토리만 광고로 만들었다. 그런데 운영하면서 해당 필드가 false인 작품에 알려진 버튜버 IP가 들어 있는 사례가 생겼다. 신고가 들어온 콘텐츠를 사람이 처리하는 흐름만으로는, 광고 생성 앞에서 모든 후보를 확인하기 어려웠다.
+- [IP침해차단 파이프라인 만들기](https://hyejunl33.github.io/projects/2026-10-12-wrtn-06-ip-detection/)
+  - Published: 2026-10-12 | Tags: Internal Agent Builder at wrtn
+  - Summary: 광고에 쓸 스토리 이미지에서 확인해야 하는 IP는 애니메이션에 한정되지 않았다. 애니메이션처럼 정해진 도메인의 IP는 WD Tagger로 태깅한 뒤 걸러낼 수 있었고, ops팀도 이미 이 방식으로 자동 태깅과 필터링을 하고 있었다.
 - [한국에서 만든 광고 파이프라인을 북미·일본으로 확장하기](https://hyejunl33.github.io/projects/2026-10-12-wrtn-07-global-expansion/)
   - Published: 2026-10-12 | Tags: Project
   - Summary: 광고 소재 제작 파이프라인은 크랙에서 먼저 만들었다. 이후 북미 OOC와 일본 캬라푸로 확장했다. 이미 돌아가는 생성 흐름이 있으니 언어만 바꾸면 될 것 같지만, 실제로는 입력 데이터와 UI, 폰트, 디자인 레퍼런스가 달랐다.
 - [성과가 난 광고에서 다음 스토리를 찾는 위닝앵글 검색](https://hyejunl33.github.io/projects/2026-10-12-wrtn-08-winning-angle-search/)
+  - Published: 2026-10-12 | Tags: Internal Agent Builder at wrtn
+  - Summary: 초기 AX 제작은 좋아요 랭킹 순으로 스토리를 넓게 탐색하는 방식이었다. 이후에는 이미 성과가 난 광고에서 다음 후보를 찾는 경로를 만들었다. 다른 팀원이 만든 에이전트의 광고 성과 분석과 인사이트를 받아, 비슷한 소구점이나 이미지를 가진 새로운 스토리를 발굴하는 작업이다.
+- [카피 A/B 테스트와 밈으로 광고 성과를 끌어올리기](https://hyejunl33.github.io/projects/2026-10-12-wrtn-09-ad-performance-experiments/)
   - Published: 2026-10-12 | Tags: Project
-  - Summary: 초기 AX 제작은 좋아요 랭킹 순으로 스토리를 넓게 탐색하는 방식이었다. 이후에는 이미 성과가 난 광고에서 다음 후보를 찾는 경로를 만들었다. 운영팀이 위닝 소재를 분석한 정보를 받아, 비슷한 소구점이나 이미지를 가진 새로운 스토리를 발굴하는 작업이다.
-- [광고를 집행하기 전에 성과를 예측할 수 있을까?](https://hyejunl33.github.io/projects/2026-10-12-wrtn-09-ad-performance-experiments/)
+  - Summary: 광고 배너를 자동으로 만들 수 있게 된 뒤에는 어떤 카피를 얹을지가 다음 과제였다. 성과가 높은 카피, 재밌는 카피에는 정해진 Ground Truth가 없었다. 여러 톤앤매너와 밈 RAG로 후보를 만들고 실제 광고 성과를 비교했다.
+- [CTR을 예측할 수 있을리가 없잖아 무리무리!(무리가아니었다!?): nemotron persona](https://hyejunl33.github.io/projects/2026-10-12-wrtn-10-nemotron-persona-ctr/)
   - Published: 2026-10-12 | Tags: Project
-  - Summary: 어떤 광고가 잘될지는 결국 집행 비용을 써봐야 알 수 있었다. 소재를 많이 만들 수 있게 된 다음에는, 같은 스토리에서 어떤 카피를 내보낼지와 집행 전에 후보를 걸러낼 수 있을지가 궁금해졌다. 카피의 톤을 바꿔 비교할 수 있는 생성 경로를 만들고, 합성 페르소나로 배너의 선호도를 예측하는 실험도 했다. 구현한 것과 성능을 확인한 것은 구분해서 기록하려고 한다. 특히 페르소나 실험은 아직 광고 성과 예측을 입증했다고 말할 수 없는 결과였다. 현지 마케터의 의견을 테스트할 수 있는 형태로 OOC에서는 구어체 카피, 캬라푸에서는 행동유도형 카피가 좋을 것이라는 마케터분들의 의견이 있었다. 특정 방향으로 고정하기보다 여러 톤을 만들어 테스트해 보자는 방향으로 정리됐다. 같은 스토리 소구점에서 세 가지 형식을 만들었다. 행동유도형: 헤드라인이 유저에게 행동을 요구하거나 권한다. 캐릭터 대사형: 그림 속 캐릭터가 그 장면에서 할 법한 구어체 한마디다. 상황형: 소구점의 상황을 경악·깨달음·곤경
+  - Summary: 어떤 광고 배너가 잘될지는 결국 집행 비용을 써봐야 알 수 있었다. 배너를 많이 만들 수 있어도, 그중 무엇을 내보낼지 고르는 데는 여전히 돈이 들었다. 집행 전에 후보를 걸러낼 수 있을지 확인하려고 NVIDIA Nemotron Persona Korea 데이터셋으로 선호도 시뮬레이션을 해봤다.
 - [[이미지기반 카페추천 프로젝트] ADK 기반 에이전트 챗봇 구현](https://hyejunl33.github.io/projects/2026-01-30-ADK-Multi-agent/)
   - Published: 2026-01-30 | Tags: 이미지기반 카페추천 프로젝트, ADK 기반 에이전트 챗봇 구현
   - Summary: 목차 1. 필요한 기능 2. 동네 처리 (Location Agent) 3. Stateful 채팅 구현 4. ADK 마이그레이션 5. Context 기반 추천 질문 생성 (Suggestion) 6. 실험 및 검증 필요한 기능 인풋 쿼리에서 동을 따로 받아서 해당하는 동네 내에서만 검색결과 보여주는 기능 인풋 쿼리의 랜드마크나 위치를 받아서 행정동으로 변환하는 에이전트 Stateful 채팅을 구현해서 이전까지의 Context를 기억해서 다른 카페 찾을 수 있는 기능 Context에 알맞는 다음 예상 질문을 생성하는 기능 동네 처리 → Location Agent 문제정의: 쿼리에서 자연어로 들어오는 동네의 형태는 매우 다양하다. 홍대, 롯데월드근처(랜드마크)일 수도 있고, 잠실역(역 이름)등일수도 있고, ‘연남동’과 같이 동네 이름 자체일 수도 있다. 유저가 제시한 위치의 근처에 위치한 카페를 검색결과로 보여주기 위해, Location Agent를 사용해서 연관 행정동 리스트를 추출하고,
@@ -97,11 +103,17 @@ This is a detailed, generated index of the public blog. Use it to discover artic
   - Published: 2025-10-22 | Tags: Domain_Common_Project, study, metrics, FocalLoss, WeigtedCrossEntropy, Lossfunction
   - Summary: 이 글은 원본글을 바탕으로 학습목적으로 정리한 글임을 밝힙니다. 원본 글: https://stages.ai/en/competitions/370/board/community/post/3051 메트릭 선택은 기술이 아니라 의사결정의 정치다. 모델 개발에서 성능이 좋다는건 특정 메트릭의 값이 좋다는 의미다. → 어떤 메트릭을 우선시 해야할까? Accuracy : 전체 예측 중 맞춘 비율. 간단하지만, 데이터 불균형에서는 무의미할 수 있음. Precision : Positive로 예측한 것 중 실제로 Positive인 비율. False Positive 줄이는 데 초점. Recall : 실제 Positive 중에서 모델이 Positive로 잡아낸 비율. False Negative 줄이는 데 초점. FPR (False Positive Rate) : 실제 Negative 중에서 Positive로 잘못 분류한 비율. 각 metric마다 데이터에서 중점으로 여기는 부분이 다르다. 불균형 데이터에서
 
-### Study (31)
+### Study (33)
 
-- [1차 랄프톤에서 2차 골프톤 우수상까지: 하네싱을 배운 과정](https://hyejunl33.github.io/study/2026-10-01-1차-랄프톤에서-2차-골프톤-우수상까지-하네싱을-배운-과정/)
+- [우리 아이가 달라졌어요: 텍스트에 워터마크를 어떻게 넣을까](https://hyejunl33.github.io/study/2026-10-07-text-watermark-kgw-synthid-textgrain/)
+  - Published: 2026-10-07 | Tags: Study
+  - Summary: 뤼튼에서 인턴으로 일하던 올해 여름, 같은 IAB중 PM들이 사용할 PRD Generator Agent를 만드는 동료 인턴이 있었다. 8월쯤 PM분들이 에이전트 성능이 이상하다는 이야기를 들었다. 심지어 클로드가 이상한말을 해서 직접 타자를 쳐서 PRD를 작성까지한다고 들었다..!(AI없이, 26년 8월에..?) Clau
+- [시골쥐의 서울 상경기: W&B Meetup과 Claude Session](https://hyejunl33.github.io/study/2026-04-10-시골쥐의-서울-상경기-WandB-Meetup과-Claude-Session/)
+  - Published: 2026-10-06 | Tags: Study, W&B, AWS, Claude Code, MLOps, AI 엔지니어
+  - Summary: 비전공자에 지방러라 신청도 못 하던 밋업을 인턴으로 상경해 다녀왔다. 강남 위워크의 W&B Meetup(4/10)과 센터필드의 Claude Session(6/16)에서 코드보다 문제 정의와 판단 기준이 중요해지는 걸 봤다.
+- [1차 랄프톤에서 2차 골프톤 우수상까지:회사에서 하네싱잘한다고 소문나기](https://hyejunl33.github.io/study/2026-10-01-1차-랄프톤에서-2차-골프톤-우수상까지-하네싱을-배운-과정/)
   - Published: 2026-10-01 | Tags: Study
-  - Summary: 1차 랄프톤: 밈을 마케팅 소재로 바꾸는 파이프라인 1차 랄프톤 현장 입구 뤼튼에 합류한 뒤 처음 참여한 사내 해커톤이 1차 랄프톤이었다. 날짜는 노동절..! 다른 인턴분들은 빨간날이라서, 안나오고싶어하는 눈치였다. 그래서 혼자 나가게 되었는데, 내 목표는 두가지였다. 랄프톤 사내 해커톤을 참여하게된 계기 뤼튼에 있는 국가 권력급 개발자 및 AI Native한 비개발자 분들의 워크플로우를 보고 배우자! 밀린 업무때문에 아이디어 단계에서만 머물러있었던 밈 크롤링 후 제안 파이프라인을 만들어보자! 특히 마케터분들과 미팅으로 PainPoint를 들어보면, 마케팅 크리에이티브를 제작할때 계속해서 디씨, 루리웹등 다양한 커뮤니티를 실제로 모니터링 한다는것을 알게되었다. 많은 뻘글들 중 유의미한 글만 걸러서 슬랙봇으로 확인하고 싶다는 니즈가 있었다. 그런데 우수하게 만들었다고 하더라도(좋은 밈을 크롤링해온다는 기준이 애매하긴 하지만), 당장 RoI를 높이는 파이프라인이 아니어서 항상 우선순위
+  - Summary: 1차 랄프톤: 밈을 마케팅 소재로 바꾸는 파이프라인 뤼튼에 합류한 뒤 처음 참여한 사내 해커톤이 1차 랄프톤이었다. 날짜는 노동절..! 다른 인턴분들은 빨간날이라서, 안나오고싶어하는 눈치였다. 그래서 혼자 나가게 되었는데, 내 목표는 두가지였다 랄프톤 사내 해커톤을 참여하게된 계기 뤼튼에 있는 국가 권력급 개발자 및 AI Native한 비개발자 분들의 워크플로우를 보고 배우자! 밀린 업무때문에 아이디어 단계에서만 머물러있었던 밈 크롤링 후 제안 파이프라인을 만들어보자! 특히 마케터분들과 미팅으로 PainPoint를 들어보면, 마케팅 크리에이티브를 제작할때, 계속해서 디씨, 루리웹등 다양한 커뮤니티를 실제로 모니터링 한다는것을 알게되었는데, 많은 뻘글들 중 유의미한 글만 걸러서 슬랙봇으로 확인하고 싶다는 니즈가 있었다. 그런데, 우수하게 만들었다고 하더라도( 좋은 밈을 크롤링해온다는 기준이 애매하긴 하지만), 당장 RoI를 높이는 파이프라인이 아니어서 항상 우선순위 뒷순위로 밀렸었다.
 - [[Domain_Common_Project][미션-2]LogitProcessor구현](https://hyejunl33.github.io/study/2025-10-31-[Domain_Common_Project]LogitProcessor/)
   - Published: 2025-10-31 | Tags: Domain_Common_Project, LogitProcessor, Pretrained, GPT, NLP, Tokenization, 미션
   - Summary: LogitsProcessor 클래스를 상속하여 한글 토큰만 허용하는 사용자 정의 Processor 작성 tokenizer.batch decode 와 유니코드 범위 검사를 활용한 한글 필터링 구현 제약 적용 전후 텍스트 생성 결과 비교 LLM(대형 언어 모델) 출력 제어를 위한 LogitsProcessor의 개념 및 활용법 이해 사용자 정의 제약 조건을 로짓 처리기에 구현하여 원하는 언어 생성 제어 방식 학습 HuggingFace transformers 기반의 텍스트 생성 파이프라인 실습 KoreanOnlyProcessor는 LogitProcessor를 상속받아서, 한글만 반환하도록 하는 Processor클래스이다. is korean 함수에서는 arg로 들어오는 토큰을 문자단위로 하나씩 쪼개서 한글이 하나라도 포함되면 True를 반환하고, 한글이 하나도 포함되지 않는다면 False를 반환한다. call 함수에서는 input ids와 scores텐서를 받아서, 현재 vocab size만
@@ -256,8 +268,11 @@ This is a detailed, generated index of the public blog. Use it to discover artic
   - Published: 2025-09-15 | Tags: PyTorch, Deep-Learning
   - Summary: 1. 강의 복습 PyTorch와 Tensor ◦ PyTorch는 딥러닝 모델 구현과 실행을 위한 프로그래밍 인터페이스다. ◦ Tensor는 PyTorch의 핵심 데이터 구조로, 스칼라(0차원)부터 다차원 배열까지 데이터를 표현한다. ◦ Tensor는 다양한 데이터 타입(정수형, 실수형 등)을 가지며, 타입 캐스팅으로 변환할 수 있다. ◦ Tensor의 기초 함수로는 최소/최대값, 합계, 평균 등을 계산하며, 메서드로 차원 수, 크기, 요소 개수 등을 확인할 수 있다. Tensor 연산 및 조작 ◦ Tensor 생성 : 특정 값, 난수, 리스트/Numpy 데이터 등으로 Tensor를 만들 수 있다. ◦ Tensor 모양 변경 : view() , flatten() , reshape() , transpose() , squeeze() , unsqueeze() , stack() , cat() 함수 등으로 Tensor의 모양이나 차원을 변경하고 연결할 수 있다. ◦ Tensor 연산 : 요소별
 
-### ETC (5)
+### ETC (6)
 
+- [3-2 도덕 배움중심수업 발표자료 — 생명이 소중한 까닭 알아보기](https://hyejunl33.github.io/etc/2026-10-23-life-lesson/)
+  - Published: 2026-10-23 | Tags: etc, 수업자료, 도덕
+  - Summary: 3학년 2반 도덕 7단원 1차시 「생명이 소중한 까닭 알아보기」 수업 발표자료입니다. 아래 화면에서 바로 넘겨 보실 수 있고, 새 창에서 크게 보실 수도 있습니다. 새 창에서 크게 보기 화면 조작 → / ← : 다음·이전 화면 F : 전체 화면 H : 하단 이동 바 숨기기
 - [WRTN에 인턴으로 합류하기까지.](https://hyejunl33.github.io/etc/2026-05-04-Start-of-2026/)
   - Published: 2026-05-04 | Tags: etc, 드디어 나도 ai 엔지니어?
   - Summary: WRTN에 인턴으로 합류하기까지. 부스트캠프 끝 그리고 인턴지원 시작 부스트캠프를 2026년 2월 둘째주쯤 끝마치고 본격적으로 인턴 지원을 시작했다. 부캠 연계기업들은 대부분 정규직이나 계약직을 뽑았어서 적어도 학사 이상의 학력을 요구했다. 그런데 나는 구직당시 휴학생이므로, 체험형인턴자리를 알아볼 수 밖에 없었다. 약 17개의 기업을 지원했고, 서류합격은 3개의 기업, 그리고 과제전형은 모두 통과했지만, 최종면접까지 합격한 회사는 뤼튼이어서 선택의 여지없이 합류했다. 이젠 뭐하지? 네이버 부스트캠프를 하면서, 대학교에서는 배울 기회가 없었던 과목들을 배워서 너무 재밌었던 시기였다. ML을 위한 변분추론, Finetuning, 그리고 프로젝트 주제에 맞는 Modeling, Hyper Parameter tuning, Loss function 셀렉팅까지, 문제를 정의하고, 해당 문제를 해결하기 위해 서치하고, 탑다운으로 공부하는 시간들이 재밌었다. 그런데 하면할수록 워낙 대단한 사람들이
@@ -273,3 +288,4 @@ This is a detailed, generated index of the public blog. Use it to discover artic
 - [부조리주의, 포스트구조주의, 그리고 반항](https://hyejunl33.github.io/etc/2025-11-13-philosophy/)
   - Published: 2025-11-13 | Tags: etc, 그냥생각
   - Summary: 왜 살아야 하는가? 왜 살아가야만 하는가? 더 많은 돈, 더 넓은 집, 더 높은 자리, 더 좋은차를 위해 오늘도 많은 사람들은 열심히 살아간다. 나는 진정 더 많은 돈, 더 넓은집, 더 높은 자리들을 원하는 걸까? 아니면 사회 구조가 주입한 것들을 욕망하는걸까? 연봉이 1억까지는 선형적으로 행복도가 상승하지만, 그 이상부터는 행복이 포화되는 그래프를 본적이 있다. 살아가기 위해서 돈이 없다면 불행하겠지만, 돈의 총량만큼 선형적으로 행복도가 증가하는것은 아니다. 시간은 유한한데, 더 많은돈, 더 높은자리등등만을 생각하느라, 정작 열심히 살긴 하지만, 행복하진 않았던 경험이 있다. 100억이있으면 좋은집, 좋은차등을 살 수 있겠지만, 행복할까? 아니면 그뿐일까 내게 필요한 몇가지의 필수조건들만 충족된다면, 그 이상의 돈은 행복과 사실 큰 연관이 없게 된다. 그렇다면 이 지점에서 나는 왜살아야 하는가? 사회에서 주입한 더 많은돈, 더 큰차, 더 넓은집들을 욕망해봤자, 선형적으로 행복도는
+
