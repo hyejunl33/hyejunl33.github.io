@@ -15,10 +15,10 @@ hide_from_latest: true
 아래 화면에서 바로 넘겨 보실 수 있고, 새 창에서 크게 보실 수도 있습니다.
 
 <div style="position:relative;width:100%;aspect-ratio:16/9;margin:18px 0;">
-  <iframe src="{{ '/files/2026-life-lesson.html' | relative_url }}" style="position:absolute;inset:0;width:100%;height:100%;border:1px solid #ddd;border-radius:8px;" allowfullscreen></iframe>
+  <iframe src="{{ '/files/2026-life-lesson.html?v=19' | relative_url }}" style="position:absolute;inset:0;width:100%;height:100%;border:1px solid #ddd;border-radius:8px;" allowfullscreen></iframe>
 </div>
 
-[새 창에서 크게 보기]({{ '/files/2026-life-lesson.html' | relative_url }})
+[새 창에서 크게 보기]({{ '/files/2026-life-lesson.html?v=19' | relative_url }})
 
 **화면 조작**
 
