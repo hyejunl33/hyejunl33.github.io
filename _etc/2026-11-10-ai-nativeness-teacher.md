@@ -1,6 +1,6 @@
 ---
 layout: modern-single
-title: "교사는 어떻게 AI Nativeness하게 업무를 할 수 있을까?"
+title: "교사는 어떻게 AI Native하게 업무를 할 수 있을까?"
 date: 2026-11-10
 tags:
   - etc
