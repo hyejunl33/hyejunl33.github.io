@@ -6,7 +6,7 @@ tags:
   - Project
 excerpt: "광고 배너를 자동으로 만들 수 있게 된 뒤에는 어떤 카피를 얹을지가 다음 과제였다. 성과가 높은 카피, 재밌는 카피에는 정해진 Ground Truth가 없었다. 여러 톤앤매너와 밈 RAG로 후보를 만들고 실제 광고 성과를 비교했다."
 project_group: wrtn-internal-agent-builder
-notion_source_id: sha256:965ecbf938973af9b474
+notion_source_id: sha256:5ce27222421a7f6ec6ed
 ---
 
 광고 배너를 자동으로 만들 수 있게 된 뒤에는 어떤 카피를 얹을지가 다음 과제였다. 그런데 어떤 형태의 카피가 효과적이라고 할 수 있을까? 성과가 높은 카피, 재밌는 카피에는 정해진 Ground Truth가 없었다. 광고 성과를 끌어올리는 AX를 하는 입장에서 이 부분이 가장 어려웠다. 답이 없는 문제를 풀고 있다는 느낌이었다.

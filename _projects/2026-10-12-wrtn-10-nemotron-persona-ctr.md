@@ -6,7 +6,7 @@ tags:
   - Project
 excerpt: "어떤 광고 배너가 잘될지는 결국 집행 비용을 써봐야 알 수 있었다. 배너를 많이 만들 수 있어도, 그중 무엇을 내보낼지 고르는 데는 여전히 돈이 들었다. 집행 전에 후보를 걸러낼 수 있을지 확인하려고 NVIDIA Nemotron Persona-Korea 데이터셋으로 선호도 시뮬레이션을 해봤다."
 project_group: wrtn-internal-agent-builder
-notion_source_id: sha256:82ba46c1fdb1b9d0e4eb
+notion_source_id: sha256:7fb40cb02331583ebf4b
 ---
 
 Nemotron Persona를 처음 알게 된 건 1차 랄프톤에서였다. 국가권력급 AI 엔지니어 Kevin이 사내 QA 에이전트의 시스템 프롬프트에 Nemotron Persona를 넣고, 변경한 UI·UX 구성요소를 A/B 테스트하는 데 활용하는 에이전트를 만든 것을 봤다.

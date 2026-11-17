@@ -6,7 +6,7 @@ tags:
   - Project
 excerpt: "광고 소재 제작 파이프라인은 크랙에서 먼저 만들었다. 이후 북미 OOC와 일본 캬라푸로 확장했다. 이미 돌아가는 생성 흐름이 있으니 언어만 바꾸면 될 것 같지만, 실제로는 입력 데이터와 UI, 폰트, 디자인 레퍼런스가 달랐다."
 project_group: wrtn-internal-agent-builder
-notion_source_id: sha256:a64cb1cb140d8e54856c
+notion_source_id: sha256:f0a2bf34840df4becd67
 ---
 
 광고 소재 제작 파이프라인은 크랙에서 먼저 만들었다. 이후 북미 OOC와 일본 캬라푸로 확장했다. 이미 돌아가는 생성 흐름이 있으니 언어만 바꾸면 될 것 같지만, 실제로는 입력 데이터와 UI, 폰트, 디자인 레퍼런스가 달랐다.
