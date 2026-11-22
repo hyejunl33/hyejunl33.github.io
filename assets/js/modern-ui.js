@@ -94,8 +94,12 @@
       art.style.setProperty('--art-y2', String(16 + ((hash >>> 7) % 68)) + '%');
       var thumb = art.querySelector('img');
       if (thumb) {
-        if (thumb.complete && thumb.naturalWidth === 0) thumb.remove();
-        else thumb.addEventListener('error', function () { thumb.remove(); });
+        var dropThumb = function () {
+          thumb.remove();
+          art.classList.remove('modern-post-card__art--image');
+        };
+        if (thumb.complete && thumb.naturalWidth === 0) dropThumb();
+        else thumb.addEventListener('error', dropThumb);
       }
     });
   }
