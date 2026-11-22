@@ -3,8 +3,30 @@
 {% assign collection_data = site.data.collections[collection_key] %}
 {% assign collection_label = collection_data.label %}
 {% unless collection_label %}{% assign collection_label = collection_key | capitalize %}{% endunless %}
+{% assign thumb_image = item.header.image | default: item.header.overlay_image | default: item.image | default: item.thumbnail %}
+{% if thumb_image and thumb_image != '' %}
+  {% unless thumb_image contains '://' %}
+    {% assign thumb_prefix = thumb_image | slice: 0 %}
+    {% if thumb_prefix != '/' %}{% assign thumb_image = thumb_image | prepend: '/images/' %}{% endif %}
+  {% endunless %}
+{% endif %}
+{% unless thumb_image and thumb_image != '' %}
+  {% assign content_img_split = item.content | split: '<img' %}
+  {% if content_img_split.size > 1 %}
+    {% assign thumb_src_split = content_img_split[1] | split: 'src="' %}
+    {% if thumb_src_split.size > 1 %}
+      {% assign thumb_image = thumb_src_split[1] | split: '"' | first | strip %}
+    {% endif %}
+  {% endif %}
+{% endunless %}
 <a class="modern-post-card" href="{{ item.url | relative_url }}" data-gradient-card>
+  {% if thumb_image and thumb_image != '' %}
+  <span class="modern-post-card__art modern-post-card__art--image" data-gradient-art data-art-key="{{ item.title | escape }}" aria-hidden="true">
+    <img src="{{ thumb_image | relative_url | escape }}" alt="" loading="lazy" decoding="async">
+  </span>
+  {% else %}
   <span class="modern-post-card__art" data-gradient-art data-art-key="{{ item.title | escape }}" aria-hidden="true"></span>
+  {% endif %}
   <span class="modern-post-card__body">
     <span class="modern-post-card__meta">{{ collection_label }}{% if item.date %} · {{ item.date | date: '%Y.%m.%d' }}{% endif %}</span>
     <h2>{{ include.title | default: item.title | markdownify | strip_html }}</h2>

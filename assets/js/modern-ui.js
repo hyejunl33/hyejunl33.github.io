@@ -92,8 +92,17 @@
       art.style.setProperty('--art-angle', String(18 + (hash % 310)) + 'deg');
       art.style.setProperty('--art-x2', String(14 + ((hash >>> 3) % 72)) + '%');
       art.style.setProperty('--art-y2', String(16 + ((hash >>> 7) % 68)) + '%');
-      if (reduceMotion || !window.matchMedia('(pointer: fine)').matches) return;
-      var card = art.closest('[data-gradient-card]') || art;
+      var thumb = art.querySelector('img');
+      if (thumb) {
+        if (thumb.complete && thumb.naturalWidth === 0) thumb.remove();
+        else thumb.addEventListener('error', function () { thumb.remove(); });
+      }
+    });
+  }
+
+  function initCardTilt() {
+    if (reduceMotion || !window.matchMedia('(pointer: fine)').matches) return;
+    document.querySelectorAll('[data-gradient-card]').forEach(function (card) {
       var frame = 0;
       card.addEventListener('pointermove', function (event) {
         if (frame) return;
@@ -628,6 +637,7 @@
   initOrbitalField();
   initAuroraCard();
   initGradientCards();
+  initCardTilt();
   initLlmArchitecture();
   initArchiveSearch();
   initArticle();
