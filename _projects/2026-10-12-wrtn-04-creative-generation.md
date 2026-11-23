@@ -28,7 +28,7 @@ notion_source_id: sha256:e5760a0b1e701e15446c
 </tbody>
 </table>
 
-```yaml
+```plaintext
 AGENTS/APPEAL_EMBEDDER.PY · STRATEGY_SYSTEM_INSTRUCTION (크랙 원문)
 너는 모바일 앱 퍼포먼스 마케팅 전략가야. 크랙 앱의 캐릭터챗 콘텐츠를 타겟(여성향/남성향, 장르별 서브컬처)에 맞춰 광고 소재화하는 전문가야.
 
@@ -50,7 +50,7 @@ AGENTS/APPEAL_EMBEDDER.PY · STRATEGY_SYSTEM_INSTRUCTION (크랙 원문)
 
 구간에는 인물 동작뿐 아니라 신체 역학, 지속되는 움직임, 표정, 카메라 워크, 효과음이 들어갔다. 이 구조화된 결과를 i2v 프롬프트로 펼치는 단계는 LLM을 다시 호출하지 않고 코드로 처리했다. 기획에서 이미 정해진 구간을 재해석할 필요가 없어서였다.
 
-```yaml
+```plaintext
 정규화 장르 (13슬러그): {슬러그}
 캐릭터 속성: {tag_character_attribute}
 대표 대사: {simple_description}
@@ -59,7 +59,7 @@ AGENTS/APPEAL_EMBEDDER.PY · STRATEGY_SYSTEM_INSTRUCTION (크랙 원문)
 세계관(발췌, 1500字)
 ```
 
-```yaml
+```plaintext
 scene_read: "Akari stands angled in a low-angle perspective against a blood moon in a red sky, wearing black lacquered armor plates over a dark outfit."
 scene_concept: "Under the blood moon, Akari shifts her grip on her katana with a cautious, resolute gaze down toward the viewer."
 audio_plan: "Howling high-altitude wind, distant rhythmic taiko drums, and the slide of a katana habaki locking inside its wooden scabbard."
@@ -82,8 +82,6 @@ One continuous take. Keep the character moving throughout the shot. No on-screen
 
 영상 입력에는 오버레이 제거본을 썼다. 예전에는 21:9로 확장한 이미지를 넣었는데, 세로 영상으로 cover-crop되면서 캐릭터가 잘려서 그 경로를 폐기했다. 9:16 영상은 한 번만 만들고 가로·정사각은 좌우를 채워 파생했다.
 
-정책 차단이 발생하면 같은 프롬프트를 계속 고치기보다 다른 후보 이미지로 최대 네 장까지 시도했다. 오디오를 켰을 때 의도하지 않은 사람 음성이 나오면 발화 가드로 처리했다. 생성 모델의 결과가 요청한 조건과 완전히 같다고 가정할 수 없어서 후처리가 필요했다.
-
 ## 롱폼: 대본을 HTML 화면으로 구성하고 녹화하기
 
 롱폼은 스토리를 읽히는 형식으로 재구성해 HTML 페이지를 만들고, 스크롤되는 화면을 녹화했다. 대본 모델에 세계관과 인물 정보를 주고 참고 이미지 여러 장도 함께 넣었다. 이미지는 중립적인 파일명으로 표시하고, 어떤 장면에 어떤 그림을 쓸지는 대본 안의 마커로 선택하게 했다.
@@ -92,7 +90,7 @@ One continuous take. Keep the character moving throughout the shot. No on-screen
 
 <p class="caption">롱폼 대본 생성과 HTML 화면 구성·녹화 흐름</p>
 
-```yaml
+```plaintext
 [S] 장면 블록 - 상황 서술
 [U] 유저(시청자) 발화 블록
 N  나레이션    D  대사    H  하이라이트    P  사진 배치
@@ -128,7 +126,7 @@ HTML 화면 구성과 녹화는 1080×1920에서 한 번 하고 다른 규격은
 
 Stage A에서 장면 흐름과 연출 방향을 만든 뒤 Stage B에서 조합 DSL로 바꾼다. 검증에 걸리면 같은 세션에서 멀티턴으로 수정했다. 채팅·선택·게이지·공개·CTA 등 준비된 요소를 조합하는 방식이라, 결과를 검증하고 렌더러에 넘길 수 있었다.
 
-```yaml
+```plaintext
 { theme, gauges[], steps[], branches{} }
 
 steps 프리미티브: chat · choice · burst · cta                    (v1)
@@ -170,13 +168,9 @@ OOC에서는 이미 잘된 UGC의 대본과 화면 구성을 유지하면서, �
 
 <p class="caption">애니메이션 티저의 플랜·생성·합성 흐름</p>
 
-![애니메이션 티저 생성 화면과 컷 계획](/assets/images/notion/1bcbb67d0be297ea92ee/06-creative-generation.png)
-
-<p class="caption">애니메이션 티저 생성 화면과 컷 계획</p>
-
 사람이 플랜을 확인한 다음 본편 영상 모델을 호출한다. 컷별 영상을 이어 붙이는 대신 컷 플랜과 캐스트를 넣어 본편을 한 번에 생성하는 경로였다. 실제 발화를 다시 전사해 자막 타이밍을 맞추고 서비스별 엔딩과 BGM을 합성했다.
 
-```yaml
+```plaintext
 shot_size: "medium"
 beat: "Chloe scrambles on the floor after spilling game pieces."
 motion: "Chloe hurriedly gathers scattered colorful plastic tokens off the floor, rushing back up toward the desk."
@@ -204,5 +198,3 @@ advances: "The spilled pieces are collected and placed back onto the playing sur
 자막이나 BGM, 꼬리 부분만 잘못되면 저장된 중간 영상부터 합성 단계를 다시 실행했다. 본편 생성까지 다시 호출할 필요가 없게 만드는 것이 비용 면에서도 중요했다.
 
 결과적으로 크랙에서의 이미지배너로 생성광고소재가 한정되어있었는데, 이미지 외, 플레이어블, 동영상광고배너형태, 그리고 OOC(북미서비스), 캬라푸(일본서비스) 광고배너소재제작으로 확장을 진행했다.
-
-형식마다 모델과 검수 방식은 달랐지만, 입력과 산출물의 계약을 정하고 수정 가능한 중간본을 남기는 방향은 같았다. 생성 결과가 한 번에 잘 나오기를 기다리는 것보다, 어느 단계가 잘못됐는지 확인하고 그 부분만 다시 처리할 수 있어야 운영할 수 있었다.

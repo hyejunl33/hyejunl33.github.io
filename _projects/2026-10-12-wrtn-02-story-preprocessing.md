@@ -66,9 +66,9 @@ tag_power_dynamic
 | 항목 | 내용 |
 | --- | --- |
 | 스토리 정보 | title · genre_category (없으면 genre) · tags (공개 태그) · internal_tags (운영 태그) · target · chat_type |
-| 장르 태그 11축 | stories.tag_\* 열한 개 — tag_relationship_orientation (관계성향) · tag_content_orientation (콘텐츠성향) · tag_world_setting (세계관) · tag_theme (테마) · tag_subject_matter (소재) · tag_conversation_type (대화유형) · tag_character_attribute (캐릭터속성) · tag_relationship_dynamic (관계동학) · tag_mood (무드) · tag_species (종족) · tag_power_dynamic (권력관계) |
+| 장르 태그 11축 | stories.tag_* 열한 개 — tag_relationship_orientation (관계성향) · tag_content_orientation (콘텐츠성향) · tag_world_setting (세계관) · tag_theme (테마) · tag_subject_matter (소재) · tag_conversation_type (대화유형) · tag_character_attribute (캐릭터속성) · tag_relationship_dynamic (관계동학) · tag_mood (무드) · tag_species (종족) · tag_power_dynamic (권력관계) |
 | 세계관·줄거리 | world_settings 를 정제해 1,500자로 컷해 쓰고, 비어 있으면 content_summary 로 대체 |
-| 댓글 | comments\[\].content — 좋아요순 상위. 보조 신호일 뿐이라 별도 블록으로 붙이고, 없으면 "(댓글 없음 — 세계관·태그 기반으로 소구점 도출)"이라고 명시해 넣는다 |
+| 댓글 | comments[].content — 좋아요순 상위. 보조 신호일 뿐이라 별도 블록으로 붙이고, 없으면 "(댓글 없음 — 세계관·태그 기반으로 소구점 도출)"이라고 명시해 넣는다 |
 
 ## 댓글은 유용했지만, 그대로 믿을 수는 없었다
 
@@ -159,7 +159,7 @@ ideal_font_sample_text: 팽팽한 긴장감 속에서 터져 나오는 질투를
 
 본문에 완성된 URL이 있으면 정규식으로 수집했다. 마크다운 이미지 선언은 링크 뒤의 문장까지 삼키지 않게 괄호의 깊이를 확인했고, GitHub blob 링크는 이미지 원본을 받을 수 있는 raw 주소로 바꿨다. URL 양식과 변수 값이 따로 적혀 있는 경우에는 LLM이 명시된 양식과 값만 조합해 완성된 주소를 만들도록 했다. 변수가 덜 채워진 URL은 제외했다.
 
-```yaml
+```plaintext
 AGENTS/LLM_IMAGE_EXTRACTOR.PY · 배치 프롬프트(발췌)
 당신은 캐릭터 챗봇의 system_prompt_variables 필드에서 외부이미지 URL 을 추출
 
@@ -188,7 +188,7 @@ AGENTS/LLM_IMAGE_EXTRACTOR.PY · 배치 프롬프트(발췌)
 <tbody>
 <tr><td>stories</td><td>제목·세계관·줄거리·11축 태그·장르·타겟.</td></tr>
 <tr><td>image_assets</td><td>이미지 1장 = 1행. URL · 출처(situation/profile/external) · CLIP 점수 · fetch 성공여부 · 아웃페인트 결과 · 얼굴 좌표.</td></tr>
-<tr><td>story_embeddings</td><td>이미지 임베딩(512-dim). HyDE 쿼리와 내적해 &quot;이 소구점에 어울리는 그림&quot;을 고른다.</td></tr>
+<tr><td>story_embeddings</td><td>이미지 임베딩(512-dim). HyDE 쿼리와 내적해 "이 소구점에 어울리는 그림"을 고른다.</td></tr>
 <tr><td>strategy_json</td><td>소구점 전략 — 훅 포인트 · 소구점 N개 · HyDE 비주얼 쿼리 · 광고 설명문 · 틱톡 본문 · 이상적 폰트 샘플 문장.</td></tr>
 <tr><td>comments</td><td>좋아요순 상위 댓글. 소구점 도출</td></tr>
 </tbody>
@@ -216,21 +216,21 @@ AGENTS/LLM_IMAGE_EXTRACTOR.PY · 배치 프롬프트(발췌)
 
 1. 관계성향(`relationship_orientation`)이 bl/gl이면 즉시 → bl / gl (최우선, 다른 축 무시).
 
-2. 세계관(`world_setting`)에 "무협" → wuxia, "로판" 또는 (판타지 세계관 + 로맨스 테마 + 콘텐츠성향=여성향) → rofan.
+1. 세계관(`world_setting`)에 "무협" → wuxia, "로판" 또는 (판타지 세계관 + 로맨스 테마 + 콘텐츠성향=여성향) → rofan.
 
-3. 테마(`theme`)에 "스포츠" → sports.
+1. 테마(`theme`)에 "스포츠" → sports.
 
-4. 로맨스 신호(테마=로맨스 or 관계성향=hl)면 → 콘텐츠성향(`content_orientation`)으로 남성향→romance-m, 여성향→romance-f 가름.
+1. 로맨스 신호(테마=로맨스 or 관계성향=hl)면 → 콘텐츠성향(`content_orientation`)으로 남성향→romance-m, 여성향→romance-f 가름.
 
-5. 소재/대화유형(`subject_matter`, `conversation_type`)에 게임태그(시뮬·육성·키우기·타이쿤 등) → simul.
+1. 소재/대화유형(`subject_matter`, `conversation_type`)에 게임태그(시뮬·육성·키우기·타이쿤 등) → simul.
 
-6. 세계관(`world_setting`)이 SF/판타지군(아포칼립스·이세계·가상현실 등) → sf-fantasy.
+1. 세계관(`world_setting`)이 SF/판타지군(아포칼립스·이세계·가상현실 등) → sf-fantasy.
 
-7. 테마(`theme`)가 추리/범죄/호러/스릴러 → mystery
+1. 테마(`theme`)가 추리/범죄/호러/스릴러 → mystery
 
-8. 테마(`theme`)가 일상/힐링/드라마·일상대화 → daily
+1. 테마(`theme`)가 일상/힐링/드라마·일상대화 → daily
 
-9. 그 외 → etc.
+1. 그 외 → etc.
 
 장르를 12종으로 확장한 뒤 기타 비중은 2.4%로 줄었다. 이 수치는 광고 성과가 오른 결과가 아니라, 원래 한 덩어리였던 후보를 타겟에 맞춰 구분할 수 있게 된 결과다. 이후 생성과 광고세트 구성에서 쓸 수 있는 데이터가 됐다는 점이 이 작업의 목적이었다.
 
